@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [连心四子棋：斜线测试的获胜格顺序写反](./2026-07-15-connect-four-diagonal-test-order.md)
+- [连心四子棋：非当前玩家无法理解棋盘布局](./2026-07-15-connect-four-board-accessibility.md)
 - [爱的刮刮卡：屏幕阅读器提前读出惊喜](./2026-07-15-scratch-screen-reader-premature-reveal.md)
 - [爱的刮刮卡：双指产生跨指错误笔画](./2026-07-15-scratch-multitouch-stroke.md)
 - [爱的刮刮卡：高 DPI 屏遮罩提示字号重复放大](./2026-07-15-scratch-dpr-prompt-size.md)

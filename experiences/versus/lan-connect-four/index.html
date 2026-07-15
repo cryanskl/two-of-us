@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>连心四子棋 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <a class="back" href="../../../index.html">← 返回体验库</a>
+
+      <header class="intro">
+        <div class="connection"><span aria-hidden="true"></span><p id="connection-text">正在连接本地房间</p></div>
+        <p class="eyebrow">LOCAL TWO-PLAYER DUEL</p>
+        <h1>连心<br>四子棋</h1>
+        <p class="lead">隔着两块屏幕轮流落子。横、竖或斜向先连成四颗，就赢下这一局。</p>
+      </header>
+
+      <section id="offline" class="panel hidden" aria-labelledby="offline-title">
+        <p class="panel-kicker">需要本地运行时</p>
+        <h2 id="offline-title">请先从仓库根目录启动</h2>
+        <p>双击 <code>start.command</code> / <code>start.bat</code>，或运行 <code>npm start</code> 后再打开本页。</p>
+      </section>
+
+      <section id="lobby" class="panel hidden" aria-labelledby="lobby-title">
+        <p class="panel-kicker">两个人，一间房</p>
+        <h2 id="lobby-title">创建房间，或者加入对方</h2>
+        <div class="lobby-actions">
+          <button id="create-room" class="primary" type="button">创建新房间</button>
+          <form id="join-form">
+            <label for="room-code">输入五位房间码</label>
+            <div class="join-row">
+              <input id="room-code" name="room-code" inputmode="text" maxlength="8" autocomplete="off" required>
+              <button type="submit">加入房间</button>
+            </div>
+          </form>
+        </div>
+        <p id="lobby-error" class="error" aria-live="polite"></p>
+      </section>
+
+      <section id="room" class="game hidden" aria-labelledby="game-title">
+        <div class="room-bar">
+          <div><span>房间</span><strong id="room-id">-----</strong></div>
+          <div class="members" aria-label="房间成员">
+            <span id="self-member">你</span>
+            <span id="partner-member">等待对方</span>
+          </div>
+        </div>
+
+        <div class="game-copy">
+          <div>
+            <p id="identity" class="identity">等待分配棋子</p>
+            <h2 id="game-title">等对方加入后开始</h2>
+          </div>
+          <button id="start-game" class="primary" type="button" disabled>开始对局</button>
+        </div>
+
+        <p id="game-status" class="status" aria-live="polite">房间状态会显示在这里。</p>
+        <div id="board" class="board" aria-label="四子棋棋盘"></div>
+        <p id="board-summary" class="sr-only" tabindex="0">棋盘尚未开始。</p>
+        <p class="hint">点击任意一列，让棋子落到这一列的最低空位。只有轮到你时才能落子。</p>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

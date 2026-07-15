@@ -7,3 +7,4 @@
 ## 已沉淀
 
 - [本地优先 Canvas 遮罩的可访问与输入模型](./2026-07-15-canvas-mask-file-first-accessibility.md)
+- [主机权威与房间私密消息](./2026-07-15-host-authority-and-private-room-messages.md)

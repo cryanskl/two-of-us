@@ -94,6 +94,8 @@ experiences/versus/lan-connect-four/
 ├── app.js
 ├── logic.js
 ├── logic.test.js
+├── protocol.js
+├── protocol.test.js
 └── README.md
 ```
 
@@ -121,3 +123,13 @@ experiences/versus/lan-connect-four/
 - Chrome 控制台无 warning/error，Network 无公网请求；
 - `npm test`、`npm run verify` 与 `git diff --check` 通过；
 - README 包含完整“借鉴与来源声明”。
+
+## 10. 2026-07-15 实现与验收结果
+
+- 已实现 7×6 棋盘、主机权威落子、递增版本完整状态、横/竖/双斜线胜利、满盘平局和再来一局交换先手；
+- 纯逻辑与协议门控 10 项定向测试通过，覆盖非法回合/列/版本、四种胜线、合法 42 步平局、旧状态、伪造非主机状态、第三人、成员替换和主机迁移；
+- Chrome 双端真实完成一局横向四连，双方同时显示 4 个获胜格；再来一局双端清盘并由上一局后手先行；
+- Chrome 三端验证第三人自动退出；原主机关闭后剩余成员晋升主机、旧棋局清空，新成员加入后可重新开始；
+- Chrome 在 390×844 下棋盘宽 336px、无横向溢出；键盘 Enter 可落子，AX 树可读完整七列棋盘摘要；
+- 页面资源仅来自 localhost 的 CSS、Socket.IO 客户端和三个本地模块；门户显示 8 个作品，控制台无 warning/error；
+- `npm test`、`npm run verify`、脚本语法检查与 `git diff --check` 在提交前再次执行。
