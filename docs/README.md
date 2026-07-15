@@ -8,11 +8,16 @@
 | --- | --- |
 | [01-classification-spec.md](./01-classification-spec.md) | 主分类、标签、目录规范、本轮范围和验收标准 |
 | [02-research-method.md](./02-research-method.md) | 调研字段、信息源优先级和推荐口径 |
+| [03-local-first-research-spec.md](./03-local-first-research-spec.md) | 第二轮 A–D 本地优先调研范围、字段与证据 Gate |
+| [04-implementation-program-spec.md](./04-implementation-program-spec.md) | 统一依赖、一键启动与分批建设计划 |
+| [05-reference-and-attribution-spec.md](./05-reference-and-attribution-spec.md) | 所有参考项目的借鉴与来源声明规范 |
 | [10-surprise-research.md](./10-surprise-research.md) | 41 个惊喜类许可明确/灵感候选与优先顺序 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
+
+持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
 ## 这轮得出的核心判断
 

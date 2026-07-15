@@ -21,11 +21,16 @@
 - [文档总览](./docs/README.md)
 - [仓库分类与内容收录规范](./docs/01-classification-spec.md)
 - [全网调研方法与判定口径](./docs/02-research-method.md)
+- [第二轮本地优先调研规格](./docs/03-local-first-research-spec.md)
+- [持续建设与统一运行规格](./docs/04-implementation-program-spec.md)
+- [借鉴与来源声明规范](./docs/05-reference-and-attribution-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
 - [创意池与实现路线](./docs/40-idea-backlog.md)
 - [第三方引入与许可证指南](./docs/50-license-and-import-guide.md)
+- [Bug 与解决方案](./bugs/README.md)
+- [可复用学习笔记](./learn/README.md)
 
 ## 仓库原则
 
