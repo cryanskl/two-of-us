@@ -113,6 +113,28 @@ export function normalizeRoomId(roomId) {
   return normalized;
 }
 
+export function prepareDirectMessage(rooms, senderId, payload = {}) {
+  const roomId = normalizeRoomId(payload.roomId);
+  if (!rooms.hasMember(roomId, senderId)) {
+    throw new RoomError("NOT_A_MEMBER", "加入房间后才能发送定向消息。");
+  }
+
+  const targetId = String(payload.targetId ?? "");
+  if (!rooms.hasMember(roomId, targetId)) {
+    throw new RoomError("TARGET_NOT_IN_ROOM", "目标成员不在这个房间中。");
+  }
+
+  return {
+    targetId,
+    message: {
+      roomId,
+      senderId,
+      type: String(payload.type ?? "action").slice(0, 48),
+      data: payload.data ?? null,
+    },
+  };
+}
+
 function sanitizeName(name) {
   const value = String(name ?? "").trim().slice(0, 24);
   return value || "玩家";

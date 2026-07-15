@@ -4,7 +4,12 @@ import QRCode from "qrcode";
 import { Server as SocketServer } from "socket.io";
 import { loadCatalog } from "./catalog.js";
 import { getNetworkUrls } from "./network.js";
-import { RoomRegistry, RoomError, normalizeRoomId } from "./rooms.js";
+import {
+  prepareDirectMessage,
+  RoomRegistry,
+  RoomError,
+  normalizeRoomId,
+} from "./rooms.js";
 import { serveStatic } from "./static.js";
 
 const defaultHost = "0.0.0.0";
@@ -142,6 +147,17 @@ export function registerRoomProtocol(io, rooms) {
           type: String(payload.type ?? "action").slice(0, 48),
           data: payload.data ?? null,
         });
+        reply({ ok: true });
+      } catch (error) {
+        reply(toProtocolError(error));
+      }
+    });
+
+    socket.on("room:direct", (payload = {}, callback) => {
+      const reply = acknowledge(callback);
+      try {
+        const { targetId, message } = prepareDirectMessage(rooms, socket.id, payload);
+        io.to(targetId).emit("room:direct", message);
         reply({ ok: true });
       } catch (error) {
         reply(toProtocolError(error));
