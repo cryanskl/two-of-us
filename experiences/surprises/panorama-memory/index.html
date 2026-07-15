@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>回到那一天 · Two of Us</title>
+    <link rel="stylesheet" href="/vendor/pannellum/2.5.7/pannellum.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="intro">
+        <h1>回到那一天</h1>
+        <p>选择一张完整的 360° 全景照片，拖动视角，慢慢回到当时。</p>
+
+        <label id="choose-label" class="primary-action" hidden>
+          选择一张全景照片
+          <input
+            id="panorama-file"
+            class="visually-hidden"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            aria-describedby="format-note privacy-note"
+            disabled
+          >
+        </label>
+      </header>
+
+      <section class="panorama-area" aria-label="全景照片查看区域">
+        <div id="panorama-stage" class="panorama-stage">
+          <div id="viewer" class="viewer" hidden></div>
+          <div id="placeholder" class="placeholder">
+            <svg class="sphere-lines" viewBox="0 0 1000 500" aria-hidden="true" preserveAspectRatio="none">
+              <path d="M0 250H1000"></path>
+              <path d="M500 0V500"></path>
+              <path d="M0 112C248 170 752 170 1000 112"></path>
+              <path d="M0 388C248 330 752 330 1000 388"></path>
+              <path d="M176 0C92 126 92 374 176 500"></path>
+              <path d="M824 0C908 126 908 374 824 500"></path>
+              <path d="M350 0C304 132 304 368 350 500"></path>
+              <path d="M650 0C696 132 696 368 650 500"></path>
+            </svg>
+            <div class="empty-copy">
+              <svg class="panorama-mark" viewBox="0 0 120 70" aria-hidden="true">
+                <path d="M20 35c0-13 18-23 40-23s40 10 40 23-18 23-40 23"></path>
+                <path d="m18 35 13-9v18zM102 35l-13-9v18z"></path>
+                <text x="60" y="32">360°</text>
+              </svg>
+              <p id="empty-message">还没有选择照片</p>
+            </div>
+          </div>
+        </div>
+
+        <p id="live-status" class="status-line" aria-live="polite"></p>
+        <p id="viewer-help" class="viewer-help" hidden>拖动照片改变视角；也可以使用方向键浏览，并用加减键缩放。</p>
+
+        <div class="below-stage">
+          <div class="notes">
+            <p id="startup-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13"></rect><path d="M9 21h6M12 17v4"></path></svg>
+              <span id="startup-copy">B 级体验 · 请先运行本地启动器</span>
+            </p>
+            <p id="privacy-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <span>照片只在这台设备的当前页面中处理，不会上传或保存。</span>
+            </p>
+            <p id="format-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m5 18 5-5 3 3 2-2 4 4"></path></svg>
+              <span>支持 JPEG、PNG、WebP · 建议 2:1</span>
+            </p>
+          </div>
+
+          <div class="viewer-actions" aria-label="照片操作">
+            <button id="replace-button" type="button" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5"></path><path d="M4 17v-5h5"></path><path d="M6.1 8.2A7 7 0 0 1 18.5 7M17.9 15.8A7 7 0 0 1 5.5 17"></path></svg>
+              更换照片
+            </button>
+            <button id="clear-button" type="button" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14"></path></svg>
+              清除照片
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <noscript><p class="noscript">需要先运行本地启动器并启用 JavaScript，才能在本机查看全景照片。</p></noscript>
+    </main>
+
+    <script src="/vendor/pannellum/2.5.7/pannellum.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

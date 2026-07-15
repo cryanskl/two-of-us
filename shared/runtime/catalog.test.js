@@ -13,6 +13,15 @@ test("catalog exposes an installed A-level Love Tree", async () => {
   assert.equal(loveTree.networkRequired, false);
 });
 
+test("catalog exposes the installed B-level panorama memory experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const panorama = catalog.experiences.find((item) => item.id === "panorama-memory");
+
+  assert.equal(panorama.level, "B");
+  assert.equal(panorama.networkRequired, false);
+  assert.match(panorama.entry, /panorama-memory\/index\.html$/);
+});
+
 test("every installed catalog entry points to a local file", async () => {
   const root = new URL("../../", import.meta.url);
   const catalog = await loadCatalog(root);

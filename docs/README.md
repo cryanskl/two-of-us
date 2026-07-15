@@ -19,6 +19,7 @@
 | [11-date-wheel-spec.md](./11-date-wheel-spec.md) | A 级约会转盘的等概率选择、SVG 角度、配置与来源声明规格 |
 | [12-sealed-rps-spec.md](./12-sealed-rps-spec.md) | C 级密封猜拳的可信本机裁判、秘密提交、同步揭晓与信任边界规格 |
 | [13-panorama-memory-spec.md](./13-panorama-memory-spec.md) | 首个 B 级全景回忆作品的本地 vendor、私人照片、对象 URL 与 WebGL 生命周期规格 |
+| [14-panorama-memory-verification.md](./14-panorama-memory-verification.md) | 全景回忆的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
@@ -55,7 +56,7 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、同机你画我猜、反应力对决、同心解锁、隔屏画猜、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、同机你画我猜、反应力对决、同心解锁、隔屏画猜、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
@@ -64,7 +65,8 @@
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；
 - 已实现首个 C 级秘密同时选择样板：密封猜拳，增加可信本机裁判、两端同时揭晓与结果复算；
-- 下一批：C 级手机控制器实时对抗，或将密封提交复用于默契问答与秘密投票；
+- 已实现首个 B 级样板：回到那一天，增加精确浏览器依赖映射、本机照片 Gate 与对象 URL 生命周期；
+- 下一批：C 级手机控制器实时对抗、默契问答，或 A 级私人照片拼图；
 - 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
 
 ## 下一轮选题时的最小输入

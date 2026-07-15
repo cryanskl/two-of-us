@@ -54,6 +54,19 @@
       "networkRequired": false
     },
     {
+      "id": "panorama-memory",
+      "title": "回到那一天",
+      "category": "surprise",
+      "level": "B",
+      "players": "1 人准备或回看",
+      "devices": "本机单设备",
+      "entry": "experiences/surprises/panorama-memory/index.html",
+      "readme": "experiences/surprises/panorama-memory/README.md",
+      "description": "选择一张本机 360° 全景照片，在不上传、不保存的当前页面里拖动回到当时。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",
