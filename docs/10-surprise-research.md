@@ -27,20 +27,20 @@
 
 ## 第一梯队：优先评估的 12 个项目
 
-| 项目 | 可借鉴的体验 | 当前离线判断 | 许可证 | 改造成本 |
+| 项目 | 可借鉴的体验 | 当前本地化现状 | 许可证 | 改造成本 |
 | --- | --- | --- | --- | --- |
-| [love-letter-website](https://github.com/qzydustin/love-letter-website) | 爱情树、飘心、打字情书、恋爱计时、本地音乐 | A：无第三方依赖，集中 `config.js` | [MIT](https://github.com/qzydustin/love-letter-website/blob/main/LICENSE) | 低 |
-| [love-pages-by-Bonn](https://github.com/AndreaBonn/love-pages-by-Bonn) | Yes/No 问答、逃跑按钮、照片留言和彩纸 | A：零 CDN、分析和 Web Font | [MIT](https://github.com/AndreaBonn/love-pages-by-Bonn/blob/main/LICENSE) | 低 |
-| [do-you-wanna-be-my-gf](https://github.com/javimelezzio/do-you-wanna-be-my-gf) | 拆信封、翻卡片、Yes 扩屏、打开情书 | A：纯 HTML/CSS/JS | [MIT](https://github.com/javimelezzio/do-you-wanna-be-my-gf/blob/main/LICENSE) | 低 |
-| [Valentines-Day-Quiz](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz) | “你有多了解我/我们”回忆测验，答对庆祝 | B：需把 canvas-confetti 本地化 | [MIT](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz/blob/main/LICENSE) | 低 |
-| [ValantineGift](https://github.com/benfooster/ValantineGift) | 接住掉落爱心，爱意槽满后解锁问题 | B：补音乐并本地化字体 | [MIT](https://github.com/benfooster/ValantineGift/blob/main/LICENSE) | 低/中 |
-| [happybirthday-asnah](https://github.com/HadeedJalani/happybirthday-asnah) | 火漆信封、情书、吹蜡烛、烟花气球、留言 | B：点击后备可离线；麦克风模式需本地服务 | [MIT](https://github.com/HadeedJalani/happybirthday-asnah/blob/main/LICENSE) | 中 |
-| [canvas-scratch-card](https://github.com/5SSS/canvas-scratch-card) | 刮开礼物、约会地点、照片或一句话 | C：组件需打包或改成普通脚本 | [MIT](https://github.com/5SSS/canvas-scratch-card/blob/master/LICENSE) | 中 |
-| [Vanilla-JavaScript-Memory-Card-Game](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game) | 用情侣照片做翻牌配对，完成后揭晓 | A：纯原生、零外链 | [MIT](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game/blob/main/LICENSE) | 低/中 |
-| [spin-wheel](https://github.com/CrazyTim/spin-wheel) | “今晚吃什么”“约会去哪”“爱的奖励”转盘 | A：已有 IIFE 发布包，零运行时依赖 | [MIT](https://github.com/CrazyTim/spin-wheel/blob/main/LICENSE.md) | 低 |
-| [js-fireworks](https://github.com/PixxxeL/js-fireworks) | 自动烟花背景与告白结尾庆祝 | A：单 Canvas 脚本 | [MIT](https://github.com/PixxxeL/js-fireworks/blob/master/LICENSE) | 低 |
-| [js-growing-tree](https://github.com/w3labkr/js-growing-tree) | 用名字或纪念日作种子，生成确定性成长树 | A：Canvas、零依赖 | [MIT](https://github.com/w3labkr/js-growing-tree/blob/master/LICENSE) | 低 |
-| [LoveDiary-Timeline](https://github.com/MoLeft/LoveDiary-Timeline) | 密码入口、恋爱秒表、照片时间线与选择互动 | C：`fetch` JSON 且 Marked 走 CDN | [MIT](https://github.com/MoLeft/LoveDiary-Timeline/blob/main/LICENSE) | 中 |
+| [love-letter-website](https://github.com/qzydustin/love-letter-website) | 爱情树、飘心、打字情书、恋爱计时、本地音乐 | 双击可用：无第三方依赖，集中 `config.js` | [MIT](https://github.com/qzydustin/love-letter-website/blob/main/LICENSE) | 低 |
+| [love-pages-by-Bonn](https://github.com/AndreaBonn/love-pages-by-Bonn) | Yes/No 问答、逃跑按钮、照片留言和彩纸 | 双击可用：零 CDN、分析和 Web Font | [MIT](https://github.com/AndreaBonn/love-pages-by-Bonn/blob/main/LICENSE) | 低 |
+| [do-you-wanna-be-my-gf](https://github.com/javimelezzio/do-you-wanna-be-my-gf) | 拆信封、翻卡片、Yes 扩屏、打开情书 | 双击可用：纯 HTML/CSS/JS | [MIT](https://github.com/javimelezzio/do-you-wanna-be-my-gf/blob/main/LICENSE) | 低 |
+| [Valentines-Day-Quiz](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz) | “你有多了解我/我们”回忆测验，答对庆祝 | 需本地化：把 canvas-confetti 保存到作品目录 | [MIT](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz/blob/main/LICENSE) | 低 |
+| [ValantineGift](https://github.com/benfooster/ValantineGift) | 接住掉落爱心，爱意槽满后解锁问题 | 需本地化：补音乐并保存字体 | [MIT](https://github.com/benfooster/ValantineGift/blob/main/LICENSE) | 低/中 |
+| [happybirthday-asnah](https://github.com/HadeedJalani/happybirthday-asnah) | 火漆信封、情书、吹蜡烛、烟花气球、留言 | 点击后备可双击；麦克风模式需 B 级本地服务 | [MIT](https://github.com/HadeedJalani/happybirthday-asnah/blob/main/LICENSE) | 中 |
+| [canvas-scratch-card](https://github.com/5SSS/canvas-scratch-card) | 刮开礼物、约会地点、照片或一句话 | 需打包：组件改成浏览器发布包后可达 A 级 | [MIT](https://github.com/5SSS/canvas-scratch-card/blob/master/LICENSE) | 中 |
+| [Vanilla-JavaScript-Memory-Card-Game](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game) | 用情侣照片做翻牌配对，完成后揭晓 | 双击可用：纯原生、零外链 | [MIT](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game/blob/main/LICENSE) | 低/中 |
+| [spin-wheel](https://github.com/CrazyTim/spin-wheel) | “今晚吃什么”“约会去哪”“爱的奖励”转盘 | 双击可用：已有 IIFE 发布包，零运行时依赖 | [MIT](https://github.com/CrazyTim/spin-wheel/blob/main/LICENSE.md) | 低 |
+| [js-fireworks](https://github.com/PixxxeL/js-fireworks) | 自动烟花背景与告白结尾庆祝 | 双击可用：单 Canvas 脚本 | [MIT](https://github.com/PixxxeL/js-fireworks/blob/master/LICENSE) | 低 |
+| [js-growing-tree](https://github.com/w3labkr/js-growing-tree) | 用名字或纪念日作种子，生成确定性成长树 | 双击可用：Canvas、零依赖 | [MIT](https://github.com/w3labkr/js-growing-tree/blob/master/LICENSE) | 低 |
+| [LoveDiary-Timeline](https://github.com/MoLeft/LoveDiary-Timeline) | 密码入口、恋爱秒表、照片时间线与选择互动 | 需本地服务和资源本地化，可改成 B 级 | [MIT](https://github.com/MoLeft/LoveDiary-Timeline/blob/main/LICENSE) | 中 |
 
 ### 推荐判断
 
@@ -88,7 +88,7 @@
 - [foryoumylove.github.io](https://github.com/zayennn/foryoumylove.github.io)：密码入口、情书、歌单、便签和花朵画廊；
 - [Love-Quest](https://github.com/SinghalAyushh/Love-Quest)：地图式五关小游戏，最终解锁情书和环形照片墙。
 
-## 适合本仓库的统一惊喜页结构
+## 适合 A 级惊喜页的统一结构
 
 ```text
 surprise-name/
@@ -103,4 +103,4 @@ surprise-name/
 └── LICENSES.md
 ```
 
-不要在运行时 `fetch()` 本地 JSON/Markdown；数据量不大时直接放在 `config.js`。前端密码只是一道仪式感入口，查看源码仍能看到文案和资源，不能当作隐私保护。
+A 级页面不要在运行时 `fetch()` 本地 JSON/Markdown；数据量不大时直接放在 `config.js`。B 级可以通过 localhost 读取本地数据，这不会造成上传。前端密码只是一道仪式感入口，查看源码仍能看到文案和资源，不能当作隐私保护。
