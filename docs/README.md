@@ -16,6 +16,7 @@
 | [08-scratch-surprise-spec.md](./08-scratch-surprise-spec.md) | A 级爱的刮刮卡的遮罩擦除、可访问降级与来源声明规格 |
 | [09-lan-connect-four-spec.md](./09-lan-connect-four-spec.md) | 首个 C 级双设备对抗作品的棋盘状态、主机权威协议与来源声明规格 |
 | [10-surprise-research.md](./10-surprise-research.md) | 41 个惊喜类许可明确/灵感候选与优先顺序 |
+| [11-date-wheel-spec.md](./11-date-wheel-spec.md) | A 级约会转盘的等概率选择、SVG 角度、配置与来源声明规格 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
