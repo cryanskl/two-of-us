@@ -12,6 +12,7 @@
 | [04-implementation-program-spec.md](./04-implementation-program-spec.md) | 统一依赖、一键启动与分批建设计划 |
 | [05-reference-and-attribution-spec.md](./05-reference-and-attribution-spec.md) | 所有参考项目的借鉴与来源声明规范 |
 | [06-together-lock-spec.md](./06-together-lock-spec.md) | 首款 C 级双设备合作作品的 brainstorm、状态机与验收标准 |
+| [07-lan-pictionary-spec.md](./07-lan-pictionary-spec.md) | 局域网你画我猜的隐藏信息协议、主机权威状态机与验收标准 |
 | [10-surprise-research.md](./10-surprise-research.md) | 41 个惊喜类许可明确/灵感候选与优先顺序 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
@@ -49,13 +50,14 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、同机你画我猜、反应力对决、同心解锁；
+- 已收录：Love Tree、慢慢打开的信、同机你画我猜、反应力对决、同心解锁、隔屏画猜；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
 - 已执行：三个无第三方运行依赖的独立 A 级样板；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
-- 下一批：局域网你画我猜与更复杂的房间状态同步；
+- 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
+- 下一批：更复杂的合作房间状态，或首个 C 级双设备对抗作品；
 - 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
 
 ## 下一轮选题时的最小输入

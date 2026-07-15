@@ -20,7 +20,15 @@ export function isCorrectGuess(guess, answer) {
   return normalizedGuess.length > 0 && normalizedGuess === normalizeGuess(answer);
 }
 
-export function startMatch({ memberIds, rounds, secondsPerRound, words, now, version = 0 }) {
+export function startMatch({
+  memberIds,
+  rounds,
+  secondsPerRound,
+  words,
+  now,
+  version = 0,
+  random = Math.random,
+}) {
   const players = uniqueIds(memberIds);
   if (players.length !== 2) throw new Error("开始比赛需要两位玩家。");
   if (!Number.isInteger(rounds) || rounds < 1) throw new Error("回合数必须是正整数。");
@@ -29,8 +37,9 @@ export function startMatch({ memberIds, rounds, secondsPerRound, words, now, ver
   }
   if (!Array.isArray(words) || words.length < rounds) throw new Error("题库数量不足。");
 
-  const selectedWords = words.slice(0, rounds).map((word) => String(word).trim());
-  if (selectedWords.some((word) => !word)) throw new Error("题目不能为空。");
+  const candidates = words.map((word) => String(word).trim());
+  if (candidates.some((word) => !word)) throw new Error("题目不能为空。");
+  const selectedWords = shuffled(candidates, random).slice(0, rounds);
 
   return {
     memberIds: players,
@@ -116,4 +125,16 @@ export function normalizeSegment(value) {
 
 function uniqueIds(memberIds) {
   return [...new Set((memberIds ?? []).map(String))];
+}
+
+function shuffled(values, random) {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const sample = Number(random());
+    if (!Number.isFinite(sample)) throw new Error("随机函数必须返回有限数字。");
+    const normalized = Math.min(Math.max(sample, 0), 1 - Number.EPSILON);
+    const target = Math.floor(normalized * (index + 1));
+    [result[index], result[target]] = [result[target], result[index]];
+  }
+  return result;
 }

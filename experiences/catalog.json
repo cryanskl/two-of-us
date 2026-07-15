@@ -54,6 +54,19 @@
       "networkRequired": false
     },
     {
+      "id": "lan-pictionary",
+      "title": "隔屏画猜",
+      "category": "co-op",
+      "level": "C",
+      "players": "2 人合作",
+      "devices": "局域网双设备",
+      "entry": "experiences/co-op/lan-pictionary/index.html",
+      "readme": "experiences/co-op/lan-pictionary/README.md",
+      "description": "秘密题目只发给画家，笔迹实时同步给猜词者，四回合轮换积累共同得分。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",

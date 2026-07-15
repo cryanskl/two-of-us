@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#142526">
+    <title>隔屏画猜 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <header class="intro">
+        <div>
+          <a class="back" href="/">← 返回体验库</a>
+          <h1>你画的，我来猜。</h1>
+          <p>两块屏幕分开秘密题目，也把每一笔实时送到对方眼前。</p>
+        </div>
+        <div class="connection" aria-live="polite">
+          <span aria-hidden="true"></span>
+          <span id="connection-text">正在连接本地房间…</span>
+        </div>
+      </header>
+
+      <section id="offline" class="panel hidden" aria-labelledby="offline-title">
+        <h2 id="offline-title">需要本地运行时</h2>
+        <p>请先双击仓库的 <code>start.command</code> 或 <code>start.bat</code>，再从门户打开这个体验。</p>
+      </section>
+
+      <section id="lobby" class="panel lobby hidden" aria-labelledby="lobby-title">
+        <div>
+          <p class="section-number">01</p>
+          <h2 id="lobby-title">先找到彼此</h2>
+          <p>一人创建房间，把五位短码告诉另一人。两台设备要连接同一个 Wi-Fi。</p>
+        </div>
+        <div class="lobby-actions">
+          <button id="create-room" class="primary" type="button">创建房间</button>
+          <form id="join-form">
+            <label for="room-code">输入五位房间码</label>
+            <div class="join-row">
+              <input id="room-code" name="room-code" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="ABCDE" required>
+              <button type="submit">加入</button>
+            </div>
+          </form>
+          <p id="lobby-error" class="error" role="alert"></p>
+        </div>
+      </section>
+
+      <section id="room" class="room hidden" aria-labelledby="room-title">
+        <div class="room-bar">
+          <div>
+            <p class="section-number">房间</p>
+            <h2 id="room-title"><span id="room-id">—</span></h2>
+          </div>
+          <div class="members" aria-label="房间成员">
+            <span id="self-member" class="member">你</span>
+            <span id="partner-member" class="member">等待同伴</span>
+          </div>
+          <button id="start-game" class="primary" type="button">开始 4 回合</button>
+        </div>
+
+        <div class="score-strip" aria-label="比赛状态">
+          <div><span>回合</span><strong id="round-count">— / 4</strong></div>
+          <div><span>共同得分</span><strong id="score">0</strong></div>
+          <div><span>剩余</span><strong id="timer">45s</strong></div>
+        </div>
+
+        <section class="game-panel" aria-labelledby="game-status">
+          <div class="game-copy">
+            <p id="role-label">等待开始</p>
+            <h2 id="game-status">两个人到齐后，由主机开始比赛。</h2>
+            <p id="game-note" aria-live="polite">每轮自动交换画家和猜词者。</p>
+          </div>
+
+          <section id="secret-card" class="secret-card hidden" aria-live="polite">
+            <span>只有你能看到的题目</span>
+            <strong id="secret-word">题目传送中…</strong>
+          </section>
+
+          <div class="canvas-shell">
+            <canvas id="drawing-canvas" aria-label="同步画板"></canvas>
+            <div id="canvas-empty" class="canvas-empty">画布会在比赛开始后启用</div>
+          </div>
+
+          <div class="game-controls">
+            <button id="clear-canvas" type="button" disabled>清空画布</button>
+            <form id="guess-form" class="guess-form hidden">
+              <label for="guess-input">你猜这是什么？</label>
+              <div>
+                <input id="guess-input" maxlength="40" autocomplete="off" placeholder="输入答案…" required>
+                <button class="primary" type="submit">提交</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

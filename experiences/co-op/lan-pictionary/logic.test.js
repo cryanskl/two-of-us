@@ -18,6 +18,7 @@ const options = {
   secondsPerRound: 45,
   words: ["热气球", "向日葵", "长颈鹿", "冰淇淋"],
   now: 1_000,
+  random: () => 1,
 };
 
 test("公开状态不包含答案、题库和截止时间，并拒绝旧版本", () => {
@@ -38,6 +39,15 @@ test("画家按回合在两位玩家之间轮换", () => {
   assert.equal(drawerForRound(["host", "guest"], 1), "guest");
   assert.equal(drawerForRound(["host", "guest"], 2), "host");
   assert.equal(drawerForRound(["host", "guest"], 3), "guest");
+});
+
+test("主机抽题不固定依赖题库前四项", () => {
+  const words = ["热气球", "向日葵", "长颈鹿", "冰淇淋", "摩天轮", "小雨伞"];
+  const originalOrder = startMatch({ ...options, words, random: () => 1 }).words;
+  const shuffledOrder = startMatch({ ...options, words, random: () => 0 }).words;
+
+  assert.deepEqual(originalOrder, words.slice(0, 4));
+  assert.notDeepEqual(shuffledOrder, originalOrder);
 });
 
 test("猜词规范化移除空格与中英文标点并忽略大小写", () => {
