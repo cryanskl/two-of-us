@@ -17,6 +17,7 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   const catalogResponse = await fetch(`${details.localUrl}api/catalog`);
   const catalog = await catalogResponse.json();
   const portalResponse = await fetch(details.localUrl);
+  const vendorResponse = await fetch(`${details.localUrl}vendor/pannellum/2.5.7/pannellum.js`);
 
   assert.equal(healthResponse.status, 200);
   assert.equal(health.ok, true);
@@ -25,6 +26,9 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   assert.equal(catalog.experiences[0].id, "love-tree");
   assert.equal(portalResponse.status, 200);
   assert.match(await portalResponse.text(), /Two of Us/);
+  assert.equal(vendorResponse.status, 200);
+  assert.match(vendorResponse.headers.get("content-type"), /^text\/javascript/);
+  assert.match(await vendorResponse.text(), /pannellum/);
 
   await runtime.stop();
   assert.equal(runtime.httpServer.listening, false);

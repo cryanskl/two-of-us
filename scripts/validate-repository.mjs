@@ -2,6 +2,7 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { resolveVendorAsset } from "../shared/runtime/vendor.js";
 
 const rootDir = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const catalogPath = path.join(rootDir, "experiences/catalog.json");
@@ -30,6 +31,15 @@ for (const experience of catalog.experiences) {
     if (reference === "/socket.io/socket.io.js" && experience.level !== "A") continue;
     const localReference = reference.split(/[?#]/, 1)[0];
     if (!localReference) continue;
+    if (localReference.startsWith("/vendor/")) {
+      const vendorPath = resolveVendorAsset(rootDir, localReference);
+      if (!vendorPath) {
+        errors.push(`${experience.id} 引用了未登记的浏览器依赖：${reference}`);
+      } else {
+        await requireFile(vendorPath, `${experience.id} 引用的浏览器依赖不存在：${reference}`);
+      }
+      continue;
+    }
     await requireFile(
       path.resolve(path.dirname(entryPath), localReference),
       `${experience.id} 引用了不存在的本地资源：${reference}`,

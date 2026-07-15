@@ -2,6 +2,7 @@ import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveVendorAsset } from "./vendor.js";
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -31,6 +32,9 @@ export function resolveStaticPath(rootDir, pathname) {
   } catch {
     return null;
   }
+
+  const vendorPath = resolveVendorAsset(rootPath, decoded);
+  if (vendorPath) return vendorPath;
 
   const relativePath = decoded === "/" ? "index.html" : decoded.replace(/^\/+/, "");
   const isPublicPath = relativePath === "index.html"

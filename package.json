@@ -14,6 +14,7 @@
     "verify": "node scripts/validate-repository.mjs"
   },
   "dependencies": {
+    "pannellum": "2.5.7",
     "qrcode": "1.5.4",
     "socket.io": "4.8.1"
   }
