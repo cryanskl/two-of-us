@@ -36,6 +36,7 @@
 - [C 级连心四子棋规格](./docs/09-lan-connect-four-spec.md)
 - [A 级约会转盘规格](./docs/11-date-wheel-spec.md)
 - [C 级密封猜拳规格](./docs/12-sealed-rps-spec.md)
+- [B 级全景回忆规格](./docs/13-panorama-memory-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
