@@ -138,3 +138,14 @@ experiences/versus/sealed-rps/
 - Chrome 控制台无 warning/error，Network 无公网请求；
 - `npm test`、`npm run verify` 与 `git diff --check` 通过；
 - README 包含完整来源声明和信任边界。
+
+## 10. 分阶段进度
+
+### 2026-07-15：共享密封裁判已完成
+
+- 新增 `shared/runtime/sealed-rounds.js` 与 6 组定向测试；
+- `room:sealed-submit` 已接入共享 Socket.IO 服务，结果只定向发送给冻结的两名参与者；
+- 全仓 51 项测试通过，仓库 9 个现有作品校验通过；
+- Chrome 两个真实 Socket.IO 客户端验证：第一份 acknowledgment 不含秘密且两端无结果事件；第二份提交后两端各收到一次相同结果，控制台为空；
+- 独立提交：`b27fd09 feat: add sealed room rounds`；
+- 猜拳页面、比赛状态机、三端/移动端完整验收仍待下一阶段完成，本规格尚未整体验收结束。
