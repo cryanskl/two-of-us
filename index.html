@@ -3,13 +3,344 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="0; url=./experiences/surprises/love-tree/index.html">
-    <title>Two of Us</title>
+    <meta name="color-scheme" content="light">
+    <title>Two of Us · 两个人的本地游乐场</title>
+    <style>
+      :root {
+        color: #302b2d;
+        background: #f6f1eb;
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-synthesis: none;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(255, 173, 185, .3), transparent 31rem),
+          radial-gradient(circle at 90% 28%, rgba(244, 207, 139, .32), transparent 27rem),
+          #f6f1eb;
+      }
+
+      button, a { font: inherit; }
+
+      .shell {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 56px 0 72px;
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: #a14c5e;
+        font-size: .76rem;
+        font-weight: 750;
+        letter-spacing: .17em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 800px;
+        margin: 0;
+        font-family: Georgia, "Songti SC", serif;
+        font-size: clamp(3rem, 8vw, 6.7rem);
+        font-weight: 500;
+        letter-spacing: -.055em;
+        line-height: .92;
+      }
+
+      .intro {
+        max-width: 620px;
+        margin: 28px 0 34px;
+        color: #625a5d;
+        font-size: 1.06rem;
+        line-height: 1.75;
+      }
+
+      .runtime {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: center;
+        margin: 0 0 54px;
+        padding: 22px 24px;
+        border: 1px solid rgba(84, 67, 70, .12);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, .66);
+        box-shadow: 0 22px 50px rgba(73, 51, 48, .07);
+        backdrop-filter: blur(14px);
+      }
+
+      .status-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 7px;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #d29c4c;
+        box-shadow: 0 0 0 5px rgba(210, 156, 76, .13);
+      }
+
+      .status-dot.online {
+        background: #428a69;
+        box-shadow: 0 0 0 5px rgba(66, 138, 105, .13);
+      }
+
+      #runtime-title { font-weight: 760; }
+      #runtime-copy { margin: 0; color: #776e71; font-size: .91rem; line-height: 1.55; }
+
+      #qr {
+        display: none;
+        width: 96px;
+        height: 96px;
+        border: 6px solid white;
+        border-radius: 12px;
+        background: white;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: end;
+        margin-bottom: 20px;
+      }
+
+      h2 { margin: 0; font: 500 1.9rem/1.2 Georgia, "Songti SC", serif; }
+      #count { color: #83797c; font-size: .88rem; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        display: flex;
+        min-height: 275px;
+        flex-direction: column;
+        padding: 26px;
+        border: 1px solid rgba(84, 67, 70, .13);
+        border-radius: 26px;
+        background: rgba(255, 253, 250, .82);
+        box-shadow: 0 16px 42px rgba(74, 55, 53, .06);
+      }
+
+      .meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+      .pill {
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #f2e6df;
+        color: #874858;
+        font-size: .74rem;
+        font-weight: 730;
+      }
+
+      .card h3 { margin: 25px 0 10px; font-size: 1.5rem; }
+      .card p { margin: 0; color: #6c6366; line-height: 1.65; }
+
+      .details {
+        margin: 17px 0 24px;
+        color: #887f81;
+        font-size: .82rem;
+      }
+
+      .open {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 46px;
+        margin-top: auto;
+        border-radius: 14px;
+        color: white;
+        background: #3e3437;
+        text-decoration: none;
+        transition: transform .18s ease, background .18s ease;
+      }
+
+      .open:hover { transform: translateY(-2px); background: #a14c5e; }
+
+      footer {
+        margin-top: 44px;
+        color: #8b8184;
+        font-size: .82rem;
+        line-height: 1.65;
+      }
+
+      @media (max-width: 640px) {
+        .shell { width: min(100% - 28px, 1120px); padding-top: 38px; }
+        .runtime { grid-template-columns: 1fr; }
+        #qr { width: 116px; height: 116px; }
+      }
+    </style>
   </head>
   <body>
-    <p>
-      正在打开 Love Tree……
-      <a href="./experiences/surprises/love-tree/index.html">如果没有自动跳转，请点这里</a>。
-    </p>
+    <main class="shell">
+      <p class="eyebrow">Private by default · Local first</p>
+      <h1>Two<br>of Us</h1>
+      <p class="intro">
+        给两个人的本地游乐场。惊喜、合作与对抗体验都留在自己的设备上；安装一次，此后从这里直接打开。
+      </p>
+
+      <section class="runtime" aria-live="polite">
+        <div>
+          <div class="status-line">
+            <span id="status-dot" class="status-dot"></span>
+            <span id="runtime-title">A 级离线门户</span>
+          </div>
+          <p id="runtime-copy">当前通过文件直接打开。A 级作品可以使用；运行 start.command / start.bat 后可启用本地房间和局域网入口。</p>
+        </div>
+        <img id="qr" alt="同一局域网的加入二维码">
+      </section>
+
+      <section aria-labelledby="experiences-heading">
+        <div class="section-head">
+          <h2 id="experiences-heading">现在想做什么？</h2>
+          <span id="count">1 个体验</span>
+        </div>
+        <div id="experiences" class="grid"></div>
+      </section>
+
+      <footer>
+        A：双击 HTML · B：本地服务 · C：局域网双设备 · D：本地重型能力<br>
+        门户与作品默认不上传私人内容；只有明确标注的异地玩法才会使用公网。
+      </footer>
+    </main>
+
+    <script id="fallback-catalog" type="application/json">
+      {
+        "schemaVersion": 1,
+        "experiences": [
+          {
+            "id": "love-tree",
+            "title": "Love Tree",
+            "category": "surprise",
+            "level": "A",
+            "players": "1 人制作，1 人观看",
+            "devices": "单设备",
+            "entry": "experiences/surprises/love-tree/index.html",
+            "description": "点击爱心，让一棵树生长开花，并展示情书与相爱时间。",
+            "installed": true
+          },
+          {
+            "id": "memory-letter",
+            "title": "一封慢慢打开的信",
+            "category": "surprise",
+            "level": "A",
+            "players": "1 人制作，1 人观看",
+            "devices": "单设备",
+            "entry": "experiences/surprises/memory-letter/index.html",
+            "description": "拆开信封，依次翻阅三段回忆，最后送出一份约会邀请。",
+            "installed": true
+          },
+          {
+            "id": "hot-seat-pictionary",
+            "title": "同机你画我猜",
+            "category": "co-op",
+            "level": "A",
+            "players": "2 人合作",
+            "devices": "单设备轮流",
+            "entry": "experiences/co-op/hot-seat-pictionary/index.html",
+            "description": "轮流看词、遮挡交接、画画和猜词，用六轮积累共同得分。",
+            "installed": true
+          },
+          {
+            "id": "reaction-duel",
+            "title": "反应力对决",
+            "category": "versus",
+            "level": "A",
+            "players": "2 人对抗",
+            "devices": "单设备同屏",
+            "entry": "experiences/versus/reaction-duel/index.html",
+            "description": "等待绿色信号后抢按；抢跑会送分给对方，先得两分获胜。",
+            "installed": true
+          }
+        ]
+      }
+    </script>
+    <script>
+      const categoryNames = {
+        surprise: "惊喜",
+        "co-op": "合作",
+        versus: "对抗"
+      };
+      const fallbackCatalog = JSON.parse(document.querySelector("#fallback-catalog").textContent);
+
+      renderCatalog(fallbackCatalog);
+      if (location.protocol === "http:" || location.protocol === "https:") connectRuntime();
+
+      async function connectRuntime() {
+        try {
+          const [healthResponse, catalogResponse] = await Promise.all([
+            fetch("/api/health", { cache: "no-store" }),
+            fetch("/api/catalog", { cache: "no-store" })
+          ]);
+          if (!healthResponse.ok || !catalogResponse.ok) throw new Error("runtime unavailable");
+
+          const [health, catalog] = await Promise.all([healthResponse.json(), catalogResponse.json()]);
+          renderCatalog(catalog);
+          document.querySelector("#status-dot").classList.add("online");
+          document.querySelector("#runtime-title").textContent = "本地运行时已就绪";
+          const networkCopy = health.networkUrls.length
+            ? `局域网入口：${health.joinUrl}`
+            : "当前只有本机入口，A/B 级体验可以正常使用。";
+          document.querySelector("#runtime-copy").textContent = `${networkCopy} · Node.js ${health.node}`;
+          const qr = document.querySelector("#qr");
+          qr.src = health.qrDataUrl;
+          qr.style.display = "block";
+        } catch {
+          document.querySelector("#runtime-title").textContent = "本地运行时未响应";
+          document.querySelector("#runtime-copy").textContent = "请关闭此页面后重新双击 start.command / start.bat。A 级作品仍可从下方直接打开。";
+        }
+      }
+
+      function renderCatalog(catalog) {
+        const container = document.querySelector("#experiences");
+        container.replaceChildren(...catalog.experiences.map(createCard));
+        document.querySelector("#count").textContent = `${catalog.experiences.length} 个体验`;
+      }
+
+      function createCard(item) {
+        const article = document.createElement("article");
+        article.className = "card";
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.append(createPill(categoryNames[item.category] ?? item.category));
+        meta.append(createPill(`${item.level} 级`));
+        meta.append(createPill(item.installed ? "已安装" : "未安装"));
+
+        const title = document.createElement("h3");
+        title.textContent = item.title;
+        const description = document.createElement("p");
+        description.textContent = item.description;
+        const details = document.createElement("p");
+        details.className = "details";
+        details.textContent = `${item.players} · ${item.devices}`;
+        const link = document.createElement("a");
+        link.className = "open";
+        link.href = new URL(item.entry, location.href).href;
+        link.textContent = "打开体验";
+
+        article.append(meta, title, description, details, link);
+        return article;
+      }
+
+      function createPill(text) {
+        const pill = document.createElement("span");
+        pill.className = "pill";
+        pill.textContent = text;
+        return pill;
+      }
+    </script>
   </body>
 </html>

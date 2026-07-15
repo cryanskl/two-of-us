@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>同机你画我猜</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="kicker">CO-OP · HOT SEAT</p>
+          <h1>你画，我猜，我们一起赢</h1>
+        </div>
+        <div class="score" aria-live="polite"><span id="score">0</span><small>共同得分</small></div>
+      </header>
+
+      <section class="panel" id="welcome">
+        <p class="round-label">单设备轮流模式</p>
+        <h2>六轮里，你们能连续猜对多少题？</h2>
+        <ol>
+          <li>画的人单独查看题目。</li>
+          <li>隐藏题目，把设备交给猜的人。</li>
+          <li>画画和猜词可以同时进行。</li>
+        </ol>
+        <button class="primary" id="start-game" type="button">开始合作</button>
+      </section>
+
+      <section class="panel hidden" id="handoff" aria-live="polite">
+        <p class="round-label" id="round-label"></p>
+        <h2 id="drawer-label"></h2>
+        <p id="handoff-copy">请让画的人拿好设备，另一位先移开视线。</p>
+        <button class="primary" id="reveal-word" type="button">我准备好了，显示题目</button>
+        <div class="secret hidden" id="secret">
+          <span>你要画的是</span>
+          <strong id="secret-word"></strong>
+          <button class="primary" id="hide-word" type="button">记住了，隐藏并交给对方</button>
+        </div>
+      </section>
+
+      <section class="game hidden" id="game" aria-live="polite">
+        <div class="gamebar">
+          <div><small>画画的人</small><strong id="active-drawer"></strong></div>
+          <div class="timer"><span id="timer">50</span><small>秒</small></div>
+          <button class="ghost" id="clear-canvas" type="button">清空画布</button>
+        </div>
+        <canvas id="canvas" aria-label="绘画画布"></canvas>
+        <form class="guess" id="guess-form">
+          <label for="guess-input">猜的人输入答案</label>
+          <div>
+            <input id="guess-input" autocomplete="off" placeholder="输入你猜到的词" />
+            <button class="primary" type="submit">提交</button>
+          </div>
+          <p id="guess-feedback" aria-live="assertive"></p>
+        </form>
+        <button class="text-button" id="skip-round" type="button">这题先跳过</button>
+      </section>
+
+      <section class="panel hidden" id="result" aria-live="polite">
+        <p class="round-label">合作完成</p>
+        <h2 id="result-title"></h2>
+        <p id="result-copy"></p>
+        <button class="primary" id="restart" type="button">再来六轮</button>
+      </section>
+    </main>
+  </body>
+</html>

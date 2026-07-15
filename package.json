@@ -1,0 +1,20 @@
+{
+  "name": "two-of-us",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first runtime for the Two of Us experience collection",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "start": "node scripts/start.mjs",
+    "test": "node --test",
+    "verify": "node scripts/validate-repository.mjs"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4",
+    "socket.io": "4.8.1"
+  }
+}

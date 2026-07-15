@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "experiences": [
+    {
+      "id": "love-tree",
+      "title": "Love Tree",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人制作，1 人观看",
+      "devices": "单设备",
+      "entry": "experiences/surprises/love-tree/index.html",
+      "readme": "experiences/surprises/love-tree/README.md",
+      "description": "点击爱心，让一棵树生长开花，并展示情书与相爱时间。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
+      "id": "memory-letter",
+      "title": "一封慢慢打开的信",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人制作，1 人观看",
+      "devices": "单设备",
+      "entry": "experiences/surprises/memory-letter/index.html",
+      "readme": "experiences/surprises/memory-letter/README.md",
+      "description": "拆开信封，依次翻阅三段回忆，最后送出一份约会邀请。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
+      "id": "hot-seat-pictionary",
+      "title": "同机你画我猜",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备轮流",
+      "entry": "experiences/co-op/hot-seat-pictionary/index.html",
+      "readme": "experiences/co-op/hot-seat-pictionary/README.md",
+      "description": "轮流看词、遮挡交接、画画和猜词，用六轮积累共同得分。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
+      "id": "reaction-duel",
+      "title": "反应力对决",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备同屏",
+      "entry": "experiences/versus/reaction-duel/index.html",
+      "readme": "experiences/versus/reaction-duel/README.md",
+      "description": "等待绿色信号后抢按；抢跑会送分给对方，先得两分获胜。",
+      "installed": true,
+      "networkRequired": false
+    }
+  ]
+}

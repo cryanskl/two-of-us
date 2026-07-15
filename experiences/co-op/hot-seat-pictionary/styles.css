@@ -1,0 +1,51 @@
+:root {
+  --ink: #1f2a2b;
+  --muted: #607173;
+  --mint: #b9e3d5;
+  --deep: #176b63;
+  --coral: #ff7f68;
+  --paper: #fffef8;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; color: var(--ink); background: #eef4ef; }
+button, input { font: inherit; }
+.app { width: min(1000px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 54px; }
+.topbar { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
+.kicker, .round-label { margin: 0 0 8px; color: var(--deep); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+h1 { margin: 0; max-width: 650px; font-size: clamp(2rem, 5vw, 4.5rem); line-height: 0.98; letter-spacing: -0.05em; }
+h2 { margin: 8px 0 20px; font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.15; }
+.score { min-width: 112px; padding: 14px; border: 2px solid var(--ink); background: var(--mint); text-align: center; box-shadow: 5px 5px 0 var(--ink); }
+.score span { display: block; font-size: 2.2rem; font-weight: 900; line-height: 1; }
+.score small { font-size: 0.75rem; }
+.panel, .game { padding: clamp(24px, 5vw, 52px); border: 2px solid var(--ink); background: var(--paper); box-shadow: 8px 8px 0 var(--ink); }
+.panel ol { max-width: 580px; margin: 24px 0 30px; padding-left: 22px; color: var(--muted); line-height: 1.8; }
+.hidden { display: none !important; }
+.primary, .ghost { min-height: 48px; border: 2px solid var(--ink); cursor: pointer; font-weight: 800; }
+.primary { padding: 11px 20px; color: white; background: var(--deep); box-shadow: 4px 4px 0 var(--ink); }
+.primary:hover, .primary:focus-visible { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); outline: none; }
+.ghost { padding: 9px 16px; color: var(--ink); background: transparent; }
+.secret { margin-top: 26px; padding: 24px; border: 2px dashed var(--deep); background: #e8f7f0; }
+.secret span { display: block; color: var(--muted); }
+.secret strong { display: block; margin: 10px 0 22px; color: var(--deep); font-size: clamp(2.6rem, 9vw, 5.6rem); letter-spacing: 0.08em; }
+.gamebar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.gamebar small { display: block; color: var(--muted); }
+.gamebar strong { font-size: 1.3rem; }
+.timer { display: flex; align-items: baseline; gap: 4px; color: var(--coral); }
+.timer span { font-size: 2.3rem; font-weight: 900; }
+canvas { display: block; width: 100%; height: min(54vh, 500px); border: 2px solid var(--ink); background: white; cursor: crosshair; touch-action: none; }
+.guess { margin-top: 22px; }
+.guess label { display: block; margin-bottom: 8px; font-weight: 800; }
+.guess > div { display: flex; gap: 10px; }
+.guess input { flex: 1; min-width: 0; min-height: 48px; padding: 10px 14px; border: 2px solid var(--ink); background: white; }
+.guess p { min-height: 24px; margin: 10px 0 0; color: var(--deep); font-weight: 700; }
+.text-button { display: block; margin: 14px auto 0; border: 0; color: var(--muted); background: transparent; text-decoration: underline; cursor: pointer; }
+@media (max-width: 650px) {
+  .topbar { align-items: start; }
+  .score { min-width: 88px; }
+  .game, .panel { padding: 22px 16px; box-shadow: 5px 5px 0 var(--ink); }
+  .gamebar { flex-wrap: wrap; }
+  .guess > div { flex-direction: column; }
+  .guess .primary { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

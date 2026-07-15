@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>反应力对决</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="arena" id="arena">
+      <header>
+        <p>VERSUS · BEST OF THREE</p>
+        <h1>别急。等它变绿。</h1>
+      </header>
+
+      <section class="scoreboard" aria-label="比分">
+        <div><span>A 玩家</span><strong id="score-a">0</strong><small>按 A / 左侧</small></div>
+        <div class="round"><span>回合</span><strong id="round">0</strong><small>先得 2 分获胜</small></div>
+        <div><span>B 玩家</span><strong id="score-b">0</strong><small>按 L / 右侧</small></div>
+      </section>
+
+      <section class="signal signal--idle" id="signal" aria-live="assertive">
+        <span id="signal-label">准备好了吗？</span>
+        <strong id="signal-detail">开始后不要抢跑</strong>
+      </section>
+
+      <section class="controls">
+        <button class="player player--a" id="player-a" type="button"><span>A 玩家</span><strong>拍这里</strong><small>键盘 A</small></button>
+        <button class="player player--b" id="player-b" type="button"><span>B 玩家</span><strong>拍这里</strong><small>键盘 L</small></button>
+      </section>
+
+      <button class="start" id="start" type="button">开始第一回合</button>
+      <p class="tip">信号变绿后最快按下的人得分；提前按下，分数送给对方。</p>
+    </main>
+  </body>
+</html>

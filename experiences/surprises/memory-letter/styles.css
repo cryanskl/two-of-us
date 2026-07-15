@@ -1,0 +1,116 @@
+:root {
+  --ink: #3d2f35;
+  --muted: #806c74;
+  --rose: #c85c75;
+  --rose-dark: #8f334c;
+  --paper: #fffaf3;
+  --cream: #f3e7da;
+  --shadow: 0 24px 70px rgba(78, 45, 57, 0.16);
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.8), transparent 25rem),
+    linear-gradient(145deg, #ead6d8 0%, #f6ecdf 48%, #d9c5c9 100%);
+}
+
+button { font: inherit; }
+
+.stage {
+  width: min(760px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  padding: 40px 0;
+}
+
+.intro, .letter, .finale { width: 100%; text-align: center; }
+.hidden { display: none; }
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--rose-dark);
+  font: 700 0.72rem/1.4 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.2em;
+}
+
+h1 { margin: 0 auto 36px; max-width: 620px; font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.08; font-weight: 500; }
+h2 { margin: 0 0 20px; font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 500; line-height: 1.2; }
+h3 { margin: 8px 0 12px; font-size: clamp(1.35rem, 3vw, 1.9rem); }
+
+.hint { margin-top: 28px; color: var(--muted); font: 0.9rem/1.6 ui-sans-serif, system-ui, sans-serif; }
+
+.envelope {
+  position: relative;
+  display: block;
+  width: min(360px, 86vw);
+  height: 230px;
+  margin: 0 auto;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 22px 28px rgba(83, 44, 58, 0.22));
+  transition: transform 180ms ease;
+}
+.envelope:hover, .envelope:focus-visible { transform: translateY(-6px) rotate(-1deg); outline: none; }
+.envelope__back, .envelope__front, .envelope__paper { position: absolute; inset: 0; border-radius: 6px; }
+.envelope__back { background: #d797a5; }
+.envelope__paper { inset: 24px 24px 54px; display: grid; place-items: center; color: var(--rose-dark); background: var(--paper); font-size: 1.15rem; }
+.envelope__front { clip-path: polygon(0 16%, 50% 62%, 100% 16%, 100% 100%, 0 100%); background: #e4a9b5; }
+.envelope__seal { position: absolute; left: 50%; top: 52%; width: 48px; height: 48px; display: grid; place-items: center; transform: translate(-50%, -50%); border-radius: 50%; color: white; background: var(--rose-dark); font-size: 1.5rem; box-shadow: 0 4px 10px rgba(80, 20, 40, 0.25); }
+
+.paper {
+  width: min(680px, 100%);
+  margin: 0 auto;
+  padding: clamp(30px, 7vw, 68px);
+  border: 1px solid rgba(102, 70, 79, 0.12);
+  border-radius: 3px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+.opening, .memory p, .invitation { font-size: clamp(1rem, 2.4vw, 1.18rem); line-height: 1.9; }
+.memory { min-height: 230px; margin: 34px 0 24px; padding: 26px; border: 1px solid rgba(143, 51, 76, 0.18); background: rgba(243, 231, 218, 0.48); }
+.memory__symbol { float: right; color: var(--rose); font-size: 3rem; line-height: 1; }
+.memory__date { margin: 0; color: var(--rose-dark); font: 700 0.75rem/1.4 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.1em; }
+.progress { display: flex; gap: 8px; margin-bottom: 24px; }
+.progress span { width: 34px; height: 3px; background: #dfd2cc; }
+.progress span.active { background: var(--rose); }
+
+.primary {
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--rose-dark);
+  cursor: pointer;
+  font: 700 0.95rem/1.2 ui-sans-serif, system-ui, sans-serif;
+}
+.primary:hover, .primary:focus-visible { background: #70243a; outline: 3px solid rgba(143, 51, 76, 0.2); }
+.paper--final { text-align: center; }
+.invitation { margin: 30px auto; max-width: 500px; }
+.signature { margin: 32px 0 10px; color: var(--muted); font-style: italic; }
+.text-button { border: 0; color: var(--rose-dark); background: transparent; text-decoration: underline; cursor: pointer; }
+
+.celebration { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.heart { position: absolute; bottom: -30px; color: var(--rose); animation: float-up 2.6s ease-out forwards; }
+@keyframes float-up { to { transform: translateY(-110vh) rotate(28deg); opacity: 0; } }
+
+@media (max-width: 560px) {
+  .stage { padding: 24px 0; }
+  .paper { padding: 28px 22px; }
+  .memory { min-height: 270px; padding: 22px 18px; }
+  .primary { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

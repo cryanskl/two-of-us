@@ -4,7 +4,13 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可进入当前已收录的 [Love Tree](./experiences/surprises/love-tree/index.html)。它属于 A 级：纯静态页面，不需要安装依赖或启动服务器。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 4 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。
+
+如果要启用局域网二维码和后续 C 级双设备房间：
+
+1. 首次双击 macOS 的 `setup.command` 或 Windows 的 `setup.bat`；
+2. 以后双击 `start.command` 或 `start.bat`，门户会自动在浏览器打开；
+3. 同一 Wi-Fi 的另一台设备扫描门户二维码加入。
 
 > 浏览器通常会限制自动播放音乐。如果页面没有声音，请先点击页面中央的爱心，再检查浏览器的音频权限。
 
@@ -12,9 +18,9 @@
 
 | 分类 | 目录 | 用途 | 当前状态 |
 | --- | --- | --- | --- |
-| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | 已收录 Love Tree |
-| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 等待实现 |
-| 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 等待实现 |
+| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信 |
+| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜 |
+| 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决 |
 
 ## 文档
 
@@ -29,6 +35,7 @@
 - [双人对抗类调研](./docs/30-versus-research.md)
 - [创意池与实现路线](./docs/40-idea-backlog.md)
 - [第三方引入与许可证指南](./docs/50-license-and-import-guide.md)
+- [第二轮本地优先全量调研](./docs/60-local-first-second-pass-research.md)
 - [Bug 与解决方案](./bugs/README.md)
 - [可复用学习笔记](./learn/README.md)
 
@@ -57,11 +64,16 @@
 
 ```text
 two-of-us/
-├── index.html                  # 兼容入口，当前直达 Love Tree
+├── index.html                  # A 级直开 / B-C 级服务共用门户
+├── setup.command / setup.bat   # 首次统一安装
+├── start.command / start.bat   # 此后双击启动本地服务
 ├── experiences/
 │   ├── surprises/             # 单人惊喜
 │   ├── co-op/                 # 双人合作
 │   └── versus/                # 双人对抗
+├── shared/runtime/             # 本地门户、房间协议、二维码
+├── bugs/                       # 已复现问题与解决方案
+├── learn/                      # 可复用的实现经验
 ├── docs/                       # 分类规范、调研和实现路线
 └── archive/                    # 原始压缩包与历史配置
 ```

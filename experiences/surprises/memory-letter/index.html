@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>一封慢慢打开的信</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="stage">
+      <section class="intro" id="intro" aria-labelledby="intro-title">
+        <p class="eyebrow">A LITTLE LETTER FOR YOU</p>
+        <h1 id="intro-title">有一封信，想请你亲手打开</h1>
+        <button class="envelope" id="open-letter" type="button" aria-label="打开信封">
+          <span class="envelope__back"></span>
+          <span class="envelope__paper">点击拆信</span>
+          <span class="envelope__front"></span>
+          <span class="envelope__seal">♡</span>
+        </button>
+        <p class="hint">建议把声音关小一点，把时间留慢一点。</p>
+      </section>
+
+      <section class="letter hidden" id="letter" aria-live="polite">
+        <div class="paper">
+          <p class="eyebrow" id="recipient"></p>
+          <h2>我想把几段记忆交给你</h2>
+          <p class="opening" id="opening"></p>
+          <div class="memory" id="memory">
+            <span class="memory__symbol" id="memory-symbol" aria-hidden="true"></span>
+            <p class="memory__date" id="memory-date"></p>
+            <h3 id="memory-title"></h3>
+            <p id="memory-text"></p>
+          </div>
+          <div class="progress" id="progress" aria-label="回忆进度"></div>
+          <button class="primary" id="next-memory" type="button">继续往下读</button>
+        </div>
+      </section>
+
+      <section class="finale hidden" id="finale" aria-live="polite">
+        <div class="paper paper--final">
+          <p class="eyebrow">ONE MORE THING</p>
+          <h2 id="closing"></h2>
+          <p class="invitation" id="invitation"></p>
+          <button class="primary" id="accept" type="button"></button>
+          <p class="signature" id="signature"></p>
+          <button class="text-button" id="replay" type="button">再读一次</button>
+        </div>
+      </section>
+    </main>
+    <div class="celebration" id="celebration" aria-hidden="true"></div>
+  </body>
+</html>
