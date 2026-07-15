@@ -14,6 +14,7 @@
 | [06-together-lock-spec.md](./06-together-lock-spec.md) | 首款 C 级双设备合作作品的 brainstorm、状态机与验收标准 |
 | [07-lan-pictionary-spec.md](./07-lan-pictionary-spec.md) | 局域网你画我猜的隐藏信息协议、主机权威状态机与验收标准 |
 | [08-scratch-surprise-spec.md](./08-scratch-surprise-spec.md) | A 级爱的刮刮卡的遮罩擦除、可访问降级与来源声明规格 |
+| [09-lan-connect-four-spec.md](./09-lan-connect-four-spec.md) | 首个 C 级双设备对抗作品的棋盘状态、主机权威协议与来源声明规格 |
 | [10-surprise-research.md](./10-surprise-research.md) | 41 个惊喜类许可明确/灵感候选与优先顺序 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
