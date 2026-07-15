@@ -41,6 +41,19 @@
       "networkRequired": false
     },
     {
+      "id": "date-wheel",
+      "title": "今晚做什么",
+      "category": "surprise",
+      "level": "A",
+      "players": "1–2 人",
+      "devices": "单设备",
+      "entry": "experiences/surprises/date-wheel/index.html",
+      "readme": "experiences/surprises/date-wheel/README.md",
+      "description": "转动一只可定制的等概率约会转盘，让今晚的安排交给命运决定。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

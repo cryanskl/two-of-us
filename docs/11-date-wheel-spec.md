@@ -118,3 +118,13 @@ experiences/surprises/date-wheel/
 - Chrome 控制台无 warning/error，页面无公网请求；
 - `npm test`、`npm run verify` 与 `git diff --check` 通过；
 - README 包含完整“借鉴与来源声明”。
+
+## 11. 2026-07-15 实现与验收结果
+
+- 已实现 6 项默认候选、2–12 项配置清洗、原生 SVG 扇区、32 位随机索引、目标角计算、旋转门控与重复抽取；
+- 5 项纯逻辑测试覆盖配置边界、随机首尾、索引区间、扇区等分、指针对齐与累计整圈；
+- Chrome 键盘 Enter 可启动，旋转中按钮禁用，正常动画结束后只结算一次；
+- Chrome reduced-motion 在短路径完成同一随机与结果流程，不依赖长动画；
+- 390×844 下 SVG 宽 328px、无横向溢出，结果卡与候选清晰可读；
+- 页面资源仅包含本地 `styles.css`、`config.js`、`logic.js`、`app.js`，门户显示 9 个作品，控制台无 warning/error；
+- `npm test`、`npm run verify`、脚本语法检查与 `git diff --check` 在提交前再次执行。

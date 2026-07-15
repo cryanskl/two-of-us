@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>今晚做什么 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <a class="back" href="../../../index.html">← 返回体验库</a>
+      <header>
+        <p id="eyebrow" class="eyebrow">TONIGHT, LET FATE DECIDE</p>
+        <h1 id="title">今晚做什么？</h1>
+        <p id="instruction" class="lead">把想一起完成的小事放进转盘，让今晚少一点纠结，多一点期待。</p>
+      </header>
+
+      <section class="experience" aria-labelledby="wheel-title">
+        <div class="wheel-side">
+          <h2 id="wheel-title" class="sr-only">约会转盘</h2>
+          <div class="wheel-wrap">
+            <span class="pointer" aria-hidden="true"></span>
+            <svg id="wheel" viewBox="0 0 400 400" role="img" aria-label="约会候选转盘">
+              <g id="wheel-group"></g>
+              <circle cx="200" cy="200" r="35" class="hub"></circle>
+              <circle cx="200" cy="200" r="8" class="hub-dot"></circle>
+            </svg>
+          </div>
+          <button id="spin-button" type="button">转一次</button>
+        </div>
+
+        <div class="copy-side">
+          <p class="list-label">今晚的候选</p>
+          <ul id="item-list">
+            <li>散步买甜品</li><li>一起看电影</li><li>去吃新店</li><li>做顿晚饭</li>
+          </ul>
+          <article id="result" class="result" aria-live="polite">
+            <p id="result-prefix">等你来转动</p>
+            <h2 id="result-label">今晚的答案会停在这里</h2>
+            <p id="result-detail">每个候选的机会都一样，也可能连续抽中同一个。</p>
+          </article>
+          <p id="config-error" class="error" role="alert"></p>
+        </div>
+      </section>
+    </main>
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

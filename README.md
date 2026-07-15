@@ -4,7 +4,7 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 5 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示“同心解锁”“隔屏画猜”和“连心四子棋”三个 C 级作品，启动本地服务后即可双设备游玩。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 6 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示“同心解锁”“隔屏画猜”和“连心四子棋”三个 C 级作品，启动本地服务后即可双设备游玩。
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
@@ -18,7 +18,7 @@
 
 | 分类 | 目录 | 用途 | 当前状态 |
 | --- | --- | --- | --- |
-| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡 |
+| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么 |
 | 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、同心解锁、隔屏画猜 |
 | 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决、连心四子棋 |
 
@@ -34,6 +34,7 @@
 - [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
 - [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)
 - [C 级连心四子棋规格](./docs/09-lan-connect-four-spec.md)
+- [A 级约会转盘规格](./docs/11-date-wheel-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
