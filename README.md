@@ -38,6 +38,7 @@
 - [C 级密封猜拳规格](./docs/12-sealed-rps-spec.md)
 - [B 级全景回忆规格](./docs/13-panorama-memory-spec.md)
 - [B 级全景回忆验收记录](./docs/14-panorama-memory-verification.md)
+- [A 级私人照片交换拼图规格](./docs/15-photo-swap-puzzle-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)

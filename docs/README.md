@@ -20,6 +20,7 @@
 | [12-sealed-rps-spec.md](./12-sealed-rps-spec.md) | C 级密封猜拳的可信本机裁判、秘密提交、同步揭晓与信任边界规格 |
 | [13-panorama-memory-spec.md](./13-panorama-memory-spec.md) | 首个 B 级全景回忆作品的本地 vendor、私人照片、对象 URL 与 WebGL 生命周期规格 |
 | [14-panorama-memory-verification.md](./14-panorama-memory-verification.md) | 全景回忆的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
+| [15-photo-swap-puzzle-spec.md](./15-photo-swap-puzzle-spec.md) | A 级私人照片交换拼图的文件导入、中心裁切、排列状态机与 blob 生命周期规格 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
