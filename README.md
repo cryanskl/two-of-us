@@ -32,6 +32,7 @@
 - [借鉴与来源声明规范](./docs/05-reference-and-attribution-spec.md)
 - [C 级首款作品规格：同心解锁](./docs/06-together-lock-spec.md)
 - [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
+- [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
