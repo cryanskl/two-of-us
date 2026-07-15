@@ -11,6 +11,7 @@ import {
   normalizeRoomId,
 } from "./rooms.js";
 import { serveStatic } from "./static.js";
+import { SealedRoundRegistry } from "./sealed-rounds.js";
 
 const defaultHost = "0.0.0.0";
 
@@ -22,6 +23,7 @@ export async function createRuntimeServer({
 } = {}) {
   const catalog = await loadCatalog(rootDir);
   const rooms = new RoomRegistry();
+  const sealedRounds = new SealedRoundRegistry();
   let runtimeDetails = null;
 
   const httpServer = createServer(async (request, response) => {
@@ -60,11 +62,12 @@ export async function createRuntimeServer({
     maxHttpBufferSize: 100_000,
     cors: false,
   });
-  registerRoomProtocol(io, rooms);
+  registerRoomProtocol(io, rooms, sealedRounds);
 
   return {
     catalog,
     rooms,
+    sealedRounds,
     httpServer,
     io,
     async start() {
@@ -92,7 +95,7 @@ export async function createRuntimeServer({
   };
 }
 
-export function registerRoomProtocol(io, rooms) {
+export function registerRoomProtocol(io, rooms, sealedRounds = new SealedRoundRegistry()) {
   io.on("connection", (socket) => {
     socket.on("room:create", async (payload = {}, callback) => {
       const reply = acknowledge(callback);
@@ -126,6 +129,7 @@ export function registerRoomProtocol(io, rooms) {
           throw new RoomError("NOT_A_MEMBER", "你不在这个房间中。");
         }
         const state = rooms.leave(roomId, socket.id);
+        sealedRounds.clearRoom(roomId);
         await socket.leave(roomChannel(roomId));
         reply({ ok: true, room: state });
         if (state) io.to(roomChannel(roomId)).emit("room:state", state);
@@ -164,8 +168,30 @@ export function registerRoomProtocol(io, rooms) {
       }
     });
 
+    socket.on("room:sealed-submit", (payload = {}, callback) => {
+      const reply = acknowledge(callback);
+      try {
+        const outcome = sealedRounds.submit(rooms, socket.id, payload);
+        if (outcome.result && outcome.participantIds) {
+          for (const participantId of outcome.participantIds) {
+            io.to(participantId).emit("room:sealed-result", outcome.result);
+          }
+        }
+        reply({
+          ok: true,
+          pending: outcome.pending,
+          complete: outcome.complete,
+          idempotent: outcome.idempotent === true,
+          replayed: outcome.replayed === true,
+        });
+      } catch (error) {
+        reply(toProtocolError(error));
+      }
+    });
+
     socket.on("disconnect", () => {
       for (const { roomId, state } of rooms.leaveAll(socket.id)) {
+        sealedRounds.clearRoom(roomId);
         if (state) io.to(roomChannel(roomId)).emit("room:state", state);
       }
     });
