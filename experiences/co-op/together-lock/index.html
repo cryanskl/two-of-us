@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#182521">
+    <title>同心解锁 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">CO-OP · TWO DEVICES</p>
+        <h1>隔着两块屏幕，<br>按住同一颗心。</h1>
+        <div class="connection"><span id="connection-dot"></span><span id="connection-text">正在连接本地房间…</span></div>
+      </header>
+
+      <section id="offline" class="panel hidden" aria-labelledby="offline-title">
+        <p class="step">需要 C 级本地运行时</p>
+        <h2 id="offline-title">请先从仓库启动</h2>
+        <p>首次双击 <code>setup.command</code> / <code>setup.bat</code>，以后双击 <code>start.command</code> / <code>start.bat</code>，再从门户打开本页。</p>
+      </section>
+
+      <section id="lobby" class="panel hidden" aria-labelledby="lobby-title">
+        <p class="step">01 · 找到彼此</p>
+        <h2 id="lobby-title">创建一个房间，或输入对方的短码</h2>
+        <div class="lobby-actions">
+          <button id="create-room" class="primary" type="button">创建房间</button>
+          <form id="join-form">
+            <label for="room-code">五位房间码</label>
+            <div class="join-row">
+              <input id="room-code" name="room-code" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="ABCDE" required>
+              <button type="submit">加入</button>
+            </div>
+          </form>
+        </div>
+        <p id="lobby-error" class="error" role="alert"></p>
+      </section>
+
+      <section id="room" class="panel room hidden" aria-labelledby="room-title">
+        <div class="room-head">
+          <div>
+            <p class="step">02 · 同时按住</p>
+            <h2 id="room-title">房间 <span id="room-id">—</span></h2>
+          </div>
+          <div class="members" aria-label="房间成员">
+            <span id="self-member" class="member">你</span>
+            <span id="partner-member" class="member">等待同伴</span>
+          </div>
+        </div>
+
+        <div id="lock" class="lock" aria-live="polite">
+          <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+          <p id="lock-kicker">等待另一位加入</p>
+          <strong id="lock-message">两个人都在房间里，机关才会出现</strong>
+          <button id="hold-button" class="hold" type="button" disabled>
+            <span class="heart">♥</span>
+            <span>按住不要松开</span>
+          </button>
+          <p id="hold-status">你：未按住 · 对方：未按住</p>
+        </div>
+
+        <button id="reset" class="text-button hidden" type="button">再解锁一次</button>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -27,6 +27,7 @@ for (const experience of catalog.experiences) {
 
   for (const reference of references) {
     if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) continue;
+    if (reference === "/socket.io/socket.io.js" && experience.level !== "A") continue;
     const localReference = reference.split(/[?#]/, 1)[0];
     if (!localReference) continue;
     await requireFile(
