@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [爱的刮刮卡：屏幕阅读器提前读出惊喜](./2026-07-15-scratch-screen-reader-premature-reveal.md)
+- [爱的刮刮卡：双指产生跨指错误笔画](./2026-07-15-scratch-multitouch-stroke.md)
+- [爱的刮刮卡：高 DPI 屏遮罩提示字号重复放大](./2026-07-15-scratch-dpr-prompt-size.md)
 - [隔屏画猜：固定题序可提前预测答案](./2026-07-15-pictionary-predictable-answers.md)
 - [隔屏画猜：跨回合保留旧猜词输入](./2026-07-15-pictionary-stale-guess.md)
 - [静态根路径末尾斜杠解析](./2026-07-15-static-root-trailing-slash.md)

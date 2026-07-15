@@ -104,3 +104,12 @@ experiences/surprises/scratch-surprise/
 - Chrome 控制台无 warning/error，页面不产生公网请求；
 - `npm test`、`npm run verify` 与 `git diff --check` 通过；
 - README 包含完整“借鉴与来源声明”。
+
+## 10. 2026-07-15 实现与验收结果
+
+- 已实现 `config.js` 文案配置、Canvas 擦除、55% 自动揭晓、直接揭晓、归一化轨迹重绘和移动端触摸；
+- `npm test` 通过 30 项测试，`npm run verify` 验证 7 个作品入口、相对资源和借鉴声明，`git diff --check` 通过；
+- Chrome 验证桌面鼠标、键盘 Enter、390×844 触摸、阈值揭晓、尺寸变化后轨迹保留、DPR 1/2 等效字号和无横向溢出；
+- Chrome AX 树验证揭晓前不暴露礼物，揭晓后恢复礼物并移除失效 Canvas；
+- Chrome 资源列表仅包含本地 `styles.css`、`config.js`、`logic.js`、`app.js`，控制台无 warning/error；
+- Chrome 自动化环境按安全策略不能导航 `file://`，未绕过该限制。A 级直接打开兼容性由普通相对脚本、无模块/网络 API、静态资源校验和无服务器依赖共同确认；浏览器交互验收在同一静态目录的本地 HTTP 入口完成。

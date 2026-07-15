@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>爱的刮刮卡 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <a class="back" href="../../../index.html">← 返回体验库</a>
+
+      <header class="intro">
+        <p id="eyebrow" class="eyebrow">A LITTLE SURPRISE FOR YOU</p>
+        <h1 id="title">有一份小惊喜，想请你亲手打开</h1>
+        <p id="instruction" class="instruction">用手指或鼠标轻轻刮开涂层，答案就在下面。</p>
+      </header>
+
+      <section class="experience" aria-labelledby="title">
+        <div id="scratch-stage" class="scratch-stage">
+          <article id="gift-card" class="gift-card">
+            <p id="gift-label" class="gift-label">今日专属礼物</p>
+            <h2 id="gift-title">一张只属于我们的约会券</h2>
+            <p id="gift-text" class="gift-text">凭这张券，可以兑换一次由你挑时间、我们一起慢慢享受的约会。地点和安排都听你的。</p>
+            <div class="gift-footer">
+              <p id="closing">普通的日子，也值得因为我们而变得特别。</p>
+              <p id="sender" class="sender">一直想给你惊喜的人</p>
+            </div>
+          </article>
+
+          <canvas
+            id="scratch-canvas"
+            aria-label="刮刮卡涂层：按住鼠标或手指拖动来刮开礼物"
+          ></canvas>
+        </div>
+
+        <div class="progress-block">
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-fill"></span>
+          </div>
+          <p id="scratch-status" aria-live="polite">从涂层上划过，刮开大约一半就会完整揭晓。</p>
+          <p id="reveal-announcement" class="sr-only" aria-live="polite"></p>
+        </div>
+
+        <button id="reveal-button" type="button">直接揭晓</button>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
