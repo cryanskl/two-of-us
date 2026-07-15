@@ -106,6 +106,19 @@
       "networkRequired": false
     },
     {
+      "id": "sealed-rps",
+      "title": "密封猜拳",
+      "category": "versus",
+      "level": "C",
+      "players": "2 人对抗",
+      "devices": "局域网双设备",
+      "entry": "experiences/versus/sealed-rps/index.html",
+      "readme": "experiences/versus/sealed-rps/README.md",
+      "description": "双方先秘密出拳，本机裁判收齐后同时揭晓，三局两胜且不会提前泄露选择。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",

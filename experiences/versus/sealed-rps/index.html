@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f4efe5">
+    <title>密封猜拳 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div class="brand">
+          <span class="brand-seal" aria-hidden="true">封</span>
+          <div>
+            <h1>密封猜拳</h1>
+            <p>两人对战 · 三局两胜</p>
+          </div>
+        </div>
+        <div class="connection" aria-live="polite">
+          <span class="device-mark" aria-hidden="true"></span>
+          <div><strong>本地直连</strong><span id="connection-text">正在连接本机裁判</span></div>
+        </div>
+      </header>
+
+      <section id="offline" class="offline hidden" aria-labelledby="offline-title">
+        <h2 id="offline-title">等待本地直连</h2>
+        <p>请从本地入口开始。</p>
+      </section>
+
+      <section id="lobby" class="lobby hidden" aria-labelledby="lobby-title">
+        <h2 id="lobby-title">创建房间或加入房间</h2>
+        <div class="lobby-grid">
+          <div class="lobby-action create-action">
+            <span class="lobby-symbol" aria-hidden="true">⌂</span>
+            <div><strong>创建房间（玩家一）</strong><span>创建房间，获得房间码。</span></div>
+            <button id="create-room" class="vermillion-button" type="button">创建房间</button>
+          </div>
+          <span class="or" aria-hidden="true">或</span>
+          <form id="join-form" class="lobby-action join-action">
+            <span class="lobby-symbol" aria-hidden="true">→</span>
+            <div>
+              <label for="room-code">加入房间（玩家二）</label>
+              <input id="room-code" name="room-code" maxlength="8" autocomplete="off" autocapitalize="characters" placeholder="输入房间码" required>
+            </div>
+            <button type="submit">加入房间</button>
+          </form>
+        </div>
+        <p id="lobby-error" class="error" aria-live="polite"></p>
+      </section>
+
+      <section id="room" class="game hidden" aria-labelledby="game-status-title">
+        <div class="room-code-row">
+          <div><span>房间码</span><strong id="room-id">-----</strong></div>
+          <button id="copy-room" type="button">复制</button>
+        </div>
+
+        <p id="round-label" class="match-label">三局两胜</p>
+        <div class="scoreboard" aria-label="比分">
+          <div><span>玩家一</span><strong id="score-one">0</strong></div>
+          <b aria-hidden="true">:</b>
+          <div><span>玩家二</span><strong id="score-two">0</strong></div>
+        </div>
+
+        <div class="seal-stage">
+          <section class="player player-one" aria-labelledby="player-one-label">
+            <div id="seal-one" class="large-seal" aria-hidden="true">封</div>
+            <strong id="player-one-label">玩家一</strong>
+            <span id="player-one-status">等待</span>
+          </section>
+
+          <section class="status-frame" aria-live="polite">
+            <h2 id="game-status-title">等待开始</h2>
+            <p id="game-status">等待双方进入房间。</p>
+            <button id="host-action" class="vermillion-button hidden" type="button">开始对局</button>
+          </section>
+
+          <section class="player player-two" aria-labelledby="player-two-label">
+            <div id="seal-two" class="large-seal" aria-hidden="true">封</div>
+            <strong id="player-two-label">玩家二</strong>
+            <span id="player-two-status">等待</span>
+          </section>
+        </div>
+
+        <section class="choices" aria-labelledby="choices-title">
+          <h2 id="choices-title">请选择你的出拳</h2>
+          <div class="choice-grid">
+            <button class="choice choice-rock" data-choice="rock" type="button" disabled>
+              <span aria-hidden="true">◆</span><strong>石头</strong>
+            </button>
+            <button class="choice choice-scissors" data-choice="scissors" type="button" disabled>
+              <span aria-hidden="true">✂</span><strong>剪刀</strong>
+            </button>
+            <button class="choice choice-paper" data-choice="paper" type="button" disabled>
+              <span aria-hidden="true">▱</span><strong>布</strong>
+            </button>
+          </div>
+          <button id="submit-choice" class="submit-choice" type="button" disabled>密封出拳</button>
+          <p id="choice-status" class="choice-status" aria-live="polite">等待开始。</p>
+        </section>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

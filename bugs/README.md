@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [密封猜拳：第三人消息可覆盖待验证的主机状态](./2026-07-15-sealed-rps-pending-envelope-overwrite.md)
+- [密封猜拳：常见桌面与移动视口看不到完整出拳区](./2026-07-15-sealed-rps-first-viewport-density.md)
 - [连心四子棋：斜线测试的获胜格顺序写反](./2026-07-15-connect-four-diagonal-test-order.md)
 - [连心四子棋：非当前玩家无法理解棋盘布局](./2026-07-15-connect-four-board-accessibility.md)
 - [爱的刮刮卡：屏幕阅读器提前读出惊喜](./2026-07-15-scratch-screen-reader-premature-reveal.md)
