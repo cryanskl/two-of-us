@@ -68,6 +68,7 @@
 - [A 级双人小馆规格](./docs/47-kitchen-relay-spec.md)
 - [A 级双人小馆验收记录](./docs/48-kitchen-relay-verification.md)
 - [A 级一层一层规格](./docs/49-nested-gift-spec.md)
+- [A 级一层一层验收记录](./docs/51-nested-gift-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)

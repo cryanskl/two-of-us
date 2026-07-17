@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [一层一层：从留言进入抽屉层时焦点退回页面主体](./2026-07-17-nested-gift-drawer-focus.md)
+- [一层一层：留言阶段仍把已打开的当前层计入剩余数](./2026-07-17-nested-gift-note-remaining-count.md)
+- [一层一层：无效操作测试比较了两份等值状态的引用](./2026-07-17-nested-gift-reference-identity-test.md)
 - [双人小馆：第三次洒落的普通事件覆盖失败反馈](./2026-07-17-kitchen-relay-terminal-feedback.md)
 - [双人小馆：营业与下一单后焦点没有落到传菜操作](./2026-07-17-kitchen-relay-service-focus.md)
 - [双人小馆：营业态超出概念原生桌面高度](./2026-07-17-kitchen-relay-desktop-height-budget.md)
