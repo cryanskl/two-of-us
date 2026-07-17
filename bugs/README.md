@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [运行时相邻端口测试偶发冲突](./2026-07-17-runtime-next-port-test-collision.md)
 - [能力安装路径是普通文件时诊断抛出 ENOTDIR](./2026-07-17-capability-install-path-not-directory.md)
 - [为你引航：圆心在世界内但暗礁圆周越界](./2026-07-17-lighthouse-reef-radius-out-of-bounds.md)
 - [同心牵引：丝带投影把圆重新推入软垫](./2026-07-17-tether-constraint-reintroduces-collision.md)

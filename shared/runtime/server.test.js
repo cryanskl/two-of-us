@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { once } from "node:events";
 import { createServer } from "node:http";
 import test from "node:test";
 import { RoomError, RoomRegistry } from "./rooms.js";
@@ -76,6 +77,20 @@ class TrackingSealedRoundRegistry extends SealedRoundRegistry {
   }
 }
 
+async function createSafePortBlocker() {
+  for (let port = 42000; port <= 64000; port += 1) {
+    const server = createServer();
+    server.listen(port, "127.0.0.1");
+    try {
+      await once(server, "listening");
+      return { server, port };
+    } catch (error) {
+      if (error.code !== "EADDRINUSE") throw error;
+    }
+  }
+  throw new Error("测试端口区间 42000 到 64000 均被占用。");
+}
+
 test("runtime serves health, catalog, portal, and releases its port", async (context) => {
   const runtime = await createRuntimeServer({
     rootDir: new URL("../../", import.meta.url),
@@ -108,21 +123,21 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
 });
 
 test("runtime selects the next port when the preferred one is occupied", async (context) => {
-  const blocker = createServer();
-  await new Promise((resolve) => blocker.listen(0, "127.0.0.1", resolve));
+  const { server: blocker, port: occupiedPort } = await createSafePortBlocker();
   context.after(() => new Promise((resolve) => blocker.close(resolve)));
-  const occupiedPort = blocker.address().port;
+  const maxPortAttempts = 32;
 
   const runtime = await createRuntimeServer({
     rootDir: new URL("../../", import.meta.url),
     host: "127.0.0.1",
     preferredPort: occupiedPort,
-    maxPortAttempts: 2,
+    maxPortAttempts,
   });
   context.after(() => runtime.stop());
 
   const details = await runtime.start();
-  assert.equal(details.port, occupiedPort + 1);
+  assert.ok(details.port > occupiedPort);
+  assert.ok(details.port < occupiedPort + maxPortAttempts);
 });
 
 test("runtime room registry rejects a third member with ROOM_FULL", async (context) => {
