@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [拍立得显影：相纸弹出后方向键没有接收焦点](./2026-07-17-instant-photo-keyboard-focus.md)
 - [默契电报码：空码本侧轨覆盖 hidden 语义](./2026-07-17-telegraph-hidden-semantics.md)
 - [默契电报码：缺失 favicon 导致浏览器控制台 404](./2026-07-17-telegraph-favicon-404.md)
 - [默契电报码：390px intro 主动作落到过深位置](./2026-07-17-telegraph-mobile-intro-depth.md)

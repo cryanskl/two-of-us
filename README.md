@@ -63,6 +63,7 @@
 - [A 级未来车票规格](./docs/38-future-ticket-spec.md)
 - [A 级未来车票验收记录](./docs/39-future-ticket-verification.md)
 - [A 级拍立得显影规格](./docs/43-instant-photo-spec.md)
+- [A 级拍立得显影验收记录](./docs/44-instant-photo-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
