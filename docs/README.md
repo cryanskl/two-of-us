@@ -44,6 +44,7 @@
 | [36-balloon-dare-spec.md](./36-balloon-dare-spec.md) | A 级“气球胆量局”的主动止盈、隐藏爆点、公平先后手与验收规格 |
 | [37-balloon-dare-verification.md](./37-balloon-dare-verification.md) | “气球胆量局”的完整实玩、无偏随机、DOM 隐私、响应式与视觉忠实度证据 |
 | [38-future-ticket-spec.md](./38-future-ticket-spec.md) | A 级“未来车票”的三次盲选、逐孔揭晓、本地配置与铁路票据视觉规格 |
+| [39-future-ticket-verification.md](./39-future-ticket-verification.md) | “未来车票”的完整签发流程、DOM 隐私、原生尺寸响应式与视觉忠实度证据 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
