@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#100b1e" />
+    <title>气球胆量局 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← Two of Us</a>
+        <p id="round-status">双人胆量 · 4 轮</p>
+      </nav>
+
+      <header class="hero">
+        <h1>气球胆量局</h1>
+        <p>再打一泵，还是见好就收？</p>
+      </header>
+
+      <section class="score-rail" aria-label="双方总分">
+        <div id="score-coral" class="score score-coral">
+          <span>珊瑚</span><strong id="coral-score">00</strong>
+          <i aria-hidden="true">● ● ● ● ●</i>
+        </div>
+        <p id="current-player" class="current-player">等待开局</p>
+        <div id="score-teal" class="score score-teal">
+          <strong id="teal-score">00</strong><span>青绿</span>
+          <i aria-hidden="true">● ● ● ● ●</i>
+        </div>
+      </section>
+
+      <section id="arena" class="arena" aria-label="气球与机械打气计">
+        <div class="readout readout-pumps">
+          <span>已打</span><strong id="pump-count">0</strong><span>泵</span>
+        </div>
+
+        <div class="machine" aria-hidden="true">
+          <img id="balloon" class="balloon" src="./assets/balloon.png" alt="" />
+          <img id="burst" class="burst" src="./assets/balloon-burst.png" alt="" />
+          <img class="pump-gauge" src="./assets/pump-gauge.png" alt="" />
+          <i class="gauge-needle"></i>
+        </div>
+
+        <div class="readout readout-pending">
+          <span>待收</span><strong id="pending-score">0</strong><span>分</span>
+        </div>
+      </section>
+
+      <section class="decisions" aria-label="本回合决策">
+        <button id="pump-button" class="decision decision-pump" type="button" disabled>
+          <kbd>↑</kbd><span>再打一泵</span>
+        </button>
+        <button id="bank-button" class="decision decision-bank" type="button" disabled>
+          <kbd>↓</kbd><span>见好就收</span>
+        </button>
+      </section>
+
+      <section id="stage" class="stage" aria-live="polite"></section>
+
+      <p class="privacy">爆点只在本机内存中 · 不联网 · 不保存</p>
+      <noscript>需要启用 JavaScript 才能游玩气球胆量局。</noscript>
+    </main>
+  </body>
+</html>

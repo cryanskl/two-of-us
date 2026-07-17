@@ -224,6 +224,19 @@
       "networkRequired": false
     },
     {
+      "id": "balloon-dare",
+      "title": "气球胆量局",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/balloon-dare/index.html",
+      "readme": "experiences/versus/balloon-dare/README.md",
+      "description": "轮流给隐藏爆点的气球打气或见好就收，四轮后比较双方存下的总分。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",

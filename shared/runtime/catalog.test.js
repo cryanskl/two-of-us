@@ -134,6 +134,32 @@ test("catalog exposes the installed A-level rhythm relay", async () => {
   assert.match(relay.entry, /rhythm-relay\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level balloon dare", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const dare = catalog.experiences.find((item) => item.id === "balloon-dare");
+
+  assert.equal(dare.category, "versus");
+  assert.equal(dare.level, "A");
+  assert.equal(dare.installed, true);
+  assert.equal(dare.networkRequired, false);
+  assert.match(dare.entry, /balloon-dare\/index\.html$/);
+});
+
+test("balloon dare keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/versus/balloon-dare/", import.meta.url);
+  const [html, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+  assert.doesNotMatch(html, /(?:burstPoint|data-burst|--burst)/);
+});
+
 test("rhythm relay keeps its file protocol and privacy boundary", async () => {
   const root = new URL("../../experiences/co-op/rhythm-relay/", import.meta.url);
   const [html, logic, app] = await Promise.all([
