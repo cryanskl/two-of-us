@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f3ead7" />
+    <title>数字凑靶 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./copy.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app" data-phase="intro">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← Two of Us</a>
+        <p id="round-status">准备开局</p>
+      </nav>
+
+      <section class="board" aria-label="数字凑靶对战桌">
+        <header class="hero">
+          <h1>数字凑靶</h1>
+          <p>轮流拿牌，把算式推到离靶心最近的位置。</p>
+        </header>
+
+        <section class="target" aria-label="本局目标">
+          <img src="./assets/target-board.png" alt="一张复古纸靶" />
+          <div class="target-copy">
+            <span>目标</span>
+            <strong id="target-number">?</strong>
+          </div>
+        </section>
+
+        <aside id="turn-card" class="turn-card" aria-live="polite"></aside>
+
+        <section id="player-coral" class="player-card player-coral" aria-label="珊瑚方算式">
+          <header>
+            <h2>珊瑚方</h2>
+            <p><strong id="score-coral">0</strong> 分</p>
+          </header>
+          <div class="expression" aria-label="珊瑚方算式">
+            <span data-player="0" data-slot="left">?</span>
+            <span data-player="0" data-slot="operator">?</span>
+            <span data-player="0" data-slot="right">?</span>
+          </div>
+          <p id="result-coral" class="player-result">等待完成</p>
+        </section>
+
+        <section id="player-blue" class="player-card player-blue" aria-label="蓝方算式">
+          <header>
+            <h2>蓝方</h2>
+            <p><strong id="score-blue">0</strong> 分</p>
+          </header>
+          <div class="expression" aria-label="蓝方算式">
+            <span data-player="1" data-slot="left">?</span>
+            <span data-player="1" data-slot="operator">?</span>
+            <span data-player="1" data-slot="right">?</span>
+          </div>
+          <p id="result-blue" class="player-result">等待完成</p>
+        </section>
+      </section>
+
+      <section id="markets" class="markets" aria-label="共享牌市场">
+        <div class="market-row number-market">
+          <h2>数字牌</h2>
+          <div id="number-buttons" class="token-row"></div>
+        </div>
+        <div class="market-row operator-market">
+          <h2>运算符</h2>
+          <div id="operator-buttons" class="token-row"></div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>公开选择 · 三步成式 · 离目标最近者得 1 分</p>
+        <p class="privacy">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          </svg>
+          本地运行 · 不联网 · 不保存
+        </p>
+      </footer>
+      <noscript>需要启用 JavaScript 才能开始数字凑靶。</noscript>
+    </main>
+  </body>
+</html>

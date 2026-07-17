@@ -241,6 +241,33 @@ test("rhythm relay keeps its file protocol and privacy boundary", async () => {
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
 });
 
+test("catalog exposes the installed A-level number target duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const target = catalog.experiences.find((item) => item.id === "number-target");
+
+  assert.equal(target.category, "versus");
+  assert.equal(target.level, "A");
+  assert.equal(target.installed, true);
+  assert.equal(target.networkRequired, false);
+  assert.match(target.entry, /number-target\/index\.html$/);
+});
+
+test("number target keeps its file protocol and local-only boundary", async () => {
+  const root = new URL("../../experiences/versus/number-target/", import.meta.url);
+  const [html, logic, copy, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("copy.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, logic, copy, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+});
+
 test("telegraph codebook keeps its file protocol and privacy boundary", async () => {
   const root = new URL("../../experiences/co-op/telegraph-codebook/", import.meta.url);
   const [html, logic, app] = await Promise.all([
