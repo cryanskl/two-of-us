@@ -87,6 +87,35 @@ test("instant photo keeps its file protocol and staged privacy boundary", async 
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
 });
 
+test("catalog exposes the installed A-level nested gift", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const nestedGift = catalog.experiences.find((item) => item.id === "nested-gift");
+
+  assert.equal(nestedGift.category, "surprise");
+  assert.equal(nestedGift.level, "A");
+  assert.equal(nestedGift.installed, true);
+  assert.equal(nestedGift.networkRequired, false);
+  assert.match(nestedGift.entry, /nested-gift\/index\.html$/);
+});
+
+test("nested gift keeps its file protocol and staged privacy boundary", async () => {
+  const root = new URL("../../experiences/surprises/nested-gift/", import.meta.url);
+  const [html, config, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(html, /第一层，是想把今天|普通日子里悄悄累积|原来盒心一直是你/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

@@ -106,6 +106,19 @@
       "networkRequired": false
     },
     {
+      "id": "nested-gift",
+      "title": "一层一层",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/nested-gift/index.html",
+      "readme": "experiences/surprises/nested-gift/README.md",
+      "description": "用解丝带、揭纸角、拉抽屉和轻敲四种输入逐层拆开本地礼盒，最后读到盒心留言。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

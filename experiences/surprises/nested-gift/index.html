@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="一层一层拆开本地礼盒，直到看见准备者留在盒心的话。">
+  <title>一层一层 · Two of Us</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23071723'/%3E%3Cpath d='M10 23h44v31H10z' fill='%23f6e5c7' stroke='%23d79b25' stroke-width='4'/%3E%3Cpath d='M7 17h50v12H7zM28 17h8v37' fill='%239f2f22'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app" data-phase="intro">
+    <nav class="topbar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <p id="stage-counter">准备拆礼物</p>
+    </nav>
+
+    <header class="hero">
+      <h1>一层一层</h1>
+      <p id="intro-note">每拆开一层，就离我想说的话近一点。</p>
+    </header>
+
+    <section class="workbench" aria-labelledby="instruction-title">
+      <div class="gift-frame">
+        <div id="gift-art" class="gift-art" data-art="0" role="img" aria-label="第一层朱红礼盒"></div>
+        <div class="ribbon-echo" aria-hidden="true">
+          <i data-side="left"></i>
+          <i data-side="right"></i>
+        </div>
+        <div class="corner-echo" aria-hidden="true">
+          <i data-corner="0"></i><i data-corner="1"></i><i data-corner="2"></i><i data-corner="3"></i>
+        </div>
+      </div>
+
+      <div class="interaction-panel">
+        <h2 id="instruction-title">先把两边的丝带都解开。</h2>
+        <div id="action-area" class="action-area"></div>
+      </div>
+
+      <div class="depth-progress" aria-label="拆盒进度">
+        <div id="depth-marks" class="depth-marks"></div>
+        <p id="depth-label">还有 4 层</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p id="recipient">给愿意慢慢拆开的你</p>
+      <p>本地运行 · 不联网 · 不保存</p>
+    </footer>
+
+    <p id="live-region" class="visually-hidden" aria-live="polite"></p>
+    <noscript>请启用 JavaScript 后再拆开这份礼物。</noscript>
+  </main>
+
+  <script src="./logic.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
