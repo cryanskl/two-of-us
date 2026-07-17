@@ -48,6 +48,7 @@
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [41-telegraph-codebook-spec.md](./41-telegraph-codebook-spec.md) | A 级“默契电报码”的六码本、热座交接、三拍编码/译码与深夜电台视觉规格 |
 | [42-telegraph-codebook-verification.md](./42-telegraph-codebook-verification.md) | “默契电报码”的四轮实玩、DOM 隐私、响应式与视觉忠实度验收记录 |
+| [43-instant-photo-spec.md](./43-instant-photo-spec.md) | A 级“拍立得显影”的单图配置、交替摇卡、分层显影与即时相机视觉规格 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 
