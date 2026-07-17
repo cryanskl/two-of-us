@@ -93,6 +93,19 @@
       "networkRequired": false
     },
     {
+      "id": "twin-light-maze",
+      "title": "双光点归巢",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/twin-light-maze/index.html",
+      "readme": "experiences/co-op/twin-light-maze/README.md",
+      "description": "两个人同时移动珊瑚与青色光点，互相踩住压力板、穿过门，并一起回到各自光门。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "together-lock",
       "title": "同心解锁",
       "category": "co-op",

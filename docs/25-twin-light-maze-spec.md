@@ -1,6 +1,6 @@
 # A 级「双光点归巢」同机合作迷宫规格
 
-> 建立日期：2026-07-17 · 状态：待实现 · 目标入口：`experiences/co-op/twin-light-maze/`
+> 建立日期：2026-07-17 · 状态：已实现并验收 · 入口：`experiences/co-op/twin-light-maze/` · 验收：[26-twin-light-maze-verification.md](./26-twin-light-maze-verification.md)
 
 ## 1. 本批补齐的能力
 

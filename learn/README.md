@@ -7,6 +7,7 @@
 ## 已沉淀
 
 - [本地优先网格游戏的生成式图集管线](./2026-07-17-local-first-sprite-atlas.md)
+- [用联合状态 BFS 验证双人机关地图](./2026-07-17-cooperative-grid-bfs.md)
 - [开源候选要固定来源谱系，不只固定项目名](./2026-07-17-upstream-source-provenance.md)
 - [主机权威的高频离散输入](./2026-07-17-host-authoritative-high-frequency-input.md)
 - [规范化游戏坐标与 CSS 布局坐标只保留一个来源](./2026-07-17-normalized-game-coordinate-mapping.md)

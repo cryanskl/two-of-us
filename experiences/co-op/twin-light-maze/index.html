@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#061321">
+    <title>双光点归巢 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main id="game" class="game-shell" data-phase="ready">
+      <header class="topbar">
+        <a class="back-link" href="../../../index.html" aria-label="返回体验库">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 12H5m6-6-6 6 6 6"></path>
+          </svg>
+          <span>返回</span>
+        </a>
+
+        <h1>双光点归巢</h1>
+
+        <p class="level-indicator" aria-label="当前关卡">
+          第 <strong id="level-current">1</strong> / <span id="level-total">4</span> 关
+        </p>
+      </header>
+
+      <section class="observatory" aria-labelledby="maze-heading">
+        <h2 id="maze-heading" class="sr-only">双人合作迷宫</h2>
+        <div class="maze-frame">
+          <span class="compass compass--north" aria-hidden="true"><span>N</span></span>
+          <span class="compass compass--east" aria-hidden="true"><span>E</span></span>
+          <span class="compass compass--south" aria-hidden="true"><span>S</span></span>
+          <span class="compass compass--west" aria-hidden="true"><span>W</span></span>
+          <div
+            id="maze-grid"
+            class="maze-grid"
+            role="grid"
+            aria-label="第一关迷宫。珊瑚光点和青色光点需要互相踩住压力板，并回到各自的光门。"
+            aria-rowcount="8"
+            aria-colcount="12"
+          ></div>
+        </div>
+      </section>
+
+      <section class="control-rail" aria-label="游戏状态与操作">
+        <div class="control-legend" aria-label="键盘控制">
+          <p class="legend-item legend-item--coral">
+            <span class="legend-mark legend-mark--coral" aria-hidden="true"></span>
+            <strong>WASD</strong>
+            <span>珊瑚光点</span>
+          </p>
+          <p class="legend-item legend-item--cyan">
+            <span class="legend-mark legend-mark--cyan" aria-hidden="true"></span>
+            <strong>方向键</strong>
+            <span>青色光点</span>
+          </p>
+        </div>
+
+        <div class="status-panel">
+          <p id="status-summary" class="status-summary">两个人都要回到自己的光门</p>
+          <p id="status-detail" class="status-detail">一人踩住压力板，另一人穿过对应的门。</p>
+          <button id="primary-action" class="primary-action" type="button">开始归巢</button>
+        </div>
+
+        <div class="tool-actions">
+          <button id="pause-button" class="tool-button" type="button" aria-pressed="false" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg>
+            <span>暂停</span>
+          </button>
+          <button id="restart-button" class="tool-button" type="button" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7"></path></svg>
+            <span>重来本关</span>
+          </button>
+          <button id="help-button" class="tool-button" type="button" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.8 9a2.3 2.3 0 0 1 4.4 1c0 2-2.2 2.1-2.2 4M12 17.5h.01"></path></svg>
+            <span>操作</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="touch-controls" aria-label="触屏方向控制">
+        <div class="dpad-group dpad-group--coral">
+          <h2>珊瑚光点</h2>
+          <div class="dpad" aria-label="珊瑚光点方向盘">
+            <button class="dpad-button dpad-button--up" type="button" data-move data-seat="0" data-direction="up" aria-label="珊瑚光点向上">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"></path></svg>
+            </button>
+            <button class="dpad-button dpad-button--left" type="button" data-move data-seat="0" data-direction="left" aria-label="珊瑚光点向左">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+            </button>
+            <span class="dpad-center dpad-center--coral" aria-hidden="true"></span>
+            <button class="dpad-button dpad-button--right" type="button" data-move data-seat="0" data-direction="right" aria-label="珊瑚光点向右">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+            </button>
+            <button class="dpad-button dpad-button--down" type="button" data-move data-seat="0" data-direction="down" aria-label="珊瑚光点向下">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="dpad-group dpad-group--cyan">
+          <h2>青色光点</h2>
+          <div class="dpad" aria-label="青色光点方向盘">
+            <button class="dpad-button dpad-button--up" type="button" data-move data-seat="1" data-direction="up" aria-label="青色光点向上">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"></path></svg>
+            </button>
+            <button class="dpad-button dpad-button--left" type="button" data-move data-seat="1" data-direction="left" aria-label="青色光点向左">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+            </button>
+            <span class="dpad-center dpad-center--cyan" aria-hidden="true"></span>
+            <button class="dpad-button dpad-button--right" type="button" data-move data-seat="1" data-direction="right" aria-label="青色光点向右">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+            </button>
+            <button class="dpad-button dpad-button--down" type="button" data-move data-seat="1" data-direction="down" aria-label="青色光点向下">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <p id="live-region" class="sr-only" aria-live="polite">双光点归巢准备好了。</p>
+      <noscript><p class="noscript-message">请启用 JavaScript 后再开始归巢。</p></noscript>
+    </main>
+
+    <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+      <form method="dialog">
+        <header>
+          <h2 id="help-title">怎样一起归巢</h2>
+          <button id="close-help" class="dialog-close" type="submit" aria-label="关闭操作说明">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+          </button>
+        </header>
+        <ol>
+          <li><strong>分别移动：</strong>珊瑚用 WASD，青色用方向键；触屏时使用两套方向盘。</li>
+          <li><strong>互相开门：</strong>任一光点踩住压力板，对应颜色的门就会打开。</li>
+          <li><strong>一起完成：</strong>两枚光点要同时站在自己的光门上，才能进入下一关。</li>
+        </ol>
+        <p>暂停、切换窗口或页面隐藏时，移动输入会暂时停止。</p>
+      </form>
+    </dialog>
+
+    <script src="./levels.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

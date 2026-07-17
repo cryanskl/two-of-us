@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { loadCatalog } from "./catalog.js";
 
@@ -49,6 +49,31 @@ test("catalog exposes the installed A-level ribbon tug", async () => {
   assert.equal(ribbonTug.level, "A");
   assert.equal(ribbonTug.networkRequired, false);
   assert.match(ribbonTug.entry, /ribbon-tug\/index\.html$/);
+});
+
+test("catalog exposes the installed A-level twin light maze", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const maze = catalog.experiences.find((item) => item.id === "twin-light-maze");
+
+  assert.equal(maze.category, "co-op");
+  assert.equal(maze.level, "A");
+  assert.equal(maze.networkRequired, false);
+  assert.match(maze.entry, /twin-light-maze\/index\.html$/);
+});
+
+test("twin light maze keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/co-op/twin-light-maze/", import.meta.url);
+  const [html, levels, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("levels.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, levels, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
 });
 
 test("catalog exposes the installed C-level heart sprint", async () => {
