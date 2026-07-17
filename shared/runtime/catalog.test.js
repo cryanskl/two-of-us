@@ -31,6 +31,34 @@ test("catalog exposes the installed A-level private photo puzzle", async () => {
   assert.match(puzzle.entry, /photo-swap-puzzle\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level future ticket", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const ticket = catalog.experiences.find((item) => item.id === "future-ticket");
+
+  assert.equal(ticket.category, "surprise");
+  assert.equal(ticket.level, "A");
+  assert.equal(ticket.networkRequired, false);
+  assert.match(ticket.entry, /future-ticket\/index\.html$/);
+});
+
+test("future ticket keeps its file protocol and hidden-option boundary", async () => {
+  const root = new URL("../../experiences/surprises/future-ticket/", import.meta.url);
+  const [html, config, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+  assert.doesNotMatch(html, /周五下班后|周六午后|去看晚霞|去吃一顿热汤|我负责路线|你负责选歌/);
+  assert.doesNotMatch(html, /data-(?:option|secret|reveal)=/i);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

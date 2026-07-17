@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>未来车票 · Two of Us</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./config.js" defer></script>
+  <script src="./logic.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app" id="app">
+    <a class="back" href="../../../index.html" aria-label="返回 Two of Us">← Two of Us</a>
+
+    <section class="content" aria-labelledby="page-title">
+      <header class="hero">
+        <h1 id="page-title">未来车票</h1>
+        <p>这张票，通往我们还没去过的一天。</p>
+      </header>
+
+      <article class="ticket" aria-label="正在签发的未来车票">
+        <span class="serial serial-left" data-serial>A 02 240624</span>
+        <span class="serial serial-right" data-serial>A 02 240624</span>
+        <div class="ticket-fields">
+          <section class="ticket-field" data-field="0">
+            <span class="punch-mark" aria-hidden="true"></span>
+            <h2>什么时候出发</h2>
+            <p>尚未打孔</p>
+          </section>
+          <section class="ticket-field" data-field="1">
+            <span class="punch-mark" aria-hidden="true"></span>
+            <h2>去哪里</h2>
+            <p>尚未打孔</p>
+          </section>
+          <section class="ticket-field" data-field="2">
+            <span class="punch-mark" aria-hidden="true"></span>
+            <h2>随行彩蛋</h2>
+            <p>尚未打孔</p>
+          </section>
+        </div>
+        <footer class="ticket-meta">
+          <span data-passenger></span>
+          <span data-issuer></span>
+        </footer>
+      </article>
+
+      <section class="interaction" aria-label="车票打孔台">
+        <div class="stage-copy" aria-live="polite">
+          <h2 data-prompt></h2>
+          <p data-final-note hidden></p>
+        </div>
+        <div class="holes" role="radiogroup" aria-label="选择一个隐藏孔位">
+          <button class="hole" type="button" role="radio" aria-checked="false" data-hole="0">
+            <span aria-hidden="true"></span>孔位 A
+          </button>
+          <button class="hole" type="button" role="radio" aria-checked="false" data-hole="1">
+            <span aria-hidden="true"></span>孔位 B
+          </button>
+          <button class="hole" type="button" role="radio" aria-checked="false" data-hole="2">
+            <span aria-hidden="true"></span>孔位 C
+          </button>
+        </div>
+        <button class="primary" type="button" data-action="start">开始打孔</button>
+      </section>
+    </section>
+
+    <aside class="machine" aria-hidden="true">
+      <img src="./assets/ticket-punch.png" alt="">
+    </aside>
+
+    <p class="privacy">所有内容只留在这台设备上</p>
+  </main>
+</body>
+</html>
