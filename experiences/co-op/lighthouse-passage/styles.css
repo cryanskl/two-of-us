@@ -1,0 +1,893 @@
+:root {
+  --night: #07151c;
+  --night-deep: #030b10;
+  --chart: #0a2029;
+  --parchment: #ead6aa;
+  --muted: #b9a67e;
+  --lamp: #f5d477;
+  --boat: #a9422e;
+  --console: #173b3a;
+  --console-deep: #0d2426;
+  --brass: #9d7637;
+  --brass-bright: #d0aa63;
+  --reef: #1e2929;
+  --focus: #f7e7b7;
+  --atlas: url("./assets/sprite-atlas.png");
+  color: var(--parchment);
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 280px;
+  background: var(--night-deep);
+}
+
+body {
+  min-width: 280px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% 0, rgba(29, 67, 72, 0.35), transparent 46rem),
+    var(--night-deep);
+}
+
+button,
+dialog {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+svg {
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(7, 21, 28, 0.92);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.game-shell {
+  width: min(100%, 1586px);
+  min-height: 100svh;
+  margin: 0 auto;
+  overflow: hidden;
+  border: clamp(2px, 0.4vw, 6px) double var(--brass);
+  background: var(--night);
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.68), inset 0 0 0 2px rgba(208, 170, 99, 0.22);
+}
+
+.masthead {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(460px, 1.2fr);
+  align-items: center;
+  min-height: 112px;
+  padding: 15px clamp(22px, 4.5vw, 72px);
+  border-bottom: 3px double var(--brass);
+  background:
+    linear-gradient(90deg, rgba(157, 118, 55, 0.06), transparent 34%, transparent 70%, rgba(157, 118, 55, 0.05)),
+    #08161c;
+}
+
+.masthead h1,
+.mission,
+.control-panel h2,
+.help-dialog h2,
+.primary-action {
+  font-family: "Songti SC", STSong, serif;
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: clamp(3rem, 6vw, 5.4rem);
+  font-weight: 650;
+  line-height: 0.95;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 22px rgba(245, 212, 119, 0.12);
+}
+
+.mission {
+  justify-self: stretch;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 0;
+  text-align: center;
+}
+
+.mission::before {
+  grid-row: 2;
+  width: min(100%, 560px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass), transparent);
+  content: "";
+}
+
+.mission p {
+  margin: 0;
+}
+
+.level-label {
+  font-size: clamp(0.95rem, 1.8vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+#status-summary {
+  grid-row: 3;
+  color: var(--parchment);
+  font-size: clamp(0.9rem, 1.65vw, 1.18rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.playfield {
+  position: relative;
+  margin: clamp(6px, 0.8vw, 12px);
+  overflow: hidden;
+  border: 3px double var(--brass);
+  border-radius: clamp(14px, 2vw, 28px);
+  background: var(--chart);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.48);
+  isolation: isolate;
+}
+
+#playfield-canvas {
+  display: block;
+  width: 100%;
+  height: clamp(370px, 55svh, 560px);
+  background: var(--chart) url("./assets/playfield-background.png") center / cover no-repeat;
+}
+
+.stage-action {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(12px, 2.4vw, 34px);
+  transform: translateX(-50%);
+}
+
+.primary-action {
+  min-width: min(440px, calc(100vw - 52px));
+  min-height: 72px;
+  padding: 13px 34px 10px;
+  border: 2px solid var(--brass-bright);
+  border-radius: 2px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.14), transparent 42%),
+    #d9bd83;
+  color: #171108;
+  cursor: pointer;
+  font-size: clamp(1.55rem, 3.3vw, 2.6rem);
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  box-shadow:
+    0 0 0 4px rgba(7, 21, 28, 0.88),
+    0 0 0 5px var(--brass),
+    0 7px 24px rgba(0, 0, 0, 0.55);
+}
+
+.primary-action:hover {
+  background-color: #f0d9a8;
+}
+
+.primary-action:active {
+  transform: translateY(2px);
+}
+
+.control-deck {
+  display: grid;
+  grid-template-columns: minmax(310px, 1.18fr) minmax(300px, 0.98fr) minmax(290px, 1fr) minmax(160px, 0.42fr);
+  grid-template-areas: "lighthouse beacon boat utilities";
+  gap: 8px;
+  padding: 0 8px 8px;
+  background: var(--night);
+}
+
+.control-panel,
+.utility-controls {
+  min-width: 0;
+  border: 2px solid var(--brass);
+  border-radius: 13px;
+  background:
+    linear-gradient(135deg, rgba(208, 170, 99, 0.06), transparent 38%),
+    var(--console);
+  box-shadow: inset 0 0 0 3px rgba(3, 11, 16, 0.58), inset 0 0 0 4px rgba(157, 118, 55, 0.38);
+}
+
+.control-panel {
+  padding: 12px clamp(12px, 1.7vw, 24px) 14px;
+}
+
+.lighthouse-control {
+  grid-area: lighthouse;
+}
+
+.beacon-panel {
+  grid-area: beacon;
+  background:
+    radial-gradient(circle at 74% 56%, rgba(245, 212, 119, 0.13), transparent 31%),
+    #15150f;
+}
+
+.boat-control {
+  grid-area: boat;
+}
+
+.control-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 40px;
+  text-align: center;
+}
+
+.control-heading h2,
+.beacon-panel h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+}
+
+.control-heading p {
+  margin: 3px 0 0;
+  color: var(--parchment);
+  font-family: "Songti SC", STSong, serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+kbd {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.72rem;
+}
+
+.role-icon,
+.atlas-icon {
+  display: block;
+  flex: 0 0 auto;
+  background-image: var(--atlas);
+  background-repeat: no-repeat;
+  background-size: 400% 300%;
+}
+
+.role-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.role-icon--lighthouse {
+  background-position: 0 0;
+}
+
+.role-icon--boat,
+.atlas-icon--boat {
+  background-position: 33.333% 0;
+}
+
+.lighthouse-controls {
+  display: grid;
+  grid-template-columns: 70px minmax(88px, 114px) 70px;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin-top: 5px;
+}
+
+.control-button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid var(--brass);
+  background:
+    radial-gradient(circle at 50% 38%, #263033, #111719 68%),
+    #111719;
+  color: var(--parchment);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow:
+    inset 0 0 0 4px rgba(3, 11, 16, 0.74),
+    inset 0 0 0 5px rgba(208, 170, 99, 0.32),
+    0 4px 0 #05090a;
+}
+
+.control-button:hover:not(:disabled) {
+  color: var(--lamp);
+  border-color: var(--brass-bright);
+}
+
+.control-button:active:not(:disabled),
+.control-button[aria-pressed="true"] {
+  transform: translateY(3px);
+  background: #2f352f;
+  box-shadow: inset 0 0 0 4px rgba(3, 11, 16, 0.7), inset 0 0 0 5px var(--lamp);
+}
+
+.control-button:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.3);
+  opacity: 0.44;
+}
+
+.lighthouse-button {
+  grid-template-rows: 1fr auto;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  padding: 9px 8px 7px;
+}
+
+.lighthouse-button svg {
+  width: 31px;
+  height: 24px;
+  stroke-width: 2.25;
+}
+
+.lighthouse-button span {
+  font: 750 0.74rem/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.lighthouse-dial {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto;
+  border: 2px solid var(--brass);
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from -2deg, rgba(234, 214, 170, 0.54) 0 1deg, transparent 1deg 14deg),
+    radial-gradient(circle, #1d2b2a 0 46%, #0c181a 47% 100%);
+  box-shadow: inset 0 0 0 7px rgba(3, 11, 16, 0.68), 0 0 0 2px rgba(208, 170, 99, 0.26);
+}
+
+.dial-needle {
+  position: absolute;
+  top: 10px;
+  bottom: 50%;
+  left: calc(50% - 2px);
+  width: 4px;
+  background: var(--lamp);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform: rotate(var(--lighthouse-angle, 0deg));
+  transform-origin: 50% 100%;
+  transition: transform 90ms linear;
+}
+
+.dial-needle::after {
+  position: absolute;
+  right: -4px;
+  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--brass);
+  border-radius: 50%;
+  background: var(--night);
+  content: "";
+}
+
+.beacon-panel {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+}
+
+.beacon-panel h2 {
+  font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+}
+
+.beacon-panel h2 strong {
+  color: var(--lamp);
+}
+
+.beacon-progress {
+  display: grid;
+  grid-template-columns: 68px 52px 68px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.beacon-progress svg {
+  width: 52px;
+  color: var(--muted);
+  stroke-dasharray: 3 5;
+}
+
+.beacon-progress .atlas-icon {
+  width: 68px;
+  height: 68px;
+}
+
+.atlas-icon--beacon-off {
+  background-position: 100% 0;
+  filter: grayscale(0.9) brightness(0.55);
+}
+
+.atlas-icon--beacon-on {
+  background-position: 0 50%;
+  filter: drop-shadow(0 0 10px rgba(245, 212, 119, 0.58));
+}
+
+.boat-dpad {
+  display: grid;
+  grid-template: repeat(3, 52px) / repeat(3, 52px);
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.boat-button {
+  width: 52px;
+  height: 52px;
+  border-radius: 7px;
+}
+
+.boat-button svg {
+  width: 27px;
+  height: 27px;
+  stroke-width: 2.45;
+}
+
+.boat-button--forward {
+  grid-area: 1 / 2;
+}
+
+.boat-button--left {
+  grid-area: 2 / 1;
+}
+
+.boat-button--right {
+  grid-area: 2 / 3;
+}
+
+.boat-button--reverse {
+  grid-area: 3 / 2;
+}
+
+.boat-dpad-center {
+  grid-area: 2 / 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+}
+
+.boat-dpad-center .atlas-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.utility-controls {
+  grid-area: utilities;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(48px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  background: #0d2021;
+}
+
+.utility-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 8px;
+  border: 2px solid var(--brass);
+  border-radius: 6px;
+  background: #111a1c;
+  color: var(--parchment);
+  cursor: pointer;
+  font-family: "Songti SC", STSong, serif;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 3px rgba(3, 11, 16, 0.7), 0 3px 0 #03080a;
+}
+
+.utility-controls button:hover:not(:disabled) {
+  color: var(--lamp);
+  border-color: var(--brass-bright);
+}
+
+.utility-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.utility-controls svg {
+  width: 23px;
+  height: 23px;
+}
+
+.help-dialog {
+  width: min(560px, calc(100% - 28px));
+  padding: 0;
+  border: 2px solid var(--brass);
+  border-radius: 12px;
+  background: var(--console-deep);
+  color: var(--parchment);
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.72), inset 0 0 0 4px var(--night), inset 0 0 0 5px rgba(208, 170, 99, 0.34);
+}
+
+.help-dialog::backdrop {
+  background: rgba(2, 8, 11, 0.84);
+  backdrop-filter: blur(4px);
+}
+
+.dialog-content {
+  padding: 26px;
+}
+
+.dialog-content header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(157, 118, 55, 0.55);
+}
+
+.help-dialog h2 {
+  margin: 0;
+  font-size: 1.7rem;
+  letter-spacing: 0.08em;
+}
+
+.dialog-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--brass);
+  background: transparent;
+  cursor: pointer;
+}
+
+.dialog-close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.help-dialog ol {
+  margin: 22px 0;
+  padding-left: 22px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.help-dialog li + li {
+  margin-top: 9px;
+}
+
+.help-dialog p {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.dialog-confirm {
+  min-width: 132px;
+  min-height: 46px;
+  padding: 10px 20px;
+  border: 1px solid var(--brass-bright);
+  background: var(--parchment);
+  color: var(--night);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.noscript-message {
+  margin: 8px;
+  padding: 12px;
+  border: 1px solid var(--brass);
+  color: var(--parchment);
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1080px) {
+  .control-deck {
+    grid-template-columns: minmax(280px, 1fr) minmax(270px, 0.9fr) minmax(280px, 1fr);
+    grid-template-areas:
+      "lighthouse beacon boat"
+      "utilities utilities utilities";
+  }
+
+  .utility-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .game-shell {
+    width: 100%;
+    border-width: 2px;
+  }
+
+  .masthead {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 154px;
+    padding: 18px 18px 12px;
+  }
+
+  .masthead h1 {
+    font-size: clamp(2.25rem, 12vw, 3.1rem);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .mission {
+    display: contents;
+  }
+
+  .level-label {
+    justify-self: end;
+    max-width: 118px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .level-label > span[aria-hidden="true"] {
+    display: none;
+  }
+
+  #level-title {
+    display: block;
+  }
+
+  .mission::before {
+    display: none;
+  }
+
+  #status-summary {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(157, 118, 55, 0.72);
+    font-size: 0.92rem;
+    text-align: center;
+  }
+
+  .playfield {
+    margin: 8px 10px 28px;
+    border-radius: 18px;
+  }
+
+  #playfield-canvas {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .stage-action {
+    bottom: -22px;
+  }
+
+  .primary-action {
+    min-width: min(290px, calc(100vw - 46px));
+    min-height: 58px;
+    padding: 10px 22px 8px;
+    font-size: 1.65rem;
+  }
+
+  .control-deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "beacon beacon"
+      "lighthouse boat"
+      "utilities utilities";
+    gap: 8px;
+    padding: 0 8px 8px;
+  }
+
+  .control-panel {
+    padding: 10px 8px 12px;
+  }
+
+  .beacon-panel {
+    min-height: 120px;
+    grid-template-columns: auto 1fr;
+    align-content: center;
+    justify-items: center;
+    column-gap: 20px;
+  }
+
+  .beacon-panel h2 {
+    font-size: 1.2rem;
+  }
+
+  .beacon-progress {
+    grid-template-columns: 54px 38px 54px;
+    gap: 4px;
+  }
+
+  .beacon-progress .atlas-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .beacon-progress svg {
+    width: 38px;
+  }
+
+  .control-heading {
+    gap: 7px;
+    min-height: 50px;
+  }
+
+  .role-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .control-heading h2 {
+    font-size: 0.9rem;
+  }
+
+  .control-heading p {
+    font-size: 0.66rem;
+  }
+
+  .lighthouse-controls {
+    grid-template-columns: repeat(2, 64px);
+    grid-template-rows: 76px 64px;
+    gap: 4px 8px;
+    margin-top: 5px;
+  }
+
+  .lighthouse-dial {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 72px;
+    height: 72px;
+  }
+
+  .lighthouse-button {
+    grid-row: 2;
+    width: 64px;
+    height: 64px;
+  }
+
+  .lighthouse-button--left {
+    grid-column: 1;
+  }
+
+  .lighthouse-button--right {
+    grid-column: 2;
+  }
+
+  .boat-dpad {
+    margin-top: 5px;
+  }
+
+  .utility-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 7px;
+    padding: 7px;
+  }
+
+  .utility-controls button {
+    min-height: 54px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .masthead {
+    min-height: 142px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .masthead h1 {
+    font-size: 2rem;
+  }
+
+  .level-label {
+    max-width: 104px;
+    font-size: 0.8rem;
+  }
+
+  #status-summary {
+    font-size: 0.82rem;
+  }
+
+  .playfield {
+    margin-right: 7px;
+    margin-left: 7px;
+  }
+
+  .control-deck {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "beacon"
+      "lighthouse"
+      "boat"
+      "utilities";
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .lighthouse-controls {
+    grid-template-columns: 64px 82px 64px;
+    grid-template-rows: 82px;
+    gap: 12px;
+  }
+
+  .lighthouse-button,
+  .lighthouse-dial {
+    grid-row: 1;
+  }
+
+  .lighthouse-button--left {
+    grid-column: 1;
+  }
+
+  .lighthouse-dial {
+    grid-column: 2;
+    width: 78px;
+    height: 78px;
+  }
+
+  .lighthouse-button--right {
+    grid-column: 3;
+  }
+
+  .boat-control {
+    padding-top: 12px;
+    padding-bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

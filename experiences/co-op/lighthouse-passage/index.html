@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#07151c">
+    <title>为你引航 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./levels.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="game" class="game-shell" data-phase="ready" aria-labelledby="game-title">
+      <header class="masthead">
+        <h1 id="game-title">为你引航</h1>
+        <div class="mission" aria-live="polite">
+          <p class="level-label">
+            第 <strong id="level-current">1</strong> 幕 / <span id="level-total">3</span>
+            <span aria-hidden="true">·</span>
+            <span id="level-title">第一束光</span>
+          </p>
+          <p id="status-summary">你照亮前路，我把船开回家。</p>
+        </div>
+      </header>
+
+      <section class="playfield" aria-labelledby="status-summary">
+        <canvas
+          id="playfield-canvas"
+          width="960"
+          height="540"
+          role="img"
+          aria-label="第一幕夜航海图：灯塔位于左侧，小船需要发现一枚航标并驶入右侧港口。"
+          aria-describedby="playfield-description"
+        >
+          当前浏览器不支持 Canvas，无法显示为你引航的夜航海图。
+        </canvas>
+        <p id="playfield-description" class="sr-only">灯塔玩家旋转光束照亮暗礁、航标和港口；小船玩家操舵、推进和减速。</p>
+
+        <div class="stage-action">
+          <button id="primary-action" class="primary-action" type="button">点亮海面</button>
+        </div>
+      </section>
+
+      <section class="control-deck" aria-label="领航控制台">
+        <section class="control-panel lighthouse-control" aria-labelledby="lighthouse-title">
+          <div class="control-heading">
+            <span class="role-icon role-icon--lighthouse" aria-hidden="true"></span>
+            <div>
+              <h2 id="lighthouse-title">灯塔</h2>
+              <p><kbd>A</kbd> / <kbd>D</kbd> 旋转光束</p>
+            </div>
+          </div>
+
+          <div class="lighthouse-controls" aria-label="灯塔旋转控制">
+            <button
+              class="control-button lighthouse-button lighthouse-button--left"
+              type="button"
+              data-control
+              data-channel="lighthouse"
+              data-action="left"
+              aria-label="灯塔光束逆时针旋转"
+              aria-keyshortcuts="A"
+              aria-pressed="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6m5-5-5 5 5 5"></path></svg>
+              <span>A</span>
+            </button>
+
+            <div id="lighthouse-dial" class="lighthouse-dial" role="img" aria-label="灯塔当前角度 0 度">
+              <span class="dial-needle" aria-hidden="true"></span>
+              <output id="lighthouse-angle" class="sr-only">0°</output>
+            </div>
+
+            <button
+              class="control-button lighthouse-button lighthouse-button--right"
+              type="button"
+              data-control
+              data-channel="lighthouse"
+              data-action="right"
+              aria-label="灯塔光束顺时针旋转"
+              aria-keyshortcuts="D"
+              aria-pressed="false"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"></path></svg>
+              <span>D</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="beacon-status" class="control-panel beacon-panel" aria-labelledby="beacon-title">
+          <h2 id="beacon-title">航标 <strong id="beacon-current">0</strong> / <span id="beacon-total">1</span></h2>
+          <div class="beacon-progress" aria-hidden="true">
+            <span class="atlas-icon atlas-icon--beacon-off"></span>
+            <svg viewBox="0 0 48 12"><path d="M1 6h41m-7-5 7 5-7 5"></path></svg>
+            <span class="atlas-icon atlas-icon--beacon-on"></span>
+          </div>
+        </section>
+
+        <section class="control-panel boat-control" aria-labelledby="boat-title">
+          <div class="control-heading">
+            <span class="role-icon role-icon--boat" aria-hidden="true"></span>
+            <div>
+              <h2 id="boat-title">小船</h2>
+              <p><kbd>方向键</kbd> 操舵</p>
+            </div>
+          </div>
+
+          <div class="boat-dpad" aria-label="小船方向控制">
+            <button
+              class="control-button boat-button boat-button--forward"
+              type="button"
+              data-control
+              data-channel="boat"
+              data-action="forward"
+              aria-label="小船向前推进"
+              aria-keyshortcuts="ArrowUp"
+              aria-pressed="false"
+            ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"></path></svg></button>
+            <button
+              class="control-button boat-button boat-button--left"
+              type="button"
+              data-control
+              data-channel="boat"
+              data-action="left"
+              aria-label="小船向左操舵"
+              aria-keyshortcuts="ArrowLeft"
+              aria-pressed="false"
+            ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button>
+            <span class="boat-dpad-center" aria-hidden="true"><span class="atlas-icon atlas-icon--boat"></span></span>
+            <button
+              class="control-button boat-button boat-button--right"
+              type="button"
+              data-control
+              data-channel="boat"
+              data-action="right"
+              aria-label="小船向右操舵"
+              aria-keyshortcuts="ArrowRight"
+              aria-pressed="false"
+            ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
+            <button
+              class="control-button boat-button boat-button--reverse"
+              type="button"
+              data-control
+              data-channel="boat"
+              data-action="reverse"
+              aria-label="小船减速或倒车"
+              aria-keyshortcuts="ArrowDown"
+              aria-pressed="false"
+            ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+          </div>
+        </section>
+
+        <div class="utility-controls" aria-label="游戏操作">
+          <button id="pause-button" type="button" aria-pressed="false" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg>
+            <span>暂停</span>
+          </button>
+          <button id="restart-button" type="button" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7"></path></svg>
+            <span>重来</span>
+          </button>
+          <button id="help-button" type="button" aria-haspopup="dialog" aria-controls="help-dialog">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.8 9a2.3 2.3 0 0 1 4.4 1c0 2-2.2 2.1-2.2 4M12 17.5h.01"></path></svg>
+            <span>玩法</span>
+          </button>
+        </div>
+      </section>
+
+      <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true">为你引航准备好了。</p>
+
+      <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+        <form class="dialog-content" method="dialog">
+          <header>
+            <h2 id="help-title">怎样一起领航</h2>
+            <button id="close-help" class="dialog-close" type="submit" aria-label="关闭玩法说明">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+            </button>
+          </header>
+          <ol>
+            <li>灯塔玩家按 A / D 或长按两枚旋转按钮，让光束照亮暗礁、航标与港口。</li>
+            <li>小船玩家使用方向键或四向船舵推进、减速与转向；看到暗礁后及时绕开。</li>
+            <li>找齐必要航标，保持港口受光，再让小船低速、对准入口并稳定停靠。</li>
+          </ol>
+          <p>切换窗口、页面隐藏或主动暂停时，所有长按输入都会释放。</p>
+          <button id="confirm-help" class="dialog-confirm" type="submit">知道了</button>
+        </form>
+      </dialog>
+
+      <noscript><p class="noscript-message">为你引航需要 JavaScript 才能运行。请启用 JavaScript 后重新打开本地页面。</p></noscript>
+    </main>
+  </body>
+</html>

@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [非对称同屏合作：让规则 Gate 证明双方都不可替代](./2026-07-17-asymmetric-navigation-state-boundary.md)
 - [固定步长柔性约束：先证明公开状态，再谈画面平滑](./2026-07-17-fixed-step-soft-constraint-collision-order.md)
 - [本地优先网格游戏的生成式图集管线](./2026-07-17-local-first-sprite-atlas.md)
 - [用联合状态 BFS 验证双人机关地图](./2026-07-17-cooperative-grid-bfs.md)

@@ -101,6 +101,31 @@ test("tethered heart keeps its file protocol and privacy boundary", async () => 
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
 });
 
+test("catalog exposes the installed A-level lighthouse passage", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const passage = catalog.experiences.find((item) => item.id === "lighthouse-passage");
+
+  assert.equal(passage.category, "co-op");
+  assert.equal(passage.level, "A");
+  assert.equal(passage.networkRequired, false);
+  assert.match(passage.entry, /lighthouse-passage\/index\.html$/);
+});
+
+test("lighthouse passage keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/co-op/lighthouse-passage/", import.meta.url);
+  const [html, levels, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("levels.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, levels, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+});
+
 test("catalog exposes the installed C-level heart sprint", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const heartSprint = catalog.experiences.find((item) => item.id === "heart-sprint");

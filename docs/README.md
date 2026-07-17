@@ -36,6 +36,7 @@
 | [28-tethered-heart-verification.md](./28-tethered-heart-verification.md) | “同心牵引”的确定性轨迹、Chrome 三幕实玩、响应式与视觉忠实度证据 |
 | [29-lighthouse-passage-spec.md](./29-lighthouse-passage-spec.md) | A 级“为你引航”的非对称灯塔/船舵规则、夜航海图视觉、来源边界与验收规格 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
+| [31-lighthouse-passage-verification.md](./31-lighthouse-passage-verification.md) | “为你引航”的确定性三幕、Chrome 交互、响应式与视觉忠实度证据 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
@@ -55,7 +56,7 @@
 | 分类 | 已实现样板 | 当前结果 |
 | --- | --- | --- |
 | 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/) | 建立可编辑 `config.js`、分段回忆与结尾邀请流程 |
-| 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/)、[双光点归巢](../experiences/co-op/twin-light-maze/) 与 [同心牵引](../experiences/co-op/tethered-heart/) | 建立热座交接、网格联合状态和连续双丝带约束三种合作样板 |
+| 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/)、[双光点归巢](../experiences/co-op/twin-light-maze/)、[同心牵引](../experiences/co-op/tethered-heart/) 与 [为你引航](../experiences/co-op/lighthouse-passage/) | 建立热座交接、网格联合状态、连续双丝带约束和非对称领航四种合作样板 |
 | 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/) 与 [心动拔河](../experiences/versus/ribbon-tug/) | 建立抢跑判定，并补齐固定步长、同帧公平结算和持续双人输入样板 |
 
 根 `index.html` 现在是统一门户：直接双击时读取内置目录；通过启动器打开时读取本地 API，并显示局域网二维码。
@@ -70,11 +71,11 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、同机你画我猜、双光点归巢、同心牵引、反应力对决、心动拔河、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、同机你画我猜、双光点归巢、同心牵引、为你引航、反应力对决、心动拔河、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
-- 已执行：十个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机，心动拔河覆盖固定步长与公平双人输入，双光点归巢覆盖联合状态 BFS 与互相保持机关，同心牵引覆盖固定子步、双丝带约束与连续碰撞；
+- 已执行：十一个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机，心动拔河覆盖固定步长与公平双人输入，双光点归巢覆盖联合状态 BFS 与互相保持机关，同心牵引覆盖固定子步、双丝带约束与连续碰撞，为你引航覆盖非对称领航、暂态显露和同步靠港 Gate；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；
@@ -82,7 +83,7 @@
 - 已实现首个 C 级密封合作问答：和你一样，增加固定双选题库、双方私密作答、乱序状态门控与中性默契计分；
 - 已实现首个 C 级手机控制器实时对抗：心跳冲刺，增加主机权威高频输入、重复序号过滤与移动端控制面；
 - 已实现首个 B 级样板：回到那一天，增加精确浏览器依赖映射、本机照片 Gate 与对象 URL 生命周期；
-- 正在建设：A 级非对称“为你引航”（灯塔与小船）；其后进入 D 级本地语音能力验证；
+- 下一阶段：D 级本地语音能力验证；
 - 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
 
 ## 下一轮选题时的最小输入

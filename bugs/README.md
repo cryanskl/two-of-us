@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [为你引航：圆心在世界内但暗礁圆周越界](./2026-07-17-lighthouse-reef-radius-out-of-bounds.md)
 - [同心牵引：丝带投影把圆重新推入软垫](./2026-07-17-tether-constraint-reintroduces-collision.md)
 - [同心牵引：验证轨迹忽略吊坠滞后而卡在第二幕](./2026-07-17-tether-route-payload-lag.md)
 - [ImageGen 图集去绿：系统 Python 缺 Pillow，FFmpeg 进程挂起](./2026-07-17-imagegen-chroma-toolchain.md)

@@ -1,10 +1,12 @@
 # 「为你引航」产品、视觉与实现规格
 
-> 状态：规格与视觉冻结，待实现
+> 状态：已实现并验收
 > 日期：2026-07-17
 > 目标等级：A（直接双击 `index.html`）
 > 主分类：双人合作
 > 设备：单设备同屏，键盘或双人多点触控
+
+实现验收见 [`31-lighthouse-passage-verification.md`](./31-lighthouse-passage-verification.md)。
 
 ## 1. Brainstorm 结论
 
