@@ -2,6 +2,8 @@
 **/.DS_Store
 node_modules/
 tmp/
+.playwright-cli/
+output/playwright/
 
 # D 级模型只安装到用户数据目录，不进入源码仓库。
 capabilities/speech-whisper-base/models/ggml-base.bin

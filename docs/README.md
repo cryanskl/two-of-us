@@ -51,6 +51,7 @@
 | [43-instant-photo-spec.md](./43-instant-photo-spec.md) | A 级“拍立得显影”的单图配置、交替摇卡、分层显影与即时相机视觉规格 |
 | [44-instant-photo-verification.md](./44-instant-photo-verification.md) | “拍立得显影”的双输入实玩、DOM 隐私、缺图回退、响应式与视觉忠实度验收记录 |
 | [45-number-target-spec.md](./45-number-target-spec.md) | A 级“数字凑靶”的可达目标生成、六步蛇形草拟、算式距离计分与纸上靶场视觉规格 |
+| [46-number-target-verification.md](./46-number-target-verification.md) | “数字凑靶”的完整三局实玩、键盘/触控、响应式与视觉忠实度验收记录 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 

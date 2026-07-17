@@ -8,6 +8,10 @@
 
 ## 已记录
 
+- [数字凑靶：平局文案容易被误读为双方各得一分](./2026-07-17-number-target-tie-copy.md)
+- [数字凑靶：空算式槽被渲染为已填写实线](./2026-07-17-number-target-empty-slot-border.md)
+- [数字凑靶：开局后焦点停在页面而不是首张可选牌](./2026-07-17-number-target-drafting-focus.md)
+- [数字凑靶：新测试误用 CommonJS，无法在 ESM 仓库执行](./2026-07-17-number-target-test-esm-mode.md)
 - [拍立得显影：相纸弹出后方向键没有接收焦点](./2026-07-17-instant-photo-keyboard-focus.md)
 - [默契电报码：空码本侧轨覆盖 hidden 语义](./2026-07-17-telegraph-hidden-semantics.md)
 - [默契电报码：缺失 favicon 导致浏览器控制台 404](./2026-07-17-telegraph-favicon-404.md)

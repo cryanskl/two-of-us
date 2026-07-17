@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [可达随机题面：先生成材料，再从材料派生目标](./2026-07-17-reachable-random-puzzle-generation.md)
 - [交替手势：用区域状态压缩高频 Pointer 事件](./2026-07-17-alternating-pointer-zones.md)
 - [阶段拥有 DOM 与播放 token 的热座秘密模型](./2026-07-17-stage-owned-dom-and-playback-tokens.md)
 - [可组合惊喜：先约束笛卡尔积，再做逐步揭晓](./2026-07-17-composable-surprise-progressive-disclosure.md)
