@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [气球胆量局：窄屏隐私说明贴近主动作描边](./2026-07-17-balloon-dare-privacy-spacing.md)
 - [节拍接力：320px 窄屏拍键低于触控高度承诺](./2026-07-17-rhythm-relay-narrow-touch-height.md)
 - [语音 WASM 缺堆导出、目标识别与预热线程池](./2026-07-17-speech-wasm-build-runtime-contract.md)
 - [浏览器资产更新会误判已安装模型不兼容](./2026-07-17-capability-receipt-non-artifact-drift.md)
