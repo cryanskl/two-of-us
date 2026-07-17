@@ -390,6 +390,8 @@ function browserAssetHeaders(asset, contentLength) {
     "cache-control": "private, no-store",
     "x-content-type-options": "nosniff",
     "cross-origin-resource-policy": "same-origin",
+    "cross-origin-embedder-policy": "require-corp",
+    "origin-agent-cluster": "?1",
   };
 }
 

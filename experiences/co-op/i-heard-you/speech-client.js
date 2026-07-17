@@ -20,7 +20,12 @@ export function createSpeechClient(capability, { WorkerCtor = globalThis.Worker 
     if (data.type === "error") request.reject(Object.assign(new Error(data.error.message), data.error));
     else request.resolve(data);
   });
-  worker.addEventListener("error", () => rejectAll("本地语音 Worker 意外停止。"));
+  worker.addEventListener("error", (event) => {
+    const detail = typeof event?.message === "string" && event.message.trim()
+      ? event.message.trim().slice(0, 180)
+      : "本地语音 Worker 意外停止。";
+    rejectAll(detail);
+  });
 
   return Object.freeze({
     initialize() {

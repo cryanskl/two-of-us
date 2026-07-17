@@ -22,6 +22,15 @@ test("speech client rejects incomplete public capability DTO", () => {
   );
 });
 
+test("speech client preserves a bounded worker startup error for local diagnosis", async () => {
+  const client = createSpeechClient(capability(), { WorkerCtor: FakeWorker });
+  const pending = client.initialize();
+  FakeWorker.last.listeners.get("error")({ message: `ReferenceError: broken ${"x".repeat(300)}` });
+  await assert.rejects(pending, (error) => error.message.startsWith("ReferenceError: broken")
+    && error.message.length === 180);
+  client.terminate();
+});
+
 function capability() {
   return {
     artifacts: [{ id: "ggml-base", bytes: 12, href: "/api/capabilities/speech/artifacts/model" }],

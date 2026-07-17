@@ -189,6 +189,8 @@ test("browser asset endpoint serves only manifest-whitelisted verified files", a
   assert.deepEqual(Buffer.from(await complete.arrayBuffer()), browserPayload);
   assert.equal(complete.headers.get("content-type"), "text/javascript; charset=utf-8");
   assert.equal(complete.headers.get("cross-origin-resource-policy"), "same-origin");
+  assert.equal(complete.headers.get("cross-origin-embedder-policy"), "require-corp");
+  assert.equal(complete.headers.get("origin-agent-cluster"), "?1");
   assert.equal(complete.headers.get("x-content-type-options"), "nosniff");
 
   const head = await fetch(assetUrl, { method: "HEAD" });
