@@ -40,6 +40,7 @@
 | [32-local-speech-and-i-heard-you-spec.md](./32-local-speech-and-i-heard-you-spec.md) | 首个 D 级本地语音能力包与“我听见了”的模型、安装、隐私、来源和分批提交规格 |
 | [33-i-heard-you-design-and-verification.md](./33-i-heard-you-design-and-verification.md) | “我听见了”的视觉方向、真实模型、固定 WAV 推理与阶段验收记录 |
 | [34-rhythm-relay-spec.md](./34-rhythm-relay-spec.md) | A 级“节拍接力”的双人序列记忆、交接遮挡、Web Audio 与验收规格 |
+| [35-rhythm-relay-verification.md](./35-rhythm-relay-verification.md) | “节拍接力”的完整实玩、响应式、DOM 隐私与视觉忠实度验收记录 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |

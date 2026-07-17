@@ -56,6 +56,7 @@
 - [D 级本地语音能力包与“我听见了”规格](./docs/32-local-speech-and-i-heard-you-spec.md)
 - [“我听见了”设计与验收记录](./docs/33-i-heard-you-design-and-verification.md)
 - [A 级节拍接力规格](./docs/34-rhythm-relay-spec.md)
+- [A 级节拍接力验收记录](./docs/35-rhythm-relay-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)

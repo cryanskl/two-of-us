@@ -16,6 +16,8 @@
 
 Web Audio 只是渐进增强：关闭声音或浏览器不支持音频时，纸带与按键高亮仍提供完整信息。页面切走或失焦会取消正在播放的计时器，回来后必须明确从头重播。
 
+完整的自动检查、Chrome 实玩、响应式和视觉忠实度证据见 [`docs/35-rhythm-relay-verification.md`](../../../docs/35-rhythm-relay-verification.md)。
+
 ## 本地优先与隐私
 
 - 公网依赖：无；第三方运行依赖：无；
