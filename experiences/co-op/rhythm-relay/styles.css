@@ -341,7 +341,7 @@ noscript { display: block; margin-top: 20px; color: #ffd0c8; text-align: center;
   .machine-readout { grid-template-columns: 1fr; }
   .machine-readout strong { justify-self: center; }
   .beat-controls { grid-template-columns: 1fr; gap: 9px; }
-  .beat-button { min-height: 58px; }
+  .beat-button { min-height: 64px; }
   .privacy { font-size: .66rem; }
 }
 

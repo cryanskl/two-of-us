@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [节拍接力：320px 窄屏拍键低于触控高度承诺](./2026-07-17-rhythm-relay-narrow-touch-height.md)
 - [语音 WASM 缺堆导出、目标识别与预热线程池](./2026-07-17-speech-wasm-build-runtime-contract.md)
 - [浏览器资产更新会误判已安装模型不兼容](./2026-07-17-capability-receipt-non-artifact-drift.md)
 - [语音 Worker 资产缺少 COEP 导致 pthread 启动失败](./2026-07-17-speech-worker-missing-coep.md)
