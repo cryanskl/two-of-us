@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "bindingProtocolVersion": 1,
+  "source": {
+    "whisperVersion": "1.8.6",
+    "whisperRevision": "23ee03506a91ac3d3f0071b40e66a430eebdfa1d",
+    "bindingSha256": "be840cf136f91a208e345b7e974ee6a1555d5084473aa36d1249e12b96011640",
+    "cmakeSha256": "8bdeb11c9b4461017d8d2784acea4064b36d2b774780be4c5783ef78b5e4a066"
+  },
+  "toolchain": {
+    "emsdkVersion": "4.0.23",
+    "emsdkRevision": "c0bb220cb6e6f4e0fabb6f6db9efd53390ef5e56",
+    "emscriptenReleaseRevision": "aaa43392544d695232b70eda706d751f18980c2a",
+    "emscriptenRevision": "7a5d93b50f6a3a35e85a0d2fc9e667b8498e6aed"
+  },
+  "assets": [
+    {
+      "id": "engine-js",
+      "path": "browser/speech-whisper.js",
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 95794,
+      "sha256": "5982cab612133830342320bb247511ab6bc19ed7aaa566daff3e3532c5c5c942"
+    },
+    {
+      "id": "engine-wasm",
+      "path": "browser/speech-whisper.wasm",
+      "contentType": "application/wasm",
+      "bytes": 1251026,
+      "sha256": "48ef5f6dfce8ddeacd494637ab4cdfc871792d13e96b521596131a391355751f"
+    }
+  ]
+}

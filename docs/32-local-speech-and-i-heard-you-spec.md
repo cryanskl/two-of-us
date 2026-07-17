@@ -257,7 +257,7 @@ catalog 条目声明：
 ### 里程碑 B：WASM 构建与服务边界
 
 - B1（已完成）：加入脱敏能力状态 API、loopback 限制与白名单模型路由；
-- B2：从固定 whisper.cpp tag 构建并记录 Emscripten 版本与产物哈希；
+- B2a（已完成）：从固定 whisper.cpp tag 构建自有结构化绑定，提交 JS/WASM、Emscripten 许可证与完整产物哈希；
 - B2：加入白名单引擎路由与 D 级作用域响应头；
 - B3：完成单实例模型复用与结构化 Worker 协议；
 - 用固定短 WAV 做断网自检；
