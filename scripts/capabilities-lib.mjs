@@ -456,9 +456,6 @@ function validateReceipt(receipt, manifestRecord) {
     || receipt.protocolVersion !== manifest.protocolVersion) {
     return { state: "incompatible", code: "RECEIPT_INCOMPATIBLE", message: "receipt 协议版本不兼容。" };
   }
-  if (receipt.manifestSha256 !== manifestRecord.sha256) {
-    return { state: "incompatible", code: "MANIFEST_CHANGED", message: "已安装能力与当前 manifest 不一致。" };
-  }
   if (receipt.artifacts.length !== manifest.artifacts.length) {
     return { state: "corrupt", code: "RECEIPT_ARTIFACTS_MISMATCH", message: "receipt 的 artifact 清单不完整。" };
   }

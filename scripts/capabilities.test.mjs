@@ -129,6 +129,21 @@ test("doctor detects corrupt artifacts", async (context) => {
   assert.equal(status.code, "ARTIFACT_HASH_MISMATCH");
 });
 
+test("non-artifact manifest updates keep an installed capability available", async (context) => {
+  const fixture = await createFixture(context);
+  const manifest = makeManifest(fixture.url("/ok"));
+  await writeManifest(fixture.rootDir, manifest);
+  await installCapability({ rootDir: fixture.rootDir, dataDir: fixture.dataDir, id: manifest.id });
+
+  manifest.engine.version = "1.0.1";
+  manifest.requirements.recommendedMemoryMiB = 128;
+  await writeManifest(fixture.rootDir, manifest);
+
+  const status = await doctorCapability({ rootDir: fixture.rootDir, dataDir: fixture.dataDir, id: manifest.id });
+  assert.equal(status.state, "available");
+  assert.equal(status.code, "OK");
+});
+
 test("doctor distinguishes missing, corrupt, and incompatible installs", async (context) => {
   const fixture = await createFixture(context);
   const manifest = makeManifest(fixture.url("/ok"));
