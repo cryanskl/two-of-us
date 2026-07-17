@@ -53,6 +53,7 @@
 - [A 级同心牵引验收记录](./docs/28-tethered-heart-verification.md)
 - [A 级为你引航规格](./docs/29-lighthouse-passage-spec.md)
 - [A 级为你引航验收记录](./docs/31-lighthouse-passage-verification.md)
+- [D 级本地语音能力包与“我听见了”规格](./docs/32-local-speech-and-i-heard-you-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)

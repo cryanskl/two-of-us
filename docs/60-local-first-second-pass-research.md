@@ -305,6 +305,8 @@ A 级负责“送给你”，C 级负责“我们一起”，D 级负责“只�
 
 优先次序建议为：MediaPipe 手势/姿态 → sherpa-onnx 或 whisper.cpp 语音 → Transformers.js 小模型 → WebLLM → ComfyUI。每一步先完成能力包、模型 manifest、硬件检查和清理机制，再交给作品使用。
 
+2026-07-17 进入首个 D 级实作前重新复核后，选定 `whisper.cpp v1.8.6` 的浏览器 WASM 与多语种 `ggml-base`，先实现短句本地转写能力包和双人倾听作品“我听见了”。本轮没有采用 sherpa-onnx：其引擎能力完整，但当前目标是自由短句而非关键词，且拟评估的中英 KWS 模型没有随发布包提供独立许可证文本。固定模型、哈希、安装、隐私和借鉴边界见 [`32-local-speech-and-i-heard-you-spec.md`](./32-local-speech-and-i-heard-you-spec.md)。
+
 ## 7. 许可证、运行时、模型和素材的四层 Gate
 
 ### 7.1 代码许可证
