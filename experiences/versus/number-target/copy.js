@@ -10,7 +10,7 @@
   // 约束：平局保持中性；胜者只描述距离，不评价聪明、数学能力或关系。
   function describeRound(result) {
     if (!result || result.winner === null) {
-      return "两边离靶心一样近，这一局各自守住一分。";
+      return "两边离靶心一样近，这一局都不加分。";
     }
     const name = PLAYER_NAMES[result.winner];
     return result.exact[result.winner]
