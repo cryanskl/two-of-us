@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [私密音频管线要显式转移所有权](./2026-07-17-private-audio-ownership-lifecycle.md)
 - [在应用 Worker 中加载 Emscripten pthread 模块](./2026-07-17-nested-emscripten-worker-entry.md)
 - [结构化 WASM 绑定比解析示例输出更稳定](./2026-07-17-structured-wasm-binding-boundary.md)
 - [本地能力运行时：公开状态与大文件必须分层](./2026-07-17-capability-runtime-trust-boundary.md)

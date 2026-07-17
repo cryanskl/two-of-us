@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f4efe4">
+    <title>我听见了 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="masthead">
+        <a class="back" href="../../../index.html" aria-label="返回 Two of Us">← Two of Us</a>
+        <p id="progress" class="progress">本机私密语音</p>
+      </header>
+
+      <section id="gate" class="gate" aria-labelledby="gate-title">
+        <p class="kicker">D · LOCAL SPEECH</p>
+        <h1 id="gate-title">我听见了</h1>
+        <p id="gate-copy" class="lead">正在检查这台电脑的本地语音能力。</p>
+        <div id="gate-action" class="gate-action">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>只检查本机，不会上传声音</span>
+        </div>
+      </section>
+
+      <section id="experience" class="experience" hidden aria-labelledby="title">
+        <div class="title-block">
+          <p id="round-label" class="round-label">1 / 2</p>
+          <h1 id="title">我听见了</h1>
+          <div class="heart-rule" aria-hidden="true"><span></span><b>♥</b><span></span></div>
+          <p id="prompt" class="prompt"></p>
+        </div>
+
+        <div class="sound-bridge" aria-hidden="true">
+          <svg viewBox="0 0 1000 84" preserveAspectRatio="none">
+            <path class="voice voice-coral" d="M0 43 C80 5 130 78 215 40 S340 12 430 42 C455 52 470 52 488 43"></path>
+            <path class="voice voice-sage" d="M1000 43 C920 5 870 78 785 40 S660 12 570 42 C545 52 530 52 512 43"></path>
+            <circle cx="492" cy="43" r="5" class="dot-coral"></circle>
+            <circle cx="508" cy="43" r="5" class="dot-sage"></circle>
+          </svg>
+        </div>
+
+        <div id="stage" class="stage" aria-live="polite"></div>
+        <p class="privacy"><span aria-hidden="true">⌂</span> 声音只留在这台电脑，确认后不保存录音</p>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

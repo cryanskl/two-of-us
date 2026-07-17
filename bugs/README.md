@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [语音录音清理顺序会清空待转写 PCM 或泄漏半初始化轨道](./2026-07-17-speech-recorder-cleanup-order.md)
 - [Emscripten pthread 误把外层转写 Worker 当作线程入口](./2026-07-17-emscripten-pthread-outer-worker-entry.md)
 - [未限定的测试发现误入 tmp 工具链](./2026-07-17-unscoped-test-discovery-enters-tmp-toolchain.md)
 - [缺失能力状态隐藏模型体积](./2026-07-17-missing-capability-hidden-download-size.md)
