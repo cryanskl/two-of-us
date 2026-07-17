@@ -30,4 +30,4 @@ createSpeechWhisperModule({
 - Worker 协议测试断言 `mainScriptUrlOrBlob` 等于 `engine-js` 白名单 URL；
 - 断言 `.wasm` 解析到 `engine-wasm` 白名单 URL；
 - 外部 origin 与路径变体在调用 `importScripts` 前被拒绝；
-- 后续真实模型自检还需在 Chrome 中确认 pthread 创建与转写完成。
+- Chrome 150 中固定 JFK WAV 已完成真实模型转写，证明外层 Worker、固定引擎入口与 pthread 子 Worker 能共同运行。

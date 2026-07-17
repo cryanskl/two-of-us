@@ -28,15 +28,15 @@
       "id": "engine-js",
       "path": "browser/speech-whisper.js",
       "contentType": "text/javascript; charset=utf-8",
-      "bytes": 95794,
-      "sha256": "5982cab612133830342320bb247511ab6bc19ed7aaa566daff3e3532c5c5c942"
+      "bytes": 96254,
+      "sha256": "5670417fb5f1c291502f03633c8ae6e2e81de37d37777edac20c1a00d80cef60"
     },
     {
       "id": "engine-wasm",
       "path": "browser/speech-whisper.wasm",
       "contentType": "application/wasm",
-      "bytes": 1251026,
-      "sha256": "48ef5f6dfce8ddeacd494637ab4cdfc871792d13e96b521596131a391355751f"
+      "bytes": 1253750,
+      "sha256": "bdbc4060e822a5be51c79c2e05b49cd7e660e454cde8f84a7339fb08e3dd8362"
     },
     {
       "id": "transcriber-worker",

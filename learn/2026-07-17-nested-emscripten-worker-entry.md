@@ -13,8 +13,10 @@
 - 创建模块时应把固定引擎 URL 传给 `mainScriptUrlOrBlob`；
 - WASM 地址继续通过 `locateFile` 指向白名单资源；
 - 顶层文档必须有 COOP/COEP，模型与引擎资源还要满足同源或 CORP；
+- 被作为 pthread 入口的引擎脚本响应自身也要带 COEP，不能只隔离顶层 HTML；
+- 同步推理前预热有界 pthread 池，避免动态启动与阻塞调用互相等待；
 - 隔离响应头应按作品路径最小化作用域，避免无意改变其他页面。
 
 ## 验证方式
 
-单元测试可以用虚拟 Worker 环境捕获模块工厂参数和资源 URL；浏览器 Gate 仍需检查 `crossOriginIsolated === true`、pthread 实际创建、推理完成，以及 Network 中没有非 localhost 请求。
+单元测试可以用虚拟 Worker 环境捕获模块工厂参数和资源 URL；浏览器 Gate 仍需检查 `crossOriginIsolated === true`、pthread 实际创建、固定非私人 WAV 推理完成，以及 Network 中没有非 localhost 请求。

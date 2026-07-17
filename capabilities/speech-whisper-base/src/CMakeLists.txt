@@ -15,6 +15,11 @@ set(WHISPER_BUILD_SERVER OFF CACHE BOOL "" FORCE)
 set(GGML_NATIVE OFF CACHE BOOL "" FORCE)
 set(GGML_OPENMP OFF CACHE BOOL "" FORCE)
 
+# Emscripten 4.0.23 reports an x86 processor to CMake. whisper.cpp uses this
+# value to select its WebAssembly quantized kernels, so make the target explicit
+# before adding the fixed upstream source tree.
+set(CMAKE_SYSTEM_PROCESSOR wasm32)
+
 add_subdirectory("${WHISPER_CPP_SOURCE}" whisper-cpp EXCLUDE_FROM_ALL)
 
 add_executable(speech-whisper emscripten.cpp)
@@ -25,6 +30,7 @@ target_link_options(speech-whisper PRIVATE
     --bind
     -pthread
     -sUSE_PTHREADS=1
+    -sPTHREAD_POOL_SIZE=4
     -sPTHREAD_POOL_SIZE_STRICT=0
     -sINITIAL_MEMORY=512MB
     -sMAXIMUM_MEMORY=2000MB
@@ -33,7 +39,7 @@ target_link_options(speech-whisper PRIVATE
     -sMODULARIZE=1
     -sEXPORT_NAME=createSpeechWhisperModule
     -sENVIRONMENT=worker
-    "-sEXPORTED_RUNTIME_METHODS=['FS']"
+    "-sEXPORTED_RUNTIME_METHODS=['FS','HEAPU8']"
 )
 
 set_target_properties(speech-whisper PROPERTIES

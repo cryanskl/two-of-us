@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [浏览器 pthread 语音构建要验证整条运行契约](./2026-07-17-browser-pthread-speech-build-contract.md)
 - [私密音频管线要显式转移所有权](./2026-07-17-private-audio-ownership-lifecycle.md)
 - [在应用 Worker 中加载 Emscripten pthread 模块](./2026-07-17-nested-emscripten-worker-entry.md)
 - [结构化 WASM 绑定比解析示例输出更稳定](./2026-07-17-structured-wasm-binding-boundary.md)

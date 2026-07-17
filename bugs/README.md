@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [语音 WASM 缺堆导出、目标识别与预热线程池](./2026-07-17-speech-wasm-build-runtime-contract.md)
+- [浏览器资产更新会误判已安装模型不兼容](./2026-07-17-capability-receipt-non-artifact-drift.md)
+- [语音 Worker 资产缺少 COEP 导致 pthread 启动失败](./2026-07-17-speech-worker-missing-coep.md)
 - [语音录音清理顺序会清空待转写 PCM 或泄漏半初始化轨道](./2026-07-17-speech-recorder-cleanup-order.md)
 - [Emscripten pthread 误把外层转写 Worker 当作线程入口](./2026-07-17-emscripten-pthread-outer-worker-entry.md)
 - [未限定的测试发现误入 tmp 工具链](./2026-07-17-unscoped-test-discovery-enters-tmp-toolchain.md)

@@ -2,7 +2,7 @@
 
 `speech-whisper-base@1` 是 Two of Us 的可选本地语音转写能力。它为 D 级作品提供多语种 Whisper base 模型，并由浏览器中的 whisper.cpp WASM Worker 完成本机推理；首个使用者是「我听见了」。
 
-当前目录已经从固定源码构建并提交 WASM/JS 引擎资产，同时用 [`browser-build.json`](./browser-build.json) 记录源码、工具链、字节数和 SHA-256。结构化 Worker 协议与 D 级隔离响应头也已完成；作品 UI 与端到端 Gate 仍是后续里程碑，在它们完成前不应宣称「我听见了」已经可运行或已在 macOS / Windows 验收。
+当前目录已经从固定源码构建并提交 WASM/JS 引擎资产，同时用 [`browser-build.json`](./browser-build.json) 记录源码、工具链、字节数和 SHA-256。结构化 Worker 协议、D 级隔离响应头和固定 WAV 的真实 Chrome 转写均已完成；macOS 真人麦克风两轮 Gate 与 Windows x64 实测仍必须分别完成后才可宣称对应平台全部验收。
 
 ## 冻结版本
 
@@ -19,8 +19,8 @@
 | 模型 SHA-256 | `60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe` |
 | 模型表 SHA-1 | `465707469ff3a37a2b9b8d8f89f2f99de7299dac`（交叉证据，不作安装校验） |
 | Emscripten | `4.0.23` / `7a5d93b50f6a3a35e85a0d2fc9e667b8498e6aed` |
-| 引擎 JS | `95794` bytes / `5982cab6…5c5c942` |
-| 引擎 WASM | `1251026` bytes / `48ef5f6d…355751f` |
+| 引擎 JS | `96254` bytes / `5670417f…0cef60` |
+| 引擎 WASM | `1253750` bytes / `bdbc4060…dd8362` |
 | 建议内存 | `8192 MiB` |
 
 manifest 中的 SHA-256 来自固定 revision 的 Git LFS 对象 `oid sha256`，并与该 revision 下载响应的 `x-linked-etag` 一致；安装器仍会对实际收到的 `147951465` 字节文件重新计算 SHA-256，不能只信任 HTTP 头。`manifest.json` 的 `model.sha256` 与 `artifacts[].sha256` 必须始终同步。
@@ -59,7 +59,7 @@ source tmp/emsdk-4.0.23/emsdk_env.sh
 node capabilities/speech-whisper-base/build-browser.mjs
 ```
 
-构建脚本先核对 whisper.cpp 完整 revision 与 Emscripten 版本，再把产物写到忽略的 `tmp/speech-whisper-browser-build/browser/` 并打印哈希。只有产物与 [`browser-build.json`](./browser-build.json) 一致时才可更新 `browser/`。普通使用者不需要 Emscripten、CMake、Python 或 C++ 工具链。
+构建脚本先核对 whisper.cpp 完整 revision 与 Emscripten 版本，再把产物写到忽略的 `tmp/speech-whisper-browser-build/browser/` 并打印哈希。CMake 显式选择 `wasm32` 量化内核、导出 `HEAPU8` 并预热 4 个 pthread；只有产物与 [`browser-build.json`](./browser-build.json) 一致时才可更新 `browser/`。普通使用者不需要 Emscripten、CMake、Python 或 C++ 工具链。
 
 本仓库的 [`src/emscripten.cpp`](./src/emscripten.cpp) 是面向作品协议的薄绑定：借鉴官方 `whisper.wasm` 示例将 JavaScript `Float32Array` 安全复制到 WASM 内存的技术方法，但没有复制其页面、文案或控制台解析方式。绑定在应用 Worker 中同步执行，返回结构化的文本、分段时间和推理耗时，并复用单个已加载模型。
 
@@ -74,6 +74,17 @@ dispose    → disposed
 ```
 
 `init` 把模型写入 WASM 内存文件系统并只初始化一次；后续两轮转写复用同一个 context。`transcribe` 只接受 `Float32Array` 且最多 `192000` 个 16 kHz 样本。`dispose` 释放 whisper context、删除 WASM 内存中的模型文件，页面随后应终止 Worker。Worker 不使用控制台转写、localStorage、IndexedDB、Cache API、服务端日志或公网 fallback。
+
+## 真实浏览器基线
+
+2026-07-17 使用 Chrome 150、已安装且经 doctor 校验的固定 `ggml-base.bin`，转写 whisper.cpp `v1.8.6` 源码树自带的 JFK WAV（只作忽略目录中的测试输入，不重新分发）：
+
+- 16 kHz、单声道、PCM16，176000 个样本，约 11 秒；
+- 输出完整的 `And so my fellow Americans ... ask what you can do for your country.`；
+- whisper 推理 `52307 ms`，含模型加载总耗时 `53434 ms`；
+- `crossOriginIsolated === true`，`SharedArrayBuffer` 可用。
+
+当时机器另有明显 CPU 负载，所以该数字是一次受压环境的保守观测，不是跨设备性能承诺。固定音频 Gate 证明了本地模型、WASM SIMD、pthread、Worker 协议与资源路由；它不替代用户本人对麦克风权限和两轮中文交互的验收。
 
 ## 许可证文件
 
