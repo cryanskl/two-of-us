@@ -26,6 +26,7 @@
 | [18-compatibility-quiz-design.md](./18-compatibility-quiz-design.md) | “和你一样”的桌面作答、揭晓、移动端状态与视觉令牌规格 |
 | [19-compatibility-quiz-verification.md](./19-compatibility-quiz-verification.md) | “和你一样”的自动检查、Chrome 双端流程、响应式与视觉忠实度证据 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
+| [21-ribbon-tug-spec.md](./21-ribbon-tug-spec.md) | A 级“心动拔河”的固定步长、公平输入 Gate、视觉方向与验收规格 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
