@@ -46,6 +46,7 @@
 | [38-future-ticket-spec.md](./38-future-ticket-spec.md) | A 级“未来车票”的三次盲选、逐孔揭晓、本地配置与铁路票据视觉规格 |
 | [39-future-ticket-verification.md](./39-future-ticket-verification.md) | “未来车票”的完整签发流程、DOM 隐私、原生尺寸响应式与视觉忠实度证据 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
+| [41-telegraph-codebook-spec.md](./41-telegraph-codebook-spec.md) | A 级“默契电报码”的六码本、热座交接、三拍编码/译码与深夜电台视觉规格 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 
