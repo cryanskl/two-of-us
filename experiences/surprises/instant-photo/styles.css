@@ -1,0 +1,612 @@
+:root {
+  color-scheme: light;
+  --sky: #c4d9e1;
+  --navy: #102d55;
+  --coral: #ed6555;
+  --paper: #f7f0e2;
+  --butter: #efc94c;
+  --muted: #5f7887;
+  --shadow: rgba(16, 45, 85, .22);
+  font-family: "Avenir Next", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--sky);
+  color: var(--navy);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--sky);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--sky);
+}
+
+button,
+a,
+.instant-photo {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+.instant-photo:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 5px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.app {
+  width: min(1504px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 46px) clamp(20px, 3.3vw, 54px) 24px;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: clamp(.82rem, 1.2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.topbar a {
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.topbar p {
+  margin: 0;
+}
+
+#photo-status {
+  font-size: clamp(.9rem, 1.7vw, 1.3rem);
+}
+
+.hero {
+  position: relative;
+  z-index: 5;
+  max-width: 620px;
+  margin-top: clamp(22px, 3.2vw, 44px);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Arial Narrow", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: clamp(4rem, 7.4vw, 7.5rem);
+  font-weight: 950;
+  line-height: .92;
+  letter-spacing: -.055em;
+}
+
+.hero p {
+  margin: 18px 0 0;
+  font-size: clamp(1rem, 1.7vw, 1.38rem);
+  font-weight: 650;
+  letter-spacing: .04em;
+}
+
+.studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, .65fr);
+  gap: clamp(28px, 3vw, 54px);
+  min-height: 676px;
+  margin-top: clamp(-42px, -2vw, -18px);
+}
+
+.camera-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 676px;
+}
+
+.camera {
+  position: absolute;
+  z-index: 1;
+  left: -6%;
+  bottom: -8%;
+  display: block;
+  width: min(820px, 90%);
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.instant-photo {
+  --drag-x: 0px;
+  --drag-rotate: 0deg;
+  position: absolute;
+  z-index: 3;
+  top: -8px;
+  left: 62%;
+  width: clamp(300px, 29vw, 410px);
+  min-height: 500px;
+  padding: 18px 18px 24px;
+  border: 1px solid rgba(16, 45, 85, .72);
+  border-radius: 5px;
+  background: var(--paper);
+  box-shadow: 12px 14px 0 var(--shadow);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  transform: translateX(calc(-50% + var(--drag-x))) rotate(var(--drag-rotate));
+  transform-origin: 50% 78%;
+  transition: transform 180ms cubic-bezier(.22, .8, .28, 1), box-shadow 180ms ease;
+}
+
+.instant-photo.is-grabbing {
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 16px 18px 0 rgba(16, 45, 85, .18);
+}
+
+.instant-photo.is-ejecting {
+  animation: eject-photo 720ms cubic-bezier(.18, .75, .18, 1) both;
+  cursor: default;
+}
+
+.instant-photo.is-complete {
+  cursor: default;
+}
+
+.photo-window {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(16, 45, 85, .45);
+  background: #e6e4d9;
+}
+
+.photo-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity 260ms ease, filter 260ms ease;
+}
+
+.developing-veil {
+  position: absolute;
+  inset: 0;
+  background: #eeeade;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.photo-loading,
+.photo-error {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.photo-error {
+  color: #9a372e;
+}
+
+.photo-copy {
+  min-height: 80px;
+  padding: 18px 6px 0;
+  text-align: left;
+}
+
+.photo-copy h2,
+.photo-copy p,
+.photo-copy blockquote {
+  margin: 0;
+}
+
+.photo-copy h2 {
+  font-family: "STKaiti", "KaiTi", serif;
+  font-size: clamp(1.28rem, 1.8vw, 1.62rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.photo-stamp {
+  margin-top: 4px !important;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  font-size: .7rem;
+  letter-spacing: .04em;
+}
+
+.photo-caption {
+  margin-top: 11px !important;
+  font-size: .86rem;
+  line-height: 1.65;
+}
+
+.photo-copy blockquote {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(16, 45, 85, .3);
+  color: #9a372e;
+  font-family: "STKaiti", "KaiTi", serif;
+  font-size: .94rem;
+  line-height: 1.6;
+}
+
+.controls {
+  position: relative;
+  z-index: 5;
+  align-self: center;
+  padding: 30px 0 12px;
+}
+
+.stage-copy h2,
+.stage-copy p {
+  margin: 0;
+}
+
+.stage-copy h2 {
+  font-size: clamp(1.65rem, 2.7vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -.025em;
+}
+
+.stage-copy p {
+  max-width: 32rem;
+  margin-top: 14px;
+  color: #294968;
+  font-size: clamp(.92rem, 1.25vw, 1.05rem);
+  line-height: 1.75;
+}
+
+.primary-action {
+  min-width: 210px;
+  min-height: 54px;
+  margin-top: 26px;
+  padding: 13px 24px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  background: var(--coral);
+  color: #1f1f22;
+  font-size: .96rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  cursor: pointer;
+  box-shadow: 5px 6px 0 var(--navy);
+  transition: transform 90ms ease, box-shadow 90ms ease;
+}
+
+.primary-action:hover {
+  background: #f07867;
+}
+
+.primary-action:active {
+  transform: translate(3px, 4px);
+  box-shadow: 2px 2px 0 var(--navy);
+}
+
+.motion-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 24px;
+}
+
+.motion-track svg {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.motion-track > span {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  border-top: 2px dashed var(--navy);
+}
+
+.motion-track > span i {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 2px;
+  height: 18px;
+  background: var(--navy);
+}
+
+.studio[data-phase="intro"] .motion-track,
+.studio[data-phase="ejecting"] .motion-track,
+.studio[data-phase="complete"] .motion-track {
+  visibility: hidden;
+}
+
+.progress-panel {
+  padding: 18px 20px 20px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .12);
+  box-shadow: 4px 5px 0 rgba(16, 45, 85, .12);
+}
+
+.progress-panel p {
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: clamp(1rem, 1.7vw, 1.32rem);
+  font-weight: 700;
+}
+
+.progress-panel ol {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progress-panel li {
+  aspect-ratio: 1;
+  border: 1.5px solid var(--navy);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.progress-panel li.is-filled {
+  background: var(--navy);
+}
+
+.keyboard-hint {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0 0;
+  color: #294968;
+  font-size: .9rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.keyboard-hint svg {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.keyboard-hint svg path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.privacy {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: -10px 0 0;
+  color: #294968;
+  font-family: ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
+
+.privacy svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+noscript {
+  display: block;
+  margin-top: 12px;
+  color: #9a372e;
+}
+
+@keyframes eject-photo {
+  from {
+    opacity: .3;
+    transform: translateX(-50%) translateY(250px) scale(.62) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@media (max-width: 940px) {
+  .hero {
+    max-width: none;
+  }
+
+  .studio {
+    grid-template-columns: minmax(0, 1.25fr) minmax(270px, .75fr);
+  }
+
+  .instant-photo {
+    left: 57%;
+  }
+
+  .camera {
+    width: 105%;
+  }
+}
+
+@media (max-width: 720px) {
+  .app {
+    padding: 16px 16px 22px;
+    overflow: hidden;
+  }
+
+  .hero {
+    margin-top: 22px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 15vw, 5rem);
+  }
+
+  .hero p {
+    margin-top: 10px;
+    font-size: .92rem;
+  }
+
+  .studio {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    margin-top: 12px;
+  }
+
+  .camera-stage {
+    min-height: 555px;
+  }
+
+  .camera {
+    left: -20%;
+    bottom: -6%;
+    width: 140%;
+  }
+
+  .instant-photo {
+    top: 6px;
+    left: 50%;
+    width: min(82vw, 330px);
+    min-height: 415px;
+    padding: 13px 13px 18px;
+    box-shadow: 8px 10px 0 var(--shadow);
+  }
+
+  .photo-copy {
+    min-height: 66px;
+    padding-top: 12px;
+  }
+
+  .photo-copy h2 {
+    font-size: 1.22rem;
+  }
+
+  .photo-caption,
+  .photo-copy blockquote {
+    font-size: .78rem;
+  }
+
+  .controls {
+    order: 2;
+    padding: 12px 4px 4px;
+  }
+
+  .stage-copy h2 {
+    font-size: 1.65rem;
+  }
+
+  .motion-track {
+    margin: 20px 0 18px;
+  }
+
+  .motion-track svg {
+    flex-basis: 46px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .progress-panel {
+    padding: 14px 16px 16px;
+  }
+
+  .progress-panel ol {
+    gap: 7px;
+  }
+
+  .keyboard-hint {
+    margin-top: 16px;
+  }
+
+  .primary-action {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .privacy {
+    justify-content: center;
+    margin-top: 18px;
+    text-align: center;
+  }
+
+  .studio[data-phase="intro"] .camera-stage {
+    min-height: 360px;
+  }
+
+  .studio[data-phase="intro"] .controls {
+    margin-top: -26px;
+  }
+}
+
+@media (max-width: 360px) {
+  .topbar {
+    font-size: .75rem;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .camera-stage {
+    min-height: 520px;
+  }
+
+  .instant-photo {
+    width: 86vw;
+    min-height: 390px;
+  }
+
+  .progress-panel ol {
+    gap: 5px;
+  }
+
+  .keyboard-hint {
+    font-size: .78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .instant-photo,
+  .instant-photo.is-grabbing {
+    transform: translateX(-50%);
+  }
+}

@@ -93,6 +93,19 @@
       "networkRequired": false
     },
     {
+      "id": "instant-photo",
+      "title": "拍立得显影",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/instant-photo/index.html",
+      "readme": "experiences/surprises/instant-photo/README.md",
+      "description": "按下快门取出一张本地配置的相纸，交替左右摇动，让照片和写给对方的话逐层显影。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

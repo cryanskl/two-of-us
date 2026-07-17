@@ -59,6 +59,34 @@ test("future ticket keeps its file protocol and hidden-option boundary", async (
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
 });
 
+test("catalog exposes the installed A-level instant photo", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const instantPhoto = catalog.experiences.find((item) => item.id === "instant-photo");
+
+  assert.equal(instantPhoto.category, "surprise");
+  assert.equal(instantPhoto.level, "A");
+  assert.equal(instantPhoto.installed, true);
+  assert.equal(instantPhoto.networkRequired, false);
+  assert.match(instantPhoto.entry, /instant-photo\/index\.html$/);
+});
+
+test("instant photo keeps its file protocol and staged privacy boundary", async () => {
+  const root = new URL("../../experiences/surprises/instant-photo/", import.meta.url);
+  const [html, config, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(html, /那天，风刚刚好|某个慢下来的傍晚|下一张，换我们/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#c4d9e1" />
+    <title>拍立得显影 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← Two of Us</a>
+        <p id="photo-status">等待快门</p>
+      </nav>
+
+      <header class="hero">
+        <h1>拍立得显影</h1>
+        <p>有些画面，要慢慢才看得清。</p>
+      </header>
+
+      <section class="studio" aria-label="拍立得显影台">
+        <div class="camera-stage">
+          <img class="camera" src="./assets/camera.png" alt="一台珊瑚红即时相机" />
+          <article id="instant-photo" class="instant-photo" hidden tabindex="0" aria-label="待显影的相纸">
+            <div id="photo-window" class="photo-window" aria-live="polite"></div>
+            <div id="photo-copy" class="photo-copy"></div>
+          </article>
+        </div>
+
+        <aside class="controls" aria-live="polite">
+          <div id="stage-copy" class="stage-copy"></div>
+
+          <div class="motion-track" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img">
+              <circle cx="24" cy="24" r="21"></circle>
+              <path d="M28 14 18 24l10 10M19 24h16"></path>
+            </svg>
+            <span><i></i></span>
+            <svg viewBox="0 0 48 48" role="img">
+              <circle cx="24" cy="24" r="21"></circle>
+              <path d="m20 14 10 10-10 10m9-10H13"></path>
+            </svg>
+          </div>
+
+          <div id="progress-panel" class="progress-panel" hidden>
+            <p id="remaining">还差 9 次</p>
+            <ol id="progress-dots" aria-label="显影进度"></ol>
+          </div>
+
+          <p class="keyboard-hint">
+            <svg viewBox="0 0 42 30" aria-hidden="true">
+              <rect x="1" y="1" width="40" height="28" rx="3"></rect>
+              <path d="M7 8h5v5H7zm8 0h5v5h-5zm8 0h5v5h-5zm8 0h5v5h-5zM7 17h18v5H7zm21 0h8v5h-8z"></path>
+            </svg>
+            <span>也可以用键盘 ← → 键</span>
+          </p>
+        </aside>
+      </section>
+
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+        </svg>
+        照片只从本地读取 · 不联网 · 不保存
+      </p>
+      <noscript>需要启用 JavaScript 才能让照片显影。</noscript>
+    </main>
+  </body>
+</html>
