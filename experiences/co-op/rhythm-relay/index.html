@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#17233f" />
+    <title>节拍接力 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← Two of Us</a>
+        <p id="relay-status">双人接力 · 3 → 10</p>
+        <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="false">声音开</button>
+      </nav>
+
+      <header class="hero">
+        <h1>节拍接力</h1>
+        <p id="hero-copy">把这一段记住，再交给对方</p>
+      </header>
+
+      <section class="machine" aria-label="节拍磁带机">
+        <div class="cassette" aria-hidden="true">
+          <div class="reel reel-coral"><i></i><i></i><i></i></div>
+          <div class="cassette-center"><span>TWO OF US</span><b>LOCAL FIRST</b></div>
+          <div class="reel reel-sage"><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="tape-wrap">
+          <span class="tape-clamp" aria-hidden="true"></span>
+          <ol id="tape" class="tape" aria-label="序列进度"></ol>
+          <span class="tape-clamp" aria-hidden="true"></span>
+        </div>
+
+        <div class="machine-readout">
+          <span id="progress-copy">等待开始</span>
+          <strong id="counter">003 / 010</strong>
+          <span id="next-copy">下一棒由对方接力</span>
+        </div>
+      </section>
+
+      <section class="beat-controls" aria-label="节拍输入">
+        <button class="beat-button beat-coral" data-beat="coral" type="button" disabled>
+          <kbd>F</kbd><span>珊瑚拍</span>
+        </button>
+        <button class="beat-button beat-sage" data-beat="sage" type="button" disabled>
+          <kbd>J</kbd><span>青绿拍</span>
+        </button>
+      </section>
+
+      <section id="stage" class="stage" aria-live="polite"></section>
+
+      <div class="echo-row">
+        <span>共享回声</span>
+        <div id="echoes" class="echoes" aria-label="剩余三次回声"></div>
+      </div>
+
+      <p class="privacy">声音由浏览器即时合成；不录音、不上传、不保存本局。</p>
+      <noscript>需要启用 JavaScript 才能播放节拍接力。</noscript>
+    </main>
+  </body>
+</html>

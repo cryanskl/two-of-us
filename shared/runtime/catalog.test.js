@@ -123,6 +123,31 @@ test("catalog exposes I Heard You as a local D-level capability experience", asy
   assert.match(experience.entry, /i-heard-you\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level rhythm relay", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
+
+  assert.equal(relay.category, "co-op");
+  assert.equal(relay.level, "A");
+  assert.equal(relay.installed, true);
+  assert.equal(relay.networkRequired, false);
+  assert.match(relay.entry, /rhythm-relay\/index\.html$/);
+});
+
+test("rhythm relay keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/co-op/rhythm-relay/", import.meta.url);
+  const [html, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+});
+
 test("lighthouse passage keeps its file protocol and privacy boundary", async () => {
   const root = new URL("../../experiences/co-op/lighthouse-passage/", import.meta.url);
   const [html, levels, logic, app] = await Promise.all([

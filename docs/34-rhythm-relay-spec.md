@@ -162,6 +162,10 @@ validateInitialSequence(sequence)
 
 方向是 **双磁带录音机 + 纸带打孔记录**，避免继续使用暖纸情书、运动海报、夜航地图或游戏机霓虹。
 
+![节拍接力双端视觉概念](./assets/rhythm-relay/concept.png)
+
+此概念由 OpenAI ImageGen 根据本规格生成，只作为构图、色板和控件层级的设计基准，不是运行时素材，也没有复制第三方作品。
+
 ### 9.1 颜色与字体
 
 | 角色 | 值 |
