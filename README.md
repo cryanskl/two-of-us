@@ -58,6 +58,7 @@
 - [A 级节拍接力规格](./docs/34-rhythm-relay-spec.md)
 - [A 级节拍接力验收记录](./docs/35-rhythm-relay-verification.md)
 - [A 级默契电报码规格](./docs/41-telegraph-codebook-spec.md)
+- [A 级默契电报码验收记录](./docs/42-telegraph-codebook-verification.md)
 - [A 级气球胆量局规格](./docs/36-balloon-dare-spec.md)
 - [A 级未来车票规格](./docs/38-future-ticket-spec.md)
 - [A 级未来车票验收记录](./docs/39-future-ticket-verification.md)

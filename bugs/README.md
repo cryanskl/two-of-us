@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [默契电报码：空码本侧轨覆盖 hidden 语义](./2026-07-17-telegraph-hidden-semantics.md)
+- [默契电报码：缺失 favicon 导致浏览器控制台 404](./2026-07-17-telegraph-favicon-404.md)
+- [默契电报码：390px intro 主动作落到过深位置](./2026-07-17-telegraph-mobile-intro-depth.md)
 - [未来车票：来源声明标题未满足仓库机器 Gate](./2026-07-17-future-ticket-attribution-heading-contract.md)
 - [未来车票：概念原生尺寸下整体纵向下沉](./2026-07-17-future-ticket-native-vertical-drift.md)
 - [气球胆量局：窄屏隐私说明贴近主动作描边](./2026-07-17-balloon-dare-privacy-spacing.md)

@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [阶段拥有 DOM 与播放 token 的热座秘密模型](./2026-07-17-stage-owned-dom-and-playback-tokens.md)
 - [可组合惊喜：先约束笛卡尔积，再做逐步揭晓](./2026-07-17-composable-surprise-progressive-disclosure.md)
 - [热座风险玩法：随机公平、隐藏信息与视觉反馈要分层](./2026-07-17-unbiased-hidden-random-hot-seat.md)
 - [热座记忆玩法：播放生命周期与 DOM 隐私要分层](./2026-07-17-hot-seat-playback-and-dom-privacy.md)
