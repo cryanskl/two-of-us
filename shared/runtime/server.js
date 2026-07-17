@@ -22,7 +22,7 @@ export async function createRuntimeServer({
   maxPortAttempts = 20,
 } = {}) {
   const catalog = await loadCatalog(rootDir);
-  const rooms = new RoomRegistry();
+  const rooms = new RoomRegistry({ maxMembers: 2 });
   const sealedRounds = new SealedRoundRegistry();
   let runtimeDetails = null;
 
@@ -129,7 +129,8 @@ export function registerRoomProtocol(io, rooms, sealedRounds = new SealedRoundRe
           throw new RoomError("NOT_A_MEMBER", "你不在这个房间中。");
         }
         const state = rooms.leave(roomId, socket.id);
-        sealedRounds.clearRoom(roomId);
+        sealedRounds.clearMember(roomId, socket.id);
+        if (!state) sealedRounds.clearRoom(roomId);
         await socket.leave(roomChannel(roomId));
         reply({ ok: true, room: state });
         if (state) io.to(roomChannel(roomId)).emit("room:state", state);
@@ -191,7 +192,8 @@ export function registerRoomProtocol(io, rooms, sealedRounds = new SealedRoundRe
 
     socket.on("disconnect", () => {
       for (const { roomId, state } of rooms.leaveAll(socket.id)) {
-        sealedRounds.clearRoom(roomId);
+        sealedRounds.clearMember(roomId, socket.id);
+        if (!state) sealedRounds.clearRoom(roomId);
         if (state) io.to(roomChannel(roomId)).emit("room:state", state);
       }
     });

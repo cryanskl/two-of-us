@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [密封轮次：无关第三人离开会清空两位玩家的待揭晓答案](./2026-07-17-third-member-clears-sealed-round.md)
 - [照片拼图：新候选校验失败时旧候选 URL 延迟释放](./2026-07-17-photo-puzzle-stale-candidate-url.md)
 - [全景回忆：运行时就绪后仍提示启动服务](./2026-07-15-panorama-stale-startup-copy.md)
 - [密封猜拳：第三人消息可覆盖待验证的主机状态](./2026-07-15-sealed-rps-pending-envelope-overwrite.md)

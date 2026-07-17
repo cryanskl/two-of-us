@@ -78,6 +78,18 @@ export class SealedRoundRegistry {
     }
     return cleared;
   }
+
+  clearMember(roomId, memberId) {
+    const normalized = normalizeRoomId(roomId);
+    const normalizedMemberId = String(memberId ?? "");
+    let cleared = 0;
+    for (const [key, round] of this.rounds) {
+      if (round.roomId !== normalized || !round.participantIds.includes(normalizedMemberId)) continue;
+      this.rounds.delete(key);
+      cleared += 1;
+    }
+    return cleared;
+  }
 }
 
 function publicReply(round, extra = {}) {

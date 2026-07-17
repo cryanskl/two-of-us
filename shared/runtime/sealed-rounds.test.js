@@ -87,6 +87,63 @@ test("成员变化使原轮次失效，清理房间移除全部轮次", () => {
   assert.equal(sealed.clearRoom(roomId), 0);
 });
 
+test("第三人退出不清除冻结的双人轮次，第二位玩家仍可完成", () => {
+  const { rooms, roomId, sealed } = setup();
+  sealed.submit(rooms, "host", {
+    roomId, namespace: "rps", roundId: "round-1", data: { choice: "rock" },
+  });
+  rooms.join(roomId, "third", "第三人");
+
+  assert.equal(sealed.clearMember(roomId, "third"), 0);
+  rooms.leave(roomId, "third");
+  const complete = sealed.submit(rooms, "guest", {
+    roomId, namespace: "rps", roundId: "round-1", data: { choice: "paper" },
+  });
+
+  assert.equal(complete.complete, true);
+  assert.deepEqual(complete.result.submissions, [
+    { memberId: "host", data: { choice: "rock" } },
+    { memberId: "guest", data: { choice: "paper" } },
+  ]);
+});
+
+test("冻结参与者退出只清理包含该成员的轮次", () => {
+  const { rooms, roomId, sealed } = setup();
+  const otherRoom = rooms.create("other-host", "另一位主机");
+  rooms.join(otherRoom.id, "other-guest", "另一位同伴");
+  sealed.submit(rooms, "host", {
+    roomId, namespace: "rps", roundId: "round-1", data: "rock",
+  });
+  sealed.submit(rooms, "other-host", {
+    roomId: otherRoom.id, namespace: "rps", roundId: "round-1", data: "paper",
+  });
+
+  assert.equal(sealed.clearMember(roomId, "host"), 1);
+  assert.equal(sealed.clearMember(roomId, "host"), 0);
+  const otherComplete = sealed.submit(rooms, "other-guest", {
+    roomId: otherRoom.id, namespace: "rps", roundId: "round-1", data: "scissors",
+  });
+  assert.equal(otherComplete.complete, true);
+});
+
+test("房间变空时仍可清理其中全部完成与未完成轮次", () => {
+  const { rooms, roomId, sealed } = setup();
+  sealed.submit(rooms, "host", {
+    roomId, namespace: "rps", roundId: "pending", data: "rock",
+  });
+  sealed.submit(rooms, "host", {
+    roomId, namespace: "rps", roundId: "complete", data: "rock",
+  });
+  sealed.submit(rooms, "guest", {
+    roomId, namespace: "rps", roundId: "complete", data: "paper",
+  });
+
+  rooms.leave(roomId, "host");
+  rooms.leave(roomId, "guest");
+  assert.equal(sealed.clearRoom(roomId), 2);
+  assert.equal(sealed.clearRoom(roomId), 0);
+});
+
 test("拒绝循环、函数、非有限数字和超大数据", () => {
   const { rooms, roomId, sealed } = setup();
   const circular = {}; circular.self = circular;
