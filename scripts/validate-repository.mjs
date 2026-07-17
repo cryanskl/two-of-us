@@ -1,8 +1,9 @@
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { resolveVendorAsset } from "../shared/runtime/vendor.js";
+import { listCapabilityIds, loadCapabilityManifest } from "./capabilities-lib.mjs";
 
 const rootDir = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const catalogPath = path.join(rootDir, "experiences/catalog.json");
@@ -47,12 +48,36 @@ for (const experience of catalog.experiences) {
   }
 }
 
+const capabilityIds = await listCapabilityIds(rootDir);
+for (const capabilityId of capabilityIds) {
+  try {
+    await loadCapabilityManifest(rootDir, capabilityId);
+  } catch (error) {
+    errors.push(`${capabilityId} 的 manifest 无效：${error.message}`);
+    continue;
+  }
+
+  const capabilityDir = path.join(rootDir, "capabilities", capabilityId);
+  const readmePath = path.join(capabilityDir, "README.md");
+  await requireFile(readmePath, `${capabilityId} 的 README 不存在`);
+  const readme = await readFile(readmePath, "utf8").catch(() => "");
+  if (!readme.includes("## 借鉴与来源声明")) {
+    errors.push(`${capabilityId} 的 README 缺少“借鉴与来源声明”`);
+  }
+
+  const licenseDir = path.join(capabilityDir, "licenses");
+  const licenses = await readdir(licenseDir, { withFileTypes: true }).catch(() => []);
+  if (!licenses.some((entry) => entry.isFile())) {
+    errors.push(`${capabilityId} 没有保留第三方许可证文件`);
+  }
+}
+
 if (errors.length > 0) {
   console.error("仓库验收失败：\n- " + errors.join("\n- "));
   process.exit(1);
 }
 
-console.log(`仓库验收通过：${catalog.experiences.length} 个作品入口、资源与借鉴声明完整。`);
+console.log(`仓库验收通过：${catalog.experiences.length} 个作品入口、${capabilityIds.length} 个能力声明、资源与借鉴声明完整。`);
 
 async function requireFile(filePath, message) {
   try {

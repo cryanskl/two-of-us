@@ -9,6 +9,7 @@
   },
   "scripts": {
     "setup": "node scripts/setup.mjs",
+    "capabilities": "node scripts/capabilities.mjs",
     "start": "node scripts/start.mjs",
     "test": "node --test",
     "verify": "node scripts/validate-repository.mjs"

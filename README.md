@@ -95,6 +95,7 @@ two-of-us/
 │   ├── surprises/             # 单人惊喜
 │   ├── co-op/                 # 双人合作
 │   └── versus/                # 双人对抗
+├── capabilities/              # D 级按需安装的本地模型与运行能力声明
 ├── shared/runtime/             # 本地门户、房间协议、二维码
 ├── bugs/                       # 已复现问题与解决方案
 ├── learn/                      # 可复用的实现经验
