@@ -9,6 +9,7 @@
 - 选择可用端口并生成局域网地址和二维码；
 - 提供 `room:create`、`room:join`、`room:leave`、`room:action`、`room:direct` 与密封轮次通用房间事件；
 - 每个生产房间固定两席，第三个成员加入时返回 `ROOM_FULL`；
+- 通过 `two-player-membership.js` 统一前两席、主机迁移、成员替换与退出判定；
 - 在进程退出时关闭连接并释放端口。
 
 ## 房间消息协议
@@ -73,6 +74,8 @@ socket.emit("room:sealed-submit", {
 本运行底座的目录组织、端口选择、静态文件边界、目录读取、房间状态管理、启动与停止流程均由本仓库独立实现。
 
 `room:direct` 的同房间双重成员校验、服务端载荷重建和错误码协议根据本仓库 `docs/07-lan-pictionary-spec.md` 独立实现，没有复制第三方项目源码。
+
+`two-player-membership.js` 是本仓库从“连心四子棋”和“密封猜拳”的重复席位 Gate 中提取的内部 helper；它不包含任何具体游戏状态、计分或回合规则。
 
 密封轮次 registry 根据本仓库 `docs/12-sealed-rps-spec.md` 独立实现；没有引入或复制 `boardgame.io` 的 reducer、服务器、Lobby、插件或 UI 代码。
 
