@@ -76,6 +76,31 @@ test("twin light maze keeps its file protocol and privacy boundary", async () =>
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
 });
 
+test("catalog exposes the installed A-level tethered heart", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const tetheredHeart = catalog.experiences.find((item) => item.id === "tethered-heart");
+
+  assert.equal(tetheredHeart.category, "co-op");
+  assert.equal(tetheredHeart.level, "A");
+  assert.equal(tetheredHeart.networkRequired, false);
+  assert.match(tetheredHeart.entry, /tethered-heart\/index\.html$/);
+});
+
+test("tethered heart keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/co-op/tethered-heart/", import.meta.url);
+  const [html, levels, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("levels.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, levels, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+});
+
 test("catalog exposes the installed C-level heart sprint", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const heartSprint = catalog.experiences.find((item) => item.id === "heart-sprint");

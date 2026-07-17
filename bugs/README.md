@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [同心牵引：丝带投影把圆重新推入软垫](./2026-07-17-tether-constraint-reintroduces-collision.md)
+- [同心牵引：验证轨迹忽略吊坠滞后而卡在第二幕](./2026-07-17-tether-route-payload-lag.md)
 - [ImageGen 图集去绿：系统 Python 缺 Pillow，FFmpeg 进程挂起](./2026-07-17-imagegen-chroma-toolchain.md)
 - [调研来源漂移：失效仓库仍标为高置信度，重分发仓库被当作一手来源](./2026-07-17-research-source-provenance-drift.md)
 - [心跳冲刺：常见桌面与手机首屏看不到完整主控制](./2026-07-17-heart-sprint-primary-control-below-fold.md)

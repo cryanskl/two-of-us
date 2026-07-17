@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [固定步长柔性约束：先证明公开状态，再谈画面平滑](./2026-07-17-fixed-step-soft-constraint-collision-order.md)
 - [本地优先网格游戏的生成式图集管线](./2026-07-17-local-first-sprite-atlas.md)
 - [用联合状态 BFS 验证双人机关地图](./2026-07-17-cooperative-grid-bfs.md)
 - [开源候选要固定来源谱系，不只固定项目名](./2026-07-17-upstream-source-provenance.md)

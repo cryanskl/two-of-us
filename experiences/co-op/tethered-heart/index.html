@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#21101f">
+    <title>同心牵引 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./levels.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="game" class="game-shell" data-phase="ready" aria-labelledby="game-title">
+      <header class="masthead">
+        <div class="brand">
+          <span class="brand-spool" aria-hidden="true"></span>
+          <div>
+            <h1 id="game-title">同心牵引</h1>
+          </div>
+        </div>
+
+        <div class="mission" aria-live="polite">
+          <p id="level-label">第一幕 · 穿过针脚</p>
+          <p id="game-status">别把我们的线拉断</p>
+        </div>
+      </header>
+
+      <section id="playfield" class="playfield" aria-labelledby="game-status">
+        <canvas
+          id="game-canvas"
+          width="960"
+          height="540"
+          role="img"
+          aria-label="两枚线轴共同牵引布艺心穿过针脚与软垫，前往右侧刺绣绷"
+        >
+          当前浏览器不支持 Canvas，无法显示同心牵引的游戏场景。
+        </canvas>
+
+        <div class="stage-action">
+          <button id="primary-action" class="primary-action" type="button">开始牵引</button>
+        </div>
+      </section>
+
+      <section class="control-rail" aria-label="玩家操作与游戏状态">
+        <section class="player-control player-control--coral" aria-labelledby="coral-control-title">
+          <div class="control-heading">
+            <div>
+              <h2 id="coral-control-title">珊瑚线轴</h2>
+              <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></p>
+            </div>
+            <span class="seat-marker" aria-hidden="true">01</span>
+          </div>
+          <div class="dpad" aria-label="珊瑚线轴方向控制">
+            <button class="direction direction--up" type="button" data-seat="0" data-direction="up" aria-label="珊瑚线轴向上移动" aria-keyshortcuts="W"><span aria-hidden="true">↑</span></button>
+            <button class="direction direction--left" type="button" data-seat="0" data-direction="left" aria-label="珊瑚线轴向左移动" aria-keyshortcuts="A"><span aria-hidden="true">←</span></button>
+            <span class="dpad-center" aria-hidden="true">✦</span>
+            <button class="direction direction--right" type="button" data-seat="0" data-direction="right" aria-label="珊瑚线轴向右移动" aria-keyshortcuts="D"><span aria-hidden="true">→</span></button>
+            <button class="direction direction--down" type="button" data-seat="0" data-direction="down" aria-label="珊瑚线轴向下移动" aria-keyshortcuts="S"><span aria-hidden="true">↓</span></button>
+          </div>
+        </section>
+
+        <section class="tension" aria-labelledby="tension-label">
+          <div class="tension-copy">
+            <h2 id="tension-label">线张力</h2>
+            <span id="reset-count">重置 0 次</span>
+          </div>
+          <div id="tension-meter" class="tension-meter" role="meter" aria-label="两条丝带的最大张力" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="张力松弛">
+            <span id="tension-fill" aria-hidden="true"></span>
+          </div>
+          <div class="tension-scale" aria-hidden="true"><span>松弛</span><span>适中</span><span>紧绷</span></div>
+        </section>
+
+        <section class="player-control player-control--teal" aria-labelledby="teal-control-title">
+          <div class="control-heading">
+            <div>
+              <h2 id="teal-control-title">青色线轴</h2>
+              <p><kbd>方向键</kbd></p>
+            </div>
+            <span class="seat-marker" aria-hidden="true">02</span>
+          </div>
+          <div class="dpad" aria-label="青色线轴方向控制">
+            <button class="direction direction--up" type="button" data-seat="1" data-direction="up" aria-label="青色线轴向上移动" aria-keyshortcuts="ArrowUp"><span aria-hidden="true">↑</span></button>
+            <button class="direction direction--left" type="button" data-seat="1" data-direction="left" aria-label="青色线轴向左移动" aria-keyshortcuts="ArrowLeft"><span aria-hidden="true">←</span></button>
+            <span class="dpad-center" aria-hidden="true">✦</span>
+            <button class="direction direction--right" type="button" data-seat="1" data-direction="right" aria-label="青色线轴向右移动" aria-keyshortcuts="ArrowRight"><span aria-hidden="true">→</span></button>
+            <button class="direction direction--down" type="button" data-seat="1" data-direction="down" aria-label="青色线轴向下移动" aria-keyshortcuts="ArrowDown"><span aria-hidden="true">↓</span></button>
+          </div>
+        </section>
+
+        <div class="utility-controls" aria-label="游戏操作">
+          <button id="pause-button" type="button" disabled><span aria-hidden="true">Ⅱ</span><span>暂停</span></button>
+          <button id="restart-button" type="button"><span aria-hidden="true">↻</span><span>重来</span></button>
+          <button id="help-button" type="button" aria-haspopup="dialog" aria-controls="help-dialog"><span aria-hidden="true">?</span><span>玩法</span></button>
+        </div>
+      </section>
+
+      <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+      <dialog id="help-dialog" aria-labelledby="help-title">
+        <div class="dialog-content">
+          <h2 id="help-title">怎样一起牵引</h2>
+          <ol>
+            <li>珊瑚玩家使用 W/A/S/D，青色玩家使用方向键；触屏时可同时按住两组方向盘。</li>
+            <li>一起移动两枚线轴，让两条丝带平稳牵着布艺心绕开软垫和危险针脚。</li>
+            <li>把布艺心送进刺绣绷，同时让两枚线轴靠近终点并保持安全张力。</li>
+          </ol>
+          <button id="close-help" type="button">知道了</button>
+        </div>
+      </dialog>
+
+      <noscript>
+        <p class="noscript-message">同心牵引需要 JavaScript 才能运行。请启用 JavaScript 后重新打开这个本地页面。</p>
+      </noscript>
+    </main>
+  </body>
+</html>

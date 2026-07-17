@@ -1,6 +1,6 @@
 # 「同心牵引」产品与实现规格
 
-> 状态：规格冻结，待实现  
+> 状态：已实现并验收
 > 日期：2026-07-17  
 > 目标等级：A（直接双击 `index.html`）  
 > 主分类：双人合作  
@@ -185,6 +185,8 @@ experiences/co-op/tethered-heart/
 
 ## 10. 自动验收
 
+最终结果与真实浏览器证据见 [`28-tethered-heart-verification.md`](./28-tethered-heart-verification.md)。
+
 ### 10.1 规则
 
 - 三幕 schema、几何和嵌套对象深冻结；非法定义被拒绝；
@@ -213,4 +215,3 @@ experiences/co-op/tethered-heart/
 - 页面隐藏/失焦清空输入并暂停；reduced-motion 不破坏规则；
 - 控制台无 warning/error，资源列表只有本地文件；
 - 最终桌面/移动截图与冻结概念同批 `view_image`，记录至少文案、布局、排版、色彩、资产、容器、响应式和动效八项 fidelity ledger。
-

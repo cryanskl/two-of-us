@@ -35,7 +35,7 @@
 | C02 | 双人机关迷宫：压板、拉杆与各自出口 | 同键盘，同时 | 纯客户端、共享游戏壳；整理发布包后目标 A | MIT · [mazecoop.js](https://github.com/tridpt/TwoPlayerGames/blob/main/js/games/mazecoop.js) | 中 |
 | C03 | 拆弹搭档：工程师看炸弹，专家读规则 | 单机轮流；双设备更佳 | 单机目标 A；局域网双设备目标 C | MIT · [defusebomb.js](https://github.com/tridpt/TwoPlayerGames/blob/main/js/games/defusebomb.js) | 中 |
 | C04 | 双人塔防：共享金币、布塔、空袭和基地 | 同屏鼠标/键盘 | 客户端逻辑复杂、依赖共享壳；目标 A/B | MIT · [coopdefense.js](https://github.com/tridpt/TwoPlayerGames/blob/main/js/games/coopdefense.js) | 中/高 |
-| C05 | 双飞船搬炸弹：两人夹住炸弹穿越洞穴 | 同键盘/手柄，同时 | Canvas + 原生 JS；目标 A | MIT · [js_thrustvector](https://github.com/pemmyz/js_thrustvector) | 低/中 |
+| C05 | 双飞船搬炸弹：两人夹住炸弹穿越洞穴 | 同键盘/手柄，同时 | Canvas + 原生 JS；已按机制自行重写为 A 级“同心牵引” | MIT，Copyright 2025 pemmyz · [js_thrustvector `4d14076`](https://github.com/pemmyz/js_thrustvector/tree/4d140761ba1af8f4448bc6bd4785b63fc8928c5c) · [LICENSE](https://github.com/pemmyz/js_thrustvector/blob/4d140761ba1af8f4448bc6bd4785b63fc8928c5c/LICENSE) | 已实现 |
 | C06 | 双人屋顶平台：收集月亮、躲机器人 | 同键盘 | 纯 HTML/CSS/JS；目标 A | MIT · [game-pjmask](https://github.com/kai-linux/game-pjmask) | 低 |
 | C07 | Space Huggers：2–4 人横版射击守复活点 | 同屏手柄 | 静态自研引擎；目标 A | GPL-3.0 · [SpaceHuggers](https://github.com/KilledByAPixel/SpaceHuggers) | 中 |
 | C08 | Battle City 双坦克：一起守基地打敌军 | 同键盘 | Canvas；移除排行榜 API 后目标 A | `package.json` 为 ISC，无独立 LICENSE · [battle-city](https://github.com/don-kihotik/battle-city) | 中，先问授权/重写 |
@@ -50,6 +50,8 @@
 `C01–C04` 来自 [tridpt/TwoPlayerGames](https://github.com/tridpt/TwoPlayerGames)。该 MIT 仓库当前有 76 个游戏脚本；同机与 AI 玩法是纯客户端，Node/WebSocket 服务跨设备房间时可改造为 C 级本地主机层。单个游戏脚本依赖 `GameRegistry`、Canvas 上下文和共享 CSS，评估时应先跑整个客户端壳，不能把一个 JS 文件孤立复制后宣称可用。
 
 2026-07-17 复核发现 `nivaboaz/CoupleCards` 与原仓库共享截至 `94ac422` 的提交历史，且其许可证仍写明版权属于 Michael Schwartz；后续提交主要修改 README 并加入压缩包。它不再作为一个独立候选或一手来源计数，只保留为发现线索，规范来源统一回到上述固定的原始仓库与 commit。
+
+2026-07-17 实现“同心牵引”时按 `js_thrustvector` 固定 commit 重新核验 MIT 许可证，只借鉴“两端通过短绳共同影响载荷”的抽象机制。实现没有复制飞船、炸弹、夹取、Harmony/Stability、洞穴、路径搜索、常量、源码或素材；三幕、固定 `1/120s` 步进、丝带约束、碰撞、触屏输入与视觉均自行编写。完整边界见 [`27-tethered-heart-spec.md`](./27-tethered-heart-spec.md)。
 
 ## 许可不完整：只借鉴机制
 

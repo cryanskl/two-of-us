@@ -4,7 +4,7 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 9 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”，以及“同心解锁”“隔屏画猜”“和你一样”“连心四子棋”“密封猜拳”和“心跳冲刺”六个 C 级作品；启动本地服务后即可使用。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 10 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”，以及“同心解锁”“隔屏画猜”“和你一样”“连心四子棋”“密封猜拳”和“心跳冲刺”六个 C 级作品；启动本地服务后即可使用。
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
@@ -19,7 +19,7 @@
 | 分类 | 目录 | 用途 | 当前状态 |
 | --- | --- | --- | --- |
 | 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻 |
-| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心解锁、隔屏画猜、和你一样 |
+| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心牵引、同心解锁、隔屏画猜、和你一样 |
 | 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决、心动拔河、心跳冲刺、连心四子棋、密封猜拳 |
 
 ## 文档
@@ -49,6 +49,8 @@
 - [C 级心跳冲刺验收记录](./docs/24-heart-sprint-verification.md)
 - [A 级双光点归巢规格](./docs/25-twin-light-maze-spec.md)
 - [A 级双光点归巢验收记录](./docs/26-twin-light-maze-verification.md)
+- [A 级同心牵引规格](./docs/27-tethered-heart-spec.md)
+- [A 级同心牵引验收记录](./docs/28-tethered-heart-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
