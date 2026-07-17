@@ -37,6 +37,13 @@
       "contentType": "application/wasm",
       "bytes": 1251026,
       "sha256": "48ef5f6dfce8ddeacd494637ab4cdfc871792d13e96b521596131a391355751f"
+    },
+    {
+      "id": "transcriber-worker",
+      "path": "browser/transcriber.worker.js",
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 5784,
+      "sha256": "94af619139b70b4d0ce5b508bc202cc30b37fe404f42d2b9c89a6e623bb3bb2d"
     }
   ],
   "artifacts": [

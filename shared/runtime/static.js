@@ -63,6 +63,7 @@ export async function serveStatic(request, response, rootDir, pathname) {
       "content-length": metadata.size,
       "cache-control": "no-cache",
       "x-content-type-options": "nosniff",
+      ...crossOriginIsolationHeaders(pathname),
     });
     if (request.method === "HEAD") response.end();
     else createReadStream(filePath).pipe(response);
@@ -71,4 +72,20 @@ export async function serveStatic(request, response, rootDir, pathname) {
     if (error.code === "ENOENT" || error.code === "ENOTDIR") return false;
     throw error;
   }
+}
+
+export function crossOriginIsolationHeaders(pathname) {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    return {};
+  }
+  const root = "/experiences/co-op/i-heard-you";
+  if (decoded !== root && !decoded.startsWith(`${root}/`)) return {};
+  return {
+    "cross-origin-opener-policy": "same-origin",
+    "cross-origin-embedder-policy": "require-corp",
+    "origin-agent-cluster": "?1",
+  };
 }

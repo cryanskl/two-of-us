@@ -6,6 +6,8 @@
 
 ## 已沉淀
 
+- [在应用 Worker 中加载 Emscripten pthread 模块](./2026-07-17-nested-emscripten-worker-entry.md)
+- [结构化 WASM 绑定比解析示例输出更稳定](./2026-07-17-structured-wasm-binding-boundary.md)
 - [本地能力运行时：公开状态与大文件必须分层](./2026-07-17-capability-runtime-trust-boundary.md)
 - [大模型能力包：先证明 artifact，再写安装 receipt](./2026-07-17-atomic-optional-capability-install.md)
 - [非对称同屏合作：让规则 Gate 证明双方都不可替代](./2026-07-17-asymmetric-navigation-state-boundary.md)

@@ -2,7 +2,7 @@
 
 `speech-whisper-base@1` 是 Two of Us 的可选本地语音转写能力。它为 D 级作品提供多语种 Whisper base 模型，并由浏览器中的 whisper.cpp WASM Worker 完成本机推理；首个使用者是「我听见了」。
 
-当前目录已经从固定源码构建并提交 WASM/JS 引擎资产，同时用 [`browser-build.json`](./browser-build.json) 记录源码、工具链、字节数和 SHA-256。结构化 Worker 接入、作品 UI 与端到端 Gate 仍是后续里程碑；在它们完成前，不应宣称「我听见了」已经可运行或已在 macOS / Windows 验收。
+当前目录已经从固定源码构建并提交 WASM/JS 引擎资产，同时用 [`browser-build.json`](./browser-build.json) 记录源码、工具链、字节数和 SHA-256。结构化 Worker 协议与 D 级隔离响应头也已完成；作品 UI 与端到端 Gate 仍是后续里程碑，在它们完成前不应宣称「我听见了」已经可运行或已在 macOS / Windows 验收。
 
 ## 冻结版本
 
@@ -62,6 +62,18 @@ node capabilities/speech-whisper-base/build-browser.mjs
 构建脚本先核对 whisper.cpp 完整 revision 与 Emscripten 版本，再把产物写到忽略的 `tmp/speech-whisper-browser-build/browser/` 并打印哈希。只有产物与 [`browser-build.json`](./browser-build.json) 一致时才可更新 `browser/`。普通使用者不需要 Emscripten、CMake、Python 或 C++ 工具链。
 
 本仓库的 [`src/emscripten.cpp`](./src/emscripten.cpp) 是面向作品协议的薄绑定：借鉴官方 `whisper.wasm` 示例将 JavaScript `Float32Array` 安全复制到 WASM 内存的技术方法，但没有复制其页面、文案或控制台解析方式。绑定在应用 Worker 中同步执行，返回结构化的文本、分段时间和推理耗时，并复用单个已加载模型。
+
+## Worker 协议
+
+页面从能力状态 API 取得三个可用 URL 后创建 `transcriber-worker`。Worker 只接受同源且路径精确匹配 manifest 白名单的 `engine-js`、`engine-wasm` 与 `ggml-base`，不接受任意资源 URL。
+
+```text
+init       → ready | error
+transcribe → transcript | error
+dispose    → disposed
+```
+
+`init` 把模型写入 WASM 内存文件系统并只初始化一次；后续两轮转写复用同一个 context。`transcribe` 只接受 `Float32Array` 且最多 `192000` 个 16 kHz 样本。`dispose` 释放 whisper context、删除 WASM 内存中的模型文件，页面随后应终止 Worker。Worker 不使用控制台转写、localStorage、IndexedDB、Cache API、服务端日志或公网 fallback。
 
 ## 许可证文件
 

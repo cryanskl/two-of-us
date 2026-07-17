@@ -10,6 +10,7 @@ const capabilityDir = path.join(rootDir, "capabilities", "speech-whisper-base");
 
 test("speech browser build record matches committed source and assets", async () => {
   const record = JSON.parse(await readFile(path.join(capabilityDir, "browser-build.json"), "utf8"));
+  const manifest = JSON.parse(await readFile(path.join(capabilityDir, "manifest.json"), "utf8"));
   assert.equal(record.schemaVersion, 1);
   assert.equal(record.bindingProtocolVersion, 1);
   assert.equal(record.source.whisperRevision, "23ee03506a91ac3d3f0071b40e66a430eebdfa1d");
@@ -19,6 +20,7 @@ test("speech browser build record matches committed source and assets", async ()
     ["src/emscripten.cpp", record.source.bindingSha256],
     ["src/CMakeLists.txt", record.source.cmakeSha256],
     ...record.assets.map((asset) => [asset.path, asset.sha256, asset.bytes]),
+    ...manifest.browserAssets.map((asset) => [asset.path, asset.sha256, asset.bytes]),
   ];
   for (const [relativePath, expectedSha256, expectedBytes] of checks) {
     const target = path.join(capabilityDir, ...relativePath.split("/"));
