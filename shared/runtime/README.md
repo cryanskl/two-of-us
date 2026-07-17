@@ -5,12 +5,27 @@
 运行时负责：
 
 - 托管根门户、`experiences/` 与 `shared/` 下的本地静态资源；
-- 提供 `/api/health` 与 `/api/catalog`；
+- 提供 `/api/health`、`/api/catalog` 与本机限定的 `/api/capabilities`；
+- 按 capability/artifact ID 白名单提供已校验的大型本地资源，不公开用户数据目录；
 - 选择可用端口并生成局域网地址和二维码；
 - 提供 `room:create`、`room:join`、`room:leave`、`room:action`、`room:direct` 与密封轮次通用房间事件；
 - 每个生产房间固定两席，第三个成员加入时返回 `ROOM_FULL`；
 - 通过 `two-player-membership.js` 统一前两席、主机迁移、成员替换与退出判定；
 - 在进程退出时关闭连接并释放端口。
+
+## 本地能力协议
+
+`GET /api/capabilities` 只在 loopback 请求中返回脱敏能力状态。公开结果包含协议、状态、运行要求、artifact ID 与体积；不会返回绝对安装路径、receipt、安装时间或上游下载 URL。模型未安装时仍返回体积，但 `href` 为 `null`，供 D 级前置页诚实说明安装预算。
+
+能力可用后，浏览器可以按 manifest 白名单请求：
+
+```text
+GET|HEAD /api/capabilities/:capabilityId/artifacts/:artifactId
+```
+
+路由只接受两个小写短横线 ID，不接受文件路径。服务端从 manifest 反查用户数据目录中的 artifact，完成 realpath 包含关系、符号链接、长度与 SHA-256 复核后才响应；支持完整文件与单段 Range。missing、corrupt 或 incompatible 返回 `409`，未知 ID 返回 `404`，非本机请求返回 `403`。
+
+所有 JSON API 只允许 `GET` / `HEAD`。HEAD 保留与 GET 相同的 header 和 `Content-Length`，但不写 body；其他方法返回 `405` 与 `Allow: GET, HEAD`。
 
 ## 房间消息协议
 

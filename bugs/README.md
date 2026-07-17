@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [未限定的测试发现误入 tmp 工具链](./2026-07-17-unscoped-test-discovery-enters-tmp-toolchain.md)
+- [缺失能力状态隐藏模型体积](./2026-07-17-missing-capability-hidden-download-size.md)
+- [运行时 API 未限制方法且 HEAD 仍写响应体](./2026-07-17-runtime-api-method-and-head-contract.md)
 - [运行时相邻端口测试偶发冲突](./2026-07-17-runtime-next-port-test-collision.md)
 - [能力安装路径是普通文件时诊断抛出 ENOTDIR](./2026-07-17-capability-install-path-not-directory.md)
 - [为你引航：圆心在世界内但暗礁圆周越界](./2026-07-17-lighthouse-reef-radius-out-of-bounds.md)

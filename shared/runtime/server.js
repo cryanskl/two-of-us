@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import process from "node:process";
 import QRCode from "qrcode";
 import { Server as SocketServer } from "socket.io";
+import { createCapabilitiesRuntime } from "./capabilities.js";
 import { loadCatalog } from "./catalog.js";
 import { getNetworkUrls } from "./network.js";
 import {
@@ -20,8 +21,13 @@ export async function createRuntimeServer({
   host = defaultHost,
   preferredPort = 4173,
   maxPortAttempts = 20,
+  dataDir,
 } = {}) {
   const catalog = await loadCatalog(rootDir);
+  const capabilities = createCapabilitiesRuntime({
+    rootDir,
+    ...(dataDir === undefined ? {} : { dataDir }),
+  });
   const rooms = new RoomRegistry({ maxMembers: 2 });
   const sealedRounds = new SealedRoundRegistry();
   let runtimeDetails = null;
@@ -29,9 +35,18 @@ export async function createRuntimeServer({
   const httpServer = createServer(async (request, response) => {
     try {
       const url = new URL(request.url ?? "/", "http://localhost");
+      const readMethod = request.method === "GET" || request.method === "HEAD";
+
+      if (await capabilities.handleRequest(request, response, url)) return;
+
+      if (url.pathname.startsWith("/api/") && !readMethod) {
+        return sendJson(request, response, 405, { error: "METHOD_NOT_ALLOWED" }, {
+          allow: "GET, HEAD",
+        });
+      }
 
       if (url.pathname === "/api/health") {
-        return sendJson(response, 200, {
+        return sendJson(request, response, 200, {
           ok: true,
           service: "two-of-us",
           version: 1,
@@ -41,18 +56,20 @@ export async function createRuntimeServer({
       }
 
       if (url.pathname === "/api/catalog") {
-        return sendJson(response, 200, catalog);
+        return sendJson(request, response, 200, catalog);
       }
 
-      if (request.method !== "GET" && request.method !== "HEAD") {
-        return sendJson(response, 405, { error: "METHOD_NOT_ALLOWED" });
+      if (!readMethod) {
+        return sendJson(request, response, 405, { error: "METHOD_NOT_ALLOWED" }, {
+          allow: "GET, HEAD",
+        });
       }
 
       if (await serveStatic(request, response, rootDir, url.pathname)) return;
-      sendJson(response, 404, { error: "NOT_FOUND" });
+      sendJson(request, response, 404, { error: "NOT_FOUND" });
     } catch (error) {
       console.error(error);
-      if (!response.headersSent) sendJson(response, 500, { error: "INTERNAL_ERROR" });
+      if (!response.headersSent) sendJson(request, response, 500, { error: "INTERNAL_ERROR" });
       else response.destroy();
     }
   });
@@ -66,6 +83,7 @@ export async function createRuntimeServer({
 
   return {
     catalog,
+    capabilities,
     rooms,
     sealedRounds,
     httpServer,
@@ -233,15 +251,17 @@ function listenOnce(server, host, port) {
   });
 }
 
-function sendJson(response, statusCode, value) {
+function sendJson(request, response, statusCode, value, extraHeaders = {}) {
   const body = JSON.stringify(value);
   response.writeHead(statusCode, {
     "content-type": "application/json; charset=utf-8",
     "content-length": Buffer.byteLength(body),
     "cache-control": "no-store",
     "x-content-type-options": "nosniff",
+    ...extraHeaders,
   });
-  response.end(body);
+  if (request.method === "HEAD") response.end();
+  else response.end(body);
 }
 
 function roomChannel(roomId) {

@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { once } from "node:events";
+import { mkdtemp, rm } from "node:fs/promises";
 import { createServer } from "node:http";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
 import { RoomError, RoomRegistry } from "./rooms.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
@@ -92,10 +95,13 @@ async function createSafePortBlocker() {
 }
 
 test("runtime serves health, catalog, portal, and releases its port", async (context) => {
+  const dataDir = await mkdtemp(path.join(os.tmpdir(), "two-of-us-runtime-data-"));
+  context.after(() => rm(dataDir, { recursive: true, force: true }));
   const runtime = await createRuntimeServer({
     rootDir: new URL("../../", import.meta.url),
     host: "127.0.0.1",
     preferredPort: 0,
+    dataDir,
   });
   context.after(() => runtime.stop());
 
@@ -104,6 +110,10 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   const health = await healthResponse.json();
   const catalogResponse = await fetch(`${details.localUrl}api/catalog`);
   const catalog = await catalogResponse.json();
+  const capabilitiesResponse = await fetch(`${details.localUrl}api/capabilities`);
+  const capabilities = await capabilitiesResponse.json();
+  const healthHeadResponse = await fetch(`${details.localUrl}api/health`, { method: "HEAD" });
+  const rejectedPostResponse = await fetch(`${details.localUrl}api/catalog`, { method: "POST" });
   const portalResponse = await fetch(details.localUrl);
   const vendorResponse = await fetch(`${details.localUrl}vendor/pannellum/2.5.7/pannellum.js`);
 
@@ -112,6 +122,17 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   assert.equal(health.port, details.port);
   assert.match(health.qrDataUrl, /^data:image\/png;base64,/);
   assert.equal(catalog.experiences[0].id, "love-tree");
+  assert.equal(capabilitiesResponse.status, 200);
+  assert.equal(capabilities.capabilities[0].id, "speech-whisper-base");
+  assert.equal(capabilities.capabilities[0].state, "missing");
+  assert.equal(capabilities.capabilities[0].artifacts[0].bytes, 147951465);
+  assert.equal(capabilities.capabilities[0].artifacts[0].href, null);
+  assert.doesNotMatch(JSON.stringify(capabilities), new RegExp(dataDir));
+  assert.equal(healthHeadResponse.status, 200);
+  assert.ok(Number(healthHeadResponse.headers.get("content-length")) > 0);
+  assert.equal(await healthHeadResponse.text(), "");
+  assert.equal(rejectedPostResponse.status, 405);
+  assert.equal(rejectedPostResponse.headers.get("allow"), "GET, HEAD");
   assert.equal(portalResponse.status, 200);
   assert.match(await portalResponse.text(), /Two of Us/);
   assert.equal(vendorResponse.status, 200);
