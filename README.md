@@ -47,6 +47,7 @@
 - [A 级心动拔河验收记录](./docs/22-ribbon-tug-verification.md)
 - [C 级心跳冲刺规格](./docs/23-heart-sprint-spec.md)
 - [C 级心跳冲刺验收记录](./docs/24-heart-sprint-verification.md)
+- [A 级双光点归巢规格](./docs/25-twin-light-maze-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
