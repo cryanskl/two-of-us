@@ -2,7 +2,7 @@
 
 ## 适用范围
 
-适用于“代码在仓库、模型或大型资源安装在用户数据目录”的本地优先 Web 能力，例如 ASR、TTS、本地模型与大型 3D 资源。
+适用于“代码在仓库、模型或大型资源安装在用户数据目录”的本地优先 Web 能力，例如 ASR、TTS、本地模型与大型 3D 资源。仓库内由固定工具链生成的 JS/WASM 同样应进入这条边界，而不是退回通用静态目录。
 
 ## 核心结论
 
@@ -23,13 +23,14 @@
 
 ### 2. 客户端提交 ID，不提交路径
 
-模型路由采用：
+模型与浏览器引擎路由采用：
 
 ```text
 /api/capabilities/:capabilityId/artifacts/:artifactId
+/api/capabilities/:capabilityId/browser/:assetId
 ```
 
-服务端从已验证 manifest 反查相对路径。这样客户端输入空间只有两个受限 ID，不能用 URL 参数请求任意磁盘文件。
+服务端从已验证 manifest 反查相对路径。这样客户端输入空间只有受限 ID，不能用 URL 参数请求任意磁盘文件。浏览器引擎还应由 manifest 固定 MIME、字节数和哈希，避免把能力目录整体变成第二个静态根。
 
 即使 manifest 合法，也应继续验证真实路径包含关系、拒绝符号链接逃逸，并从同一个文件描述符完成 stat、SHA-256 与响应读取，避免检查后替换的时间差。
 
@@ -53,5 +54,4 @@
 
 ## 验证方法
 
-用临时小 artifact 覆盖完整文件、HEAD、前缀/开放/后缀 Range、越界与多段 Range、未知 ID、编码 traversal、模型缺失、文件 symlink 和能力目录 symlink。测试不需要下载真实大模型，但必须走与生产相同的 resolver 和文件描述符读取路径。
-
+用临时小 artifact 覆盖完整文件、HEAD、前缀/开放/后缀 Range、越界与多段 Range、未知 ID、编码 traversal、模型缺失、文件 symlink 和能力目录 symlink。对仓库内 JS/WASM 还要覆盖正确 MIME、服务前变更和指向能力目录外的 symlink。测试不需要下载真实大模型，但必须走与生产相同的 resolver 和文件描述符读取路径。

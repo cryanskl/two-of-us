@@ -120,6 +120,7 @@ export function validateManifest(manifest, expectedId = manifest && manifest.id)
   validateEngine(manifest.engine);
   validateModel(manifest.model);
   validateRequirements(manifest.requirements);
+  validateBrowserAssets(manifest.browserAssets);
   if (!Array.isArray(manifest.artifacts) || manifest.artifacts.length === 0) {
     throw invalidManifest("manifest 必须至少声明一个 artifact");
   }
@@ -166,6 +167,47 @@ export async function getCapabilityStatus({ rootDir, dataDir = resolveDataDir(),
       return freezeStatus(id, "incompatible", error.code, error.message, dataDir);
     }
     throw error;
+  }
+
+  const capabilitySourceDir = path.join(toPath(rootDir), "capabilities", id);
+  for (const asset of manifestRecord.value.browserAssets ?? []) {
+    const assetPath = resolveArtifactPath(capabilitySourceDir, asset.path);
+    let metadata;
+    try {
+      metadata = await stat(assetPath);
+    } catch (error) {
+      if (error.code === "ENOENT") {
+        return freezeStatus(
+          id,
+          "corrupt",
+          "BROWSER_ASSET_MISSING",
+          `缺少浏览器运行资产：${asset.path}`,
+          dataDir,
+          manifestRecord,
+        );
+      }
+      throw error;
+    }
+    if (!metadata.isFile() || metadata.size !== asset.bytes) {
+      return freezeStatus(
+        id,
+        "corrupt",
+        "BROWSER_ASSET_LENGTH_MISMATCH",
+        `浏览器运行资产长度错误：${asset.path}`,
+        dataDir,
+        manifestRecord,
+      );
+    }
+    if (await sha256File(assetPath) !== asset.sha256) {
+      return freezeStatus(
+        id,
+        "corrupt",
+        "BROWSER_ASSET_HASH_MISMATCH",
+        `浏览器运行资产哈希错误：${asset.path}`,
+        dataDir,
+        manifestRecord,
+      );
+    }
   }
 
   const installDir = capabilityInstallDir(dataDir, id);
@@ -524,6 +566,39 @@ function validateRequirements(requirements) {
   if (!Number.isSafeInteger(requirements.recommendedMemoryMiB)
     || requirements.recommendedMemoryMiB <= 0) {
     throw invalidManifest("requirements.recommendedMemoryMiB 必须是正整数");
+  }
+}
+
+function validateBrowserAssets(assets) {
+  if (assets === undefined) return;
+  if (!Array.isArray(assets) || assets.length === 0) {
+    throw invalidManifest("browserAssets 必须是非空数组");
+  }
+  const ids = new Set();
+  const paths = new Set();
+  const allowedContentTypes = new Set([
+    "application/wasm",
+    "text/javascript; charset=utf-8",
+  ]);
+  for (const asset of assets) {
+    if (!isPlainObject(asset)) throw invalidManifest("browser asset 必须是普通对象");
+    if (typeof asset.id !== "string" || !capabilityIdPattern.test(asset.id)) {
+      throw invalidManifest("browser asset id 必须是小写短横线标识符");
+    }
+    if (ids.has(asset.id)) throw invalidManifest(`重复的 browser asset id：${asset.id}`);
+    ids.add(asset.id);
+    validateRelativePath(asset.path);
+    if (paths.has(asset.path)) throw invalidManifest(`重复的 browser asset path：${asset.path}`);
+    paths.add(asset.path);
+    if (!allowedContentTypes.has(asset.contentType)) {
+      throw invalidManifest(`browser asset ${asset.id} 的 contentType 不受支持`);
+    }
+    if (!Number.isSafeInteger(asset.bytes) || asset.bytes <= 0) {
+      throw invalidManifest(`browser asset ${asset.id} 的 bytes 必须是正整数`);
+    }
+    if (typeof asset.sha256 !== "string" || !sha256Pattern.test(asset.sha256)) {
+      throw invalidManifest(`browser asset ${asset.id} 必须提供 64 位小写 SHA-256`);
+    }
   }
 }
 

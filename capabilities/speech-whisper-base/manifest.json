@@ -23,6 +23,22 @@
     "crossOriginIsolated": true,
     "recommendedMemoryMiB": 8192
   },
+  "browserAssets": [
+    {
+      "id": "engine-js",
+      "path": "browser/speech-whisper.js",
+      "contentType": "text/javascript; charset=utf-8",
+      "bytes": 95794,
+      "sha256": "5982cab612133830342320bb247511ab6bc19ed7aaa566daff3e3532c5c5c942"
+    },
+    {
+      "id": "engine-wasm",
+      "path": "browser/speech-whisper.wasm",
+      "contentType": "application/wasm",
+      "bytes": 1251026,
+      "sha256": "48ef5f6dfce8ddeacd494637ab4cdfc871792d13e96b521596131a391355751f"
+    }
+  ],
   "artifacts": [
     {
       "id": "ggml-base",

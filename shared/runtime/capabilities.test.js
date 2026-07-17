@@ -14,6 +14,8 @@ import {
 
 const payload = Buffer.from("runtime capability fixture\n");
 const payloadSha256 = createHash("sha256").update(payload).digest("hex");
+const browserPayload = Buffer.from("globalThis.fixtureEngine = true;\n");
+const browserPayloadSha256 = createHash("sha256").update(browserPayload).digest("hex");
 
 test("loopback detection covers IPv4, IPv6, and mapped addresses", () => {
   assert.equal(isLoopbackAddress("127.0.0.1"), true);
@@ -76,6 +78,12 @@ test("public status DTO is sanitized and concurrent reads share one provider", a
     id: "fixture-model",
     bytes: payload.length,
     href: "/api/capabilities/fixture-speech/artifacts/fixture-model",
+  }]);
+  assert.deepEqual(firstResult.capabilities[0].browserAssets, [{
+    id: "engine-js",
+    bytes: browserPayload.length,
+    contentType: "text/javascript; charset=utf-8",
+    href: "/api/capabilities/fixture-speech/browser/engine-js",
   }]);
 });
 
@@ -171,6 +179,94 @@ test("artifact endpoint rejects invalid ranges, unknown IDs, and encoded travers
   assert.equal((await fetch(`${base}/fixture-model/receipt.json`)).status, 404);
 });
 
+test("browser asset endpoint serves only manifest-whitelisted verified files", async (context) => {
+  const fixture = await createFixture(context);
+  const server = await startRuntimeServer(context, fixture);
+  const assetUrl = `${server.url}/api/capabilities/fixture-speech/browser/engine-js`;
+
+  const complete = await fetch(assetUrl);
+  assert.equal(complete.status, 200);
+  assert.deepEqual(Buffer.from(await complete.arrayBuffer()), browserPayload);
+  assert.equal(complete.headers.get("content-type"), "text/javascript; charset=utf-8");
+  assert.equal(complete.headers.get("cross-origin-resource-policy"), "same-origin");
+  assert.equal(complete.headers.get("x-content-type-options"), "nosniff");
+
+  const head = await fetch(assetUrl, { method: "HEAD" });
+  assert.equal(head.status, 200);
+  assert.equal(head.headers.get("content-length"), String(browserPayload.length));
+  assert.equal(await head.text(), "");
+
+  assert.equal((await fetch(`${server.url}/api/capabilities/fixture-speech/browser/unknown`)).status, 404);
+  assert.equal((await fetch(`${server.url}/api/capabilities/fixture-speech/browser/%252e%252e`)).status, 404);
+  assert.equal((await fetch(`${assetUrl}/manifest.json`)).status, 404);
+});
+
+test("browser asset endpoint detects a post-status mutation before serving", async (context) => {
+  const fixture = await createFixture(context);
+  const runtime = createCapabilitiesRuntime({
+    rootDir: fixture.rootDir,
+    dataDir: fixture.dataDir,
+    async statusProvider({ id }) {
+      return {
+        id,
+        state: "available",
+        code: "OK",
+        message: "available",
+        manifest: fixture.manifest,
+      };
+    },
+  });
+  await writeFile(path.join(
+    fixture.rootDir,
+    "capabilities",
+    fixture.manifest.id,
+    "browser",
+    "fixture-engine.js",
+  ), Buffer.alloc(browserPayload.length, 0x20));
+  const server = await startRuntimeServer(context, fixture, runtime);
+
+  const response = await fetch(`${server.url}/api/capabilities/fixture-speech/browser/engine-js`);
+  assert.equal(response.status, 409);
+  assert.equal((await response.json()).error, "BROWSER_ASSET_CHANGED");
+});
+
+test("capability status reports a changed browser asset as corrupt", async (context) => {
+  const fixture = await createFixture(context);
+  await writeFile(path.join(
+    fixture.rootDir,
+    "capabilities",
+    fixture.manifest.id,
+    "browser",
+    "fixture-engine.js",
+  ), Buffer.alloc(browserPayload.length, 0x20));
+  const runtime = createCapabilitiesRuntime({ rootDir: fixture.rootDir, dataDir: fixture.dataDir });
+
+  const status = (await runtime.getPublicStatuses()).capabilities[0];
+  assert.equal(status.state, "corrupt");
+  assert.equal(status.code, "BROWSER_ASSET_HASH_MISMATCH");
+  assert.equal(status.browserAssets[0].href, null);
+});
+
+test("browser asset realpath containment rejects a symlink outside its capability", async (context) => {
+  const fixture = await createFixture(context);
+  const assetPath = path.join(
+    fixture.rootDir,
+    "capabilities",
+    fixture.manifest.id,
+    "browser",
+    "fixture-engine.js",
+  );
+  const outsidePath = path.join(fixture.baseDir, "outside-engine.js");
+  await writeFile(outsidePath, browserPayload);
+  await rm(assetPath);
+  await symlink(outsidePath, assetPath);
+  const server = await startRuntimeServer(context, fixture);
+
+  const response = await fetch(`${server.url}/api/capabilities/fixture-speech/browser/engine-js`);
+  assert.equal(response.status, 409);
+  assert.equal((await response.json()).error, "BROWSER_ASSET_UNSAFE");
+});
+
 test("realpath containment rejects an installed artifact symlink to another directory", async (context) => {
   const fixture = await createFixture(context);
   const artifactPath = path.join(fixture.dataDir, "capabilities", fixture.manifest.id, "models", "fixture.bin");
@@ -222,6 +318,8 @@ async function createFixture(context, { install = true } = {}) {
   const manifestDir = path.join(rootDir, "capabilities", manifest.id);
   await mkdir(manifestDir, { recursive: true });
   await writeFile(path.join(manifestDir, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+  await mkdir(path.join(manifestDir, "browser"));
+  await writeFile(path.join(manifestDir, "browser", "fixture-engine.js"), browserPayload);
   if (install) {
     await installCapability({
       rootDir,
@@ -258,6 +356,13 @@ function makeManifest() {
       crossOriginIsolated: false,
       recommendedMemoryMiB: 64,
     },
+    browserAssets: [{
+      id: "engine-js",
+      path: "browser/fixture-engine.js",
+      contentType: "text/javascript; charset=utf-8",
+      bytes: browserPayload.length,
+      sha256: browserPayloadSha256,
+    }],
     artifacts: [{
       id: "fixture-model",
       path: "models/fixture.bin",
@@ -268,8 +373,9 @@ function makeManifest() {
   };
 }
 
-async function startRuntimeServer(context, fixture) {
-  const runtime = createCapabilitiesRuntime({ rootDir: fixture.rootDir, dataDir: fixture.dataDir });
+async function startRuntimeServer(context, fixture, providedRuntime) {
+  const runtime = providedRuntime
+    ?? createCapabilitiesRuntime({ rootDir: fixture.rootDir, dataDir: fixture.dataDir });
   const server = createServer(async (request, response) => {
     const url = new URL(request.url ?? "/", "http://localhost");
     if (await runtime.handleRequest(request, response, url)) return;

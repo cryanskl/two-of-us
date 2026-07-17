@@ -3,6 +3,7 @@ import { constants as fsConstants } from "node:fs";
 import { open, realpath } from "node:fs/promises";
 import path from "node:path";
 import { pipeline } from "node:stream/promises";
+import { fileURLToPath } from "node:url";
 import {
   capabilitiesDataRoot,
   CapabilityError,
@@ -52,7 +53,9 @@ export function createCapabilitiesRuntime({
   async function handleRequest(request, response, urlOrPathname) {
     const pathname = getPathname(urlOrPathname, request.url);
     const artifactRoute = parseArtifactRoute(pathname);
-    if (pathname !== capabilitiesPath && !artifactRoute && !pathname.startsWith(artifactPrefix)) {
+    const browserAssetRoute = parseBrowserAssetRoute(pathname);
+    if (pathname !== capabilitiesPath && !artifactRoute && !browserAssetRoute
+      && !pathname.startsWith(artifactPrefix)) {
       return false;
     }
 
@@ -75,16 +78,83 @@ export function createCapabilitiesRuntime({
       return true;
     }
 
-    if (!artifactRoute) {
+    if (!artifactRoute && !browserAssetRoute) {
       sendJson(request, response, 404, { error: "NOT_FOUND" });
       return true;
     }
 
-    await serveArtifact(request, response, artifactRoute, provideStatus, { rootDir, dataDir });
+    if (browserAssetRoute) {
+      await serveBrowserAsset(request, response, browserAssetRoute, provideStatus, { rootDir });
+    } else {
+      await serveArtifact(request, response, artifactRoute, provideStatus, { rootDir, dataDir });
+    }
     return true;
   }
 
   return Object.freeze({ getPublicStatuses, handleRequest });
+}
+
+async function serveBrowserAsset(request, response, route, provideStatus, { rootDir }) {
+  let fileHandle;
+  try {
+    const manifestRecord = await loadCapabilityManifest(rootDir, route.capabilityId);
+    const asset = manifestRecord.value.browserAssets?.find(({ id }) => id === route.assetId);
+    if (!asset) {
+      sendJson(request, response, 404, { error: "BROWSER_ASSET_NOT_FOUND" });
+      return;
+    }
+
+    const status = await provideStatus(route.capabilityId);
+    if (status.state !== "available") {
+      sendJson(request, response, 409, {
+        error: "CAPABILITY_UNAVAILABLE",
+        state: status.state,
+        code: status.code,
+      });
+      return;
+    }
+
+    const capabilityRoot = path.resolve(getRootPath(rootDir), "capabilities", route.capabilityId);
+    const candidate = path.resolve(capabilityRoot, ...asset.path.split("/"));
+    const [realCapabilityRoot, realCandidate] = await Promise.all([
+      realpath(capabilityRoot),
+      realpath(candidate),
+    ]);
+    if (!isInside(realCapabilityRoot, realCandidate)) {
+      sendJson(request, response, 409, { error: "BROWSER_ASSET_UNSAFE" });
+      return;
+    }
+
+    const noFollow = typeof fsConstants.O_NOFOLLOW === "number" ? fsConstants.O_NOFOLLOW : 0;
+    fileHandle = await open(realCandidate, fsConstants.O_RDONLY | noFollow);
+    const metadata = await fileHandle.stat();
+    if (!metadata.isFile() || metadata.size !== asset.bytes
+      || await sha256FileHandle(fileHandle) !== asset.sha256) {
+      sendJson(request, response, 409, { error: "BROWSER_ASSET_CHANGED" });
+      return;
+    }
+
+    response.writeHead(200, browserAssetHeaders(asset, metadata.size));
+    if (request.method === "HEAD") {
+      response.end();
+      return;
+    }
+    await pipeline(fileHandle.createReadStream({ start: 0, autoClose: false }), response);
+  } catch (error) {
+    if (!response.headersSent && isUnavailableFileError(error)) {
+      sendJson(request, response, 409, { error: "CAPABILITY_UNAVAILABLE" });
+    } else if (!response.headersSent && error instanceof CapabilityError
+      && error.code === "MANIFEST_NOT_FOUND") {
+      sendJson(request, response, 404, { error: "CAPABILITY_NOT_FOUND" });
+    } else if (!response.headersSent) {
+      console.error(error);
+      sendJson(request, response, 500, { error: "BROWSER_ASSET_ERROR" });
+    } else {
+      response.destroy();
+    }
+  } finally {
+    if (fileHandle) await fileHandle.close().catch(() => {});
+  }
 }
 
 export function isLoopbackAddress(address) {
@@ -225,6 +295,12 @@ function toPublicStatus(status) {
       bytes: artifact.bytes,
       href: available ? `${capabilitiesPath}/${status.id}/artifacts/${artifact.id}` : null,
     })) : [],
+    browserAssets: manifest ? (manifest.browserAssets ?? []).map((asset) => ({
+      id: asset.id,
+      bytes: asset.bytes,
+      contentType: asset.contentType,
+      href: available ? `${capabilitiesPath}/${status.id}/browser/${asset.id}` : null,
+    })) : [],
   };
 }
 
@@ -251,6 +327,15 @@ function parseArtifactRoute(pathname) {
   return capabilityId && artifactId ? { capabilityId, artifactId } : null;
 }
 
+function parseBrowserAssetRoute(pathname) {
+  if (typeof pathname !== "string") return null;
+  const match = /^\/api\/capabilities\/([^/]+)\/browser\/([^/]+)$/.exec(pathname);
+  if (!match) return null;
+  const capabilityId = decodeId(match[1]);
+  const assetId = decodeId(match[2]);
+  return capabilityId && assetId ? { capabilityId, assetId } : null;
+}
+
 function decodeId(value) {
   try {
     const decoded = decodeURIComponent(value);
@@ -274,6 +359,10 @@ function isInside(base, target) {
   return relative !== "" && !relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative);
 }
 
+function getRootPath(rootDir) {
+  return rootDir instanceof URL ? fileURLToPath(rootDir) : path.resolve(rootDir);
+}
+
 async function sha256FileHandle(fileHandle) {
   const digest = createHash("sha256");
   for await (const chunk of fileHandle.createReadStream({ start: 0, autoClose: false })) {
@@ -291,6 +380,16 @@ function artifactHeaders({ contentLength, contentRange }) {
     "x-content-type-options": "nosniff",
     "cross-origin-resource-policy": "same-origin",
     ...(contentRange ? { "content-range": contentRange } : {}),
+  };
+}
+
+function browserAssetHeaders(asset, contentLength) {
+  return {
+    "content-type": asset.contentType,
+    "content-length": contentLength,
+    "cache-control": "private, no-store",
+    "x-content-type-options": "nosniff",
+    "cross-origin-resource-policy": "same-origin",
   };
 }
 
