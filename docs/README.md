@@ -21,6 +21,7 @@
 | [13-panorama-memory-spec.md](./13-panorama-memory-spec.md) | 首个 B 级全景回忆作品的本地 vendor、私人照片、对象 URL 与 WebGL 生命周期规格 |
 | [14-panorama-memory-verification.md](./14-panorama-memory-verification.md) | 全景回忆的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
 | [15-photo-swap-puzzle-spec.md](./15-photo-swap-puzzle-spec.md) | A 级私人照片交换拼图的文件导入、中心裁切、排列状态机与 blob 生命周期规格 |
+| [16-photo-swap-puzzle-verification.md](./16-photo-swap-puzzle-verification.md) | 私人照片交换拼图的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
@@ -57,17 +58,17 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、同机你画我猜、反应力对决、同心解锁、隔屏画猜、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、同机你画我猜、反应力对决、同心解锁、隔屏画猜、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
-- 已执行：五个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择；
+- 已执行：七个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；
 - 已实现首个 C 级秘密同时选择样板：密封猜拳，增加可信本机裁判、两端同时揭晓与结果复算；
 - 已实现首个 B 级样板：回到那一天，增加精确浏览器依赖映射、本机照片 Gate 与对象 URL 生命周期；
-- 下一批：C 级手机控制器实时对抗、默契问答，或 A 级私人照片拼图；
+- 下一批：C 级手机控制器实时对抗、默契问答，或 D 级本地语音体验的能力验证；
 - 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
 
 ## 下一轮选题时的最小输入

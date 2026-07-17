@@ -22,6 +22,15 @@ test("catalog exposes the installed B-level panorama memory experience", async (
   assert.match(panorama.entry, /panorama-memory\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level private photo puzzle", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const puzzle = catalog.experiences.find((item) => item.id === "photo-swap-puzzle");
+
+  assert.equal(puzzle.level, "A");
+  assert.equal(puzzle.networkRequired, false);
+  assert.match(puzzle.entry, /photo-swap-puzzle\/index\.html$/);
+});
+
 test("every installed catalog entry points to a local file", async () => {
   const root = new URL("../../", import.meta.url);
   const catalog = await loadCatalog(root);

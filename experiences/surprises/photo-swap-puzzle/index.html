@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>拼回这一刻 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="intro">
+        <h1>拼回这一刻</h1>
+        <p>选择一张我们的照片，点两块交换，慢慢把它拼回来。</p>
+        <label id="choose-label" class="primary-action">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m5 18 5-5 3 3 2-2 4 4"></path></svg>
+          选择一张照片
+          <input id="photo-input" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="privacy-note format-note">
+        </label>
+      </header>
+
+      <p id="status" class="status visually-hidden" aria-live="polite"></p>
+
+      <section class="photo-workspace" aria-label="照片拼图">
+        <div id="empty-stage" class="empty-stage" aria-hidden="true">
+          <svg class="empty-grid" viewBox="0 0 600 600">
+            <path d="M200 0v600M400 0v600M0 200h600M0 400h600"></path>
+            <rect x="234" y="236" width="132" height="112" rx="4"></rect>
+            <circle cx="275" cy="273" r="12"></circle>
+            <path d="m248 327 62-56 33 29 21-17 30 28"></path>
+          </svg>
+        </div>
+
+        <div id="puzzle-stage" class="puzzle-stage" hidden>
+          <button class="tile" type="button" data-position="0"></button>
+          <button class="tile" type="button" data-position="1"></button>
+          <button class="tile" type="button" data-position="2"></button>
+          <button class="tile" type="button" data-position="3"></button>
+          <button class="tile" type="button" data-position="4"></button>
+          <button class="tile" type="button" data-position="5"></button>
+          <button class="tile" type="button" data-position="6"></button>
+          <button class="tile" type="button" data-position="7"></button>
+          <button class="tile" type="button" data-position="8"></button>
+        </div>
+
+        <div id="completion" class="completion" hidden>
+          <img id="completed-photo" alt="已经拼好的私人照片">
+          <div class="completion-copy">
+            <h2>拼回来了</h2>
+            <p>原来这一刻一直都在。</p>
+          </div>
+        </div>
+      </section>
+
+      <div id="game-toolbar" class="game-toolbar" aria-label="拼图操作" hidden>
+        <p id="moves">第 0 次交换</p>
+        <button id="shuffle-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c5 0 5 10 10 10h3"></path><path d="m17 14 3 3-3 3M4 17h3c2 0 3-1 4-3M14 9c1-1 2-2 3-2h3"></path><path d="m17 4 3 3-3 3"></path></svg>
+          重新打乱
+        </button>
+        <button id="replace-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 8a7 7 0 0 1 12-1M18 16a7 7 0 0 1-12 1"></path></svg>
+          换一张照片
+        </button>
+        <button id="clear-button" type="button" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14"></path></svg>
+          清除照片
+        </button>
+      </div>
+
+      <footer class="privacy-bar">
+        <p id="privacy-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+          照片只在当前页面中处理，不会上传或保存。
+        </p>
+        <p id="format-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM15 3v5h4"></path></svg>
+          JPEG、PNG、WebP · 最大 20 MiB
+        </p>
+      </footer>
+
+      <noscript><p class="noscript">需要启用 JavaScript 才能在本地生成照片拼图。</p></noscript>
+    </main>
+
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
