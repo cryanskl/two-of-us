@@ -1,6 +1,6 @@
 # 单人惊喜类：开源项目与互动机制调研
 
-> 调研快照：2026-07-15。结论来自原仓库、许可证文件与入口源码核验；未把任何第三方源码直接复制进本仓库。
+> 调研快照：2026-07-15；来源维护复核：2026-07-17。结论来自原仓库、许可证文件与入口源码核验；未把任何第三方源码直接复制进本仓库。
 
 ## 结论先行
 
@@ -34,7 +34,7 @@
 | [do-you-wanna-be-my-gf](https://github.com/javimelezzio/do-you-wanna-be-my-gf) | 拆信封、翻卡片、Yes 扩屏、打开情书 | 双击可用：纯 HTML/CSS/JS | [MIT](https://github.com/javimelezzio/do-you-wanna-be-my-gf/blob/main/LICENSE) | 低 |
 | [Valentines-Day-Quiz](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz) | “你有多了解我/我们”回忆测验，答对庆祝 | 需本地化：把 canvas-confetti 保存到作品目录 | [MIT](https://github.com/ViktorHadzhiyanev/Valentines-Day-Quiz/blob/main/LICENSE) | 低 |
 | [ValantineGift](https://github.com/benfooster/ValantineGift) | 接住掉落爱心，爱意槽满后解锁问题 | 需本地化：补音乐并保存字体 | [MIT](https://github.com/benfooster/ValantineGift/blob/main/LICENSE) | 低/中 |
-| [happybirthday-asnah](https://github.com/HadeedJalani/happybirthday-asnah) | 火漆信封、情书、吹蜡烛、烟花气球、留言 | 点击后备可双击；麦克风模式需 B 级本地服务 | [MIT](https://github.com/HadeedJalani/happybirthday-asnah/blob/main/LICENSE) | 中 |
+| [birthday-bliss `d1e5348`](https://github.com/randillasith/birthday-bliss/tree/d1e534811041a2b33f98ad23527ce7bf97e25d3d) | 倒计时、相册、点击或吹蜡烛、星夜许愿 | 麦克风需 B 级 localhost；字体需本地化，示例相册文件缺失需自备 | [MIT](https://github.com/randillasith/birthday-bliss/blob/d1e534811041a2b33f98ad23527ce7bf97e25d3d/LICENSE) | 中 |
 | [canvas-scratch-card](https://github.com/5SSS/canvas-scratch-card) | 刮开礼物、约会地点、照片或一句话 | 需打包：组件改成浏览器发布包后可达 A 级 | [MIT](https://github.com/5SSS/canvas-scratch-card/blob/master/LICENSE) | 中 |
 | [Vanilla-JavaScript-Memory-Card-Game](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game) | 用情侣照片做翻牌配对，完成后揭晓 | 双击可用：纯原生、零外链 | [MIT](https://github.com/ahmedknasr-dev/Vanilla-JavaScript-Memory-Card-Game/blob/main/LICENSE) | 低/中 |
 | [spin-wheel](https://github.com/CrazyTim/spin-wheel) | “今晚吃什么”“约会去哪”“爱的奖励”转盘 | 双击可用：已有 IIFE 发布包，零运行时依赖 | [MIT](https://github.com/CrazyTim/spin-wheel/blob/main/LICENSE.md) | 低 |
@@ -64,7 +64,6 @@
 | [LoveLetterEffect](https://github.com/notpoiu/LoveLetterEffect) | 点击跳动爱心后展开 Markdown 情书 | `fetch` 文本，多项 CDN | [MIT](https://github.com/notpoiu/LoveLetterEffect/blob/main/LICENSE.md) | 中 |
 | [ValentineWish](https://github.com/SandeepVashishtha/ValentineWish) | 分镜名字、照片、气球爱心，可重播 | `fetch` JSON、Babel 与 GSAP CDN | [Apache-2.0](https://github.com/SandeepVashishtha/ValentineWish/blob/main/LICENSE) | 中 |
 | [Happy-Birthday / Harmann60](https://github.com/Harmann60/Happy-Birthday) | 生日主视觉、关系故事、照片/视频画廊 | 多项 UI 库和字体使用 CDN | [MIT](https://github.com/Harmann60/Happy-Birthday/blob/main/LICENSE) | 中 |
-| [birthday-bliss](https://github.com/randillasith/birthday-bliss) | 倒计时、心跳、轮播、吹/点蜡烛、星夜祝愿 | 麦克风不能直接 `file://`；字体远程 | [MIT](https://github.com/randillasith/birthday-bliss/blob/main/LICENSE) | 中 |
 | [Happy-Birthday / codertheashish](https://github.com/codertheashish/Happy-Birthday) | 开灯、气球、拉幕、逐段留言、回忆画廊 | 字体远程；注意 BSL 条款 | [BSL-1.0](https://github.com/codertheashish/Happy-Birthday/blob/main/LICENSE) | 低/中 |
 | [love-anniversary](https://github.com/co-star/love-anniversary) | 经典爱心树、打字情书和恋爱计时 | 引用的 `love.mp3` 缺失 | [MIT](https://github.com/co-star/love-anniversary/blob/master/LICENSE) | 中 |
 | [loveTimeline](https://github.com/yanhaijing/loveTimeline) | 爱心花园开场、计时、年份时间线和照片 | 失效分享脚本与较老布局 | [MIT](https://github.com/yanhaijing/loveTimeline/blob/gh-pages/LICENSE) | 中 |
@@ -78,6 +77,10 @@
 | [flowers](https://github.com/willlllllllllllllllllllllllllllllllliam/flowers) | 花朵/爱心生成艺术，文字影响动画 | p5.js CDN、`loadStrings` 本地文本 | [MIT](https://github.com/willlllllllllllllllllllllllllllllllliam/flowers/blob/main/LICENSE) | 中 |
 | [anniversaryGift](https://github.com/softnchewy/anniversaryGift) | 密码、对话和关卡解锁的 Three.js 纪念游戏 | 旧 Webpack/node-sass 与远程素材 | [MIT](https://github.com/softnchewy/anniversaryGift/blob/master/LICENSE) | 高 |
 | [Valentines-day-fun](https://github.com/chromaglow/Valentines-day-fun) | 日期解锁、首次/再次访问台词、NFC 触发 | Apps Script、ntfy、远程 URL | [MIT](https://github.com/chromaglow/Valentines-day-fun/blob/main/LICENSE) | 高，只借鉴状态机 |
+
+## 证据失效与撤回记录
+
+- `HadeedJalani/happybirthday-asnah` 曾在 2026-07-15 快照中作为 MIT 的吹蜡烛候选；2026-07-17 复核时 GitHub Repository API 返回 404，`git ls-remote` 也返回 Repository not found，原 LICENSE 已无法重新打开。因此它只保留为历史机制线索，不再计入许可明确候选，不复制代码或素材；同一能力改由固定版本的 `randillasith/birthday-bliss` 承接。
 
 ## 无许可证：只借鉴创意
 

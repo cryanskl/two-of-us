@@ -160,7 +160,7 @@ experiences/co-op/compatibility-quiz/
 
 ## 10. 借鉴与来源声明
 
-- [nivaboaz/CoupleCards](https://github.com/nivaboaz/CoupleCards)（MIT）：只参考情侣对话卡与中性问题方向；不复制题目、源码、视觉或素材；
+- [michaelsboost/CoupleCards `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1)（[MIT](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md)，Copyright 2025 Michael Schwartz）：只参考情侣对话卡与中性问题方向；不复制题目、源码、视觉或素材；
 - [google/html-quiz](https://github.com/google/html-quiz)（已归档；`quiz.js` 为 Apache-2.0，HTML/CSS 为 CC BY 3.0，图片各有归属）：只比较双队问答与结算流程；混合许可文件不引入；
 - [JustalK/COUPLE-APP](https://github.com/JustalK/COUPLE-APP)（MIT）：只比较关系问答的主题舒适度、跳过和局数；不引入旧 Expo/React Native 技术栈；
 - [tomalama/hackbox](https://github.com/tomalama/hackbox)（MIT）：只参考主机与手机控制器的角色分离；不引入 Socket.IO 2.2、React 16、CRA 3 或 node-sass 4；

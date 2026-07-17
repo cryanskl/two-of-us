@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [调研来源漂移：失效仓库仍标为高置信度，重分发仓库被当作一手来源](./2026-07-17-research-source-provenance-drift.md)
 - [心跳冲刺：常见桌面与手机首屏看不到完整主控制](./2026-07-17-heart-sprint-primary-control-below-fold.md)
 - [心动拔河：规则越线时织带结未对齐终点针](./2026-07-17-ribbon-tug-finish-marker-drift.md)
 - [和你一样：已选择后仍提示先选答案](./2026-07-17-compatibility-quiz-stale-selection-hint.md)

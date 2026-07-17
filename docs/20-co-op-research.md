@@ -1,6 +1,6 @@
 # 双人合作类：开源项目与玩法调研
 
-> 调研快照：2026-07-15。这里的“合作”包括同屏实时协作、轮流沟通、一起创作和共同完成关系练习。
+> 调研快照：2026-07-15；来源维护复核：2026-07-17。这里的“合作”包括同屏实时协作、轮流沟通、一起创作和共同完成关系练习。
 
 ## 最适合先做的合作玩法
 
@@ -42,13 +42,14 @@
 | C09 | Tetrus：双人 P2P 合作消除方块 | 双设备 | WebRTC + WebSocket + Go；重做本地主机后目标 C | MIT · [tetrus](https://github.com/frustra/tetrus) | 高 |
 | C10 | p5.party 合作谜题 | 双设备 | 当前依赖 p5.party 公网状态服务；需本地替代后目标 C | MIT · [p5.party_Co-Op_Puzzle](https://github.com/Yaoc105/p5.party_Co-Op_Puzzle) | 高 |
 | C11 | Void Harvest：双人合作构筑并清怪 | 同机 | Three.js + Webpack；提供发布包与启动器后目标 B | MIT · [void-harvest-game](https://github.com/VictorZakharov/void-harvest-game) | 高 |
-| C12 | 情侣问题卡：抽卡、跳过、展开话题 | 单设备轮流 | 已有 dist 与本地库；目标 A | MIT · [nivaboaz/CoupleCards](https://github.com/nivaboaz/CoupleCards) | 低/中 |
-| C13 | 关系卡牌：认识彼此、讨论和共同回忆 | 单设备轮流 | 前端项目，核对素材并精简后目标 A/B | MIT · [michaelsboost/CoupleCards](https://github.com/michaelsboost/CoupleCards) | 中 |
-| C14 | What We Carry：讨论家务与心理负担是谁承担 | 单设备共同填写 | 单文件 HTML、本地、无追踪；目标 A | MIT · [what-we-carry](https://github.com/PButters/what-we-carry) | 低 |
-| C15 | 个人照片拼图：选择自己的照片一起拼 | 同屏鼠标/触屏 | HTML5 PWA，核对发布包后目标 A/B | MPL · [grrd01/Puzzle](https://github.com/grrd01/Puzzle) | 中 |
-| C16 | 图像拼图组件：把照片直接转成拼片 | 同屏鼠标 | 旧 WebKit 方案，兼容性重测后目标 A | MPL-2.0 · [jqJigsawPuzzle](https://github.com/jfmdev/jqJigsawPuzzle) | 中 |
+| C12 | 情侣问题卡：抽卡、跳过、展开话题 | 单设备轮流 | 已有 dist 与本地库；目标 A，题库与视觉自行重写 | MIT，Copyright 2025 Michael Schwartz · [michaelsboost/CoupleCards `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1) · [LICENSE.md](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md) | 低/中 |
+| C13 | What We Carry：讨论家务与心理负担是谁承担 | 单设备共同填写 | 单文件 HTML、本地、无追踪；目标 A | MIT · [what-we-carry](https://github.com/PButters/what-we-carry) | 低 |
+| C14 | 个人照片拼图：选择自己的照片一起拼 | 同屏鼠标/触屏 | HTML5 PWA，核对发布包后目标 A/B | MPL · [grrd01/Puzzle](https://github.com/grrd01/Puzzle) | 中 |
+| C15 | 图像拼图组件：把照片直接转成拼片 | 同屏鼠标 | 旧 WebKit 方案，兼容性重测后目标 A | MPL-2.0 · [jqJigsawPuzzle](https://github.com/jfmdev/jqJigsawPuzzle) | 中 |
 
 `C01–C04` 来自 [tridpt/TwoPlayerGames](https://github.com/tridpt/TwoPlayerGames)。该 MIT 仓库当前有 76 个游戏脚本；同机与 AI 玩法是纯客户端，Node/WebSocket 服务跨设备房间时可改造为 C 级本地主机层。单个游戏脚本依赖 `GameRegistry`、Canvas 上下文和共享 CSS，评估时应先跑整个客户端壳，不能把一个 JS 文件孤立复制后宣称可用。
+
+2026-07-17 复核发现 `nivaboaz/CoupleCards` 与原仓库共享截至 `94ac422` 的提交历史，且其许可证仍写明版权属于 Michael Schwartz；后续提交主要修改 README 并加入压缩包。它不再作为一个独立候选或一手来源计数，只保留为发现线索，规范来源统一回到上述固定的原始仓库与 commit。
 
 ## 许可不完整：只借鉴机制
 

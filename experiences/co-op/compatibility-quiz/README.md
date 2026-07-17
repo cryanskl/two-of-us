@@ -30,7 +30,7 @@
 
 本作品的题库、问答状态机、密封结果验证、页面结构、视觉、文案与测试均为本仓库自行实现。下列项目只用于调研玩法方向或架构边界；**没有复制其代码、题目、视觉、素材、构建配置或许可混合文件**：
 
-- **[nivaboaz/CoupleCards](https://github.com/nivaboaz/CoupleCards)（MIT）**：只参考情侣对话卡与中性问题方向；未复制代码、题目、视觉、素材或构建配置。
+- **[michaelsboost/CoupleCards `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1)（[MIT](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md)，Copyright 2025 Michael Schwartz）**：只参考情侣对话卡与中性问题方向；未复制代码、题目、视觉、素材或构建配置。
 - **[google/html-quiz](https://github.com/google/html-quiz)（已归档；`quiz.js` 为 Apache-2.0，HTML/CSS 为 CC BY 3.0，图片各有归属）**：只比较双队问答与结算流程；未引入其混合许可文件，也未复制代码、题目、视觉、素材或构建配置。
 - **[JustalK/COUPLE-APP](https://github.com/JustalK/COUPLE-APP)（MIT）**：只比较关系问答的主题舒适度、跳过与局数；未引入旧 Expo/React Native 技术栈，也未复制代码、题目、视觉、素材或构建配置。
 - **[tomalama/hackbox](https://github.com/tomalama/hackbox)（MIT）**：只参考主机与手机控制器的角色分离；未引入 Socket.IO 2.2、React 16、CRA 3 或 node-sass 4，也未复制代码、题目、视觉、素材或构建配置。

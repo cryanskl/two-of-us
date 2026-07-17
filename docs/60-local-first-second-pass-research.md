@@ -1,6 +1,6 @@
 # Two of Us 第二轮本地优先项目调研
 
-> 调研日期：2026-07-15
+> 调研日期：2026-07-15；来源维护复核：2026-07-17
 > 研究对象：情侣惊喜、双人合作、双人对抗与共享本地运行基础设施
 > 研究方法：技术演进纵轴 × 当前 A/B/C/D 启动等级横轴
 > 证据范围：原作者仓库、仓库许可证、官方文档与开放标准；本轮不复制第三方源码
@@ -116,7 +116,7 @@ Yjs、Automerge 一类 CRDT 则改变了协作状态：每台设备保留副本�
 | S15 | [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | D / 无 | 本地生成纪念视频、音频裁切和格式转换 | [MIT 包装层](https://github.com/ffmpegwasm/ffmpeg.wasm/blob/main/LICENSE)；FFmpeg 组件许可另审，需 COOP/COEP；中 |
 | S16 | [WebLLM](https://github.com/mlc-ai/web-llm) | D / 首次下载可选，游玩无 | WebGPU 本地生成文案、线索和互动角色 | [Apache-2.0](https://github.com/mlc-ai/web-llm/blob/main/LICENSE)；固定模型与 WASM，逐个核模型许可；高（引擎）/中（机型） |
 | S17 | [ComfyUI](https://github.com/Comfy-Org/ComfyUI) | D / 首次下载可选，游玩无 | 本机图像工作流，可生成专属卡片或风格化回忆 | [GPL-3.0](https://github.com/Comfy-Org/ComfyUI/blob/master/LICENSE)；作为独立进程集成，模型与节点逐项审计；中 |
-| S18 | [happybirthday-asnah](https://github.com/HadeedJalani/happybirthday-asnah) | B / 无 | 信封、情书、蜡烛、烟花和麦克风吹蜡烛 | [MIT](https://github.com/HadeedJalani/happybirthday-asnah/blob/main/LICENSE)；本地字体音乐，麦克风走 localhost；高 |
+| S18 | [birthday-bliss `d1e5348`](https://github.com/randillasith/birthday-bliss/tree/d1e534811041a2b33f98ad23527ce7bf97e25d3d) | B / 无 | 倒计时、相册、点击或麦克风吹蜡烛、星夜许愿 | [MIT](https://github.com/randillasith/birthday-bliss/blob/d1e534811041a2b33f98ad23527ce7bf97e25d3d/LICENSE)；本地化 Google Fonts、自备缺失相册图片，麦克风走 localhost；中 |
 | S19 | [LoveDiary-Timeline](https://github.com/MoLeft/LoveDiary-Timeline) | B / 无 | 恋爱秒表、照片时间线和选择互动 | [MIT](https://github.com/MoLeft/LoveDiary-Timeline/blob/main/LICENSE)；替换资源与弱密码入口；中 |
 | S20 | [anniversaryGift](https://github.com/softnchewy/anniversaryGift) | B / 无 | Three.js 纪念关卡和场景探索 | [MIT](https://github.com/softnchewy/anniversaryGift/blob/master/LICENSE)；升级旧构建链，替换远程素材；中 |
 
@@ -142,7 +142,7 @@ Yjs、Automerge 一类 CRDT 则改变了协作状态：每台设备保留副本�
 | C08 | [Tetrus](https://github.com/frustra/tetrus) | C / 无 | WebRTC 合作方块，适合研究状态与信令分离 | [MIT](https://github.com/frustra/tetrus/blob/master/LICENSE)；替换 Go 公网信令为本机服务；中 |
 | C09 | [js_thrustvector](https://github.com/pemmyz/js_thrustvector) | A / 无 | 双飞船保持张力搬运炸弹 | [MIT](https://github.com/pemmyz/js_thrustvector/blob/master/LICENSE)；抽离玩法、补触屏；高 |
 | C10 | [game-pjmask](https://github.com/kai-linux/game-pjmask) | A / 无 | 同键盘双人屋顶平台关卡 | [MIT](https://github.com/kai-linux/game-pjmask/blob/master/LICENSE)；核素材并调整按键；中 |
-| C11 | [nivaboaz/CoupleCards](https://github.com/nivaboaz/CoupleCards) | A / 无 | 情侣问题卡、轮流抽取和展开话题 | [MIT](https://github.com/nivaboaz/CoupleCards/blob/main/LICENSE)；重写题库与视觉；高 |
+| C11 | [michaelsboost/CoupleCards `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1) | A / 无 | 情侣问题卡、分类抽取、翻面和进度 | [MIT](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md)，Copyright 2025 Michael Schwartz；重写题库与视觉；高 |
 | C12 | [What We Carry](https://github.com/PButters/what-we-carry) | A / 无 | 共同讨论家务与心理负担 | [MIT](https://github.com/PButters/what-we-carry/blob/main/LICENSE)；只借鉴流程，改成中性本地问卷；高 |
 | C13 | [grrd01/Puzzle](https://github.com/grrd01/Puzzle) | A/B / 无 | 使用私人照片共同拼图 | [MPL-2.0（包元数据）](https://github.com/grrd01/Puzzle/blob/master/package.json)；仓库无独立许可证文件，引入前需再确认；中低 |
 | C14 | [p5.party Co‑Op Puzzle](https://github.com/Yaoc105/p5.party_Co-Op_Puzzle) | C / 现状必须，改造后无 | 双设备合作机关的机制样板 | [MIT](https://github.com/Yaoc105/p5.party_Co-Op_Puzzle/blob/main/LICENSE)；完全替换公共 p5.party 状态服务；中 |

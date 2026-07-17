@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [开源候选要固定来源谱系，不只固定项目名](./2026-07-17-upstream-source-provenance.md)
 - [主机权威的高频离散输入](./2026-07-17-host-authoritative-high-frequency-input.md)
 - [规范化游戏坐标与 CSS 布局坐标只保留一个来源](./2026-07-17-normalized-game-coordinate-mapping.md)
 - [密封流程的版本队列与可验证回合编号](./2026-07-17-versioned-sealed-state-replay.md)
