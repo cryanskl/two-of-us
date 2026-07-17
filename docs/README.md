@@ -32,6 +32,7 @@
 | [24-heart-sprint-verification.md](./24-heart-sprint-verification.md) | “心跳冲刺”的自动检查、Chrome 双端实玩、响应式与视觉忠实度证据 |
 | [25-twin-light-maze-spec.md](./25-twin-light-maze-spec.md) | A 级“双光点归巢”的网格机关、共同胜利、生成式图集与验收规格 |
 | [26-twin-light-maze-verification.md](./26-twin-light-maze-verification.md) | “双光点归巢”的 BFS 可解性、Chrome 四关实玩、响应式与视觉忠实度证据 |
+| [27-tethered-heart-spec.md](./27-tethered-heart-spec.md) | A 级“同心牵引”的固定步长、双丝带约束、连续碰撞、生成式资产与验收规格 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
