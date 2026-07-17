@@ -51,6 +51,16 @@ test("catalog exposes the installed A-level ribbon tug", async () => {
   assert.match(ribbonTug.entry, /ribbon-tug\/index\.html$/);
 });
 
+test("catalog exposes the installed C-level heart sprint", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const heartSprint = catalog.experiences.find((item) => item.id === "heart-sprint");
+
+  assert.equal(heartSprint.category, "versus");
+  assert.equal(heartSprint.level, "C");
+  assert.equal(heartSprint.networkRequired, false);
+  assert.match(heartSprint.entry, /heart-sprint\/index\.html$/);
+});
+
 test("every installed catalog entry points to a local file", async () => {
   const root = new URL("../../", import.meta.url);
   const catalog = await loadCatalog(root);

@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [主机权威的高频离散输入](./2026-07-17-host-authoritative-high-frequency-input.md)
 - [规范化游戏坐标与 CSS 布局坐标只保留一个来源](./2026-07-17-normalized-game-coordinate-mapping.md)
 - [密封流程的版本队列与可验证回合编号](./2026-07-17-versioned-sealed-state-replay.md)
 - [双人席位 Gate 与玩法状态分层](./2026-07-17-two-player-membership-boundary.md)

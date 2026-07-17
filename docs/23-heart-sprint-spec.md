@@ -1,6 +1,6 @@
 # C 级「心跳冲刺」手机控制器实时对抗规格
 
-> 建立日期：2026-07-17 · 状态：待实现 · 目标入口：`experiences/versus/heart-sprint/`
+> 建立日期：2026-07-17 · 状态：已实现并验收 · 目标入口：`experiences/versus/heart-sprint/`
 
 ## 1. 本批要补齐什么
 
