@@ -8,6 +8,10 @@
 
 ## 已记录
 
+- [双人小馆：第三次洒落的普通事件覆盖失败反馈](./2026-07-17-kitchen-relay-terminal-feedback.md)
+- [双人小馆：营业与下一单后焦点没有落到传菜操作](./2026-07-17-kitchen-relay-service-focus.md)
+- [双人小馆：营业态超出概念原生桌面高度](./2026-07-17-kitchen-relay-desktop-height-budget.md)
+- [双人小馆：`hidden` 飞行卡被组件样式重新显示](./2026-07-17-kitchen-relay-hidden-flight-card.md)
 - [数字凑靶：平局文案容易被误读为双方各得一分](./2026-07-17-number-target-tie-copy.md)
 - [数字凑靶：空算式槽被渲染为已填写实线](./2026-07-17-number-target-empty-slot-border.md)
 - [数字凑靶：开局后焦点停在页面而不是首张可选牌](./2026-07-17-number-target-drafting-focus.md)

@@ -66,6 +66,7 @@
 - [A 级拍立得显影验收记录](./docs/44-instant-photo-verification.md)
 - [A 级数字凑靶规格](./docs/45-number-target-spec.md)
 - [A 级双人小馆规格](./docs/47-kitchen-relay-spec.md)
+- [A 级双人小馆验收记录](./docs/48-kitchen-relay-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
