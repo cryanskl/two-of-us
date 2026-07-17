@@ -45,6 +45,7 @@
 - [C 级双设备默契问答验收记录](./docs/19-compatibility-quiz-verification.md)
 - [A 级心动拔河规格](./docs/21-ribbon-tug-spec.md)
 - [A 级心动拔河验收记录](./docs/22-ribbon-tug-verification.md)
+- [C 级心跳冲刺规格](./docs/23-heart-sprint-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
