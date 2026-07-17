@@ -34,6 +34,7 @@
 | [26-twin-light-maze-verification.md](./26-twin-light-maze-verification.md) | “双光点归巢”的 BFS 可解性、Chrome 四关实玩、响应式与视觉忠实度证据 |
 | [27-tethered-heart-spec.md](./27-tethered-heart-spec.md) | A 级“同心牵引”的固定步长、双丝带约束、连续碰撞、生成式资产与验收规格 |
 | [28-tethered-heart-verification.md](./28-tethered-heart-verification.md) | “同心牵引”的确定性轨迹、Chrome 三幕实玩、响应式与视觉忠实度证据 |
+| [29-lighthouse-passage-spec.md](./29-lighthouse-passage-spec.md) | A 级“为你引航”的非对称灯塔/船舵规则、夜航海图视觉、来源边界与验收规格 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
@@ -81,7 +82,7 @@
 - 已实现首个 C 级密封合作问答：和你一样，增加固定双选题库、双方私密作答、乱序状态门控与中性默契计分；
 - 已实现首个 C 级手机控制器实时对抗：心跳冲刺，增加主机权威高频输入、重复序号过滤与移动端控制面；
 - 已实现首个 B 级样板：回到那一天，增加精确浏览器依赖映射、本机照片 Gate 与对象 URL 生命周期；
-- 下一批：A 级非对称“灯塔与小船”，或 D 级本地语音体验的能力验证；
+- 正在建设：A 级非对称“为你引航”（灯塔与小船）；其后进入 D 级本地语音能力验证；
 - 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
 
 ## 下一轮选题时的最小输入

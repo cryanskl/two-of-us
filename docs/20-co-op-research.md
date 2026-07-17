@@ -53,6 +53,8 @@
 
 2026-07-17 实现“同心牵引”时按 `js_thrustvector` 固定 commit 重新核验 MIT 许可证，只借鉴“两端通过短绳共同影响载荷”的抽象机制。实现没有复制飞船、炸弹、夹取、Harmony/Stability、洞穴、路径搜索、常量、源码或素材；三幕、固定 `1/120s` 步进、丝带约束、碰撞、触屏输入与视觉均自行编写。完整边界见 [`27-tethered-heart-spec.md`](./27-tethered-heart-spec.md)。
 
+2026-07-17 选定原创 C03“灯塔与小船”，作品名为“为你引航”。它采用灯塔显露/发现/通航许可与小船实际运动两套不可替代的输入通道，目标为 A 级单设备同屏。技术比较固定了 Matter.js、rot.js、boardgame.io 与 trylock/visibility 的版本和许可证，但不引入、复制或打包这些运行时；完整规则、视觉和来源边界见 [`29-lighthouse-passage-spec.md`](./29-lighthouse-passage-spec.md)。
+
 ## 许可不完整：只借鉴机制
 
 | 候选 | 可借鉴之处 | 当前运行形态 | 原因 |
