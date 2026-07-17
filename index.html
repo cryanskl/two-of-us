@@ -331,6 +331,18 @@
             "installed": true
           },
           {
+            "id": "i-heard-you",
+            "title": "我听见了",
+            "category": "co-op",
+            "level": "D",
+            "players": "2 人轮流",
+            "devices": "本机单设备",
+            "entry": "experiences/co-op/i-heard-you/index.html",
+            "description": "轮流说一句想让对方认真听见的话，由本机语音模型整理成可编辑草稿，确认后让两句话相遇。",
+            "installed": true,
+            "capabilities": ["speech-whisper-base@1"]
+          },
+          {
             "id": "together-lock",
             "title": "同心解锁",
             "category": "co-op",
@@ -428,19 +440,26 @@
         versus: "对抗"
       };
       const fallbackCatalog = JSON.parse(document.querySelector("#fallback-catalog").textContent);
+      let capabilityStatuses = [];
 
       renderCatalog(fallbackCatalog);
       if (location.protocol === "http:" || location.protocol === "https:") connectRuntime();
 
       async function connectRuntime() {
         try {
-          const [healthResponse, catalogResponse] = await Promise.all([
+          const [healthResponse, catalogResponse, capabilitiesResponse] = await Promise.all([
             fetch("/api/health", { cache: "no-store" }),
-            fetch("/api/catalog", { cache: "no-store" })
+            fetch("/api/catalog", { cache: "no-store" }),
+            fetch("/api/capabilities", { cache: "no-store" })
           ]);
           if (!healthResponse.ok || !catalogResponse.ok) throw new Error("runtime unavailable");
 
-          const [health, catalog] = await Promise.all([healthResponse.json(), catalogResponse.json()]);
+          const [health, catalog, capabilities] = await Promise.all([
+            healthResponse.json(),
+            catalogResponse.json(),
+            capabilitiesResponse.ok ? capabilitiesResponse.json() : { capabilities: [] }
+          ]);
+          capabilityStatuses = capabilities.capabilities ?? [];
           renderCatalog(catalog);
           document.querySelector("#status-dot").classList.add("online");
           document.querySelector("#runtime-title").textContent = "本地运行时已就绪";
@@ -471,7 +490,7 @@
         meta.className = "meta";
         meta.append(createPill(categoryNames[item.category] ?? item.category));
         meta.append(createPill(`${item.level} 级`));
-        meta.append(createPill(item.installed ? "已安装" : "未安装"));
+        meta.append(createPill(availabilityLabel(item)));
 
         const title = document.createElement("h3");
         title.textContent = item.title;
@@ -494,6 +513,18 @@
         pill.className = "pill";
         pill.textContent = text;
         return pill;
+      }
+
+      function availabilityLabel(item) {
+        if (!item.installed) return "未安装";
+        if (!Array.isArray(item.capabilities) || item.capabilities.length === 0) return "已安装";
+        const states = item.capabilities.map((reference) => {
+          const id = String(reference).split("@", 1)[0];
+          return capabilityStatuses.find((capability) => capability.id === id)?.state ?? "unknown";
+        });
+        if (states.every((state) => state === "available")) return "能力就绪";
+        if (states.some((state) => state === "corrupt" || state === "incompatible")) return "能力需修复";
+        return "需安装模型";
       }
     </script>
   </body>

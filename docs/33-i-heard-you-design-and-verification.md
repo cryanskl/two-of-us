@@ -44,7 +44,7 @@ intro
 - `audio.test.js`：chunk 所有权、48 kHz → 16 kHz、12 秒截断与音量归一化；
 - `speech-client.test.js`：manifest ID 映射、PCM transferable、dispose 和缺资产拒绝；
 - 全仓测试：`224 / 224`；
-- 仓库 verifier：`18` 个已登记作品、`1` 个能力声明通过（catalog 接入在下一独立阶段）。
+- 作品核心阶段的仓库 verifier：`18` 个已登记作品、`1` 个能力声明通过；随后 catalog 与单作品启动器作为独立提交接入，登记总数更新为 `19`。
 
 ## Chrome 阶段验收
 

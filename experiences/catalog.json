@@ -132,6 +132,20 @@
       "networkRequired": false
     },
     {
+      "id": "i-heard-you",
+      "title": "我听见了",
+      "category": "co-op",
+      "level": "D",
+      "players": "2 人轮流",
+      "devices": "本机单设备",
+      "entry": "experiences/co-op/i-heard-you/index.html",
+      "readme": "experiences/co-op/i-heard-you/README.md",
+      "description": "轮流说一句想让对方认真听见的话，由本机语音模型整理成可编辑草稿，确认后让两句话相遇。",
+      "installed": true,
+      "networkRequired": false,
+      "capabilities": ["speech-whisper-base@1"]
+    },
+    {
       "id": "together-lock",
       "title": "同心解锁",
       "category": "co-op",

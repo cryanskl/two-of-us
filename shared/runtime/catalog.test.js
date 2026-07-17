@@ -111,6 +111,18 @@ test("catalog exposes the installed A-level lighthouse passage", async () => {
   assert.match(passage.entry, /lighthouse-passage\/index\.html$/);
 });
 
+test("catalog exposes I Heard You as a local D-level capability experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const experience = catalog.experiences.find((item) => item.id === "i-heard-you");
+
+  assert.equal(experience.category, "co-op");
+  assert.equal(experience.level, "D");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.deepEqual(experience.capabilities, ["speech-whisper-base@1"]);
+  assert.match(experience.entry, /i-heard-you\/index\.html$/);
+});
+
 test("lighthouse passage keeps its file protocol and privacy boundary", async () => {
   const root = new URL("../../experiences/co-op/lighthouse-passage/", import.meta.url);
   const [html, levels, logic, app] = await Promise.all([

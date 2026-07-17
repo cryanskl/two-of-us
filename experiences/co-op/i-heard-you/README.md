@@ -12,7 +12,7 @@ node scripts/capabilities.mjs install speech-whisper-base
 npm start
 ```
 
-然后从门户进入「我听见了」。模型只安装一次；完成安装后，作品核心流程不需要公网。
+然后从门户进入「我听见了」，或直接双击本目录的 `start.command`（Windows 使用 `start.bat`）。单作品启动器仍复用仓库统一 Node 运行时，不会额外安装或后台下载模型。模型只安装一次；完成安装后，作品核心流程不需要公网。
 
 ## 隐私与限制
 

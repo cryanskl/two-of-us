@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import process from "node:process";
+import { parseExperienceId, resolveExperienceUrl } from "./start-target.mjs";
 
 const rootDir = new URL("..", import.meta.url);
 const shouldOpenBrowser = !process.argv.includes("--no-open");
@@ -11,14 +12,18 @@ if (!Number.isInteger(preferredPort) || preferredPort < 0 || preferredPort > 655
 }
 
 let runtime;
+let experienceId;
 
 try {
+  experienceId = parseExperienceId(process.argv.slice(2));
   const { createRuntimeServer } = await import("../shared/runtime/server.js");
   runtime = await createRuntimeServer({ rootDir, preferredPort });
   const details = await runtime.start();
+  const openUrl = resolveExperienceUrl(runtime.catalog, details.localUrl, experienceId);
 
   console.log("\nTwo of Us 已启动");
   console.log(`本机入口：${details.localUrl}`);
+  if (experienceId) console.log(`当前作品：${openUrl}`);
   if (details.networkUrls.length > 0) {
     console.log("同一局域网的手机或电脑可打开：");
     for (const url of details.networkUrls) console.log(`  ${url}`);
@@ -27,7 +32,7 @@ try {
   }
   console.log("按 Ctrl+C 可安全停止服务。\n");
 
-  if (shouldOpenBrowser) openBrowser(details.localUrl);
+  if (shouldOpenBrowser) openBrowser(openUrl);
 } catch (error) {
   if (error?.code === "ERR_MODULE_NOT_FOUND") {
     console.error("共享依赖尚未安装。请先双击 setup.command（Windows 使用 setup.bat）。");
