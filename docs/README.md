@@ -22,6 +22,7 @@
 | [14-panorama-memory-verification.md](./14-panorama-memory-verification.md) | 全景回忆的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
 | [15-photo-swap-puzzle-spec.md](./15-photo-swap-puzzle-spec.md) | A 级私人照片交换拼图的文件导入、中心裁切、排列状态机与 blob 生命周期规格 |
 | [16-photo-swap-puzzle-verification.md](./16-photo-swap-puzzle-verification.md) | 私人照片交换拼图的自动检查、Chrome 流程、资源回收与视觉忠实度证据 |
+| [17-compatibility-quiz-spec.md](./17-compatibility-quiz-spec.md) | C 级双设备默契问答的密封选择、两人房间、状态机与来源声明规格 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |

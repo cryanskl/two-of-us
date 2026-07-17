@@ -40,6 +40,7 @@
 - [B 级全景回忆验收记录](./docs/14-panorama-memory-verification.md)
 - [A 级私人照片交换拼图规格](./docs/15-photo-swap-puzzle-spec.md)
 - [A 级私人照片交换拼图验收记录](./docs/16-photo-swap-puzzle-verification.md)
+- [C 级双设备默契问答规格](./docs/17-compatibility-quiz-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
