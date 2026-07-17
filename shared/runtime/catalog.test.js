@@ -41,6 +41,16 @@ test("catalog exposes the installed C-level sealed compatibility quiz", async ()
   assert.match(quiz.entry, /compatibility-quiz\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level ribbon tug", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const ribbonTug = catalog.experiences.find((item) => item.id === "ribbon-tug");
+
+  assert.equal(ribbonTug.category, "versus");
+  assert.equal(ribbonTug.level, "A");
+  assert.equal(ribbonTug.networkRequired, false);
+  assert.match(ribbonTug.entry, /ribbon-tug\/index\.html$/);
+});
+
 test("every installed catalog entry points to a local file", async () => {
   const root = new URL("../../", import.meta.url);
   const catalog = await loadCatalog(root);

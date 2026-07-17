@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [规范化游戏坐标与 CSS 布局坐标只保留一个来源](./2026-07-17-normalized-game-coordinate-mapping.md)
 - [密封流程的版本队列与可验证回合编号](./2026-07-17-versioned-sealed-state-replay.md)
 - [双人席位 Gate 与玩法状态分层](./2026-07-17-two-player-membership-boundary.md)
 - [密封状态按参与者作用域清理](./2026-07-17-participant-scoped-sealed-cleanup.md)

@@ -27,6 +27,7 @@
 | [19-compatibility-quiz-verification.md](./19-compatibility-quiz-verification.md) | “和你一样”的自动检查、Chrome 双端流程、响应式与视觉忠实度证据 |
 | [20-co-op-research.md](./20-co-op-research.md) | 你画我猜、双人解谜、卡牌、拼图等合作候选 |
 | [21-ribbon-tug-spec.md](./21-ribbon-tug-spec.md) | A 级“心动拔河”的固定步长、公平输入 Gate、视觉方向与验收规格 |
+| [22-ribbon-tug-verification.md](./22-ribbon-tug-verification.md) | “心动拔河”的自动检查、Chrome 实玩、响应式与坐标忠实度证据 |
 | [30-versus-research.md](./30-versus-research.md) | 24 个共享壳玩法与 13 个独立对抗项目 |
 | [40-idea-backlog.md](./40-idea-backlog.md) | 三类各 20 个、共 60 个适合自行实现的创意 |
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
@@ -48,7 +49,7 @@
 | --- | --- | --- |
 | 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/) | 建立可编辑 `config.js`、分段回忆与结尾邀请流程 |
 | 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/) | 建立 Canvas、热座遮挡、计时和共同计分样板 |
-| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/) | 建立双人按键、抢跑判定、计分和重开样板 |
+| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/) 与 [心动拔河](../experiences/versus/ribbon-tug/) | 建立抢跑判定，并补齐固定步长、同帧公平结算和持续双人输入样板 |
 
 根 `index.html` 现在是统一门户：直接双击时读取内置目录；通过启动器打开时读取本地 API，并显示局域网二维码。
 
@@ -62,11 +63,11 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、同机你画我猜、反应力对决、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、同机你画我猜、反应力对决、心动拔河、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
-- 已执行：七个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机；
+- 已执行：八个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机，心动拔河覆盖固定步长与公平双人输入；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；

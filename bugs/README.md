@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [心动拔河：规则越线时织带结未对齐终点针](./2026-07-17-ribbon-tug-finish-marker-drift.md)
 - [和你一样：已选择后仍提示先选答案](./2026-07-17-compatibility-quiz-stale-selection-hint.md)
 - [和你一样：连续乱序状态会丢失下一题](./2026-07-17-compatibility-quiz-out-of-order-state-loss.md)
 - [和你一样：历史回合编号可复用并永久等待](./2026-07-17-compatibility-quiz-round-id-reuse.md)

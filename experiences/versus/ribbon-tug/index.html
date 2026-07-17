@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>心动拔河 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main id="game" class="game" data-phase="idle">
+      <header class="topbar">
+        <div class="identity">
+          <a class="back-link" href="../../../index.html">← 返回体验库</a>
+          <p class="eyebrow">LOCAL TWO-PLAYER DUEL</p>
+          <h1>心动拔河</h1>
+        </div>
+
+        <div class="scoreboard" aria-label="比赛比分">
+          <div class="score score--left">
+            <span>左边 · A</span>
+            <strong id="left-score">0</strong>
+          </div>
+          <div class="round-label">
+            <span>ROUND</span>
+            <strong><span id="round-number">1</span> / 3</strong>
+          </div>
+          <div class="score score--right">
+            <span>右边 · L</span>
+            <strong id="right-score">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="arena" aria-labelledby="status-text">
+        <div class="field-label field-label--left" aria-hidden="true">LEFT / A</div>
+        <div class="field-label field-label--right" aria-hidden="true">RIGHT / L</div>
+
+        <div class="status-board">
+          <h2 id="status-text">把织带结拉过终点线</h2>
+          <p id="status-detail">左边按 A，右边按 L；也可以点击两侧按钮。</p>
+        </div>
+
+        <div
+          id="ribbon-meter"
+          class="ribbon-meter"
+          role="meter"
+          aria-label="织带结位置"
+          aria-valuemin="-100"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          aria-valuetext="织带结在中间"
+        >
+          <span class="goal-pin goal-pin--left" aria-hidden="true"></span>
+          <span class="goal-pin goal-pin--right" aria-hidden="true"></span>
+          <span class="ribbon" aria-hidden="true"></span>
+          <span id="ribbon-knot" class="ribbon-knot" aria-hidden="true"><span></span></span>
+        </div>
+
+        <p class="finish-copy finish-copy--left">拉过这条线</p>
+        <p class="finish-copy finish-copy--right">拉过这条线</p>
+      </section>
+
+      <section class="controls" aria-label="比赛操作">
+        <button id="left-pull" class="pull-button pull-button--left" type="button" disabled>
+          <span class="keycap">A</span>
+          <strong>左边 · 拉一下</strong>
+          <small>按下，再松开</small>
+        </button>
+
+        <div class="match-actions">
+          <button id="primary-action" class="primary-action" type="button">开始比赛</button>
+          <button id="pause-button" class="pause-action" type="button" aria-pressed="false" disabled>暂停</button>
+        </div>
+
+        <button id="right-pull" class="pull-button pull-button--right" type="button" disabled>
+          <span class="keycap">L</span>
+          <strong>右边 · 拉一下</strong>
+          <small>按下，再松开</small>
+        </button>
+      </section>
+
+      <footer class="footer-note">
+        <p>同一逻辑步中的拉力会一起结算；长按不会重复加力。</p>
+        <p>A 级直开 · 不联网 · 不保存按键与比分</p>
+      </footer>
+
+      <p id="live-region" class="sr-only" aria-live="polite">心动拔河准备好了。</p>
+      <noscript id="noscript"><p class="noscript-message">请启用 JavaScript 后再开始比赛。</p></noscript>
+    </main>
+
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

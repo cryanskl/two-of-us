@@ -169,6 +169,19 @@
       "description": "等待绿色信号后抢按；抢跑会送分给对方，先得两分获胜。",
       "installed": true,
       "networkRequired": false
+    },
+    {
+      "id": "ribbon-tug",
+      "title": "心动拔河",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备同屏",
+      "entry": "experiences/versus/ribbon-tug/index.html",
+      "readme": "experiences/versus/ribbon-tug/README.md",
+      "description": "两个人用 A/L 或左右触控区反复拉动同一条织带，先赢两局完成比赛。",
+      "installed": true,
+      "networkRequired": false
     }
   ]
 }
