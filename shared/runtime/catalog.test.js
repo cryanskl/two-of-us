@@ -162,6 +162,17 @@ test("catalog exposes the installed A-level rhythm relay", async () => {
   assert.match(relay.entry, /rhythm-relay\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level telegraph codebook", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const telegraph = catalog.experiences.find((item) => item.id === "telegraph-codebook");
+
+  assert.equal(telegraph.category, "co-op");
+  assert.equal(telegraph.level, "A");
+  assert.equal(telegraph.installed, true);
+  assert.equal(telegraph.networkRequired, false);
+  assert.match(telegraph.entry, /telegraph-codebook\/index\.html$/);
+});
+
 test("catalog exposes the installed A-level balloon dare", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const dare = catalog.experiences.find((item) => item.id === "balloon-dare");
@@ -200,6 +211,21 @@ test("rhythm relay keeps its file protocol and privacy boundary", async () => {
   assert.doesNotMatch(html, /type=["']module["']/i);
   assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+});
+
+test("telegraph codebook keeps its file protocol and privacy boundary", async () => {
+  const root = new URL("../../experiences/co-op/telegraph-codebook/", import.meta.url);
+  const [html, logic, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker)\b/);
+  assert.doesNotMatch(html, /月亮|星星|云朵|热茶|电影|散步/);
 });
 
 test("lighthouse passage keeps its file protocol and privacy boundary", async () => {

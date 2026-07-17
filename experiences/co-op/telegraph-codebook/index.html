@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07191c" />
+    <title>默契电报码 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← Two of Us</a>
+        <p id="round-status">四轮交替发送</p>
+        <p id="score">共同译对 0 / 4</p>
+      </nav>
+
+      <header class="hero">
+        <h1>默契电报码</h1>
+        <p>学会同一套暗号，把一句话送到对方手里。</p>
+      </header>
+
+      <section class="station" aria-label="双人电报台">
+        <aside id="codebook" class="codebook" aria-label="今晚的六码本"></aside>
+
+        <div class="console">
+          <div class="target-plate">
+            <span id="target-label">今晚共同守台</span>
+            <strong id="target-value">先记住六码本</strong>
+          </div>
+
+          <div class="radio" aria-hidden="true">
+            <span class="speaker"><i></i><i></i><i></i><i></i></span>
+            <span class="dial"><i id="dial-needle"></i><b>FIELD RADIO · LOCAL</b></span>
+            <span class="knob"></span>
+          </div>
+
+          <ol id="pulse-strip" class="pulse-strip" aria-label="三拍电报"></ol>
+
+          <div class="keys" aria-label="报码输入">
+            <button class="telegraph-key key-short" data-pulse="short" type="button" disabled>
+              <span class="key-hardware" aria-hidden="true"><i></i></span>
+              <kbd>S</kbd><strong>短讯号</strong>
+            </button>
+            <button class="telegraph-key key-long" data-pulse="long" type="button" disabled>
+              <span class="key-hardware" aria-hidden="true"><i></i></span>
+              <kbd>L</kbd><strong>长讯号</strong>
+            </button>
+          </div>
+
+          <section id="stage" class="stage" aria-live="polite"></section>
+        </div>
+      </section>
+
+      <p class="privacy">目标只在交接前显示 · 不联网 · 不保存</p>
+      <noscript>需要启用 JavaScript 才能使用默契电报码。</noscript>
+    </main>
+  </body>
+</html>

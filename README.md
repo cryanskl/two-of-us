@@ -4,7 +4,7 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 14 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 15 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
@@ -19,7 +19,7 @@
 | 分类 | 目录 | 用途 | 当前状态 |
 | --- | --- | --- | --- |
 | 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票 |
-| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、我听见了、同心解锁、隔屏画猜、和你一样 |
+| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、我听见了、同心解锁、隔屏画猜、和你一样 |
 | 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决、心动拔河、气球胆量局、心跳冲刺、连心四子棋、密封猜拳 |
 
 ## 文档
@@ -57,6 +57,7 @@
 - [“我听见了”设计与验收记录](./docs/33-i-heard-you-design-and-verification.md)
 - [A 级节拍接力规格](./docs/34-rhythm-relay-spec.md)
 - [A 级节拍接力验收记录](./docs/35-rhythm-relay-verification.md)
+- [A 级默契电报码规格](./docs/41-telegraph-codebook-spec.md)
 - [A 级气球胆量局规格](./docs/36-balloon-dare-spec.md)
 - [A 级未来车票规格](./docs/38-future-ticket-spec.md)
 - [A 级未来车票验收记录](./docs/39-future-ticket-verification.md)
