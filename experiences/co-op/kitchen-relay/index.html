@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#18231f">
+  <title>双人小馆 · Two of Us</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23a92d1f'/%3E%3Cpath d='M12 26h40v7H12zm5 12h30v7H17z' fill='%23f2e4c4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app" data-phase="intro">
+    <nav class="topbar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <p id="round-status">准备营业</p>
+    </nav>
+
+    <section class="opening-grid">
+      <header class="masthead">
+        <h1>双人小馆</h1>
+        <p>一个选对食材，一个接稳盘子。</p>
+      </header>
+      <aside class="order-ticket" id="order-ticket" aria-live="polite"></aside>
+    </section>
+
+    <section class="playfield" id="playfield" aria-label="三条传菜滑槽">
+      <img class="pass-backdrop" src="./assets/kitchen-pass.png" alt="" aria-hidden="true">
+      <div class="lane-layer" aria-hidden="true">
+        <div class="lane" data-lane="0"><span>1</span><i></i></div>
+        <div class="lane" data-lane="1"><span>2</span><i></i></div>
+        <div class="lane" data-lane="2"><span>3</span><i></i></div>
+        <div class="flight-card" id="flight-card" hidden>
+          <span class="ingredient-sprite" id="flight-sprite"></span>
+        </div>
+        <div class="plate" id="plate"><span></span></div>
+      </div>
+    </section>
+
+    <p class="event-message" id="event-message">左边选食材，右边把盘子移到同一条滑槽。</p>
+
+    <section class="control-deck" aria-label="双人控制台">
+      <section class="role-panel dispatcher-panel" aria-labelledby="dispatcher-title">
+        <header>
+          <h2 id="dispatcher-title">传菜员</h2>
+          <p>A / D 选食材 · W 传菜</p>
+        </header>
+        <div class="ingredient-options" id="ingredient-options" aria-label="三条滑槽的食材"></div>
+        <div class="key-row dispatcher-keys">
+          <button type="button" data-action="dispatcher-move" data-delta="-1" aria-label="传菜员向左选择">A</button>
+          <button class="send-button" id="send-button" type="button" data-action="dispatch">W <span>传菜</span></button>
+          <button type="button" data-action="dispatcher-move" data-delta="1" aria-label="传菜员向右选择">D</button>
+        </div>
+      </section>
+
+      <section class="shared-progress" aria-label="共享进度">
+        <div>
+          <h2>失误 <strong id="spill-count">0 / 3</strong></h2>
+          <div class="mark-row spill-marks" id="spill-marks" aria-hidden="true"></div>
+        </div>
+        <div>
+          <h2>一起出餐 <strong id="order-count">0 / 4</strong></h2>
+          <div class="mark-row order-marks" id="order-marks" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="role-panel plater-panel" aria-labelledby="plater-title">
+        <header>
+          <h2 id="plater-title">装盘员</h2>
+          <p>← / → 移动盘子</p>
+        </header>
+        <div class="plate-track" aria-hidden="true">
+          <span>1</span><span>2</span><span>3</span>
+          <i id="plate-position"></i>
+        </div>
+        <div class="key-row plater-keys">
+          <button type="button" data-action="plate-move" data-delta="-1" aria-label="盘子向左移动">←</button>
+          <button type="button" data-action="plate-move" data-delta="1" aria-label="盘子向右移动">→</button>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <p>选对食材 · 接稳同一滑槽 · 四单共同完成</p>
+      <p class="privacy">本地运行 · 不联网 · 不保存</p>
+    </footer>
+    <p class="visually-hidden" id="live-region" aria-live="assertive"></p>
+    <noscript>需要启用 JavaScript 才能开始双人小馆。</noscript>
+  </main>
+
+  <script src="./logic.js"></script>
+  <script src="./copy.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

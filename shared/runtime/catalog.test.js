@@ -268,6 +268,34 @@ test("number target keeps its file protocol and local-only boundary", async () =
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
 });
 
+test("catalog exposes the installed A-level kitchen relay", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");
+
+  assert.equal(kitchen.category, "co-op");
+  assert.equal(kitchen.level, "A");
+  assert.equal(kitchen.installed, true);
+  assert.equal(kitchen.networkRequired, false);
+  assert.match(kitchen.entry, /kitchen-relay\/index\.html$/);
+});
+
+test("kitchen relay keeps its file protocol and local-only boundary", async () => {
+  const root = new URL("../../experiences/co-op/kitchen-relay/", import.meta.url);
+  const [html, logic, copy, app] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("copy.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+  ]);
+  const runtimeSource = [html, logic, copy, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+});
+
 test("telegraph codebook keeps its file protocol and privacy boundary", async () => {
   const root = new URL("../../experiences/co-op/telegraph-codebook/", import.meta.url);
   const [html, logic, app] = await Promise.all([
