@@ -31,6 +31,16 @@ test("catalog exposes the installed A-level private photo puzzle", async () => {
   assert.match(puzzle.entry, /photo-swap-puzzle\/index\.html$/);
 });
 
+test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
+
+  assert.equal(quiz.category, "co-op");
+  assert.equal(quiz.level, "C");
+  assert.equal(quiz.networkRequired, false);
+  assert.match(quiz.entry, /compatibility-quiz\/index\.html$/);
+});
+
 test("every installed catalog entry points to a local file", async () => {
   const root = new URL("../../", import.meta.url);
   const catalog = await loadCatalog(root);

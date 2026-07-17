@@ -8,6 +8,11 @@
 
 ## 已记录
 
+- [和你一样：已选择后仍提示先选答案](./2026-07-17-compatibility-quiz-stale-selection-hint.md)
+- [和你一样：连续乱序状态会丢失下一题](./2026-07-17-compatibility-quiz-out-of-order-state-loss.md)
+- [和你一样：历史回合编号可复用并永久等待](./2026-07-17-compatibility-quiz-round-id-reuse.md)
+- [和你一样：成员迁移后隐藏 DOM 保留上一题答案](./2026-07-17-compatibility-quiz-hidden-answer-residue.md)
+- [和你一样：触屏 sticky hover 让选中答案文字消失](./2026-07-17-compatibility-quiz-mobile-selected-text.md)
 - [密封轮次：无关第三人离开会清空两位玩家的待揭晓答案](./2026-07-17-third-member-clears-sealed-round.md)
 - [照片拼图：新候选校验失败时旧候选 URL 延迟释放](./2026-07-17-photo-puzzle-stale-candidate-url.md)
 - [全景回忆：运行时就绪后仍提示启动服务](./2026-07-15-panorama-stale-startup-copy.md)

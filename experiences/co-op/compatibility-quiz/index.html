@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f7f2ea">
+    <title>和你一样 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <p id="connection-status" class="connection-status" aria-live="polite">正在连接本机房间</p>
+
+      <section id="offline" class="offline hidden" aria-labelledby="offline-title">
+        <h1 id="offline-title">和你一样</h1>
+        <p>等待本机房间，请从仓库的本地入口打开。</p>
+      </section>
+
+      <section id="lobby" class="lobby hidden" aria-labelledby="lobby-title">
+        <header class="lobby-heading">
+          <h1 id="lobby-title">和你一样</h1>
+          <p>两个人，各自选好，再一起揭晓。</p>
+        </header>
+        <div class="lobby-actions">
+          <section aria-labelledby="create-title">
+            <h2 id="create-title">先开一间房</h2>
+            <p>创建一个只容纳两人的本地房间。</p>
+            <button id="create-room" class="primary-button" type="button">创建房间</button>
+          </section>
+          <form id="join-form">
+            <h2>加入对方</h2>
+            <label for="room-code">五位房间码</label>
+            <div class="join-row">
+              <input id="room-code" name="room-code" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="ABCDE" required>
+              <button type="submit">加入房间</button>
+            </div>
+          </form>
+        </div>
+        <p id="lobby-error" class="error" aria-live="polite"></p>
+      </section>
+
+      <section id="room" class="room hidden" aria-labelledby="room-title">
+        <header class="room-header">
+          <h1 id="room-title">和你一样</h1>
+          <div class="room-controls">
+            <p>房间 <strong id="room-id">-----</strong></p>
+            <button id="leave-room" class="text-button" type="button">离开房间</button>
+          </div>
+        </header>
+
+        <section id="waiting" class="waiting" aria-live="polite">
+          <h2 id="waiting-title">等待另一个人</h2>
+          <p id="waiting-status">两人到齐后就可以开始。</p>
+        </section>
+
+        <section id="quiz" class="quiz hidden" aria-labelledby="question-prompt">
+          <p id="progress" class="progress">01 / 08</p>
+          <h2 id="question-prompt" class="question">今晚临时空出来，更想怎么过？</h2>
+
+          <div id="duet" class="duet">
+            <section class="answer-side self-side" aria-labelledby="self-label">
+              <h3 id="self-label">你选择</h3>
+              <div class="answer-list">
+                <button class="answer-choice" data-answer-id="a" type="button" aria-pressed="false" disabled>
+                  <span class="choice-mark" aria-hidden="true">A</span><strong data-answer-label="a"></strong>
+                </button>
+                <button class="answer-choice" data-answer-id="b" type="button" aria-pressed="false" disabled>
+                  <span class="choice-mark" aria-hidden="true">B</span><strong data-answer-label="b"></strong>
+                </button>
+              </div>
+              <p id="self-state" class="side-state">还没有选择</p>
+            </section>
+
+            <div id="heart-bridge" class="heart-bridge" aria-hidden="true">
+              <svg viewBox="0 0 64 42" role="img">
+                <path d="M32 36C24 29 14 22 14 13C14 6 22 3 27 8L32 13"></path>
+                <path d="M32 36C40 29 50 22 50 13C50 6 42 3 37 8L32 13"></path>
+              </svg>
+            </div>
+
+            <section class="answer-side partner-side" aria-labelledby="partner-label">
+              <h3 id="partner-label">对方选择</h3>
+              <div class="answer-list partner-list" aria-hidden="true">
+                <div class="partner-choice" data-answer-id="a">
+                  <span class="choice-mark">A</span><strong data-partner-label="a"></strong>
+                </div>
+                <div class="partner-choice" data-answer-id="b">
+                  <span class="choice-mark">B</span><strong data-partner-label="b"></strong>
+                </div>
+              </div>
+              <p id="partner-state" class="side-state">等待对方</p>
+            </section>
+          </div>
+
+          <div class="quiz-actions">
+            <button id="submit-answer" class="primary-button" type="button" disabled>密封这个选择</button>
+            <button id="host-action" class="primary-button hidden" type="button">下一题</button>
+            <p id="quiz-status" aria-live="polite">先选一个答案，再把它密封。</p>
+          </div>
+        </section>
+
+        <p class="privacy-note">你们的选择只在当前本机房间中处理，不上传公网，也不会保存。房主电脑上的本地服务可以在揭晓前读取提交内容，因此它不是端到端加密；请只在你们信任的设备和局域网中使用。</p>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
