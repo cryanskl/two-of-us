@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把信号接回来：系统 FFmpeg 存在但缺少 WebP 编码器](./2026-07-18-signal-repair-webp-encoder-unavailable.md)
 - [把颜色调到一起：来源声明标题未满足仓库机器 Gate](./2026-07-18-shared-color-attribution-heading-contract.md)
 - [把颜色调到一起：合册结语随移动步数偏离冻结文案](./2026-07-18-shared-color-result-copy-drift.md)
 - [把颜色调到一起：背景素材被负层级完全遮住](./2026-07-18-shared-color-background-stacking.md)
