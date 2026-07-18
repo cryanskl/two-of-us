@@ -94,6 +94,7 @@
 - [A 级“光轨围猎”定向调研](./docs/75-light-trail-hunt-research.md)
 - [A 级“光轨围猎”实现规格](./docs/76-light-trail-hunt-spec.md)
 - [“光轨围猎”分步实施计划](./docs/77-light-trail-hunt-plan.md)
+- [“光轨围猎”视觉设计](./docs/78-light-trail-hunt-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
