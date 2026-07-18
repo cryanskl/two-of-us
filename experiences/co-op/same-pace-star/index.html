@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#11152b" />
+    <title>慢一点，也和你一起 · Two of Us</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="same-pace-app" class="app">
+      <nav class="topbar" aria-label="体验导航">
+        <a class="topbar-action back-link" href="../../../index.html">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>返回 Two of Us</span>
+        </a>
+        <details class="help">
+          <summary class="topbar-action">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+              <rect x="3" y="4" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="17.5" cy="7.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <path d="M3 19h7v-5H3v5Zm11-5h7v5h-7v-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+            <span>玩法</span>
+          </summary>
+          <div class="help-content">
+            <p>左边按 A，右边按 L。每颗星按住两次，再依次松开。</p>
+            <p>光圈只是节拍提示，不需要配合真实呼吸。</p>
+          </div>
+        </details>
+      </nav>
+
+      <header class="hero">
+        <h1>慢一点，也和你一起</h1>
+        <p>光圈只是节拍提示，不需要配合真实呼吸。</p>
+      </header>
+
+      <section id="phase-host" class="phase-host" data-phase-host aria-label="接光区域"></section>
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <footer class="privacy">不录音、不联网、不保存。</footer>
+      <noscript>需要启用 JavaScript 才能开始接光。</noscript>
+    </main>
+  </body>
+</html>
