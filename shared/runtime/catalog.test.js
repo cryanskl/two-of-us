@@ -297,6 +297,37 @@ test("number target keeps its file protocol and local-only boundary", async () =
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
 });
 
+test("catalog exposes the installed A-level paper soccer duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const paperSoccer = catalog.experiences.find((item) => item.id === "paper-soccer");
+
+  assert.equal(paperSoccer.category, "versus");
+  assert.equal(paperSoccer.level, "A");
+  assert.equal(paperSoccer.installed, true);
+  assert.equal(paperSoccer.networkRequired, false);
+  assert.match(paperSoccer.entry, /paper-soccer\/index\.html$/);
+});
+
+test("paper soccer keeps its file protocol and local graph boundary", async () => {
+  const root = new URL("../../experiences/versus/paper-soccer/", import.meta.url);
+  const [html, config, logic, app, css] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /assets\/tactics-desk\.png/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");

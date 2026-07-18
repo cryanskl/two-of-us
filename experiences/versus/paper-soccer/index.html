@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>纸上球局 · Two of Us</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23173b2a'/%3E%3Cpath d='M13 7h38v50H13z' fill='%23efe3c6' stroke='%23b08b4f' stroke-width='3'/%3E%3Cpath d='M19 16h26M19 24h26M19 32h26M19 40h26M27 11v42M37 11v42' stroke='%235b5a50' stroke-width='1'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23282c27'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app" data-phase="intro" data-current="red">
+    <nav class="topbar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <p id="round-status">第 1 回合</p>
+    </nav>
+
+    <div class="workspace">
+      <header class="title-block">
+        <h1>纸上球局</h1>
+        <p>一笔一脚，沿着旧线借力，把球送进对方球门。</p>
+      </header>
+
+      <section class="turn-panel" aria-labelledby="turn-banner">
+        <h2 id="turn-banner">红方开球 · 朝上方球门</h2>
+        <p class="rule-line">落到旧点或边线，可以继续走</p>
+        <p id="event-message" class="event-message">球从正中央开始。</p>
+      </section>
+
+      <section class="pitch-paper" aria-label="纸上足球棋盘">
+        <svg id="pitch" viewBox="0 0 760 950" role="group" aria-labelledby="pitch-title pitch-description">
+          <title id="pitch-title">八乘十格纸上足球场</title>
+          <desc id="pitch-description">红方进攻上方球门，蓝方进攻下方球门。选择当前球点相邻的高亮格点画线。</desc>
+          <g id="pitch-base" aria-hidden="true"></g>
+          <g id="trail-layer" aria-hidden="true"></g>
+          <g id="target-layer"></g>
+          <g id="ball-layer" aria-hidden="true"></g>
+        </svg>
+      </section>
+
+      <section class="scoreboard" aria-label="会话胜局">
+        <div class="score score--red">
+          <span id="red-name">红方</span>
+          <strong id="red-score">0</strong>
+        </div>
+        <span class="score-divider" aria-hidden="true"></span>
+        <div class="score score--blue">
+          <span id="blue-name">蓝方</span>
+          <strong id="blue-score">0</strong>
+        </div>
+      </section>
+
+      <section class="controls" aria-labelledby="controls-title">
+        <h2 id="controls-title">选择下一点</h2>
+        <div id="control-area" class="control-area"></div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>两个人，一张球场纸</p>
+      <p>本地运行 · 不联网 · 不保存</p>
+    </footer>
+    <p id="live-region" class="visually-hidden" aria-live="polite"></p>
+  </main>
+
+  <script src="logic.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

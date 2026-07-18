@@ -315,6 +315,19 @@
       "networkRequired": false
     },
     {
+      "id": "paper-soccer",
+      "title": "纸上球局",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/paper-soccer/index.html",
+      "readme": "experiences/versus/paper-soccer/README.md",
+      "description": "轮流在八乘十点阵上画不可重复的线，借旧点连续推进，把球送进对方球门或封住出口。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",
