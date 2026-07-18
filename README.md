@@ -115,6 +115,7 @@
 - [“这一拍，刚好和你”验收记录](./docs/95-four-hands-harmony-verification.md)
 - [A 级“慢一点，也和你一起”定向调研](./docs/96-same-pace-star-research.md)
 - [A 级“慢一点，也和你一起”实现规格](./docs/97-same-pace-star-spec.md)
+- [“慢一点，也和你一起”分步实施计划](./docs/98-same-pace-star-plan.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
