@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [星码解锁：轴向度数与方位字母重叠](./2026-07-18-star-code-axis-label-overlap.md)
 - [纸飞机投递：± 步进按钮小于 56px](./2026-07-18-paper-plane-step-target.md)
 - [纸上球局：整张交互 SVG 的图片角色隐藏了内部合法落点](./2026-07-18-paper-soccer-interactive-svg-role.md)
 - [纸上球局：桌面首屏高度预算固定多出 2px](./2026-07-18-paper-soccer-desktop-height-budget.md)

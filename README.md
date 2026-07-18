@@ -76,6 +76,7 @@
 - [A 级回声擂台规格](./docs/55-echo-arena-spec.md)
 - [A 级回声擂台验收记录](./docs/57-echo-arena-verification.md)
 - [A 级星码解锁规格](./docs/58-star-code-unlock-spec.md)
+- [A 级星码解锁验收记录](./docs/59-star-code-unlock-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)

@@ -64,6 +64,7 @@
 | [56-paper-plane-mail-verification.md](./56-paper-plane-mail-verification.md) | “纸飞机投递”的失败/命中/揭信实玩、file 直开、reduced motion、响应式与视觉忠实度验收记录 |
 | [57-echo-arena-verification.md](./57-echo-arena-verification.md) | “回声擂台”的三局两胜、静音/失焦、file 直开、响应式与视觉忠实度验收记录 |
 | [58-star-code-unlock-spec.md](./58-star-code-unlock-spec.md) | A 级“星码解锁”的私人答案规范化、三星状态 Gate、帮助校准、阶段 DOM 与模拟天文台视觉规格 |
+| [59-star-code-unlock-verification.md](./59-star-code-unlock-verification.md) | “星码解锁”的错误兜底、答案规范化、阶段 DOM、file 直开、响应式与视觉忠实度验收记录 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 | [61-closer-cards-spec.md](./61-closer-cards-spec.md) | A 级“靠近一点”的六张谈话仪式、无惩罚跳过、原创题库、隐私与视觉规格 |
 
