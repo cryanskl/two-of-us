@@ -3,6 +3,12 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { loadCatalog } from "./catalog.js";
 
+test("portal gives every experience link a title-specific accessible name", async () => {
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+
+  assert.match(portal, /link\.setAttribute\("aria-label", `打开《\$\{item\.title\}》`\)/);
+});
+
 test("catalog exposes an installed A-level Love Tree", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const loveTree = catalog.experiences.find((item) => item.id === "love-tree");

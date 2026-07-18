@@ -624,6 +624,7 @@
         link.className = "open";
         link.href = new URL(item.entry, location.href).href;
         link.textContent = "打开体验";
+        link.setAttribute("aria-label", `打开《${item.title}》`);
 
         article.append(meta, title, description, details, link);
         return article;

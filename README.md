@@ -74,6 +74,7 @@
 - [A 级纸飞机投递规格](./docs/54-paper-plane-mail-spec.md)
 - [A 级纸飞机投递验收记录](./docs/56-paper-plane-mail-verification.md)
 - [A 级回声擂台规格](./docs/55-echo-arena-spec.md)
+- [A 级回声擂台验收记录](./docs/57-echo-arena-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
