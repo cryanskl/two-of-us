@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#061018">
+    <meta name="description" content="一封只在本地打开的雾窗手写信。">
+    <title>在雾上，写给你</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js" defer></script>
+    <script src="logic.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="letter-app" id="letter-app" data-phase="intro">
+      <header class="masthead">
+        <p class="eyebrow">03 / 雾窗手写</p>
+        <p class="privacy-note">本地 · 不保存</p>
+      </header>
+
+      <section class="intro-copy" aria-labelledby="page-title">
+        <h1 id="page-title">在雾上，写给你</h1>
+        <p class="subtitle">先写下一点什么，再沿着它，把窗外慢慢擦亮。</p>
+      </section>
+
+      <section class="experience" aria-labelledby="stage-title">
+        <header class="stage-copy">
+          <div>
+            <h2 id="stage-title">写一点只有我们懂的形状</h2>
+            <p id="instruction">不用写得好看。一个字、一颗星，或者只有我们懂的符号，都可以。</p>
+          </div>
+          <p class="trace-progress" id="trace-progress" aria-hidden="true" hidden>0%</p>
+        </header>
+
+        <div
+          class="window-surface"
+          id="window-surface"
+          role="region"
+          tabindex="0"
+          aria-label="雾窗手写区域"
+          aria-describedby="instruction visible-status keyboard-route"
+        >
+          <canvas id="fog-canvas" width="1000" height="620" aria-hidden="true"></canvas>
+          <canvas id="clear-canvas" width="1000" height="620" aria-hidden="true"></canvas>
+          <div class="window-frame" aria-hidden="true"></div>
+          <div class="completion-host" id="completion-host"></div>
+        </div>
+
+        <p class="canvas-fallback" id="canvas-fallback" hidden>
+          当前浏览器不能显示这扇雾窗，你仍然可以用“直接打开”读到信。
+        </p>
+        <p class="keyboard-route" id="keyboard-route">
+          使用键盘时，按 Tab 移到“直接打开”即可跳过手写。
+        </p>
+        <p class="visible-status" id="visible-status">准备好了，就从第一笔开始。</p>
+
+        <div class="controls" id="controls">
+          <button class="button button-primary" type="button" data-action="start">开始写</button>
+          <button class="button button-primary" type="button" data-action="confirm" hidden>就写到这里</button>
+          <button class="button" type="button" data-action="clear" hidden>清空重写</button>
+          <button class="button" type="button" data-action="pause" hidden>先停一下</button>
+          <button class="button button-primary" type="button" data-action="resume" hidden>继续写给你</button>
+          <button class="button button-direct" type="button" data-action="direct">不方便手写，直接打开</button>
+          <span class="controls-privacy" aria-hidden="true">本地 · 不保存</span>
+        </div>
+      </section>
+
+      <p class="live-status" id="live-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>需要启用 JavaScript 才能在雾窗上写字；页面不会联网，也不会保存你的内容。</noscript>
+    </main>
+  </body>
+</html>
