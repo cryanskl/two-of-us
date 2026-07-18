@@ -26,9 +26,8 @@
 
 可在 [`config.js`](./config.js) 中修改两位玩家姓名和允许的比赛参数。所有姓名与文案都通过 `textContent` 输出；无效配置会回退到安全默认值。
 
-## 借鉴声明
+## 借鉴与来源声明
 
 「光轨围猎」是基于经典 light-cycle / trail-survival 抽象机制重新设计的原创本地双人游戏。研究阶段参考了 `JDStraughan/html5-lightcycles`、`thatplatypus/LightCycle`、`dpren/WebGL-Tron` 与 `patorjk/JavaScript-Snake` 的公开规则描述及架构取舍。
 
 最终实现没有复制这些项目的代码、素材、音频、字体、模型或依赖；游戏状态机、同时结算、界面、文案、视觉资产与测试均为独立实现。固定提交、作者、许可证和零复制范围见 [`ATTRIBUTION.md`](./ATTRIBUTION.md)。
-
