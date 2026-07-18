@@ -60,6 +60,7 @@
   let previousPhase = null;
   let announcedStatus = "";
   let lastSelectedBranch = null;
+  let lastWorkspaceKey = null;
 
   root.addEventListener("click", handleClick);
   document.addEventListener("keydown", handleKeydown);
@@ -215,8 +216,11 @@
     elements.roundNumber.textContent = `${view.roundNumber} / ${view.roundCount}`;
     elements.seconds.textContent = String(view.remainingSeconds);
     elements.operatorName.textContent = view.operatorName;
+    const workspaceKey = [view.currentPuzzle.id, view.north.role, view.isLocked].join(":");
+    if (workspaceKey === lastWorkspaceKey) return;
     renderWorkspace("north", view.north, view);
     renderWorkspace("south", view.south, view);
+    lastWorkspaceKey = workspaceKey;
   }
 
   function renderWorkspace(seat, seatView, view) {
@@ -315,6 +319,7 @@
   function clearPlaying() {
     elements.northContent.replaceChildren();
     elements.southContent.replaceChildren();
+    lastWorkspaceKey = null;
   }
 
   function renderResult(view) {
