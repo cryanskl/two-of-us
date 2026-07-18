@@ -106,6 +106,7 @@
 | [97-same-pace-star-spec.md](./97-same-pace-star-spec.md) | A 级“慢一点，也和你一起”的六星四拍、整数边界、物理输入、阶段 DOM、降动效与验收规格 |
 | [98-same-pace-star-plan.md](./98-same-pace-star-plan.md) | “慢一点，也和你一起”的视觉、逻辑、前端、目录、浏览器、bugs、learn 与独立提交计划 |
 | [99-same-pace-star-design.md](./99-same-pace-star-design.md) | “慢一点，也和你一起”的桌面/移动/完成概念、靛蓝纸夜令牌、生产背景、允许文案与 fidelity ledger |
+| [100-same-pace-star-verification.md](./100-same-pace-star-verification.md) | “慢一点，也和你一起”的 77 项逻辑、615 项全仓、41 项目录、三档响应式、生命周期、资源降级、来源与 learn 验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
