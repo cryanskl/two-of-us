@@ -443,6 +443,55 @@ test("shared color studio keeps its file protocol, deterministic rules, and attr
   assert.match(portal, /"id": "shared-color-studio"/);
 });
 
+test("catalog exposes the installed A-level signal repair manual", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const signalRepair = catalog.experiences.find((item) => item.id === "signal-repair-manual");
+
+  assert.equal(signalRepair.category, "co-op");
+  assert.equal(signalRepair.level, "A");
+  assert.equal(signalRepair.players, "2 人合作");
+  assert.equal(signalRepair.devices, "单设备面对面");
+  assert.equal(signalRepair.installed, true);
+  assert.equal(signalRepair.networkRequired, false);
+  assert.match(signalRepair.entry, /signal-repair-manual\/index\.html$/);
+});
+
+test("signal repair keeps its file protocol, rule source, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/signal-repair-manual/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /createUnbiasedRandomIndex/);
+  assert.match(css, /assets\/signal-dust\.webp/);
+  assert.match(css, /rotate\(180deg\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /542c57a778bbf843eb2cb121e99d0b050d8c866e/);
+  assert.match(attribution, /e379d86e12d1d6409c228b84ca9a74deffa15c99/);
+  assert.match(attribution, /OpenAI ImageGen/);
+  assert.match(attribution, /完整零复制声明/);
+  assert.match(portal, /"id": "signal-repair-manual"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
