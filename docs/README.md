@@ -92,6 +92,7 @@
 | [83-shared-color-studio-plan.md](./83-shared-color-studio-plan.md) | “把颜色调到一起”的视觉、逻辑、前端、目录、浏览器、bugs、learn 与验收独立提交计划 |
 | [84-shared-color-studio-design.md](./84-shared-color-studio-design.md) | “把颜色调到一起”的桌面/移动/完成态概念、夜间纸上调色桌令牌、生产背景、允许文案与 Fidelity ledger |
 | [85-shared-color-studio-verification.md](./85-shared-color-studio-verification.md) | “把颜色调到一起”的真实 file 直开、超时重试、五轮合册、三档响应式、颜色/素材降级与视觉忠实度验收 |
+| [86-signal-repair-manual-research.md](./86-signal-repair-manual-research.md) | A 级“把信号接回来”的互补信息推理、原创星路规则、固定来源、许可证边界与零复制调研 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

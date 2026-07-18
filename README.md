@@ -103,6 +103,7 @@
 - [“把颜色调到一起”分步实施计划](./docs/83-shared-color-studio-plan.md)
 - [“把颜色调到一起”视觉设计](./docs/84-shared-color-studio-design.md)
 - [“把颜色调到一起”验收记录](./docs/85-shared-color-studio-verification.md)
+- [A 级“把信号接回来”定向调研](./docs/86-signal-repair-manual-research.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
