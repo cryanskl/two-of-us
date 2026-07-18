@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [共同按住交互：物理 inputId、双松手 Gate 与焦点连续性](./2026-07-18-physical-input-release-gate-focus.md)
 - [同步合作与可选音频：整数完成记录、差值消费和 generation 守卫](./2026-07-18-coop-completion-delta-audio-generation.md)
 - [高频页面渲染：用结构键保住 DOM 身份与键盘焦点](./2026-07-18-structural-render-key-focus-stability.md)
 - [条件推理题：用规则 Token 同源生成文案、谓词与唯一解](./2026-07-18-rule-token-single-source-unique-solution.md)
