@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [把夜晚照成我们：发现列表增长推动舞台并破坏后续命中](./2026-07-19-starlight-search-stage-shift.md)
+- [把夜晚照成我们：桌面标题把“们”挤成孤字](./2026-07-19-starlight-search-title-orphan.md)
 - [在雾上，写给你：笔迹达标后焦点没有进入确认动作](./2026-07-19-fog-window-ready-focus-gap.md)
 - [在雾上，写给你：1280×800 首屏看不到状态和主动作](./2026-07-19-fog-window-desktop-actions-below-fold.md)
 - [在雾上，写给你：移动完成态重开按钮被信件滚动区裁切](./2026-07-19-fog-window-mobile-restart-clipped.md)
