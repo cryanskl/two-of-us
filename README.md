@@ -123,6 +123,7 @@
 - [“稳稳地，和你一起向前”分步实施计划](./docs/103-steady-together-plan.md)
 - [“稳稳地，和你一起向前”视觉设计](./docs/104-steady-together-design.md)
 - [“稳稳地，和你一起向前”验收记录](./docs/105-steady-together-verification.md)
+- [A 级“一起，把家搬进来”定向调研](./docs/106-moving-home-together-research.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
