@@ -26,6 +26,34 @@
 
 ## 借鉴与来源声明
 
-研究阶段固定查看了 Tone.js、MDN Web Audio Examples、ptcollab 与 pianco，用于理解音频时间轴分离、AudioContext 用户激活、声部分工和统一音符事件等通用机制。正式版本没有复制、改写、打包或依赖这些项目的源码、协议、钢琴界面、示例曲、MIDI、采样、字体、图标、截图或页面结构。
+核验日期：2026-07-18。
 
-完整提交、许可证、权利声明、ImageGen 提示词、资产路径与零复制边界见 [`ATTRIBUTION.md`](./ATTRIBUTION.md)。五节乐句、合奏规则、状态机、HTML、CSS、JavaScript、中文文案与测试均为本仓库独立创作。
+| 项目 | 固定版本、许可证与权利主体 | 本作只研究的抽象机制 |
+| --- | --- | --- |
+| [Tonejs/Tone.js](https://github.com/Tonejs/Tone.js/tree/589edde7f895ee0cd2b8068133c74e7c4d521046) | commit `589edde7f895ee0cd2b8068133c74e7c4d521046`；MIT；Copyright © 2014–2025 Yotam Mann | 音频时间轴与规则时间轴分离、短音生命周期 |
+| [mdn/webaudio-examples](https://github.com/mdn/webaudio-examples/tree/733def1c41939a7bb2ec4dc1be3603e3ae70af51) | commit `733def1c41939a7bb2ec4dc1be3603e3ae70af51`；CC0 1.0；MDN contributors | AudioContext 用户激活与渐进增强 |
+| [yuxshao/ptcollab](https://github.com/yuxshao/ptcollab/tree/8b40faa043f1e7734e7f560c0c181160c85f979e) | commit `8b40faa043f1e7734e7f560c0c181160c85f979e`；MIT；Copyright © 2020 Yu Xuan Shao | 声部分工、统一事件时间线 |
+| [drahoslove/pianco](https://github.com/drahoslove/pianco/tree/2cb08afe19bc6583e281773d283033bde60e7d51) | commit `2cb08afe19bc6583e281773d283033bde60e7d51`；MIT；Copyright © 2022 Drahoslav Bednář | 玩家身份反馈、note 事件模型 |
+
+这些项目都不是运行依赖。正式版本没有复制、翻译、改写、打包或依赖它们的源码、算法表达、网络协议、钢琴/键盘 UI、示例曲、MIDI、采样、声音包、字体、图标、截图或页面结构。五节乐句、200ms 会合与 300ms 保持规则、状态机、HTML、CSS、JavaScript、中文文案和测试均为本仓库独立创作。
+
+### OpenAI ImageGen 资产
+
+- 生成方式：OpenAI 内置 ImageGen，`stylized-concept`；
+- 生成日期：2026-07-18；
+- 第三方输入：无；
+- 运行资产：[`assets/harmony-table.webp`](./assets/harmony-table.webp)；
+- 原始概念：仓库 [`design/four-hands-harmony/`](../../../design/four-hands-harmony/) 下三张内部视觉规格图，不在运行页面加载。
+
+最终生产背景提示词：
+
+```text
+Use case: stylized-concept. Production 1504x1046 responsive web background.
+Bright morning conservatory, pale ash desk, matte ivory wall, soft leaf shadows,
+restrained brass/glass props only at far edges, muted mint fabric left and apricot
+fabric right. Center 70% empty, low contrast and crop-safe. Background only: no UI,
+panels, cards, controls, keyboard, piano keys, sheet music, notation, symbols, hearts,
+text, letters, numbers, logo, watermark, hands or people.
+```
+
+运行声音只复用仓库内部 [`shared/audio/tone-player.js`](../../../shared/audio/tone-player.js)，由原生 OscillatorNode 实时生成；零音频文件、零采样、零远程请求。完整逐项边界见 [`ATTRIBUTION.md`](./ATTRIBUTION.md)。

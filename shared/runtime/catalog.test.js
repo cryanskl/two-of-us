@@ -545,6 +545,17 @@ test("four hands harmony keeps its file protocol, input, audio, and attribution 
   assert.match(css, /forced-colors:\s*active/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /589edde7f895ee0cd2b8068133c74e7c4d521046/);
+  assert.match(readme, /733def1c41939a7bb2ec4dc1be3603e3ae70af51/);
+  assert.match(readme, /8b40faa043f1e7734e7f560c0c181160c85f979e/);
+  assert.match(readme, /2cb08afe19bc6583e281773d283033bde60e7d51/);
+  assert.match(readme, /Copyright © 2014–2025 Yotam Mann/);
+  assert.match(readme, /Copyright © 2020 Yu Xuan Shao/);
+  assert.match(readme, /Copyright © 2022 Drahoslav Bednář/);
+  assert.match(readme, /OpenAI 内置 ImageGen/);
+  assert.match(readme, /第三方输入：无/);
+  assert.match(readme, /Center 70% empty/);
+  assert.match(readme, /零音频文件、零采样、零远程请求/);
   assert.match(attribution, /589edde7f895ee0cd2b8068133c74e7c4d521046/);
   assert.match(attribution, /733def1c41939a7bb2ec4dc1be3603e3ae70af51/);
   assert.match(attribution, /8b40faa043f1e7734e7f560c0c181160c85f979e/);
