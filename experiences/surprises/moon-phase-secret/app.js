@@ -196,7 +196,7 @@
     elements.phaseRing.setAttribute("aria-label", `当前月相 ${view.selectedPhaseName}。拖动，或按左右方向键调整；按 Home 回到新月。`);
 
     renderClues(Array.isArray(view.clues) ? view.clues : []);
-    renderFeedback(view.feedback);
+    renderFeedback(view.feedback, view.phase);
     renderFinal(view.finalMessage);
     elements.primaryButton.textContent = view.phase === "intro"
       ? "开始校准"
@@ -218,9 +218,9 @@
     });
   }
 
-  function renderFeedback(feedback) {
+  function renderFeedback(feedback, phase) {
     elements.feedbackList.replaceChildren();
-    elements.feedbackList.hidden = !feedback;
+    elements.feedbackList.hidden = !feedback || phase === "unlocked";
     if (!feedback) return;
     const rows = [
       [feedback.monthAligned ? "月序已对齐" : "月序还没对齐", feedback.monthAligned],

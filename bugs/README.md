@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把月亮拨回那一天：成功态重复反馈把第三条裁出桌面首屏](./2026-07-18-moon-unlocked-feedback-overflow.md)
 - [把月亮拨回那一天：Pointer 与键盘切换时圆环失焦](./2026-07-18-moon-ring-pointer-focus.md)
 - [把月亮拨回那一天：隐藏播报节点留下 17px 桌面滚动](./2026-07-18-moon-sr-only-scroll-residue.md)
 - [把月亮拨回那一天：月相目标四字段被日期三字段校验拒绝](./2026-07-18-moon-target-shape-reset.md)
