@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1420" />
+    <meta name="description" content="两个人在同一台设备上轮流藏好四格配方，再用同位与有料反馈破解彼此的秘密。" />
+    <title>藏好这一味 · Two of Us</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="table-scene" aria-hidden="true"></div>
+    <main id="app" class="app-shell" data-phase="intro" aria-labelledby="work-title">
+      <div id="app-content" class="app-content"></div>
+      <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+      <noscript>
+        <section class="noscript-card">
+          <h1>藏好这一味</h1>
+          <p>需要启用 JavaScript 才能藏配方、计算反馈和交换角色。</p>
+        </section>
+      </noscript>
+    </main>
+  </body>
+</html>
