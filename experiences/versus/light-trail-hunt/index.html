@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#071523">
+  <title>光轨围猎 · Two of Us</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app" data-phase="ready">
+    <header class="masthead">
+      <div class="title-block">
+        <h1 id="game-title">光轨围猎</h1>
+        <p id="game-intro">别追光，去改写它的边界。</p>
+      </div>
+
+      <section class="score-rail" aria-label="比赛比分">
+        <p class="score-side score-side--cyan">
+          <span id="player-one-name">小满</span>
+          <strong id="player-one-score">0</strong>
+        </p>
+        <span class="score-dash" aria-hidden="true">—</span>
+        <p class="score-side score-side--coral">
+          <strong id="player-two-score">0</strong>
+          <span id="player-two-name">阿昼</span>
+        </p>
+      </section>
+
+      <div class="round-rail">
+        <p id="round-label">第 1 / 3 轮</p>
+        <p id="status-label">准备制图</p>
+      </div>
+    </header>
+
+    <div class="play-layout">
+      <section class="board-column" aria-labelledby="board-heading">
+        <h2 id="board-heading" class="visually-hidden">光轨赛场</h2>
+        <div class="board-frame">
+          <canvas id="board" width="960" height="640" aria-describedby="board-description"></canvas>
+          <p id="board-description" class="visually-hidden">四十八乘三十二格赛场。青色圆环代表玩家一，珊瑚菱形代表玩家二。</p>
+          <div id="countdown-panel" class="stage-panel stage-panel--countdown" hidden aria-hidden="true">
+            <strong id="countdown-label">3</strong>
+          </div>
+          <section id="pause-panel" class="stage-panel stage-panel--message" hidden aria-labelledby="pause-title">
+            <h2 id="pause-title" tabindex="-1">制图暂停</h2>
+            <p id="pause-reason">路线停在原地。</p>
+            <button type="button" class="action action--primary" data-action="resume">继续</button>
+          </section>
+        </div>
+
+        <div class="desktop-command" aria-label="键盘控制">
+          <p><span class="marker marker--cyan" aria-hidden="true"></span><span id="desktop-player-one">小满</span> <kbd>A</kbd> / <kbd>D</kbd></p>
+          <button type="button" class="action action--quiet" data-action="pause">暂停</button>
+          <p><span class="marker marker--coral" aria-hidden="true"></span><span id="desktop-player-two">阿昼</span> <kbd>←</kbd> / <kbd>→</kbd> · <kbd>J</kbd> / <kbd>L</kbd></p>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <section id="ready-panel" class="phase-copy" aria-labelledby="ready-title">
+          <h2 id="ready-title">两束光同时出发</h2>
+          <p>左转或右转，别撞上任何旧轨。</p>
+          <p class="rule-note">撞墙、撞线或同刻相撞，本轮立即结束。</p>
+          <button type="button" class="action action--primary" data-action="start">开始围猎</button>
+        </section>
+
+        <section class="map-notes" aria-labelledby="notes-title">
+          <h2 id="notes-title">制图笔记</h2>
+          <ul>
+            <li>每一刻只能直行、左转或右转。</li>
+            <li>旧轨会永久留在本轮地图上。</li>
+          </ul>
+          <div class="legend" aria-label="玩家图例">
+            <p><span class="head-symbol head-symbol--cyan" aria-hidden="true"></span><span id="legend-player-one">小满</span></p>
+            <p><span class="head-symbol head-symbol--coral" aria-hidden="true"></span><span id="legend-player-two">阿昼</span></p>
+          </div>
+        </section>
+
+        <section id="result-panel" class="phase-copy phase-copy--result" hidden aria-labelledby="result-title">
+          <h2 id="result-title" tabindex="-1">同时撞线，平局</h2>
+          <p id="result-detail">这一局谁也没抢走边界。</p>
+          <p id="result-score" class="result-score">0 — 0</p>
+          <button type="button" class="action action--primary" data-action="next">下一轮</button>
+          <button type="button" class="action action--primary" data-action="restart" hidden>重新比赛</button>
+        </section>
+      </aside>
+    </div>
+
+    <section id="touch-controls" class="touch-controls" aria-label="触控转向">
+      <div class="control-group control-group--cyan">
+        <p><span id="touch-player-one">小满</span> 操作</p>
+        <div class="turn-buttons">
+          <button type="button" class="turn-button" data-player="0" data-turn="-1" aria-label="玩家一小满左转">
+            <span class="player-number" aria-hidden="true">1</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M39 36V24c0-7.2-5.8-13-13-13H12m7-7-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="turn-button" data-player="0" data-turn="1" aria-label="玩家一小满右转">
+            <span class="player-number" aria-hidden="true">1</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 36V24c0-7.2 5.8-13 13-13h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        </div>
+        <small>A / D</small>
+      </div>
+      <div class="control-group control-group--coral">
+        <p><span id="touch-player-two">阿昼</span> 操作</p>
+        <div class="turn-buttons">
+          <button type="button" class="turn-button" data-player="1" data-turn="-1" aria-label="玩家二阿昼左转">
+            <span class="player-number" aria-hidden="true">2</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M39 36V24c0-7.2-5.8-13-13-13H12m7-7-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="turn-button" data-player="1" data-turn="1" aria-label="玩家二阿昼右转">
+            <span class="player-number" aria-hidden="true">2</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 36V24c0-7.2 5.8-13 13-13h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        </div>
+        <small>← / → · J / L</small>
+      </div>
+    </section>
+
+    <button type="button" class="action action--mobile-pause" data-action="pause">暂停</button>
+    <p id="live-region" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+  </main>
+
+  <noscript>光轨围猎需要浏览器启用 JavaScript；页面仍不会联网或保存数据。</noscript>
+  <script src="config.js"></script>
+  <script src="logic.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
