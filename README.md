@@ -106,6 +106,7 @@
 - [A 级“把信号接回来”定向调研](./docs/86-signal-repair-manual-research.md)
 - [A 级“把信号接回来”实现规格](./docs/87-signal-repair-manual-spec.md)
 - [“把信号接回来”分步实施计划](./docs/88-signal-repair-manual-plan.md)
+- [“把信号接回来”视觉设计](./docs/89-signal-repair-manual-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
