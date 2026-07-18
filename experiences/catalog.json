@@ -171,6 +171,19 @@
       "networkRequired": false
     },
     {
+      "id": "fog-window-letter",
+      "title": "在雾上，写给你",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/fog-window-letter/index.html",
+      "readme": "experiences/surprises/fog-window-letter/README.md",
+      "description": "先在雾窗上自由写下一遍，再沿自己的原始笔迹走回来；找回足够多的露珠锚点后才揭开本地私信。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

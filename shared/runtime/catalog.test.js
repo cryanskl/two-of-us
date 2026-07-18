@@ -263,6 +263,71 @@ test("moon phase secret keeps its file protocol, source, secret, and attribution
   assert.match(attribution, /SunCalc/);
 });
 
+test("catalog exposes the installed A-level fog window letter", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const fogWindow = catalog.experiences.find((item) => item.id === "fog-window-letter");
+
+  assert.equal(fogWindow.category, "surprise");
+  assert.equal(fogWindow.level, "A");
+  assert.equal(fogWindow.players, "1 人准备，1 人体验");
+  assert.equal(fogWindow.devices, "单设备");
+  assert.equal(fogWindow.installed, true);
+  assert.equal(fogWindow.networkRequired, false);
+  assert.match(fogWindow.entry, /fog-window-letter\/index\.html$/);
+});
+
+test("fog window letter keeps its file protocol, private DOM, trace, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/fog-window-letter/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|MediaDevices|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /document\.cookie|navigator\.clipboard/i);
+  assert.doesNotMatch(runtimeSource, /Math\.random|getImageData|putImageData/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|\beval\s*\(/);
+  assert.match(html, /<canvas[^>]+aria-hidden=["']true["']/i);
+  assert.match(html, /<div class="completion-host" id="completion-host"><\/div>/);
+  assert.doesNotMatch(`${html}\n${app}\n${portal}`, /你刚才写下的每一笔，都让窗外更亮了一点/);
+  assert.match(app, /document\.createElement\("article"\)/);
+  assert.match(app, /completionHost\.replaceChildren\(\)/);
+  assert.match(app, /setPointerCapture/);
+  assert.match(app, /getCoalescedEvents/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /MAX_FRAME_GAP_MS/);
+  assert.match(logic, /ANCHOR_SPACING = 32/);
+  assert.match(logic, /TRACE_RADIUS = 46/);
+  assert.match(logic, /TRACE_REQUIRED_NUMERATOR = 4/);
+  assert.match(logic, /cross \* cross <= radiusSquared \* vv/);
+  assert.match(css, /assets\/window-evening\.jpg/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /本机明文|不是加密/);
+  assert.match(attribution, /b392d1d417a7a2fa21a7f659eb76fddcc2be3fdb/);
+  assert.match(attribution, /f56f097e0e211fffa1601b93883e4d9f9dccf122/);
+  assert.match(attribution, /723838fcbb9feaa87c8840082640de2ed82383da/);
+  assert.match(attribution, /c1d88390d2c86901db152827fe778c3e39cfb073/);
+  assert.match(attribution, /OpenAI ImageGen/);
+  assert.match(attribution, /没有复制或移植/);
+  assert.match(portal, /"id": "fog-window-letter"/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
