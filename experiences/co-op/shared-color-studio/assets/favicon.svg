@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="两滴颜料汇入一张色笺">
+  <rect width="64" height="64" rx="12" fill="#06131f"/>
+  <path d="M12 39 18 29l6 10a7 7 0 1 1-12 0Z" fill="#61b9ad"/>
+  <path d="m40 39 6-10 6 10a7 7 0 1 1-12 0Z" fill="#dfb36f"/>
+  <path d="M18 42c8-5 20-5 28 0v12H18Z" fill="#f4efe3" stroke="#b77b35" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M27 43c3 2 7 2 10 0" fill="none" stroke="#249b92" stroke-width="3" stroke-linecap="round"/>
+</svg>

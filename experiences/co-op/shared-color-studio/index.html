@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#06131f">
+  <title>把颜色调到一起 · Two of Us</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="studio-app" id="studio-app" data-phase="ready" data-color-mode="hsl">
+    <header class="studio-header">
+      <h1 id="app-title">把颜色调到一起</h1>
+      <div class="round-line" aria-live="off">
+        <span aria-hidden="true"></span>
+        <p id="round-label">1 / 5 晚霞信笺</p>
+        <span aria-hidden="true"></span>
+      </div>
+      <p class="timer" id="timer-label" aria-label="本轮剩余时间">24.0 秒</p>
+    </header>
+
+    <section class="studio-stage" id="studio-stage" aria-labelledby="round-label" tabindex="-1">
+      <div class="phase-banner ready-banner" id="ready-banner">
+        <p id="intro-copy">你转色相，我调明暗。一起把五张色笺调到目标刻度。</p>
+        <button class="primary-action" id="start-button" type="button" data-action="start">开始调色</button>
+      </div>
+
+      <div class="phase-banner countdown-banner" id="countdown-banner" hidden aria-hidden="true">
+        <span id="countdown-label">3</span>
+      </div>
+
+      <section class="pause-strip" id="pause-strip" hidden aria-labelledby="pause-title">
+        <div>
+          <h2 id="pause-title" tabindex="-1">调色暂停了</h2>
+          <p id="pause-copy">准备好再继续。</p>
+        </div>
+        <button class="secondary-action" type="button" data-action="resume">继续</button>
+      </section>
+
+      <section class="papers" aria-label="目标色与共享颜色">
+        <article class="color-paper target-paper" id="target-paper">
+          <h2>目标色</h2>
+          <div class="paint-swatch" id="target-swatch" aria-hidden="true"></div>
+          <p class="coordinate" id="target-coordinate">H 2/12 · L 8/9</p>
+        </article>
+        <article class="color-paper current-paper" id="current-paper">
+          <h2>我们调出的颜色</h2>
+          <div class="paint-swatch" id="current-swatch" aria-hidden="true"></div>
+          <p class="coordinate" id="current-coordinate">H 9/12 · L 3/9</p>
+          <p class="paper-note" id="paper-note"></p>
+          <div class="success-stamp" id="success-stamp" hidden aria-hidden="true">合拍</div>
+        </article>
+      </section>
+
+      <section class="axis-deck" aria-label="双人调色控制">
+        <section class="axis-panel hue-panel" aria-labelledby="hue-title">
+          <header class="axis-heading">
+            <span aria-hidden="true"></span>
+            <h2 id="hue-title">玩家 1 · 色相</h2>
+            <span aria-hidden="true"></span>
+          </header>
+          <div class="axis-rail hue-rail" id="hue-rail" aria-label="十二格色相刻度"></div>
+          <p class="axis-status" id="hue-status">色相还差 5 格，顺时针转</p>
+          <div class="control-row">
+            <button type="button" data-axis="hue" data-direction="-1" aria-label="玩家 1：色相逆时针转一格">
+              <kbd>A</kbd><span>逆时针</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7H4v4M4.5 10A8 8 0 1 0 7 5.5"/></svg>
+            </button>
+            <button type="button" data-axis="hue" data-direction="1" aria-label="玩家 1：色相顺时针转一格">
+              <kbd>D</kbd><span>顺时针</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 7h4v4m-.5-1A8 8 0 1 1 17 5.5"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <section class="axis-panel lightness-panel" aria-labelledby="lightness-title">
+          <header class="axis-heading">
+            <span aria-hidden="true"></span>
+            <h2 id="lightness-title">玩家 2 · 明度</h2>
+            <span aria-hidden="true"></span>
+          </header>
+          <div class="axis-rail lightness-rail" id="lightness-rail" aria-label="九格明度刻度"></div>
+          <p class="axis-status" id="lightness-status">明度还差 5 格，再亮一点</p>
+          <div class="control-row">
+            <button type="button" data-axis="lightness" data-direction="-1" aria-label="玩家 2：颜色深一格">
+              <kbd>J</kbd><span>深一点</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-5-5 5 5 5-5"/></svg>
+            </button>
+            <button type="button" data-axis="lightness" data-direction="1" aria-label="玩家 2：颜色亮一格">
+              <kbd>L</kbd><span>亮一点</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-5 5 5-5 5 5"/></svg>
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <section class="round-result" id="round-result" hidden aria-labelledby="result-title">
+        <div>
+          <h2 id="result-title" tabindex="-1"></h2>
+          <p id="result-copy"></p>
+        </div>
+        <button class="primary-action" id="result-action" type="button"></button>
+      </section>
+    </section>
+
+    <section class="album-view" id="album-view" hidden aria-labelledby="album-title">
+      <h2 id="album-title" tabindex="-1">五张颜色，都被我们收下了</h2>
+      <div class="album-book">
+        <div class="album-slips" id="album-slips"></div>
+        <p class="album-copy" id="album-copy"></p>
+        <p class="album-count">5 张色笺 · 共同完成</p>
+      </div>
+      <button class="primary-action" id="restart-button" type="button" data-action="restart">重新调一册</button>
+      <a class="album-back" href="../../../index.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7M8 12h11"/></svg>
+        返回作品库
+      </a>
+    </section>
+
+    <footer class="studio-footer" id="studio-footer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 10v6m0-9h.01"/></svg>
+      <p>玩家 1 只调色相，玩家 2 只调明度。</p>
+    </footer>
+    <p class="visually-hidden" id="live-status" role="status" aria-live="polite"></p>
+    <noscript>需要启用 JavaScript 才能一起调色。</noscript>
+  </main>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
