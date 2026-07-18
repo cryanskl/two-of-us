@@ -90,6 +90,7 @@
 - [A 级“这一格归谁”视觉设计](./docs/71-dots-and-boxes-design.md)
 - [A 级“这一格归谁”验收记录](./docs/72-dots-and-boxes-verification.md)
 - [A 级“这一颗我先到”定向调研](./docs/73-orbit-star-race-research.md)
+- [A 级“这一颗我先到”实现规格](./docs/74-orbit-star-race-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
