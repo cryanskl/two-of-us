@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把颜色调到一起：来源声明标题未满足仓库机器 Gate](./2026-07-18-shared-color-attribution-heading-contract.md)
 - [把颜色调到一起：合册结语随移动步数偏离冻结文案](./2026-07-18-shared-color-result-copy-drift.md)
 - [把颜色调到一起：背景素材被负层级完全遮住](./2026-07-18-shared-color-background-stacking.md)
 - [baoyu-image-gen 的 codex-cli 后端在只有 npx 时因缺少 bun 失败](./2026-07-18-baoyu-imagegen-codex-cli-bun-missing.md)
