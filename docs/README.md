@@ -72,6 +72,7 @@
 | [64-hand-crank-music-box-spec.md](./64-hand-crank-music-box-spec.md) | A 级“把这首转给你”的净顺时针角度、逐音推进、无声降级、原创资产、配置策略与响应式规格 |
 | [65-hand-crank-music-box-verification.md](./65-hand-crank-music-box-verification.md) | “把这首转给你”的真实圆周拖拽、八圈完成、file 直开、离线降级、响应式与视觉忠实度验收记录 |
 | [66-moon-phase-secret-research.md](./66-moon-phase-secret-research.md) | A 级“把月亮拨回那一天”的八相近似、Pointer 圆环、本地隐私、SunCalc 对照与零复制调研 |
+| [67-moon-phase-secret-spec.md](./67-moon-phase-secret-spec.md) | A 级“把月亮拨回那一天”的配置 schema、八相近似、三项校准、阶段 DOM、视觉与验收规格 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
