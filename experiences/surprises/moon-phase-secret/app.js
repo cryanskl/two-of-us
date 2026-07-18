@@ -126,6 +126,7 @@
       pointer.previousAngle = angleFromCenter(event, elements.calibrator);
       pointer.carry = 0;
       ring.setPointerCapture(event.pointerId);
+      ring.focus({ preventScroll: true });
       event.preventDefault();
     });
     ring.addEventListener("pointermove", (event) => {
