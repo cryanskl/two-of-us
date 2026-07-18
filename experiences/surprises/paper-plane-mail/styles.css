@@ -310,15 +310,15 @@ input:focus-visible {
 
 .range-row {
   display: grid;
-  grid-template-columns: 50px minmax(0, 1fr) 50px;
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
   align-items: center;
   gap: 10px;
   margin-top: 5px;
 }
 
 .step-button {
-  width: 50px;
-  min-height: 50px;
+  width: 56px;
+  min-height: 56px;
   border: 1px solid var(--paper-dim);
   border-radius: 0;
   color: var(--paper);
@@ -784,12 +784,12 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .range-row {
-    grid-template-columns: 54px minmax(0, 1fr) 54px;
+    grid-template-columns: 56px minmax(0, 1fr) 56px;
     gap: 8px;
   }
 
   .step-button {
-    width: 54px;
+    width: 56px;
     min-height: 56px;
   }
 
