@@ -76,6 +76,7 @@
 | [68-moon-phase-secret-design.md](./68-moon-phase-secret-design.md) | “把月亮拨回那一天”的桌面/手机概念、设计令牌、组件资产、允许文案与响应式提取清单 |
 | [69-dots-and-boxes-research.md](./69-dots-and-boxes-research.md) | A 级“这一格归谁”的传统规则、规范边模型、固定来源、许可证与零复制调研 |
 | [70-dots-and-boxes-spec.md](./70-dots-and-boxes-spec.md) | A 级“这一格归谁”的配置、规范边状态机、语义棋盘、视觉与验收规格 |
+| [71-dots-and-boxes-design.md](./71-dots-and-boxes-design.md) | “这一格归谁”的桌面/手机/终局概念、设计令牌、触控棋盘、文案与响应式提取清单 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
