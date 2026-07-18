@@ -934,6 +934,7 @@ body[data-phase="complete"] .paper-curtain-right {
   .crank-control {
     width: 126px;
     height: 126px;
+    align-self: flex-end;
   }
 
   .mobile-controls {
@@ -1076,6 +1077,7 @@ body[data-phase="complete"] .paper-curtain-right {
   .crank-control {
     width: 104px;
     height: 104px;
+    margin-right: 6px;
   }
 
   .turn-track li {
