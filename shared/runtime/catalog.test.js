@@ -633,6 +633,55 @@ test("light trail hunt keeps its atomic file-protocol duel boundary", async () =
   assert.match(attribution, /未复制|未使用/);
 });
 
+test("catalog exposes the installed A-level orbital star race duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const game = catalog.experiences.find((item) => item.id === "orbit-star-race");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备同屏");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /orbit-star-race\/index\.html$/);
+});
+
+test("orbital star race keeps its deterministic file-protocol boundary", async () => {
+  const root = new URL("../../experiences/versus/orbit-star-race/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /crypto\.getRandomValues/);
+  assert.match(app, /MAX_STEPS_PER_FRAME\s*=\s*12/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /FIXED_DT\s*=\s*1\s*\/\s*120/);
+  assert.match(logic, /SHARED_EPSILON\s*=\s*1e-5/);
+  assert.match(css, /assets\/star-chart\.png/);
+  assert.match(css, /assets\/orbit-sprites\.png/);
+  assert.match(css, /sprite-missing/);
+  assert.match(css, /background-missing/);
+  assert.doesNotMatch(html, /concept-(?:desktop|mobile)/);
+  assert.match(config, /composeResult/);
+  assert.match(readme, /## 借鉴与来源声明/);
+  assert.match(attribution, /^# 借鉴与来源声明/m);
+  assert.match(attribution, /81b92ff6df930644fae28cf5c14035dd055bc84e/);
+  assert.match(attribution, /零代码、零素材/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");

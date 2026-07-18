@@ -103,7 +103,7 @@
 | --- | --- | --- |
 | 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/)、[未来车票](../experiences/surprises/future-ticket/)、[拍立得显影](../experiences/surprises/instant-photo/)、[一层一层](../experiences/surprises/nested-gift/)、[纸飞机投递](../experiences/surprises/paper-plane-mail/)、[星码解锁](../experiences/surprises/star-code-unlock/)、[把这首转给你](../experiences/surprises/hand-crank-music-box/) 与 [把月亮拨回那一天](../experiences/surprises/moon-phase-secret/) | 建立可编辑 `config.js`、分段回忆、盲选揭晓、交替手势显影、多手势逐层拆盒、确定性投递、私人答案 Gate、逐音手摇、三轴日期仪器与结尾邀请流程 |
 | 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/)、[双光点归巢](../experiences/co-op/twin-light-maze/)、[同心牵引](../experiences/co-op/tethered-heart/)、[为你引航](../experiences/co-op/lighthouse-passage/)、[节拍接力](../experiences/co-op/rhythm-relay/)、[默契电报码](../experiences/co-op/telegraph-codebook/)、[双人小馆](../experiences/co-op/kitchen-relay/) 与 [靠近一点](../experiences/co-op/closer-cards/) | 建立热座交接、联合状态、连续约束、非对称领航、序列记忆、编码/译码、同步传菜和无评分倾听八种合作样板 |
-| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/)、[心动拔河](../experiences/versus/ribbon-tug/)、[气球胆量局](../experiences/versus/balloon-dare/)、[数字凑靶](../experiences/versus/number-target/)、[纸上球局](../experiences/versus/paper-soccer/)、[回声擂台](../experiences/versus/echo-arena/) 与 [这一格归谁](../experiences/versus/dots-and-boxes/) | 建立抢跑判定、固定步长公平输入、主动止盈、公开市场算式草拟、图结构封路、顺序记忆和规范边占地七种对抗样板 |
+| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/)、[心动拔河](../experiences/versus/ribbon-tug/)、[气球胆量局](../experiences/versus/balloon-dare/)、[数字凑靶](../experiences/versus/number-target/)、[纸上球局](../experiences/versus/paper-soccer/)、[回声擂台](../experiences/versus/echo-arena/)、[这一格归谁](../experiences/versus/dots-and-boxes/)、[光轨围猎](../experiences/versus/light-trail-hunt/) 与 [这一颗我先到](../experiences/versus/orbit-star-race/) | 建立抢跑判定、固定步公平输入、主动止盈、公开市场草拟、图结构封路、顺序记忆、规范边占地、同时转向原子碰撞和反向轨道共享裁决九种对抗样板 |
 
 根 `index.html` 现在是统一门户：直接双击时读取内置目录；通过启动器打开时读取本地 API，并显示局域网二维码。
 
@@ -117,11 +117,11 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
-- 已执行：二十七个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机，未来车票覆盖本地可组合配置、盲选揭晓与票据签发，拍立得显影覆盖交替 Pointer/Keyboard 输入、渐进媒体显影与图片/文案分层回退，一层一层覆盖整份配置回退、四种输入 Gate 与阶段留言 DOM，纸飞机投递覆盖固定步长抛体、连续邮箱碰撞与命中后阶段信件，星码解锁覆盖私人答案规范化、三星 Gate 与不保存输入，把这首转给你覆盖净顺时针角度、逐音推进与无声降级，把月亮拨回那一天覆盖 UTC 月相近似、三轴校准与阶段留言 DOM，心动拔河覆盖固定步长与公平双人输入，双光点归巢覆盖联合状态 BFS 与互相保持机关，同心牵引覆盖固定子步、双丝带约束与连续碰撞，为你引航覆盖非对称领航、暂态显露和同步靠港 Gate，节拍接力覆盖轮流序列记忆与 Web Audio 渐进增强，默契电报码覆盖六码本编码、阶段 DOM 隐私与双环节共同得分，双人小馆覆盖双角色同步传递、在途移盘与单调 flight token，靠近一点覆盖平衡谈话卡计划、双席轮换、无评分跳过与不接收答案，气球胆量局覆盖无偏爆点、主动止盈和对称先后手，数字凑靶覆盖可达题面生成、六步蛇形草拟与可解释距离计分，纸上球局覆盖无向边规范化、落笔前旧点判定、连续借力与图出口困死，回声擂台覆盖三局两胜序列对抗、播放 token 与共享音色播放器，这一格归谁覆盖 40 条规范边、闭格续走与可访问格子归属；
+- 已执行：二十九个无第三方运行依赖的独立 A 级样板，其中爱的刮刮卡覆盖 Canvas 遮罩与可访问降级，今晚做什么覆盖 SVG 与等概率选择，拼回这一刻覆盖私人照片预处理与交换拼图状态机，未来车票覆盖本地可组合配置、盲选揭晓与票据签发，拍立得显影覆盖交替 Pointer/Keyboard 输入、渐进媒体显影与图片/文案分层回退，一层一层覆盖整份配置回退、四种输入 Gate 与阶段留言 DOM，纸飞机投递覆盖固定步长抛体、连续邮箱碰撞与命中后阶段信件，星码解锁覆盖私人答案规范化、三星 Gate 与不保存输入，把这首转给你覆盖净顺时针角度、逐音推进与无声降级，把月亮拨回那一天覆盖 UTC 月相近似、三轴校准与阶段留言 DOM，心动拔河覆盖固定步长与公平双人输入，双光点归巢覆盖联合状态 BFS 与互相保持机关，同心牵引覆盖固定子步、双丝带约束与连续碰撞，为你引航覆盖非对称领航、暂态显露和同步靠港 Gate，节拍接力覆盖轮流序列记忆与 Web Audio 渐进增强，默契电报码覆盖六码本编码、阶段 DOM 隐私与双环节共同得分，双人小馆覆盖双角色同步传递、在途移盘与单调 flight token，靠近一点覆盖平衡谈话卡计划、双席轮换、无评分跳过与不接收答案，气球胆量局覆盖无偏爆点、主动止盈和对称先后手，数字凑靶覆盖可达题面生成、六步蛇形草拟与可解释距离计分，纸上球局覆盖无向边规范化、落笔前旧点判定、连续借力与图出口困死，回声擂台覆盖三局两胜序列对抗、播放 token 与共享音色播放器，这一格归谁覆盖 40 条规范边、闭格续走与可访问格子归属，光轨围猎覆盖同时转向、原子碰撞与三局赛制，这一颗我先到覆盖开普勒式三轨速度、seed 星流与共享 claim 加赛；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；

@@ -432,6 +432,19 @@
       "networkRequired": false
     },
     {
+      "id": "orbit-star-race",
+      "title": "这一颗我先到",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备同屏",
+      "entry": "experiences/versus/orbit-star-race/index.html",
+      "readme": "experiences/versus/orbit-star-race/README.md",
+      "description": "两枚卫星沿相反方向自动绕行，只用升降轨改变角速度，抢先碰到五颗共享目标星。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",

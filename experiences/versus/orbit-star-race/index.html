@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#06131f">
+    <title>这一颗我先到 · Two of Us</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body data-phase="intro">
+    <main class="orbit-shell">
+      <nav class="topbar" aria-label="体验导航">
+        <a class="back-link" href="../../../index.html" aria-label="返回 Two of Us 体验目录">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7M8 12h9"></path></svg>
+        </a>
+      </nav>
+
+      <section class="score-rail" aria-label="双方抢星比分">
+        <article id="player-summary-0" class="player-summary player-summary--red">
+          <span class="player-seal" aria-hidden="true">朱</span>
+          <div>
+            <h2 id="player-name-0">朱方</h2>
+            <p><strong id="player-score-0">0</strong><span>颗</span></p>
+          </div>
+        </article>
+        <div class="rail-center" aria-hidden="true">
+          <span></span><b>先到 5</b><span></span>
+        </div>
+        <article id="player-summary-1" class="player-summary player-summary--blue">
+          <div>
+            <h2 id="player-name-1">蓝方</h2>
+            <p><strong id="player-score-1">0</strong><span>颗</span></p>
+          </div>
+          <span class="player-seal" aria-hidden="true">蓝</span>
+        </article>
+      </section>
+
+      <div class="game-layout">
+        <section class="story-panel" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">两人 · 同屏 · 反向绕行</p>
+            <h1 id="page-title">这一颗我先到</h1>
+            <p class="rule-copy">只管升轨和降轨。内轨更快，先碰到五颗星的人赢。</p>
+          </div>
+
+          <section class="dynamic-status" aria-labelledby="status-title">
+            <p id="star-counter" class="star-counter">星轨待命</p>
+            <h2 id="status-title" tabindex="-1">两颗卫星已经就位</h2>
+            <p id="status-body">看准星轨，再一起出发。</p>
+          </section>
+
+          <div id="action-stage" class="action-stage">
+            <button id="primary-action" class="primary-action" type="button">开始抢星</button>
+          </div>
+        </section>
+
+        <section id="orbit-stage" class="orbit-stage" aria-labelledby="orbit-heading" aria-describedby="stage-description">
+          <h2 id="orbit-heading" class="visually-hidden">三层轨道抢星盘</h2>
+          <div class="star-map" aria-hidden="true"></div>
+          <div class="astrolabe" aria-hidden="true">
+            <span class="outer-bezel"></span>
+            <span class="axis axis--vertical"></span>
+            <span class="axis axis--horizontal"></span>
+            <span class="orbit-ring orbit-ring--outer"><i>外</i></span>
+            <span class="orbit-ring orbit-ring--middle"><i>中</i></span>
+            <span class="orbit-ring orbit-ring--inner"><i>内</i></span>
+          </div>
+          <span class="sun-sprite atlas-sprite" aria-hidden="true"></span>
+
+          <div id="star-object" class="orbit-object orbit-object--star" aria-hidden="true">
+            <span class="target-sprite atlas-sprite"><i>★</i></span>
+          </div>
+          <div id="player-object-0" class="orbit-object orbit-object--red" aria-hidden="true">
+            <span class="satellite-sprite atlas-sprite"><i>朱</i></span>
+          </div>
+          <div id="player-object-1" class="orbit-object orbit-object--blue" aria-hidden="true">
+            <span class="satellite-sprite atlas-sprite"><i>蓝</i></span>
+          </div>
+
+          <p id="stage-description" class="visually-hidden">朱方与蓝方都在中轨，目标尚未出现。</p>
+        </section>
+      </div>
+
+      <section class="controls" aria-label="双方轨道控制">
+        <fieldset class="player-controls player-controls--red">
+          <legend><span id="control-name-0">朱方</span><small>W / S</small></legend>
+          <div>
+            <button type="button" data-player="0" data-direction="1"><kbd>W</kbd><span>升一轨</span></button>
+            <button type="button" data-player="0" data-direction="-1"><kbd>S</kbd><span>降一轨</span></button>
+          </div>
+          <p id="lane-status-0">中轨 · 顺时针</p>
+        </fieldset>
+
+        <p id="match-status" class="match-status" aria-live="polite">先拿到 5 颗星</p>
+
+        <fieldset class="player-controls player-controls--blue">
+          <legend><span id="control-name-1">蓝方</span><small>↑ / ↓</small></legend>
+          <div>
+            <button type="button" data-player="1" data-direction="1"><kbd>↑</kbd><span>升一轨</span></button>
+            <button type="button" data-player="1" data-direction="-1"><kbd>↓</kbd><span>降一轨</span></button>
+          </div>
+          <p id="lane-status-1">中轨 · 逆时针</p>
+        </fieldset>
+      </section>
+
+      <p id="live-region" class="visually-hidden" aria-live="polite"></p>
+      <noscript>需要启用 JavaScript 才能开始这一颗我先到。</noscript>
+    </main>
+  </body>
+</html>
