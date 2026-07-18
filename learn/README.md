@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [条件推理题：用规则 Token 同源生成文案、谓词与唯一解](./2026-07-18-rule-token-single-source-unique-solution.md)
 - [正交离散合作：把颜色显示与成功规则分开](./2026-07-18-orthogonal-discrete-coop-color-rules.md)
 - [可重放轨道争夺：claim 权威、平衡 seed 与哑光精灵](./2026-07-18-seeded-orbit-claims-and-matte-sprites.md)
 - [同时输入游戏：原子 tick、失败尝试与可重放裁决](./2026-07-18-simultaneous-tick-atomic-collision.md)
