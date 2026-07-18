@@ -283,21 +283,20 @@ distance >= sofaRadius + obstacleRadius + COLLISION_GAP × ANGLE_SCALE
 ## 9. 文件与依赖
 
 ```text
-projects/moving-home-together/
+experiences/co-op/moving-home-together/
   index.html
   styles.css
   config.js
-  game.js
+  logic.js
   app.js
+  logic.test.js
   assets/
     scene-concept.png
-  tests/
-    game.test.mjs
   README.md
-  BORROWING.md
+  ATTRIBUTION.md
 ```
 
-`game.js` 是无 DOM 的纯规则层，以经典脚本方式暴露冻结命名空间；`app.js` 是唯一 DOM/Pointer/rAF 适配层。所有 URL 为相对路径，禁止 ESM、fetch、CDN、远程字体、远程图片、运行依赖和构建前置。
+`logic.js` 是无 DOM 的纯规则层，以经典脚本方式暴露冻结命名空间；`app.js` 是唯一 DOM/Pointer/rAF 适配层。所有 URL 为相对路径，禁止 ESM、fetch、CDN、远程字体、远程图片、运行依赖和构建前置。
 
 ## 10. 验收矩阵
 
@@ -325,7 +324,7 @@ projects/moving-home-together/
 - 320×700、390×844、1280×800 视觉截图；键盘走到转角；两盘真实双 Pointer 同时影响状态。
 - 键盘焦点、可见 focus、live 文案、reduced motion、forced colors 和非颜色信息。
 - `npm test`、项目测试、catalog 测试、`npm run verify`、`git diff --check` 全部通过。
-- `BORROWING.md` 明示原创实现、固定研究来源、未复制范围和未来引入代码时的许可义务。
+- `ATTRIBUTION.md` 明示原创实现、固定研究来源、未复制范围和未来引入代码时的许可义务。
 
 ## 11. 借鉴与原创声明契约
 
