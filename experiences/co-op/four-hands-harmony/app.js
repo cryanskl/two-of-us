@@ -205,7 +205,8 @@
       lastFrameTime = null;
     }
     const completedGrew = view.completed.length > previousView.completed.length;
-    render(Boolean(options.focus));
+    const nextMeasureStarted = previousView.phase === "measure-complete" && view.phase === "playing";
+    render(Boolean(options.focus || nextMeasureStarted));
     if (completedGrew) playCompletedHarmony();
   }
 
@@ -420,7 +421,8 @@
       button.classList.toggle("is-target", isTarget);
       button.classList.toggle("is-held", isHeld);
       button.classList.toggle("is-complete", view.phase === "measure-complete" && isTarget);
-      button.disabled = !view.canPress;
+      button.disabled = false;
+      button.setAttribute("aria-disabled", String(!view.canPress));
       button.setAttribute("aria-pressed", String(isHeld));
       button.setAttribute("aria-label", `${seat.name}，${voice === "low" ? "低音席" : "高音席"} ${note.key}，${note.label}${isTarget ? "，目标键" : ""}${isHeld ? "，按住" : ""}`);
       button.querySelector(".key-state").textContent = isHeld ? "按住" : isTarget ? "目标键" : "";

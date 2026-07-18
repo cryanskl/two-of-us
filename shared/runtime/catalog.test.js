@@ -532,6 +532,9 @@ test("four hands harmony keeps its file protocol, input, audio, and attribution 
   assert.match(app, /pointercancel/);
   assert.match(app, /lostpointercapture/);
   assert.match(app, /classifyHarmonyKey/);
+  assert.match(app, /previousView\.phase === "measure-complete" && view\.phase === "playing"/);
+  assert.match(app, /setAttribute\("aria-disabled", String\(!view\.canPress\)\)/);
+  assert.doesNotMatch(app, /button\.disabled = !view\.canPress/);
   assert.match(app, /const player = tonePlayer;\s*const generation = audioGeneration;/);
   assert.match(app, /generation !== audioGeneration \|\| player !== tonePlayer/);
   assert.match(app, /if \(audioPreparing\) return;/);

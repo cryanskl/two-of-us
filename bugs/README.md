@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一拍，刚好和你：小节完成时禁用目标键造成键盘焦点断链](./2026-07-18-four-hands-harmony-measure-focus-loss.md)
 - [这一拍，刚好和你：音频准备竞态导致完成和弦漏播或旧状态回写](./2026-07-18-four-hands-harmony-audio-readiness-race.md)
 - [这一拍，刚好和你：SVG 标准命名空间被离线 Gate 误判为网络地址](./2026-07-18-four-hands-harmony-svg-namespace-gate.md)
 - [这一拍，刚好和你：FFmpeg 可执行但没有 WebP 编码器](./2026-07-18-four-hands-harmony-webp-encoder-unavailable.md)
