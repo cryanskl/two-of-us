@@ -324,15 +324,15 @@ ready/countdown/暂停/结果所需文案以规格和 config 为准，但不得�
 
 | 比较点 | 概念证据 | 浏览器证据 | 处理 |
 | --- | --- | --- | --- |
-| 标题/轮次/倒计时层级 | desktop playing | 待截图 | 待验收 |
-| 目标小、当前大 | desktop playing | 待截图 | 待验收 |
-| 色相圆点/明度方块 | desktop + mobile | 待截图 | 待验收 |
-| 四按钮键帽、黄铜细边 | desktop + mobile | 待截图 | 待验收 |
-| 深墨背景与无 overlay 资产 | all + production | 待截图 | 待验收 |
-| 390×844 2×2 控制 | mobile | 待截图 | 待验收 |
-| complete 纸册与五张色笺 | desktop complete | 待截图 | 待验收 |
-| 系统字体与控制字号 | all | 待截图/computed CSS | 待验收 |
-| 状态动效/reduced motion | design spec | 待实玩 | 待验收 |
-| Above-the-fold copy diff | 第 6 节 | 待抓取 | 待验收 |
+| 标题/轮次/倒计时层级 | desktop playing | `desktop-success-round1-1504x1046.png` | 通过 |
+| 目标小、当前大 | desktop playing | 250×258 / 401×324 | 通过 |
+| 色相圆点/明度方块 | desktop + mobile | desktop + mobile playing | 通过 |
+| 四按钮键帽、黄铜细边 | desktop + mobile | desktop + mobile playing | 通过 |
+| 深墨背景与无 overlay 资产 | all + production | file + localhost 截图 | 通过 |
+| 390×844 2×2 控制 | mobile | `mobile-playing-390x844.png` | 通过 |
+| complete 纸册与五张色笺 | desktop complete | `desktop-complete-1504x1046.png` | 通过 |
+| 系统字体与控制字号 | all | 原生截图 + computed geometry | 通过 |
+| 状态动效/reduced motion | design spec | 实玩 + reduce context | 通过 |
+| Above-the-fold copy diff | 第 6 节 | 语义快照 + 截图 | 通过，见 [验收记录](./85-shared-color-studio-verification.md) |
 
 最终 QA 必须在同一轮用 `view_image` 打开对应概念与最新浏览器截图。若仍有会被专业设计评审指出的可修复偏差，不得宣告视觉完成。
