@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [稳稳地，和你一起向前：非等幅坡势与严格镜像 Gate 矛盾](./2026-07-18-steady-together-asymmetric-bias-mirror-contract.md)
 - [稳稳地，和你一起向前：FFmpeg 可执行但没有 WebP 编码器](./2026-07-18-steady-together-webp-encoder-unavailable.md)
 - [这一拍，刚好和你：浏览器截图字节为 JPEG 却保存成 PNG 扩展名](./2026-07-18-four-hands-harmony-screenshot-extension.md)
 - [这一拍，刚好和你：README 只跳转详版声明，未独立满足来源 Gate](./2026-07-18-four-hands-harmony-readme-attribution-gate.md)

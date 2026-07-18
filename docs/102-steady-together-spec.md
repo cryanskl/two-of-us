@@ -73,7 +73,7 @@ CHECKPOINTS = [0, 800, 1600];
 FINAL_HOLD_TICKS = 30;
 
 COURSE_SEGMENTS = [
-  { id: "lean-left", start: 0,    end: 799,  bias: 72 },
+  { id: "lean-left", start: 0,    end: 799,  bias: 84 },
   { id: "lean-right", start: 800, end: 1599, bias: -84 },
   { id: "come-home", start: 1600, end: 2400, bias: 0 }
 ];
@@ -397,7 +397,7 @@ main
 10. 掉落回最近检查点、保留已达检查点、丢弃 TICK 余量并进入 release Gate；
 11. inputId 唯一、重复 keydown、迟到旧 release、pointercancel 等价释放；
 12. TICK 分片等价、固定日志重放深相等、state/action 不变；
-13. 左右输入、位置、速度、倾角与坡势反号后的镜像轨迹等价；
+13. 在第一/第二段的同一局部物理状态下，交换左右输入与升力，并将位置、速度、倾角和 `+84/-84` 坡势反号后，下一 tick 的物理字段严格镜像；路线/checkpoint 元数据不作整体深相等；
 14. pause/hidden/blur/stalled 清空物理并回检查点，complete 冻结；
 15. view 的有限数、优先提示、非颜色标签与不责备措辞；
 16. 浏览器全局与 CommonJS 导出一致。
