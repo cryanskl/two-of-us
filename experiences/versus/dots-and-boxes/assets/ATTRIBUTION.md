@@ -7,6 +7,7 @@
 | 本地文件 | 用途 | 处理与边界 |
 | --- | --- | --- |
 | `paper-texture.png` | 运行页棋盘纸低对比纹理 | 1254×1254，无字、无物件、无中央折痕；CSS 只作背景并提供纯色/方格渐变回退 |
+| `favicon.svg` | 浏览器页签中的双色格子图标 | 本项目使用 SVG 基础图形原创绘制，无外部素材 |
 | `docs/assets/dots-and-boxes/concept-desktop-playing.png` | 1504×1046 桌面进行态设计基准 | 只作布局、色板与材质证据，运行页不加载 |
 | `docs/assets/dots-and-boxes/concept-mobile-playing.png` | 853×1844 手机进行态设计基准 | 只作响应式层级与触控密度证据，运行页不加载 |
 | `docs/assets/dots-and-boxes/concept-desktop-finished.png` | 1504×1046 桌面终局设计基准 | 只作终局密度与双色分布证据，运行页不加载 |
