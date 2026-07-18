@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [只口头作答的双人仪式：把安全感写进状态机](./2026-07-18-spoken-answer-ritual-boundary.md)
 - [可恢复的私人答案 Gate：不留输入，也不让对方卡住](./2026-07-18-recoverable-private-answer-gate.md)
 - [规则先于动画：固定步长、连续碰撞与 reduced motion](./2026-07-18-rule-authority-before-motion.md)
 - [落笔前图状态：无向边、借力与困死的统一判定](./2026-07-18-pre-move-graph-state-and-bounce.md)

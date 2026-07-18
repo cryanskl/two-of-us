@@ -174,7 +174,12 @@
 
   function announceTransition() {
     if (state.phase === "card-back") announcement.textContent = `第 ${state.completedIds.length + 1} 张卡已就位，问题尚未显示。`;
-    else if (state.phase === "first-speaking") announcement.textContent = `问题已翻开，由${playerName(state.currentSpeaker)}先说。`;
+    else if (state.phase === "first-speaking") {
+      const currentCard = logic.getCurrentCard(state, logic.CARDS);
+      announcement.textContent = currentCard
+        ? `问题已翻开：${currentCard.question} 由${playerName(state.currentSpeaker)}先说。`
+        : `问题已翻开，由${playerName(state.currentSpeaker)}先说。`;
+    }
     else if (state.phase === "second-speaking") announcement.textContent = `已换席，轮到${playerName(state.currentSpeaker)}回答。`;
     else if (state.phase === "settle") announcement.textContent = "两个人都说完了，可以收好这张。";
     else if (state.phase === "complete") announcement.textContent = "六张卡已经完成。";

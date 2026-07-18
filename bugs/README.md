@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [浏览器验证：插件运行时与故障文档版本漂移](./2026-07-18-browser-plugin-version-drift.md)
+- [靠近一点：配置回退后仍可能执行原对象的开场策略](./2026-07-18-closer-cards-config-strategy-half-fallback.md)
+- [靠近一点：奇数次处理卡后重开会继承轮换席位](./2026-07-18-closer-cards-restart-speaker-drift.md)
 - [星码解锁：轴向度数与方位字母重叠](./2026-07-18-star-code-axis-label-overlap.md)
 - [纸飞机投递：± 步进按钮小于 56px](./2026-07-18-paper-plane-step-target.md)
 - [纸上球局：整张交互 SVG 的图片角色隐藏了内部合法落点](./2026-07-18-paper-soccer-interactive-svg-role.md)

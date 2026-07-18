@@ -67,6 +67,7 @@
 | [59-star-code-unlock-verification.md](./59-star-code-unlock-verification.md) | “星码解锁”的错误兜底、答案规范化、阶段 DOM、file 直开、响应式与视觉忠实度验收记录 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 | [61-closer-cards-spec.md](./61-closer-cards-spec.md) | A 级“靠近一点”的六张谈话仪式、无惩罚跳过、原创题库、隐私与视觉规格 |
+| [62-closer-cards-verification.md](./62-closer-cards-verification.md) | “靠近一点”的完整六张实玩、阶段 DOM、file 直开、响应式与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 

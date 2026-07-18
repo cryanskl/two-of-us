@@ -67,7 +67,7 @@ brainstorm 比较过三个方向：
 
 ## 5. 洗牌与首发公平
 
-UI 提供 `randomIndex(max)`，优先使用 `crypto.getRandomValues` 与拒绝采样；能力缺失时可回退 `Math.random`，因为此处随机只改变体验顺序，不涉及安全或胜负。
+UI 提供 `randomIndex(max)`，优先使用 `crypto.getRandomValues` 与拒绝采样；能力缺失时使用由时间和高精度时钟播种的本地 xorshift32，避免引入第二种题序 API。此处随机只改变体验顺序，不涉及安全或胜负。
 
 纯逻辑先分别 Fisher–Yates 洗牌三个主题，再按随机主题轮转组成 24 张唯一计划。前六张必须每个主题至少出现一次，且同一主题不能连续超过两张。配置策略返回合法卡 ID 时只把该卡移到计划首位，不复制卡片。
 
@@ -95,7 +95,7 @@ UI 提供 `randomIndex(max)`，优先使用 `crypto.getRandomValues` 与拒绝�
 ### 6.1 纯逻辑 API
 
 - `createInitialState(config?)`：整份校验名字、首发和目标张数，创建 intro；
-- `startSession(state, deck, randomIndex)`：只在 intro 生成唯一、平衡计划并进入 card-back；
+- `startSession(state, deck, randomIndex, chooseOpeningCard?)`：只在 intro 生成唯一、平衡计划并进入 card-back；
 - `revealCard(state)`：只在 card-back 展示当前题并进入 first-speaking；
 - `finishSpeaking(state)`：first-speaking 交给另一席；second-speaking 进入 settle；
 - `settleCard(state)`：只在 settle 把当前 ID 计入完成并前进；第六张进入 complete；
@@ -122,6 +122,8 @@ UI 提供 `randomIndex(max)`，优先使用 `crypto.getRandomValues` 与拒绝�
   }
 }
 ```
+
+`sessionSize` 是首版六张仪式的固定 schema 值，不作为可变题数开关；改变它会使标题、进度点、完成文案与会话时长失去一致性，因此非法值整份回退。
 
 `chooseOpeningCard` 是准备者可以亲手写的 5–10 行策略：返回 `null` 使用平衡随机；返回合法 ID 就让某张有私人意义的原创题成为开场；抛错、修改冻结上下文或返回非法值会安全回退。名字和策略只在本机运行，不上传、不保存。
 

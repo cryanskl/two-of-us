@@ -26,14 +26,14 @@
 
 ## 个性化
 
-可以在 `config.js` 修改两席名字和首发席。`chooseOpeningCard` 是一个预留的本机策略函数：保留 `null` 会平衡随机；返回 `logic.js` 中某张合法卡的 ID，可以让那张卡成为开场。策略异常或返回非法值会安全回退。
+可以在 `config.js` 修改两席名字和首发席；`sessionSize` 是首版六张仪式的固定值，请保持为 `6`。`chooseOpeningCard` 是一个预留的本机策略函数：保留 `null` 会平衡随机；返回 `logic.js` 中某张合法卡的 ID，可以让那张卡成为开场。策略异常或返回非法值会安全回退。
 
 ## 借鉴与来源声明
 
 | 项目 | 原作者与来源 | 借鉴类型 | 本作品实际使用 | 许可证 | 本仓库的处理 |
 | --- | --- | --- | --- | --- | --- |
 | CoupleCards | [Michael Schwartz / michaelsboost/CoupleCards @ `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1) | 玩法机制 | 仅参考“本地抽取谈话提示”这一通用机制 | [MIT，Copyright 2025 Michael Schwartz](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md) | 没有读取、复制、改写或运行其源码、题库与素材 |
-| couplecards | [Qiaeru / qiaeru/couplecards @ `c3e4d1e`](https://github.com/qiaeru/couplecards/tree/c3e4d1ef15651caa72b261677e65dc9beda8bd13) | 产品边界比较 | 只比较账户、历史、PWA 与后端等重型能力 | MIT，Copyright 2026 Qiaeru | 本作不采用账户、后端、历史、禁卡、遥测或 Service Worker |
+| couplecards | [Qiaeru / qiaeru/couplecards @ `c3e4d1e`](https://github.com/qiaeru/couplecards/tree/c3e4d1ef15651caa72b261677e65dc9beda8bd13) | 产品边界比较 | 只比较账户、历史、PWA 与后端等重型能力 | [MIT，Copyright 2026 Qiaeru](https://github.com/qiaeru/couplecards/blob/c3e4d1ef15651caa72b261677e65dc9beda8bd13/LICENSE) | 本作不采用账户、后端、历史、禁卡、遥测或 Service Worker |
 
 ### 独立实现说明
 

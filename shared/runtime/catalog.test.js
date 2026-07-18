@@ -309,8 +309,10 @@ test("closer cards keeps its file protocol, spoken-answer, and attribution bound
   assert.doesNotMatch(runtimeSource, /Math\.random/);
   assert.doesNotMatch(css, /gradient\s*\(/i);
   assert.match(css, /assets\/midnight-paper\.png/);
+  assert.match(css, /@media \(max-width: 980px\)/);
   assert.doesNotMatch(`${html}\n${app}`, /最近哪一件很小的事|和我相处时|下一个空闲的半天/);
   assert.match(app, /logic\.sanitizeConfig\(rawConfig\)/);
+  assert.match(app, /primaryLockedUntil/);
   assert.match(readme, /^## 借鉴与来源声明$/m);
   assert.match(attribution, /^# 借鉴与来源声明$/m);
 });

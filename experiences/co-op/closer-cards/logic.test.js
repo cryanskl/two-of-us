@@ -56,26 +56,26 @@ test("配置整份回退、名字去空白、目标张数与状态递归冻结",
     aName: "  小满  ",
     bName: "  阿岚 ",
     firstSpeaker: "b",
-    sessionSize: 4,
+    sessionSize: 6,
     chooseOpeningCard: strategy,
   });
   assert.deepEqual(config, {
     aName: "小满",
     bName: "阿岚",
     firstSpeaker: "b",
-    sessionSize: 4,
+    sessionSize: 6,
     chooseOpeningCard: strategy,
   });
   assert.ok(Object.isFrozen(config));
   assert.equal(logic.sanitizeConfig({ ...config, aName: "" }), logic.DEFAULT_CONFIG);
   assert.equal(logic.sanitizeConfig({ ...config, firstSpeaker: "c" }), logic.DEFAULT_CONFIG);
-  assert.equal(logic.sanitizeConfig({ ...config, sessionSize: 25 }), logic.DEFAULT_CONFIG);
+  assert.equal(logic.sanitizeConfig({ ...config, sessionSize: 4 }), logic.DEFAULT_CONFIG);
   assert.equal(logic.sanitizeConfig({ ...config, chooseOpeningCard: null }), logic.DEFAULT_CONFIG);
 
   const state = logic.createInitialState(config);
   assert.deepEqual(state.players, { a: "小满", b: "阿岚" });
   assert.equal(state.firstSpeaker, "b");
-  assert.equal(state.sessionSize, 4);
+  assert.equal(state.sessionSize, 6);
   assert.ok(Object.isFrozen(state));
   assert.ok(Object.isFrozen(state.players));
   assert.ok(Object.isFrozen(state.plan));
@@ -229,10 +229,10 @@ test("重开只在终局生效并清除上一场计划与处理结果", () => {
     aName: "甲",
     bName: "乙",
     firstSpeaker: "a",
-    sessionSize: 1,
+    sessionSize: 6,
     chooseOpeningCard: () => null,
   });
-  state = completeCurrent(state);
+  for (let count = 0; count < 6; count += 1) state = completeCurrent(state);
   const restarted = logic.restartSession(state);
   assert.equal(restarted.phase, "intro");
   assert.deepEqual(restarted.players, { a: "甲", b: "乙" });
@@ -241,4 +241,18 @@ test("重开只在终局生效并清除上一场计划与处理结果", () => {
   assert.deepEqual(restarted.skippedIds, []);
   assert.equal(restarted.endReason, null);
   assert.ok(restarted.revision > state.revision);
+});
+
+test("奇数次处理后完成，重开仍恢复配置首发席", () => {
+  let state = start();
+  state = logic.skipCard(reveal(state));
+  for (let count = 0; count < 6; count += 1) state = completeCurrent(state);
+
+  assert.equal(state.phase, "complete");
+  assert.equal(state.cursor, 7);
+  assert.equal(state.firstSpeaker, "b");
+
+  const restarted = logic.restartSession(state);
+  assert.equal(restarted.phase, "intro");
+  assert.equal(restarted.firstSpeaker, "a");
 });

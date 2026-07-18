@@ -101,9 +101,7 @@
     const bName = cleanName(raw.bName);
     if (!aName || !bName
       || !["a", "b"].includes(raw.firstSpeaker)
-      || !Number.isInteger(raw.sessionSize)
-      || raw.sessionSize < 1
-      || raw.sessionSize > CARDS.length
+      || raw.sessionSize !== DEFAULT_CONFIG.sessionSize
       || typeof raw.chooseOpeningCard !== "function") {
       return DEFAULT_CONFIG;
     }
@@ -291,6 +289,9 @@
     const current = safeState(state);
     if (!current) return createInitialState();
     if (current.phase !== "complete") return current;
+    const openingSpeaker = current.cursor % 2 === 0
+      ? current.firstSpeaker
+      : otherSpeaker(current.firstSpeaker);
     return freezeState({
       phase: "intro",
       players: { ...current.players },
@@ -299,7 +300,7 @@
       cursor: 0,
       completedIds: [],
       skippedIds: [],
-      firstSpeaker: current.firstSpeaker,
+      firstSpeaker: openingSpeaker,
       currentSpeaker: null,
       endReason: null,
       revision: current.revision + 1,
@@ -315,7 +316,7 @@
   function isGameState(value) {
     if (!hasExactKeys(value, STATE_KEYS) || !PHASES.includes(value.phase)) return false;
     if (!hasExactKeys(value.players, PLAYER_KEYS) || !cleanName(value.players.a) || !cleanName(value.players.b)) return false;
-    if (!Number.isInteger(value.sessionSize) || value.sessionSize < 1 || value.sessionSize > CARDS.length) return false;
+    if (value.sessionSize !== DEFAULT_CONFIG.sessionSize) return false;
     if (!Array.isArray(value.plan) || !value.plan.every((id) => CARD_ID_SET.has(id))
       || new Set(value.plan).size !== value.plan.length) return false;
     if (!Number.isInteger(value.cursor) || value.cursor < 0 || value.cursor > value.plan.length) return false;

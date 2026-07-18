@@ -2,7 +2,7 @@
 
 ## 原创实现与开源边界
 
-本作品只参考 [`michaelsboost/CoupleCards` 固定 commit `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1) 的“本地抽取谈话提示”通用机制，并用 [`qiaeru/couplecards` 固定 commit `c3e4d1e`](https://github.com/qiaeru/couplecards/tree/c3e4d1ef15651caa72b261677e65dc9beda8bd13) 比较重型产品边界。调研没有读取、复制、改写或运行两者源码、题库与素材；本目录是零代码、零题目、零第三方视觉素材借用的原创实现。详细许可证与功能边界见上级 [`README.md`](../README.md)。
+本作品只参考 [`michaelsboost/CoupleCards` 固定 commit `94ac422`](https://github.com/michaelsboost/CoupleCards/tree/94ac422ba393d5aa8c709527dab6f1f6e4156cc1) 的“本地抽取谈话提示”通用机制，并用 [`qiaeru/couplecards` 固定 commit `c3e4d1e`](https://github.com/qiaeru/couplecards/tree/c3e4d1ef15651caa72b261677e65dc9beda8bd13) 比较重型产品边界。两者许可证分别为 [Michael Schwartz 的 MIT](https://github.com/michaelsboost/CoupleCards/blob/94ac422ba393d5aa8c709527dab6f1f6e4156cc1/LICENSE.md) 与 [Qiaeru 的 MIT](https://github.com/qiaeru/couplecards/blob/c3e4d1ef15651caa72b261677e65dc9beda8bd13/LICENSE)。调研没有读取、复制、改写或运行两者源码、题库与素材；本目录是零代码、零题目、零第三方视觉素材借用的原创实现。详细许可证与功能边界见上级 [`README.md`](../README.md)。
 
 ## OpenAI ImageGen
 
