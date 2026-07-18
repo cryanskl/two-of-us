@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [把这首转给你：桌面原生尺寸残留可滚动高度](./2026-07-18-hand-crank-desktop-scroll-residue.md)
+- [把这首转给你：移动端摇柄覆盖主按钮并产生窄屏溢出](./2026-07-18-hand-crank-mobile-control-overlap.md)
+- [把这首转给你：反转后“转一格”可能没有产生新音](./2026-07-18-hand-crank-discrete-step-after-reverse.md)
 - [靠近一点：翻卡读屏播报出现重复终止标点](./2026-07-18-closer-cards-live-region-double-punctuation.md)
 - [靠近一点：861–980px 仍使用双列导致中间宽度溢出](./2026-07-18-closer-cards-intermediate-width-overflow.md)
 - [靠近一点：快速连击主动作会穿过多个谈话阶段](./2026-07-18-closer-cards-rapid-primary-activation.md)
