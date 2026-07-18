@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#171a2b" />
+    <title>靠近一点 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app" data-phase="intro">
+      <nav class="topbar" aria-label="体验导航">
+        <a class="back-link" href="../../../index.html">← <span>返回合集</span></a>
+        <div class="title-lockup">
+          <h1>靠近一点</h1>
+          <p>六张卡，不评分，只认真听完</p>
+        </div>
+        <p id="session-progress" class="session-progress" aria-label="会话进度">0 / 6</p>
+      </nav>
+
+      <div class="conversation-layout">
+        <aside class="session-rail" aria-label="双人会话轨道">
+          <div id="player-a" class="player player-a">
+            <strong id="name-a">A 席</strong>
+            <span id="status-a">等待开始</span>
+          </div>
+
+          <ol id="progress-dots" class="progress-dots" aria-label="六张卡进度">
+            <li><span>第 1 张</span></li>
+            <li><span>第 2 张</span></li>
+            <li><span>第 3 张</span></li>
+            <li><span>第 4 张</span></li>
+            <li><span>第 5 张</span></li>
+            <li><span>第 6 张</span></li>
+          </ol>
+
+          <div id="player-b" class="player player-b">
+            <strong id="name-b">B 席</strong>
+            <span id="status-b">等待开始</span>
+          </div>
+
+          <p class="privacy privacy-desktop">不录音 <i aria-hidden="true">·</i> 不保存 <i aria-hidden="true">·</i> 随时跳过</p>
+        </aside>
+
+        <section class="card-stage" aria-label="谈话卡">
+          <article id="prompt-card" class="prompt-card">
+            <p id="card-theme" class="card-theme" hidden></p>
+            <div class="card-copy">
+              <p id="card-kicker" class="card-kicker">今晚，留一点不被打断的时间</p>
+              <h2 id="card-question">把六张卡慢慢聊完，也可以随时换一张。</h2>
+            </div>
+            <p id="speaker-copy" class="speaker-copy">准备好，就从第一张开始</p>
+          </article>
+
+          <div class="actions">
+            <button id="primary-action" class="primary-action" type="button">开始靠近</button>
+            <button id="skip-action" class="skip-action" type="button" hidden>换一张</button>
+          </div>
+          <p class="privacy privacy-mobile">不录音 <i aria-hidden="true">·</i> 不保存 <i aria-hidden="true">·</i> 随时跳过</p>
+          <p id="announcement" class="sr-only" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <noscript>需要启用 JavaScript 才能翻开谈话卡；页面不会联网或保存内容。</noscript>
+    </main>
+  </body>
+</html>

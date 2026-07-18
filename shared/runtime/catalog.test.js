@@ -277,6 +277,44 @@ test("catalog exposes I Heard You as a local D-level capability experience", asy
   assert.match(experience.entry, /i-heard-you\/index\.html$/);
 });
 
+test("catalog exposes the installed A-level closer cards ritual", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const closerCards = catalog.experiences.find((item) => item.id === "closer-cards");
+
+  assert.equal(closerCards.category, "co-op");
+  assert.equal(closerCards.level, "A");
+  assert.equal(closerCards.installed, true);
+  assert.equal(closerCards.networkRequired, false);
+  assert.match(closerCards.entry, /closer-cards\/index\.html$/);
+});
+
+test("closer cards keeps its file protocol, spoken-answer, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/closer-cards/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|FileReader|getUserMedia|MediaRecorder|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(html, /<(?:input|textarea)\b/i);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /assets\/midnight-paper\.png/);
+  assert.doesNotMatch(`${html}\n${app}`, /最近哪一件很小的事|和我相处时|下一个空闲的半天/);
+  assert.match(app, /logic\.sanitizeConfig\(rawConfig\)/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /^# 借鉴与来源声明$/m);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
