@@ -58,6 +58,7 @@
 | [50-license-and-import-guide.md](./50-license-and-import-guide.md) | 许可证、素材、离线化、隐私和引入检查清单 |
 | [51-nested-gift-verification.md](./51-nested-gift-verification.md) | “一层一层”的四层实玩、阶段 DOM、file 直开、响应式与视觉忠实度验收记录 |
 | [52-paper-soccer-spec.md](./52-paper-soccer-spec.md) | A 级“纸上球局”的无向图规则、旧点借力、困死结算、开球策略与战术本视觉规格 |
+| [53-paper-soccer-verification.md](./53-paper-soccer-verification.md) | “纸上球局”的进球/借力/困死实玩、file 直开、响应式与视觉忠实度验收记录 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

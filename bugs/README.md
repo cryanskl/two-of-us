@@ -8,6 +8,10 @@
 
 ## 已记录
 
+- [纸上球局：整张交互 SVG 的图片角色隐藏了内部合法落点](./2026-07-18-paper-soccer-interactive-svg-role.md)
+- [纸上球局：桌面首屏高度预算固定多出 2px](./2026-07-18-paper-soccer-desktop-height-budget.md)
+- [纸上球局：普通换手反馈在玩家名之前多出空格](./2026-07-18-paper-soccer-turn-copy-spacing.md)
+- [纸上球局：规格允许了图结构上不可能出现的普通换手困死](./2026-07-18-paper-soccer-impossible-switch-trap.md)
 - [一层一层：从留言进入抽屉层时焦点退回页面主体](./2026-07-17-nested-gift-drawer-focus.md)
 - [一层一层：留言阶段仍把已打开的当前层计入剩余数](./2026-07-17-nested-gift-note-remaining-count.md)
 - [一层一层：无效操作测试比较了两份等值状态的引用](./2026-07-17-nested-gift-reference-identity-test.md)
