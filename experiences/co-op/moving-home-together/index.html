@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f3ebdd" />
+    <title>一起，把家搬进来 · Two of Us</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="moving-home-app" class="app" data-phase="intro">
+      <header class="masthead">
+        <div class="brand-line">
+          <svg class="brand-sofa" viewBox="0 0 92 56" aria-hidden="true">
+            <path d="M14 23v-8c0-5 4-9 9-9h46c5 0 9 4 9 9v8" />
+            <path d="M10 22h72c4 0 7 3 7 7v17H3V29c0-4 3-7 7-7Z" />
+            <path d="M12 46v6m68-6v6M33 8v22m26-22v22" />
+          </svg>
+          <h1>一起，把家<span>搬</span>进来</h1>
+        </div>
+        <p class="subtitle">同一个转角，一起给方向。</p>
+        <button class="pause-button" type="button" data-action="pause" aria-label="暂停搬运">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M17 5v14" /></svg>
+          <span>暂停</span>
+        </button>
+      </header>
+
+      <section class="game-shell" aria-label="双人搬沙发合作游戏">
+        <div class="scene-frame">
+          <svg id="home-scene" class="home-scene" viewBox="0 0 1000 680" role="img" aria-labelledby="scene-title scene-description">
+            <title id="scene-title">S 形门厅搬运地图</title>
+            <desc id="scene-description">沙发从左下门厅出发，穿过中央转角，到右上客厅的目标地毯。</desc>
+            <defs>
+              <pattern id="floor-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M40 0H0V40" />
+              </pattern>
+              <pattern id="sealed-hatch" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(22)">
+                <path d="M0 0V42" />
+              </pattern>
+              <filter id="paper-shadow" x="-20%" y="-30%" width="140%" height="170%">
+                <feDropShadow dx="0" dy="8" stdDeviation="7" flood-opacity=".2" />
+              </filter>
+            </defs>
+
+            <rect class="floor" x="0" y="0" width="1000" height="680" rx="18" />
+            <rect class="floor-grid" x="24" y="24" width="952" height="632" />
+
+            <g class="route-pins" aria-hidden="true">
+              <circle data-route-pin="0" cx="92" cy="560" r="7" />
+              <circle data-route-pin="0" cx="210" cy="560" r="7" />
+              <circle data-route-pin="0" cx="334" cy="552" r="7" />
+              <circle data-route-pin="1" cx="455" cy="520" r="7" />
+              <circle data-route-pin="1" cx="504" cy="420" r="7" />
+              <circle data-route-pin="1" cx="504" cy="315" r="7" />
+              <circle data-route-pin="2" cx="520" cy="210" r="7" />
+              <circle data-route-pin="2" cx="640" cy="164" r="7" />
+              <circle data-route-pin="2" cx="770" cy="158" r="7" />
+            </g>
+
+            <g class="goal-rug" data-goal="true">
+              <rect x="690" y="90" width="260" height="140" rx="8" />
+              <rect class="goal-stitch" x="703" y="103" width="234" height="114" rx="4" />
+              <path class="goal-sofa-mark" d="M755 142h130v47H755zM765 132h110v58M798 132v58m44-58v58" />
+              <text x="820" y="205" text-anchor="middle">把它放在这里</text>
+            </g>
+
+            <g class="obstacles">
+              <rect class="wall outer-wall" data-obstacle="wall-top" x="0" y="0" width="1000" height="24" />
+              <rect class="wall outer-wall" data-obstacle="wall-bottom" x="0" y="656" width="1000" height="24" />
+              <rect class="wall outer-wall" data-obstacle="wall-left" x="0" y="24" width="24" height="632" />
+              <rect class="wall outer-wall" data-obstacle="wall-right" x="976" y="24" width="24" height="632" />
+
+              <g class="sealed-block" data-obstacle="block-north-west">
+                <rect class="sealed-paper" x="24" y="24" width="336" height="356" />
+                <rect class="sealed-hatch" x="24" y="24" width="336" height="356" />
+                <path class="parcel-cord" d="M38 38 346 366M346 38 38 366" />
+                <text x="192" y="209" text-anchor="middle">封闭区</text>
+              </g>
+              <g class="sealed-block" data-obstacle="block-south-east">
+                <rect class="sealed-paper" x="640" y="300" width="336" height="356" />
+                <rect class="sealed-hatch" x="640" y="300" width="336" height="356" />
+                <path class="parcel-cord" d="M654 314 962 642M962 314 654 642" />
+                <text x="808" y="485" text-anchor="middle">封闭区</text>
+              </g>
+            </g>
+
+            <g id="sofa" class="sofa" data-x="190" data-y="518" data-angle="0" transform="translate(190 518) rotate(0)" filter="url(#paper-shadow)">
+              <rect class="sofa-shadow" x="-113" y="-35" width="226" height="80" rx="15" />
+              <rect class="sofa-body" x="-110" y="-38" width="220" height="76" rx="14" />
+              <rect class="sofa-seat" x="-91" y="-27" width="182" height="54" rx="9" />
+              <path class="cushion-lines" d="M-31-27v54M31-27v54" />
+              <rect class="sofa-arm" x="-108" y="-31" width="18" height="62" rx="7" />
+              <rect class="sofa-arm" x="90" y="-31" width="18" height="62" rx="7" />
+              <circle class="grip grip-left" cx="-116" cy="0" r="9" />
+              <circle class="grip grip-right" cx="116" cy="0" r="9" />
+              <path class="sofa-axis" d="M-63 0H62m-12-10 12 10-12 10" />
+            </g>
+          </svg>
+        </div>
+
+        <section class="status-board" aria-labelledby="phase-heading">
+          <p id="route-stage" class="route-stage">门厅</p>
+          <div class="status-copy">
+            <h2 id="phase-heading" tabindex="-1">同一个转角，一起给方向。</h2>
+            <p id="phase-message">左边握住左端，右边握住右端。一起给方向，沙发才会动；同向往前，错开一点就能转弯。</p>
+            <p id="signature" class="signature"></p>
+          </div>
+          <div class="phase-actions">
+            <button class="primary-action" type="button" data-action="start">开始一起搬</button>
+            <button class="primary-action" type="button" data-action="resume">继续一起搬</button>
+            <button class="primary-action" type="button" data-action="restart">再搬一次</button>
+          </div>
+        </section>
+
+        <section class="controls" aria-label="左右两端控制盘">
+          <article class="control-card control-left">
+            <header>
+              <h2 id="left-title">左端</h2>
+              <p>WASD</p>
+            </header>
+            <button id="left-pad" class="direction-pad" type="button" data-side="left" aria-labelledby="left-title left-direction" aria-pressed="false"></button>
+            <p id="left-direction" class="direction-label">左端：松开</p>
+          </article>
+
+          <article class="control-card control-right">
+            <header>
+              <h2 id="right-title">右端</h2>
+              <p>方向键</p>
+            </header>
+            <button id="right-pad" class="direction-pad" type="button" data-side="right" aria-labelledby="right-title right-direction" aria-pressed="false"></button>
+            <p id="right-direction" class="direction-label">右端：松开</p>
+          </article>
+        </section>
+      </section>
+
+      <p id="polite-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p id="urgent-status" class="sr-only" role="alert" aria-live="assertive" aria-atomic="true"></p>
+      <noscript>需要启用 JavaScript 才能开始一起搬。</noscript>
+    </main>
+  </body>
+</html>
