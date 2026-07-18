@@ -128,6 +128,7 @@
 - [“一起，把家搬进来”分步实施计划](./docs/108-moving-home-together-plan.md)
 - [“一起，把家搬进来”视觉设计与资产说明](./docs/109-moving-home-together-design.md)
 - [“一起，把家搬进来”验收记录](./docs/110-moving-home-together-verification.md)
+- [A 级“在雾上，写给你”定向调研](./docs/111-fog-window-letter-research.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
