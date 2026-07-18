@@ -81,6 +81,7 @@
 | [73-orbit-star-race-research.md](./73-orbit-star-race-research.md) | A 级“这一颗我先到”的开普勒速度简化、同屏抢星规则、固定来源、许可证与零复制调研 |
 | [74-orbit-star-race-spec.md](./74-orbit-star-race-spec.md) | A 级“这一颗我先到”的 seed 星流、固定步轨道、共享 claim、配置、语义舞台与验收规格 |
 | [75-light-trail-hunt-research.md](./75-light-trail-hunt-research.md) | A 级“光轨围猎”的同时输入、原子碰撞、固定来源、许可证与零复制调研 |
+| [76-light-trail-hunt-spec.md](./76-light-trail-hunt-spec.md) | A 级“光轨围猎”的可重放 tick、原子碰撞 API、三轮赛制、阶段 DOM 与验收规格 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
