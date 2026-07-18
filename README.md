@@ -133,6 +133,7 @@
 - [“在雾上，写给你”分步实施计划](./docs/113-fog-window-letter-plan.md)
 - [“在雾上，写给你”视觉设计与资产说明](./docs/114-fog-window-letter-design.md)
 - [“在雾上，写给你”验收记录](./docs/115-fog-window-letter-verification.md)
+- [A 级“把夜晚照成我们”定向调研](./docs/116-starlight-keepsake-search-research.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
