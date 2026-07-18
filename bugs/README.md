@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [靠近一点：翻卡读屏播报出现重复终止标点](./2026-07-18-closer-cards-live-region-double-punctuation.md)
+- [靠近一点：861–980px 仍使用双列导致中间宽度溢出](./2026-07-18-closer-cards-intermediate-width-overflow.md)
+- [靠近一点：快速连击主动作会穿过多个谈话阶段](./2026-07-18-closer-cards-rapid-primary-activation.md)
 - [浏览器验证：插件运行时与故障文档版本漂移](./2026-07-18-browser-plugin-version-drift.md)
 - [靠近一点：配置回退后仍可能执行原对象的开场策略](./2026-07-18-closer-cards-config-strategy-half-fallback.md)
 - [靠近一点：奇数次处理卡后重开会继承轮换席位](./2026-07-18-closer-cards-restart-speaker-drift.md)

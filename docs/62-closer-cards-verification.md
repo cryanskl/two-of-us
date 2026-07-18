@@ -31,7 +31,7 @@
 ## 3. 浏览器方法与环境
 
 - 首选应用内浏览器与 Chrome 扩展通道均按技能要求尝试；当前运行时报告无可用浏览器，且故障文档查找到了不同插件版本目录，详见 [`bugs/2026-07-18-browser-plugin-version-drift.md`](../bugs/2026-07-18-browser-plugin-version-drift.md)；
-- 回退方法：`playwright-cli` headed Chromium；CLI 初始 `open file://` 被协议白名单拦截后，在同一受控页面用 `page.goto(file://...)` 真实导航；
+- 回退方法：`playwright-cli` 驱动本机 headed Chrome 验证 localhost 全流程；另用系统 Chrome headless 直接打开 `file://`，生成 1504×1046 启动页证明；
 - 入口：`file:///Users/zenith/Desktop/two-of-us/experiences/co-op/closer-cards/index.html`；
 - 桌面原生概念尺寸：1504×1046；
 - 手机验证尺寸：390×844；
@@ -44,6 +44,7 @@
 | 路径 | 证据与结果 |
 | --- | --- |
 | intro → card-back | 进度从 `0 / 6` 到 `1 / 6`；snapshot 只有“等两个人都准备好”，没有当前题目 |
+| 连续双击主动作 | 开始、翻卡、两席说完和收好都只推进一个阶段；650ms 内的第二次激活被忽略 |
 | 翻卡 → 第一席 | 主题、问题和“A 席先说”同时出现；主按钮为“我说完了” |
 | 第一席 → 第二席 | 席位状态和主按钮切换，问题保持不变 |
 | 第二席 → settle | 双方都显示“都已说完”，主按钮变为“收好这张” |
@@ -81,7 +82,7 @@
 - [桌面运行截图 1504×1046](assets/closer-cards/implementation-desktop-1504x1046.png)；
 - [手机运行截图 390×844](assets/closer-cards/implementation-mobile-390x844.png)。
 
-运行截图由 headed Chromium 直接截取 `file://` 页面；概念图只作视觉规格，运行页没有裁切或加载概念图。
+运行截图由 Playwright 驱动的本机 headed Chrome 在 localhost 页面截取；另以系统 Chrome 直接打开 `file://` 入口并检查 1504×1046 启动页。概念图只作视觉规格，运行页没有裁切或加载概念图。
 
 ## 8. 保真账本
 
@@ -104,6 +105,7 @@
 - 奇数次处理卡后重开会继承轮换后的席位：按 `cursor` 奇偶反推出原始首发；
 - 900px 左右窄桌面仍可能挤压双列：响应式切换点提前到 980px；
 - 连续快速点击主按钮可能穿过多个谈话阶段：加入 650ms 主动作节流，不影响换卡；
+- 翻卡的 live region 在问题问号后重复追加句号：改用空格连接席位提示，并以 snapshot 回归；
 - 应用内浏览器/Chrome 插件版本漂移：仓库不修改外部插件，以 headed Chromium 完成可复现回退验收。
 
 对应项目 bug 与通用经验已写入 `bugs/` 和 `learn/`。
