@@ -154,6 +154,37 @@ test("paper plane mail keeps its file protocol and staged letter boundary", asyn
   assert.doesNotMatch(`${html}\n${app}`, /这封信，终于飞到了|有些话，放在心里太久|下一段路，也想继续和你一起走/);
 });
 
+test("catalog exposes the installed A-level star code unlock", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const starCode = catalog.experiences.find((item) => item.id === "star-code-unlock");
+
+  assert.equal(starCode.category, "surprise");
+  assert.equal(starCode.level, "A");
+  assert.equal(starCode.installed, true);
+  assert.equal(starCode.networkRequired, false);
+  assert.match(starCode.entry, /star-code-unlock\/index\.html$/);
+});
+
+test("star code unlock keeps its file protocol and staged secret boundary", async () => {
+  const root = new URL("../../experiences/surprises/star-code-unlock/", import.meta.url);
+  const [html, config, logic, app, css] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /assets\/observatory-desk\.png/);
+  assert.doesNotMatch(html, /那次聊到很晚|第一次一起去看海|每次分别前|星图最后指向你|普通的夜晚/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

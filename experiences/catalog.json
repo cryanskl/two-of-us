@@ -132,6 +132,19 @@
       "networkRequired": false
     },
     {
+      "id": "star-code-unlock",
+      "title": "星码解锁",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/star-code-unlock/index.html",
+      "readme": "experiences/surprises/star-code-unlock/README.md",
+      "description": "回答三条私人线索点亮星位，三星连成后主动读出一段本地定制的惊喜星码。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

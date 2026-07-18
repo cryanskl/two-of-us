@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>星码解锁 · Two of Us</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23151218'/%3E%3Cpath d='m32 5 5 20 20 7-20 6-5 21-6-21-20-6 20-7z' fill='%23e7a052' stroke='%23d8c39f' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app" data-phase="intro">
+    <nav class="topbar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <p id="top-progress">本地星盘 · 第 1 / 3 题</p>
+    </nav>
+
+    <div class="observatory-grid">
+      <section class="chart-panel" aria-labelledby="chart-heading">
+        <header class="instrument-header">
+          <h2 id="chart-heading">私人星盘 / 观测面 01</h2>
+          <p>LAT 31°14′N · LON 121°29′E</p>
+        </header>
+        <svg id="star-chart" viewBox="0 0 1000 920" role="img" aria-labelledby="chart-title chart-description">
+          <title id="chart-title">星码解锁星盘</title>
+          <desc id="chart-description">十二颗星都还没有点亮，等待第一条星讯。</desc>
+          <g id="chart-base" aria-hidden="true"></g>
+          <g id="connection-layer" aria-hidden="true"></g>
+          <g id="star-layer" aria-hidden="true"></g>
+          <g id="word-layer" aria-hidden="true"></g>
+        </svg>
+        <div class="connection-dock" aria-label="三星连接进度">
+          <p>星图连接座</p>
+          <ol id="connection-sockets">
+            <li><span aria-hidden="true"></span><strong>1</strong></li>
+            <li><span aria-hidden="true"></span><strong>2</strong></li>
+            <li><span aria-hidden="true"></span><strong>3</strong></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="decoder-panel" aria-labelledby="page-title">
+        <header class="title-block">
+          <h1 id="page-title">星码解锁</h1>
+          <p>三条只有你知道的答案，会让星图说出一句话。</p>
+        </header>
+
+        <ol id="clue-progress" class="clue-progress" aria-label="三条星讯进度">
+          <li><span>1</span><strong>第 1 题</strong></li>
+          <li><span>2</span><strong>第 2 题</strong></li>
+          <li><span>3</span><strong>第 3 题</strong></li>
+        </ol>
+
+        <p id="event-message" class="event-message" role="status">星盘还没有开始校准。</p>
+        <section id="stage" class="stage" aria-live="off"></section>
+        <section id="seal-stage" class="seal-stage" aria-label="星码状态"></section>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>不联网 · 不保存 · 答案只在本机配置</p>
+      <p>把记得的事，慢慢连成一句话</p>
+    </footer>
+    <p id="live-region" class="visually-hidden" aria-live="polite"></p>
+  </main>
+
+  <script src="logic.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
