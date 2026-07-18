@@ -41,4 +41,4 @@
 
 ## 相关提交
 
-- 待本次修复提交后补充
+- `9ac3ebb fix: restore four hands touch targets`

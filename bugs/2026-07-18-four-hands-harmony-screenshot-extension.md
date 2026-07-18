@@ -41,4 +41,4 @@
 
 ## 相关提交
 
-- 待本次修复提交后补充
+- `4823c29 bug: correct four hands screenshot extensions`

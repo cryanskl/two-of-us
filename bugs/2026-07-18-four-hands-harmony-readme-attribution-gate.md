@@ -41,4 +41,4 @@ ATTRIBUTION 完整，但旧 README 只有项目名、抽象机制和到详版的
 
 ## 相关提交
 
-- 待本次修复提交后补充
+- `2787a39 docs: complete four hands attribution gate`

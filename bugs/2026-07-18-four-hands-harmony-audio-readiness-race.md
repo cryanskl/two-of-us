@@ -53,4 +53,4 @@
 
 ## 相关提交
 
-- 待本次修复提交后补充
+- `da2a2a1 fix: guard four hands audio readiness`

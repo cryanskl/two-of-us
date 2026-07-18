@@ -44,4 +44,4 @@
 
 ## 相关提交
 
-- 待本次修复提交后补充
+- `108d866 fix: preserve four hands keyboard focus`
