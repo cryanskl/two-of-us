@@ -44,6 +44,11 @@ globalThis.MOON_PHASE_SECRET_CONFIG = Object.freeze({
   recipientName: "给你",
   finalTitle: "原来月亮也记得",
   finalMessage: "那一天之后，普通的日子也开始有了坐标。",
+  clues: Object.freeze([
+    "春天快走到尾声的时候。",
+    "把两双手的手指都数一遍。",
+    "月光已经越过半圆，正走向圆满。",
+  ]),
   composeClues(context) {
     return null;
   },
@@ -56,8 +61,9 @@ globalThis.MOON_PHASE_SECRET_CONFIG = Object.freeze({
 - `recipientName`：去首尾空白后 1–20 字；
 - `finalTitle`：1–32 字；
 - `finalMessage`：1–180 字；
-- `composeClues(context)`：收到递归冻结的 `{ targetDate, targetPhaseIndex, targetPhaseName, defaultClues }`，可返回恰好三条、每条 1–36 字且互不重复的线索；
-- 返回 `null` 使用原创默认线索；抛错、修改上下文、非法返回或额外配置字段触发整份安全回退；
+- `clues`：恰好三条、每条去首尾空白后 1–36 字且互不重复；
+- `composeClues(context)`：收到递归冻结的 `{ targetDate, targetPhaseIndex, targetPhaseName, baseClues }`，可返回同样满足约束的三条替代线索；
+- 返回 `null`、抛错或返回非法结果时只回退到已经清洗过的 `clues`；基础字段或额外配置字段非法时才整份安全回退；
 - sanitize 结果、状态、线索和所有嵌套对象递归冻结，不与调用方共享引用。
 
 `composeClues` 是准备者可贡献的 5–10 行业务逻辑：可以按共同经历选择“季节 / 场景 / 一句只有彼此懂的话”，但不应直接返回日期数字。
@@ -85,7 +91,7 @@ phaseIndex = round(cycle × 8) mod 8
 | 索引 | 名称 |
 | --- | --- |
 | 0 | 新月 |
-| 1 | 娥眉月 |
+| 1 | 蛾眉月 |
 | 2 | 上弦月 |
 | 3 | 盈凸月 |
 | 4 | 满月 |
@@ -108,7 +114,7 @@ clues: 三条冻结线索
 feedback: null | { monthAligned, dayAligned, phaseAligned }
 attempts: 非负整数
 revision: 单调递增整数
-recipientName / finalTitle / finalMessage: 私密完成内容
+recipientName / finalTitle / finalMessage: 只在完成阶段投影的明文内容
 ```
 
 初态固定为 1 月 1 日、新月、无反馈；不根据目标选择“很接近”的起点，避免旁路泄露。
@@ -130,8 +136,8 @@ recipientName / finalTitle / finalMessage: 私密完成内容
 
 纯逻辑提供：
 
-- `normalizeAngularDelta(previous, next)`：返回 `[-π, π]` 有限差；
-- `stepsFromAngularTravel(carry, delta, stepAngle)`：累加拖拽余量并返回 `{ steps, carry }`；
+- `normalizeAngularDelta(previous, next)`：用 `atan2(sin(raw), cos(raw))` 返回 `[-π, π]` 有限差；输入恰为 `π` 保留 `π`，恰为 `-π` 保留 `-π`；
+- `stepsFromAngularTravel(carry, delta, stepAngle)`：先求 `total = carry + delta`；正数用 `floor(total / stepAngle)`、负数用 `ceil(total / stepAngle)` 向零取整，返回 `newCarry = total - steps × stepAngle`，保证 `abs(newCarry) < stepAngle`，反向拖动会先抵消已有余量；
 - 月份步角 `2π / 12`，月相步角 `2π / 8`；
 - 单个 Pointer 样本绝对差超过 `π / 2` 时丢弃，防止坐标瞬移；
 - Pointer 正向/反向都能调整；规则允许来回校准，不是单调进度游戏。
@@ -140,9 +146,10 @@ DOM 适配：
 
 - 月份环与月相环各自使用 pointer capture；
 - 一个控件只接收一个 primary pointer；
+- 鼠标 `button !== 0` 时拒绝开始；两个交互圆环声明 `touch-action: none`；
 - 失焦、隐藏、`pointercancel`、`lostpointercapture` 清理会话和 carry；
 - `ArrowLeft` / `ArrowRight` 逐档，`Home` 回第一档；
-- 日历日使用 48px 的 ± 按钮；
+- 月、日、月相都提供至少 48px 的 ± 按钮作为直接触控替代；
 - 所有 Pointer 结果调用与键盘相同的 adjust reducer。
 
 ## 7. 阶段、反馈与 DOM 隐私
@@ -166,7 +173,9 @@ DOM 适配：
 - 此时才创建 `.final-message`，包含称呼、标题、正文；
 - 主动作变为“再找一次”；重开销毁留言节点并回到 intro。
 
-静态 HTML、CSS、catalog 和 `app.js` 不包含最终默认正文代表句；完成内容只在 `config.js`，且在 unlocked 前不投影到 DOM、aria-label、data 属性或 CSS 自定义属性。
+静态 HTML、CSS、catalog 和 `app.js` 不包含最终默认正文代表句；完成内容只在 `config.js`，且在 unlocked 前不进入 view model，也不投影到 DOM 正文、`aria-*`、`data-*` 属性或 CSS 自定义属性。DOM Gate 同时扫描节点数量、`body.textContent` 与这些属性。
+
+这是一种舞台隔离而不是加密：任何能查看本地源码的人都能读取 `config.js`，反复提交产生的三项布尔反馈也能帮助推测目标。README 和 UI 不得把它描述成安全保险箱。
 
 ## 8. 视觉规格
 
@@ -204,6 +213,13 @@ motion: 180ms control / 620ms reveal
 
 UI 文本和控件保持代码原生；ImageGen 只提供概念图与无字月面纹理。图片失败时，用 CSS 径向阴影和三处陨石坑回退；若概念使用图像中的文字，运行版仍以规格中的代码原生文本为准。
 
+概念与运行资产清单：
+
+- `docs/assets/moon-phase-secret/concept-desktop.png`：OpenAI ImageGen 生成的桌面完整概念；
+- `docs/assets/moon-phase-secret/concept-mobile.png`：OpenAI ImageGen 生成的手机完整概念；
+- `experiences/surprises/moon-phase-secret/assets/moon-surface.png`：OpenAI ImageGen 生成的通用无字月面纹理；
+- 月相明暗边界由 CSS 根据八档状态叠加，纹理不承担规则或秘密；图形朝向是符号化表达，不模拟半球与观测姿态。
+
 ## 9. 可访问性与 reduced motion
 
 - 原生 link/button、H1/H2、线索 list、校准读数和 live region；
@@ -228,10 +244,12 @@ UI 文本和控件保持代码原生；ImageGen 只提供概念图与无字月�
 9. 第一次正确核对唯一创建成功状态，终局幂等；
 10. 畸形状态与额外字段安全回退。
 
+时区 Gate 必须分别启动带不同 `TZ` 环境变量的 Node 进程，不能只在同一进程中改环境变量后重跑函数。
+
 目录 Gate：
 
-- catalog 注册 A 级、installed、`publicNetworkRequired: false`；
-- HTML 不含远程 URL、模块脚本、存储/网络/媒体 API；
+- catalog 注册 A 级、installed、`networkRequired: false`，并通过目录 schema 测试；
+- 源码边界测试扫描 HTML/JS/CSS：不含远程/协议 URL、模块脚本、`fetch`、XHR、WebSocket、存储、Cookie、媒体权限或 Service Worker；
 - 作品目录不依赖 `shared/`，可单目录复制完整游玩；
 - 最终配置文案不预埋在 HTML/app/catalog；
 - README 与 `assets/ATTRIBUTION.md` 写明 NASA/USNO 事实来源、SunCalc 零复制对照和 ImageGen 资产；
@@ -248,7 +266,15 @@ UI 文本和控件保持代码原生；ImageGen 只提供概念图与无字月�
 - 正常路径 0 error / 0 warning，仅本地资源请求；
 - 同一 QA 用 `view_image` 比较概念与最新运行截图，保真账本不少于五项。
 
-## 12. 完成定义
+触屏 Gate 还要记录圆环拖动前后的 `scrollTop`，确认 `touch-action: none` 真正阻止手势把页面带走。
+
+## 12. 同类作品区分
+
+- 与 `date-wheel` 的区别：它用日期滚轮完成双方比较，本作把一个固定纪念日拆成月、日、月相三轴推理解锁；
+- 与 `star-code-unlock` 的区别：它输入显式星码，本作不显示答案数字，依靠私人线索和离线月相近似校准；
+- 因此首版不复用上述作品的规则或表现层，只沿用仓库统一的 A 级启动与 catalog 契约。
+
+## 13. 完成定义
 
 - 完整作品目录可独立复制，双击 `index.html` 完整游玩；
 - 三项校准、反馈、最终 DOM Gate、重开和配置个性化全部可用；
