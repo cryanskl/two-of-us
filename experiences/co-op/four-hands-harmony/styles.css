@@ -589,8 +589,8 @@ noscript { display: block; color: var(--danger-neutral); text-align: center; }
     padding-top: max(8px, env(safe-area-inset-top));
   }
 
-  .topbar { min-height: 44px; }
-  .back-link, .sound-toggle { min-height: 44px; font-size: 13px; }
+  .topbar { min-height: 48px; }
+  .back-link, .sound-toggle { min-height: 48px; font-size: 13px; }
   .sound-toggle { min-width: 102px; padding-inline: 11px; }
   .hero { min-height: 54px; padding-bottom: 5px; }
   .hero h1 { font-size: clamp(30px, 9vw, 36px); }
@@ -637,7 +637,7 @@ noscript { display: block; color: var(--danger-neutral); text-align: center; }
   .key-state { min-height: 13px; font-size: 9px; }
 
   .pause-row { margin-top: 7px; }
-  .pause-action { min-height: 44px; padding-block: 6px; font-size: 14px; }
+  .pause-action { min-height: 48px; padding-block: 6px; font-size: 14px; }
   .privacy { margin-top: 6px; font-size: 10px; }
 
   .intro-panel, .paused-panel { margin-top: 12px; padding: 24px 18px; }

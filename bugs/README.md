@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一拍，刚好和你：移动断点把三个交互目标压到 44px](./2026-07-18-four-hands-harmony-mobile-touch-targets.md)
 - [这一拍，刚好和你：小节完成时禁用目标键造成键盘焦点断链](./2026-07-18-four-hands-harmony-measure-focus-loss.md)
 - [这一拍，刚好和你：音频准备竞态导致完成和弦漏播或旧状态回写](./2026-07-18-four-hands-harmony-audio-readiness-race.md)
 - [这一拍，刚好和你：SVG 标准命名空间被离线 Gate 误判为网络地址](./2026-07-18-four-hands-harmony-svg-namespace-gate.md)

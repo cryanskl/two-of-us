@@ -541,6 +541,7 @@ test("four hands harmony keeps its file protocol, input, audio, and attribution 
   assert.match(app, /createElementNS\("http:\/\/www\.w3\.org\/2000\/svg"/);
   assert.match(css, /assets\/harmony-table\.webp/);
   assert.match(css, /touch-action:\s*none/);
+  assert.doesNotMatch(css, /(?:back-link, \.sound-toggle|pause-action)[^{]*\{[^}]*min-height:\s*44px/s);
   assert.match(css, /forced-colors:\s*active/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(readme, /^## 借鉴与来源声明$/m);
