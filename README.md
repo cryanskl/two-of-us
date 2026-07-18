@@ -109,6 +109,7 @@
 - [“把信号接回来”视觉设计](./docs/89-signal-repair-manual-design.md)
 - [“把信号接回来”验收记录](./docs/90-signal-repair-manual-verification.md)
 - [A 级“这一拍，刚好和你”定向调研](./docs/91-four-hands-harmony-research.md)
+- [A 级“这一拍，刚好和你”实现规格](./docs/92-four-hands-harmony-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
