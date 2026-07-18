@@ -209,6 +209,15 @@ test("rejection sampling accepts the last safe value and rejects the threshold",
   assert.deepEqual(values, []);
 });
 
+test("rejection sampling never introduces a retry-count fallback bias", () => {
+  const values = [...new Array(130).fill(4294967295), 7];
+  const randomIndex = logic.createUnbiasedRandomIndex({
+    getRandomValues(array) { array[0] = values.shift(); return array; },
+  });
+  assert.equal(randomIndex(3), 1);
+  assert.deepEqual(values, []);
+});
+
 test("unbiased indexes handle n=1 and missing or throwing crypto", () => {
   let calls = 0;
   const one = logic.createUnbiasedRandomIndex({ getRandomValues() { calls += 1; } });

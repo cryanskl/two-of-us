@@ -176,7 +176,7 @@
       if (!cryptoLike || typeof cryptoLike.getRandomValues !== "function") return 0;
       const limit = Math.floor(UINT32_RANGE / maxExclusive) * maxExclusive;
       const sample = new Uint32Array(1);
-      for (let attempt = 0; attempt < 128; attempt += 1) {
+      while (true) {
         try {
           cryptoLike.getRandomValues(sample);
         } catch {
@@ -184,7 +184,6 @@
         }
         if (sample[0] < limit) return sample[0] % maxExclusive;
       }
-      return 0;
     };
   }
 
