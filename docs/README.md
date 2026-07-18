@@ -80,7 +80,7 @@
 | --- | --- | --- |
 | 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/)、[未来车票](../experiences/surprises/future-ticket/)、[拍立得显影](../experiences/surprises/instant-photo/)、[一层一层](../experiences/surprises/nested-gift/) 与 [纸飞机投递](../experiences/surprises/paper-plane-mail/) | 建立可编辑 `config.js`、分段回忆、盲选揭晓、交替手势显影、多手势逐层拆盒、确定性投递与结尾邀请流程 |
 | 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/)、[双光点归巢](../experiences/co-op/twin-light-maze/)、[同心牵引](../experiences/co-op/tethered-heart/)、[为你引航](../experiences/co-op/lighthouse-passage/)、[节拍接力](../experiences/co-op/rhythm-relay/)、[默契电报码](../experiences/co-op/telegraph-codebook/) 与 [双人小馆](../experiences/co-op/kitchen-relay/) | 建立热座交接、联合状态、连续约束、非对称领航、序列记忆、编码/译码和同步传菜七种合作样板 |
-| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/)、[心动拔河](../experiences/versus/ribbon-tug/)、[气球胆量局](../experiences/versus/balloon-dare/)、[数字凑靶](../experiences/versus/number-target/) 与 [纸上球局](../experiences/versus/paper-soccer/) | 建立抢跑判定、固定步长公平输入、主动止盈、公开市场算式草拟和图结构封路五种对抗样板 |
+| 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/)、[心动拔河](../experiences/versus/ribbon-tug/)、[气球胆量局](../experiences/versus/balloon-dare/)、[数字凑靶](../experiences/versus/number-target/)、[纸上球局](../experiences/versus/paper-soccer/) 与 [回声擂台](../experiences/versus/echo-arena/) | 建立抢跑判定、固定步长公平输入、主动止盈、公开市场算式草拟、图结构封路和顺序记忆六种对抗样板 |
 
 根 `index.html` 现在是统一门户：直接双击时读取内置目录；通过启动器打开时读取本地 API，并显示局域网二维码。
 

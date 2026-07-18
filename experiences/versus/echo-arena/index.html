@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#231914" />
+    <title>回声擂台 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="../../../shared/audio/tone-player.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app" data-phase="intro" data-player="a">
+      <nav class="topbar" aria-label="体验导航">
+        <a href="../../../index.html">← TWO OF US</a>
+        <p>LOCAL MEMORY DUEL · 01</p>
+        <button id="sound-toggle" class="sound-toggle" role="switch" aria-checked="true" type="button">
+          <span aria-hidden="true"></span> 声音开
+        </button>
+      </nav>
+
+      <div class="desk">
+        <aside class="score-panel" aria-label="比赛记分台">
+          <p class="serial">EA—1978 / HOT SEAT</p>
+          <header class="hero">
+            <p class="eyebrow">LISTEN · REPEAT · ADD ONE</p>
+            <h1>回声擂台</h1>
+            <p>完整接住对方留下的旋律，再添一音。</p>
+          </header>
+
+          <div class="match-readout">
+            <p id="game-status">准备开局</p>
+            <strong id="turn-status">三局两胜</strong>
+          </div>
+
+          <div class="scores" aria-label="当前比分">
+            <section id="player-a" class="player-score player-a">
+              <span>A</span>
+              <div>
+                <h2 id="name-a">A 席</h2>
+                <p>得分 <strong id="score-a">0</strong></p>
+              </div>
+            </section>
+            <section id="player-b" class="player-score player-b">
+              <span>B</span>
+              <div>
+                <h2 id="name-b">B 席</h2>
+                <p>得分 <strong id="score-b">0</strong></p>
+              </div>
+            </section>
+          </div>
+
+          <ol class="rules">
+            <li><b>01</b><span>听完全部回声</span></li>
+            <li><b>02</b><span>按原顺序完整复现</span></li>
+            <li><b>03</b><span>正确后亲手添一音</span></li>
+          </ol>
+        </aside>
+
+        <section class="console" aria-label="四音回声控制台">
+          <header class="console-head">
+            <div>
+              <span>SEQUENCE MEMORY</span>
+              <strong id="sequence-count">00 / 16</strong>
+            </div>
+            <p id="audio-status">浏览器即时合成四个短音</p>
+          </header>
+
+          <ol id="sequence-track" class="sequence-track" aria-label="当前序列长度"></ol>
+
+          <section id="stage" class="stage" aria-live="polite"></section>
+
+          <div id="note-keys" class="note-keys" aria-label="四个音符键">
+            <button class="note-key note-do" data-note="do" type="button" disabled>
+              <kbd>1</kbd><strong>DO</strong><span>261</span>
+            </button>
+            <button class="note-key note-mi" data-note="mi" type="button" disabled>
+              <kbd>2</kbd><strong>MI</strong><span>329</span>
+            </button>
+            <button class="note-key note-sol" data-note="sol" type="button" disabled>
+              <kbd>3</kbd><strong>SOL</strong><span>392</span>
+            </button>
+            <button class="note-key note-la" data-note="la" type="button" disabled>
+              <kbd>4</kbd><strong>LA</strong><span>440</span>
+            </button>
+          </div>
+
+          <div class="hardware-line" aria-hidden="true">
+            <i></i><span>ANALOG ECHO CONTROL · FOUR VOICE</span><i></i>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <p>同一台设备 · 每局轮换先手 · 先得 2 分获胜</p>
+        <p>本地运行 · 不联网 · 不录音 · 不保存</p>
+      </footer>
+      <noscript>需要启用 JavaScript 才能开始回声擂台。</noscript>
+    </main>
+  </body>
+</html>

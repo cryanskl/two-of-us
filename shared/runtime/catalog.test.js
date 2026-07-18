@@ -360,6 +360,40 @@ test("paper soccer keeps its file protocol and local graph boundary", async () =
   assert.match(css, /assets\/tactics-desk\.png/);
 });
 
+test("catalog exposes the installed A-level echo arena duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const echoArena = catalog.experiences.find((item) => item.id === "echo-arena");
+
+  assert.equal(echoArena.category, "versus");
+  assert.equal(echoArena.level, "A");
+  assert.equal(echoArena.installed, true);
+  assert.equal(echoArena.networkRequired, false);
+  assert.match(echoArena.entry, /echo-arena\/index\.html$/);
+});
+
+test("echo arena keeps its file protocol, audio, and local privacy boundary", async () => {
+  const root = new URL("../../experiences/versus/echo-arena/", import.meta.url);
+  const [html, config, logic, app, css, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.match(html, /\.\.\/\.\.\/\.\.\/shared\/audio\/tone-player\.js/);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /assets\/rehearsal-desk\.png/);
+  assert.match(attribution, /零代码、零素材借用边界|零代码、零素材借用/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");

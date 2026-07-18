@@ -17,6 +17,8 @@
 
 因此当前运行目录不包含来自上述项目的代码、图片、字体、音频或其他需要再分发的文件。
 
+**借用结论：零代码、零素材借用。** 上述链接只作为机制与许可证调研记录。
+
 ## 浏览器音频依据
 
 [MDN Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices)用于确认 AudioContext 的用户手势与声音控制边界。本作不复制示例代码；共享 tone player 为仓库原创实现。
