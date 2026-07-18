@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一拍，刚好和你：SVG 标准命名空间被离线 Gate 误判为网络地址](./2026-07-18-four-hands-harmony-svg-namespace-gate.md)
 - [这一拍，刚好和你：FFmpeg 可执行但没有 WebP 编码器](./2026-07-18-four-hands-harmony-webp-encoder-unavailable.md)
 - [把信号接回来：倒计时刷新重建选项并夺走键盘焦点](./2026-07-18-signal-repair-tick-rebuild-focus-loss.md)
 - [把信号接回来：无偏采样的固定重试上限重新引入索引 0 偏差](./2026-07-18-signal-repair-rejection-sampling-retry-bias.md)
