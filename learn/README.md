@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [几何玩法的生产动作重放：同时证明可达、无穿透与完成 Gate](./2026-07-19-production-action-replay-for-geometry.md)
 - [对称双人动力学：让 fixture、舍入和镜像 oracle 同时成立](./2026-07-18-symmetric-dynamics-and-mirror-oracles.md)
 - [共同按住交互：物理 inputId、双松手 Gate 与焦点连续性](./2026-07-18-physical-input-release-gate-focus.md)
 - [同步合作与可选音频：整数完成记录、差值消费和 generation 守卫](./2026-07-18-coop-completion-delta-audio-generation.md)
