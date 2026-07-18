@@ -532,6 +532,9 @@ test("four hands harmony keeps its file protocol, input, audio, and attribution 
   assert.match(app, /pointercancel/);
   assert.match(app, /lostpointercapture/);
   assert.match(app, /classifyHarmonyKey/);
+  assert.match(app, /const player = tonePlayer;\s*const generation = audioGeneration;/);
+  assert.match(app, /generation !== audioGeneration \|\| player !== tonePlayer/);
+  assert.match(app, /if \(audioPreparing\) return;/);
   assert.match(app, /createElementNS\("http:\/\/www\.w3\.org\/2000\/svg"/);
   assert.match(css, /assets\/harmony-table\.webp/);
   assert.match(css, /touch-action:\s*none/);

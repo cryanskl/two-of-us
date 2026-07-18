@@ -33,7 +33,9 @@
   let accumulatorMs = 0;
   let soundEnabled = true;
   let audioReady = false;
+  let audioPreparing = false;
   let audioUnavailable = !audioFactory || typeof audioFactory.createTonePlayer !== "function";
+  let audioGeneration = 0;
   let tonePlayer = createTonePlayer();
   let playedCompletedCount = view.completed.length;
   let announcedKey = "";
@@ -83,7 +85,7 @@
       case "resume":
         clearLocalInputs();
         update({ type: "RESUME" }, { focus: true, resetClock: true });
-        tonePlayer = createTonePlayer();
+        replaceTonePlayer();
         void prepareAudio();
         break;
       case "restart":
@@ -525,49 +527,82 @@
       return;
     }
     soundEnabled = true;
-    tonePlayer = createTonePlayer();
+    replaceTonePlayer();
     await prepareAudio();
   }
 
   async function prepareAudio() {
     if (!soundEnabled) return false;
+    const player = tonePlayer;
+    const generation = audioGeneration;
+    audioPreparing = true;
+    let ready = false;
     try {
-      audioReady = Boolean(await tonePlayer.ensureReady());
+      ready = Boolean(await player.ensureReady());
     } catch {
-      audioReady = false;
+      ready = false;
     }
-    audioUnavailable = !audioReady;
+    if (generation !== audioGeneration || player !== tonePlayer || !soundEnabled) return false;
+    audioPreparing = false;
+    audioReady = ready;
+    audioUnavailable = !ready;
+    if (ready) playCompletedHarmony();
+    else playedCompletedCount = view.completed.length;
     renderSound();
     return audioReady;
   }
 
   function playCompletedHarmony() {
     if (view.completed.length <= playedCompletedCount) return;
-    const index = view.completed.length - 1;
-    playedCompletedCount = view.completed.length;
-    if (!soundEnabled || !audioReady) return;
+    if (!soundEnabled) {
+      playedCompletedCount = view.completed.length;
+      return;
+    }
+    if (audioPreparing) return;
+    if (!audioReady) {
+      playedCompletedCount = view.completed.length;
+      return;
+    }
+    while (playedCompletedCount < view.completed.length) {
+      const index = playedCompletedCount;
+      playedCompletedCount += 1;
+      if (!playHarmonyAt(index)) {
+        playedCompletedCount = view.completed.length;
+        audioReady = false;
+        audioUnavailable = true;
+        renderSound();
+        return;
+      }
+    }
+  }
+
+  function playHarmonyAt(index) {
     const measure = logic.PHRASE[index];
     const low = lowNotes.get(measure.low);
     const high = highNotes.get(measure.high);
-    let lowPlayed = false;
-    let highPlayed = false;
     try {
-      lowPlayed = tonePlayer.playTone({ frequency: low.frequency, type: "triangle", duration: .42, attack: .018, gain: .12 });
-      highPlayed = tonePlayer.playTone({ frequency: high.frequency, type: "sine", duration: .42, attack: .018, gain: .1 });
+      const lowPlayed = tonePlayer.playTone({ frequency: low.frequency, type: "triangle", duration: .42, attack: .018, gain: .12 });
+      const highPlayed = tonePlayer.playTone({ frequency: high.frequency, type: "sine", duration: .42, attack: .018, gain: .1 });
+      return Boolean(lowPlayed && highPlayed);
     } catch {
-      lowPlayed = false;
-      highPlayed = false;
+      return false;
     }
-    if (!lowPlayed || !highPlayed) {
-      audioReady = false;
-      audioUnavailable = true;
-      renderSound();
-    }
+  }
+
+  function replaceTonePlayer() {
+    audioGeneration += 1;
+    audioPreparing = false;
+    audioReady = false;
+    audioUnavailable = false;
+    tonePlayer = createTonePlayer();
   }
 
   async function releaseAudio() {
     const player = tonePlayer;
+    audioGeneration += 1;
+    audioPreparing = false;
     audioReady = false;
+    playedCompletedCount = view.completed.length;
     try { await player.close?.(); } catch { /* Closing is best effort. */ }
   }
 
