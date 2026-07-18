@@ -22,8 +22,8 @@ HTML、CSS、SVG 返回箭头、棋盘点、40 条可交互边、16 个格子、
 
 ## 开源对照与零复制声明
 
-- [`Upside-Down-Collective/dots-game@c9fdec7`](https://github.com/Upside-Down-Collective/dots-game/tree/c9fdec7ba334412c1ce9798c341e29900cadebde)，[MIT](https://github.com/Upside-Down-Collective/dots-game/blob/c9fdec7ba334412c1ce9798c341e29900cadebde)，Copyright (c) 2022 lemmoor / Upside Down Collective：只用 README 对照 React、Node、Socket.IO、Docker/HAProxy 的联网架构，确认本作无需这些依赖；零代码、零 CSS、零组件、零素材引入。
+- [`Upside-Down-Collective/dots-game@c9fdec7`](https://github.com/Upside-Down-Collective/dots-game/tree/c9fdec7ba334412c1ce9798c341e29900cadebde)，根仓库 [MIT](https://github.com/Upside-Down-Collective/dots-game/blob/c9fdec7ba334412c1ce9798c341e29900cadebde/LICENSE)，Copyright (c) 2022 lemmoor / Upside Down Collective；其 `server/package.json` 另标 ISC，React、Socket.IO 等依赖也各有许可证：只用 README 对照 React、Node、Socket.IO、Docker/HAProxy 的联网架构，确认本作无需这些依赖；零代码、零 CSS、零组件、零素材、零依赖引入。若未来复制任何文件，必须重新做文件级许可证审计。
 - [`jessefischer/dots-and-boxes@4e3382a`](https://github.com/jessefischer/dots-and-boxes/tree/4e3382aa04d844f9c46932d7df9161bb8d6745bd)，[MIT](https://github.com/jessefischer/dots-and-boxes/blob/4e3382aa04d844f9c46932d7df9161bb8d6745bd/LICENSE)，Copyright (c) 2021 Jesse Fischer：只审阅其每格保存边状态的实现以识别共享边重复真值风险；本作改用全局规范物理边 ID，未复制、改写、移植或运行其源码、CSS 与素材。
-- [`wannesm/dotsandboxes@70ba3a9`](https://github.com/wannesm/dotsandboxes/tree/70ba3a9f1c99a8aee4de0347d0b276bf9093ca4c)：仓库未发现明确源码许可证，只作为搜索发现记录；未读取实现，也不得复制代码或素材。
+- [`wannesm/dotsandboxes@70ba3a9`](https://github.com/wannesm/dotsandboxes/tree/70ba3a9f1c99a8aee4de0347d0b276bf9093ca4c)：项目根目录未发现明确源码许可证；其中 `static/d3/LICENSE` 只覆盖第三方 D3，并不授权该项目自身代码。它只作为搜索发现记录；未读取实现，也不得复制代码、数据或素材。
 
 本作的状态机、边 ID、双闭合判定、配置、中文文案、DOM、CSS 和测试均由本仓库独立实现。运行时无第三方依赖、无网络请求、无存储、无 AI、无远程字体或 CDN。若以后实际借入第三方代码或素材，必须在本文件补充固定版本、作者、许可证、本地文件与修改范围。

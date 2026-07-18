@@ -104,22 +104,25 @@ phase             intro | playing | finished
 starter           0 | 1
 currentPlayer     0 | 1
 playerNames       [string, string]
-edges             [{ id, owner }]
+moves             [{ edgeId, player }]
 boxes             [{ id, owner }]
 scores            [integer, integer]
-moves             non-negative integer
+moveNumber        non-negative integer
 lastMove          null | { edgeId, player, capturedBoxIds, kind }
 revision           non-negative integer
 ```
 
 约束：
 
-- `edges` 只保存已落边，按 `getAllEdgeIds()` 顺序排序；owner 为落边玩家；
+- `moves` 是按实际时间顺序保存的唯一落边历史；每项只含规范 `edgeId` 与当手 `player`，edgeId 不得重复；
+- 公开 state 不保存 `Set` / `Map`；内部计算时可以从冻结 moves 临时构造集合；
 - `boxes` 固定 16 项，按 `B:0:0 ... B:3:3` 排序；owner 为 `null / 0 / 1`；
 - 分数必须恰等于双方 owner 方格数，分数和等于已占格数；
-- `moves === edges.length`；
+- `moveNumber === moves.length`，范围为 0–40；
+- 每项 `player` 必须等于重放到该手之前的当前玩家；
 - `currentPlayer` 在 finished 仍保留完成最后一步的玩家；
 - `lastMove` 的 edge、player、捕获格与当前状态相符；
+- `replayMoves(starter, moves)` 必须从空盘完整重放，并与 state 的 `boxes / scores / currentPlayer / lastMove / phase` 逐项一致；局部字段看似合理但重放不一致的状态仍属畸形；
 - 任意嵌套对象递归冻结；
 - 公开动作收到畸形状态时回到默认安全初态，不抛异常。
 
@@ -129,10 +132,10 @@ revision           non-negative integer
 phase = intro
 starter = 0
 currentPlayer = 0
-edges = []
+moves = []
 boxes = 16 个 owner:null
 scores = [0,0]
-moves = 0
+moveNumber = 0
 lastMove = null
 ```
 
@@ -145,7 +148,7 @@ lastMove = null
 ### 4.3 `claimEdge(state, edgeId)`
 
 - 只在 playing 且 edgeId 合法、未使用时生效；
-- 记录当前玩家为边 owner，moves 加一；
+- 按时间追加 `{ edgeId, player: currentPlayer }`，moveNumber 加一；
 - 只检查邻接方格；本步新闭合的 0–2 格归当前玩家；
 - 捕获 0 格：`kind = "switch"`，换到另一玩家；
 - 捕获 1 格：`kind = "capture-one"`，加 1 分，当前玩家继续；
@@ -153,7 +156,7 @@ lastMove = null
 - 16 格全部归属：phase 立即变 finished，`kind = "finished"`；
 - 重复、越界、错误阶段或非字符串 edgeId 返回原引用。
 
-一步同时闭合两格时：moves 只加一，边只增加一项，两个方格归同一玩家，分数加二，回合不切换。
+一步同时闭合两格时：moveNumber 只加一，moves 只追加一项，两个方格归同一玩家，分数加二，回合不切换。
 
 ### 4.4 `restart(state)`
 
@@ -165,11 +168,11 @@ lastMove = null
 
 ### 4.5 `getViewModel(state)`
 
-只返回 UI 所需派生值：
+只返回 UI 所需派生值；其中 `edges` 是从 moves 派生并按 `getAllEdgeIds()` 排序的冻结占边投影，不在 state 维护第二份真值：
 
 ```text
 phase, starter, currentPlayer, currentPlayerName
-playerNames, scores, moves
+playerNames, scores, moveNumber
 remainingBoxes, remainingEdges
 edges, boxes, lastMove
 result: null | { winnerIndex, isTie }
@@ -197,6 +200,7 @@ deepFreeze, sanitizeConfig
 makeEdgeId, parseEdgeId, getAllEdgeIds
 makeBoxId, parseBoxId, getAllBoxIds
 getBoxEdgeIds, getAdjacentBoxIds, isBoxClosed
+replayMoves
 createInitialState, isDotsAndBoxesState
 start, claimEdge, restart
 getViewModel, resolveResultCopy
@@ -240,6 +244,7 @@ body[data-stage="intro|playing|finished"]
 - 鼠标、触摸和键盘 Enter/Space 走同一 `claimEdge`；
 - 落边后焦点移动到 DOM 顺序的下一条可用边；终局焦点落到结果标题；
 - intro 开始后焦点落到第一条可用边；restart 后焦点落到“开始落笔”。
+- “下一条”严格指规范边顺序中当前边之后的第一条空边，末尾环回；使用 `focus({ preventScroll: true })`，不设置正数 tabindex。
 
 不伪造 ARIA grid、slider 或 canvas。Tab 可遍历所有可用边；点与已占边不进入 Tab 顺序。
 
@@ -306,7 +311,7 @@ body[data-stage="intro|playing|finished"]
 README 与 `assets/ATTRIBUTION.md` 必须固定并区分：
 
 - AAAI 论文：只确认传统规则和规模术语，不使用算法、图表或数据；
-- `Upside-Down-Collective/dots-game@c9fdec7`：MIT，多人架构对照，零代码/依赖/素材引入；
+- `Upside-Down-Collective/dots-game@c9fdec7`：根许可证 MIT，但 server manifest 另标 ISC 且 Web 端依赖各自许可证；只作多人架构对照，零代码/依赖/素材引入；
 - `jessefischer/dots-and-boxes@4e3382a`：MIT，实际审阅用于识别重复边风险，零代码/CSS/组件引入；
 - `wannesm/dotsandboxes@70ba3a9`：未识别许可证，只作发现线索；
 - ImageGen：列出三张概念和一张运行纹理、生成日期、提示词摘要、用途和回退；
@@ -324,11 +329,12 @@ README 与 `assets/ATTRIBUTION.md` 必须固定并区分：
 6. 单格闭合加分并继续；
 7. 一条内部边同时闭合两格，加二分并继续；
 8. 重复边、越界、斜边、未知 ID 同引用；
-9. 完整合法轨迹终局，分数和 16、边数 40；
-10. 8–8 平局与胜者派生；
-11. restart 清盘、首发轮换、名字保留；
-12. 额外字段、伪造分数、重复边、矛盾 owner、敌意对象安全回初态；
-13. view model 与 result copy 冻结且不共享引用。
+9. 完整合法时间序列重放，拒绝错误 move.player、伪造 box owner、分数、currentPlayer、lastMove 与 phase；
+10. 先全部水平边、再全部垂直边的 40 手确定轨迹终局为 8–8 平局；
+11. 8–8 平局与胜者派生；
+12. restart 清盘、首发轮换、名字保留；
+13. 额外字段、伪造分数、重复边、矛盾 owner、敌意对象安全回初态；
+14. view model 与 result copy 冻结且不共享引用。
 
 目录边界测试至少断言：
 
@@ -359,6 +365,7 @@ README 与 `assets/ATTRIBUTION.md` 必须固定并区分：
 - 1504×1046：横纵无滚动，完整棋盘与终局动作在首屏；
 - 390×844：无横向溢出，棋盘不裁切，边命中区 ≥44px；
 - 320×700：无横向溢出，允许自然纵滚，所有边和动作可达；
+- 320 与 390px 对全部 40 个按钮中心执行 `elementFromPoint`，必须命中自身 `[data-edge-id]`；另真实点击边界/内部的横边与竖边各一条；
 - reduced motion：规则一致、无必须等待的动画；
 - 概念与最新截图在同一 QA 中以原始尺寸 `view_image` 对照；
 - fidelity ledger 至少记录布局、文案、字体、色彩、纸张、棋盘几何、状态与手机密度八项；
