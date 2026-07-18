@@ -86,6 +86,7 @@
 - [A 级月相密语实现规格](./docs/67-moon-phase-secret-spec.md)
 - [A 级月相密语视觉设计](./docs/68-moon-phase-secret-design.md)
 - [A 级线框占地定向调研](./docs/69-dots-and-boxes-research.md)
+- [A 级“这一格归谁”实现规格](./docs/70-dots-and-boxes-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
