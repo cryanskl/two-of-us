@@ -82,6 +82,7 @@
 - [A 级手摇音乐盒定向调研](./docs/63-hand-crank-music-box-research.md)
 - [A 级把这首转给你规格](./docs/64-hand-crank-music-box-spec.md)
 - [A 级把这首转给你验收记录](./docs/65-hand-crank-music-box-verification.md)
+- [A 级月相密语定向调研](./docs/66-moon-phase-secret-research.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
