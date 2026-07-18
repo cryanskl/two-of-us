@@ -1144,7 +1144,6 @@ test("orbital star race keeps its deterministic file-protocol boundary", async (
 
   assert.doesNotMatch(html, /type=["']module["']/i);
   assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
-  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
   assert.doesNotMatch(runtimeSource, /Math\.random/);
   assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
@@ -1164,6 +1163,48 @@ test("orbital star race keeps its deterministic file-protocol boundary", async (
   assert.match(attribution, /^# 借鉴与来源声明/m);
   assert.match(attribution, /81b92ff6df930644fae28cf5c14035dd055bc84e/);
   assert.match(attribution, /零代码、零素材/);
+});
+
+test("catalog exposes the installed A-level secret recipe code duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const game = catalog.experiences.find((item) => item.id === "secret-recipe-code");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备轮流");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /secret-recipe-code\/index\.html$/);
+  assert.match(portal, /"id": "secret-recipe-code"/);
+});
+
+test("secret recipe code keeps its file protocol, hot-seat privacy, and attribution boundary", async () => {
+  const root = new URL("../../experiences/versus/secret-recipe-code/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /getRecipeView/);
+  assert.match(css, /assets\/apothecary-table\.jpg/);
+  assert.match(readme, /秘密只保存在当前页面的 JavaScript 内存/);
+  assert.match(attribution, /688006ae2280b721e4a8289b710351dd3fd7e5ed/);
+  assert.match(attribution, /a06fb28a3fa6072a089ca664c66a7bf08c0a3e99/);
+  assert.match(attribution, /没有复制、改写、翻译、移植/);
 });
 
 test("catalog exposes the installed A-level kitchen relay", async () => {

@@ -549,6 +549,19 @@
       "networkRequired": false
     },
     {
+      "id": "secret-recipe-code",
+      "title": "藏好这一味",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/secret-recipe-code/index.html",
+      "readme": "experiences/versus/secret-recipe-code/README.md",
+      "description": "两人轮流藏好四格配方并交接设备，依据同位与错位数量在七次内破译；交换角色后，猜测次数更少者获胜。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",
