@@ -221,7 +221,10 @@
   function renderFeedback(feedback, phase) {
     elements.feedbackList.replaceChildren();
     elements.feedbackList.hidden = !feedback || phase === "unlocked";
-    if (!feedback) return;
+    if (!feedback) {
+      liveRegion.textContent = "";
+      return;
+    }
     const rows = [
       [feedback.monthAligned ? "月序已对齐" : "月序还没对齐", feedback.monthAligned],
       [feedback.dayAligned ? "日期已对齐" : "日期还没对齐", feedback.dayAligned],
