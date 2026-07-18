@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [像素无关的双遍轨迹确认：锚点、线段命中与 Canvas 分层](./2026-07-19-pixel-independent-two-pass-trace.md)
 - [几何玩法的生产动作重放：同时证明可达、无穿透与完成 Gate](./2026-07-19-production-action-replay-for-geometry.md)
 - [对称双人动力学：让 fixture、舍入和镜像 oracle 同时成立](./2026-07-18-symmetric-dynamics-and-mirror-oracles.md)
 - [共同按住交互：物理 inputId、双松手 Gate 与焦点连续性](./2026-07-18-physical-input-release-gate-focus.md)
