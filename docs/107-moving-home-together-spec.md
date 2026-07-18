@@ -291,7 +291,7 @@ experiences/co-op/moving-home-together/
   app.js
   logic.test.js
   assets/
-    scene-concept.png
+    moving-day-paper.jpg
   README.md
   ATTRIBUTION.md
 ```

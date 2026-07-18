@@ -48,7 +48,7 @@
   - `design/moving-home-together/concept-desktop-playing.png`；
   - `design/moving-home-together/concept-mobile-playing.png`；
   - `design/moving-home-together/concept-desktop-complete.png`；
-  - `experiences/co-op/moving-home-together/assets/moving-day-paper.webp`；
+  - `experiences/co-op/moving-home-together/assets/moving-day-paper.jpg`；
 - 过程：先生成三个完整状态概念，再生成无字、可裁切的生产背景；每张用 `view_image` 检查，不接受可读乱码、第三方品牌、商业游戏造型或把控件烘焙进背景；
 - 方向：俯视纸艺搬家平面图、亚麻米白、陶土红沙发、鼠尾草绿目标地毯、石墨墙线、黄铜路线针；亲密、轻松、有手作感，不做商业搬家游戏海报、3D 写实、公寓地产图、玻璃拟态或霓虹街机；
 - 验收：设计令牌、允许文案、组件、图标、容器模型、移动重排、资产提示词、素材尺寸、fidelity ledger 与刻意偏离冻结；
