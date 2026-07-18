@@ -129,6 +129,7 @@
 | [120-starlight-keepsake-search-verification.md](./120-starlight-keepsake-search-verification.md) | “把夜晚照成我们”的 153 项逻辑、1161 项全仓、45 项目录、五目标实玩、三档响应式、视觉对照、来源与 bugs/learn 验收 |
 | [121-secret-recipe-code-research.md](./121-secret-recipe-code-research.md) | A 级“藏好这一味”的同机设密交接、重复配料反馈、双轮公平、商标/视觉边界、固定来源与零复制调研 |
 | [122-secret-recipe-code-spec.md](./122-secret-recipe-code-spec.md) | A 级“藏好这一味”的四格秘密、两遍多重集合反馈、阶段 public view、双轮结算、配置与验收规格 |
+| [123-secret-recipe-code-design.md](./123-secret-recipe-code-design.md) | “藏好这一味”的三状态 ImageGen 概念、午夜药房账本设计系统、生产背景、移动重排与 fidelity Gate |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
