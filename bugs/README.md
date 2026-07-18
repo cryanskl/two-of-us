@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把颜色调到一起：背景素材被负层级完全遮住](./2026-07-18-shared-color-background-stacking.md)
 - [baoyu-image-gen 的 codex-cli 后端在只有 npx 时因缺少 bun 失败](./2026-07-18-baoyu-imagegen-codex-cli-bun-missing.md)
 - [这一颗我先到：终局标题与正文重复显示两次](./2026-07-18-orbit-duplicate-terminal-copy.md)
 - [这一颗我先到：哑光精灵图在星图上露出方形底块](./2026-07-18-orbit-sprite-matte-blocks.md)
