@@ -71,6 +71,7 @@
 - [A 级一层一层验收记录](./docs/51-nested-gift-verification.md)
 - [A 级纸上球局规格](./docs/52-paper-soccer-spec.md)
 - [A 级纸上球局验收记录](./docs/53-paper-soccer-verification.md)
+- [A 级纸飞机投递规格](./docs/54-paper-plane-mail-spec.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
