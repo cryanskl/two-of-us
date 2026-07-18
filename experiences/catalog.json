@@ -419,6 +419,19 @@
       "networkRequired": false
     },
     {
+      "id": "light-trail-hunt",
+      "title": "光轨围猎",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备同屏",
+      "entry": "experiences/versus/light-trail-hunt/index.html",
+      "readme": "experiences/versus/light-trail-hunt/README.md",
+      "description": "两束光在固定网格中同时前进，用左右转向留下永久轨迹；撞墙或撞线者落败，同 tick 双亡则平局。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",

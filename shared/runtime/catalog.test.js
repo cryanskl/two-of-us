@@ -587,6 +587,52 @@ test("dots and boxes keeps its file protocol and canonical local board boundary"
   assert.match(attribution, /^# 借鉴与来源声明/m);
 });
 
+test("catalog exposes the installed A-level light trail hunt duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const game = catalog.experiences.find((item) => item.id === "light-trail-hunt");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备同屏");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /light-trail-hunt\/index\.html$/);
+});
+
+test("light trail hunt keeps its atomic file-protocol duel boundary", async () => {
+  const root = new URL("../../experiences/versus/light-trail-hunt/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /function queueTurn\(player, turn\)/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /same-destination/);
+  assert.match(logic, /head-swap/);
+  assert.match(css, /assets\/board-texture\.webp/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(readme, /## 借鉴与来源声明/);
+  assert.match(attribution, /b19dc25bb78f9ac7299f83193774978089ff0cc2/);
+  assert.match(attribution, /1d35ea0306766bbc5f4a52244ef820db431776fc/);
+  assert.match(attribution, /7d4faa2cfa7152186924484d5bd191778babdff0/);
+  assert.match(attribution, /68d0ef1a53d6a4191a9c4e4b851d5d4fdc86ce05/);
+  assert.match(attribution, /未复制|未使用/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");
