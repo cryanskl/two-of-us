@@ -2,6 +2,7 @@
   "use strict";
 
   const logic = globalThis.TELEGRAPH_CODEBOOK_LOGIC;
+  const tonePlayer = globalThis.TWO_OF_US_TONE_PLAYER?.createTonePlayer();
   if (!logic) {
     document.body.textContent = "默契电报码加载失败，请确认 logic.js 与页面放在同一目录。";
     return;
@@ -19,7 +20,6 @@
   const pulseButtons = [...document.querySelectorAll("[data-pulse]")];
 
   let state = logic.createInitialState(createRounds());
-  let audioContext = null;
   let soundEnabled = true;
   let playbackTimers = new Set();
   let activePulse = null;
@@ -388,40 +388,24 @@
 
   async function ensureAudio() {
     if (!soundEnabled) return;
-    const AudioContextCtor = globalThis.AudioContext || globalThis.webkitAudioContext;
-    if (!AudioContextCtor) return;
-    try {
-      audioContext ||= new AudioContextCtor();
-      if (audioContext.state === "suspended") await audioContext.resume();
-    } catch {
-      soundEnabled = false;
-      audioContext = null;
-    }
+    const ready = await tonePlayer?.ensureReady();
+    if (!ready) soundEnabled = false;
   }
 
   function playTone(pulse) {
-    if (!soundEnabled || !audioContext || audioContext.state !== "running") return;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    const now = audioContext.currentTime;
+    if (!soundEnabled) return;
     const duration = pulse === "short" ? .18 : .48;
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(520, now);
-    gain.gain.setValueAtTime(.0001, now);
-    gain.gain.exponentialRampToValueAtTime(.12, now + .015);
-    gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
-    oscillator.connect(gain).connect(audioContext.destination);
-    oscillator.start(now);
-    oscillator.stop(now + duration + .02);
-    oscillator.addEventListener("ended", () => {
-      oscillator.disconnect();
-      gain.disconnect();
-    }, { once: true });
+    tonePlayer?.playTone({
+      frequency: 520,
+      type: "sine",
+      duration,
+      attack: .015,
+      gain: .12,
+    });
   }
 
   function releaseAudio() {
     cancelPlayback(false);
-    if (audioContext) void audioContext.close();
-    audioContext = null;
+    void tonePlayer?.close();
   }
 })();

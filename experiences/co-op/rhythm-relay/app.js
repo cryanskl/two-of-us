@@ -2,6 +2,7 @@
   "use strict";
 
   const logic = globalThis.RHYTHM_RELAY_LOGIC;
+  const tonePlayer = globalThis.TWO_OF_US_TONE_PLAYER?.createTonePlayer();
   if (!logic) {
     document.body.textContent = "节拍接力加载失败，请确认 logic.js 与页面放在同一目录。";
     return;
@@ -21,7 +22,6 @@
 
   let state = logic.createRelayState();
   let soundEnabled = true;
-  let audioContext = null;
   let playbackTimers = new Set();
   let playbackInterrupted = false;
   let activeBeat = null;
@@ -252,33 +252,18 @@
 
   async function ensureAudio() {
     if (!soundEnabled) return;
-    const AudioContextCtor = globalThis.AudioContext || globalThis.webkitAudioContext;
-    if (!AudioContextCtor) return;
-    try {
-      audioContext ||= new AudioContextCtor();
-      if (audioContext.state === "suspended") await audioContext.resume();
-    } catch {
-      audioContext = null;
-    }
+    await tonePlayer?.ensureReady();
   }
 
   function playTone(beat, duration) {
-    if (!soundEnabled || !audioContext || audioContext.state !== "running") return;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    const now = audioContext.currentTime;
-    oscillator.type = beat === "coral" ? "sine" : "triangle";
-    oscillator.frequency.setValueAtTime(beat === "coral" ? 246.94 : 392, now);
-    gain.gain.setValueAtTime(.0001, now);
-    gain.gain.exponentialRampToValueAtTime(.16, now + .018);
-    gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
-    oscillator.connect(gain).connect(audioContext.destination);
-    oscillator.start(now);
-    oscillator.stop(now + duration + .02);
-    oscillator.addEventListener("ended", () => {
-      oscillator.disconnect();
-      gain.disconnect();
-    }, { once: true });
+    if (!soundEnabled) return;
+    tonePlayer?.playTone({
+      frequency: beat === "coral" ? 246.94 : 392,
+      type: beat === "coral" ? "sine" : "triangle",
+      duration,
+      attack: .018,
+      gain: .16,
+    });
   }
 
   function flashBeat(beat) {
@@ -294,7 +279,6 @@
 
   function releaseAudio() {
     cancelPlayback(false);
-    if (audioContext) void audioContext.close();
-    audioContext = null;
+    void tonePlayer?.close();
   }
 })();
