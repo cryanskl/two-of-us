@@ -99,6 +99,7 @@
 | [90-signal-repair-manual-verification.md](./90-signal-repair-manual-verification.md) | “把信号接回来”的 43 项逻辑、468 项全仓、39 项目录、四轮实玩、三档响应式、焦点、暂停与视觉忠实度验收 |
 | [91-four-hands-harmony-research.md](./91-four-hands-harmony-research.md) | A 级“这一拍，刚好和你”的共同和声、双键窗口、Web Audio 渐进增强、固定来源、许可证与零复制调研 |
 | [92-four-hands-harmony-spec.md](./92-four-hands-harmony-spec.md) | A 级“这一拍，刚好和你”的五节和声、整数 tick、双声部输入、音频降级、阶段 DOM 与验收规格 |
+| [93-four-hands-harmony-plan.md](./93-four-hands-harmony-plan.md) | “这一拍，刚好和你”的视觉、逻辑、前端、目录、浏览器、bugs、learn 与独立提交计划 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
