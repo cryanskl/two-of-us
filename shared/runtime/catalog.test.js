@@ -185,6 +185,43 @@ test("star code unlock keeps its file protocol and staged secret boundary", asyn
   assert.doesNotMatch(html, /那次聊到很晚|第一次一起去看海|每次分别前|星图最后指向你|普通的夜晚/);
 });
 
+test("catalog exposes the installed A-level hand-crank music box", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const musicBox = catalog.experiences.find((item) => item.id === "hand-crank-music-box");
+
+  assert.equal(musicBox.category, "surprise");
+  assert.equal(musicBox.level, "A");
+  assert.equal(musicBox.installed, true);
+  assert.equal(musicBox.networkRequired, false);
+  assert.match(musicBox.entry, /hand-crank-music-box\/index\.html$/);
+});
+
+test("hand-crank music box keeps its file protocol, audio, secret, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/hand-crank-music-box/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.match(html, /\.\.\/\.\.\/\.\.\/shared\/audio\/tone-player\.js/);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.match(css, /--night:\s*#111827/i);
+  assert.match(html, /assets\/paper-diorama\.png/);
+  assert.doesNotMatch(`${html}\n${app}`, /这段路，想和你慢慢走|谢谢你把这首小小的旋律转到最后/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /^# 借鉴与来源声明$/m);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

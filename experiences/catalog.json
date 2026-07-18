@@ -145,6 +145,19 @@
       "networkRequired": false
     },
     {
+      "id": "hand-crank-music-box",
+      "title": "把这首转给你",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/hand-crank-music-box/index.html",
+      "readme": "experiences/surprises/hand-crank-music-box/README.md",
+      "description": "顺时针转动胡桃木音乐盒的摇柄，让原创短旋律逐音响起、纸雕夜景展开，最后读到一段本地留言。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

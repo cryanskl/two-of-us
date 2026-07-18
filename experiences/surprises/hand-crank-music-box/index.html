@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#111827">
+    <title>把这首转给你 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-phase="intro" data-step="0">
+    <a class="back-link" href="../../../index.html" aria-label="返回体验库">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7M8 12h10"></path>
+      </svg>
+    </a>
+
+    <main class="experience-shell">
+      <section class="intro-panel" aria-labelledby="page-title">
+        <div class="title-block">
+          <h1 id="page-title">把这首转给你</h1>
+          <span class="title-rule" aria-hidden="true"></span>
+          <p class="lead">顺时针转动摇柄，让一小段旋律慢慢展开。</p>
+        </div>
+
+        <div class="desktop-controls">
+          <button id="sound-button" class="sound-button" type="button" aria-pressed="false">
+            <svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 10v4h4l5 4V6L8 10H4Z"></path>
+              <path class="sound-wave" d="M16 9.2a4 4 0 0 1 0 5.6M18.5 6.8a7.5 7.5 0 0 1 0 10.4"></path>
+              <path class="sound-slash" d="m5 4 15 16"></path>
+            </svg>
+            <span id="sound-label">声音</span>
+          </button>
+          <p id="sound-note" class="sound-note" hidden>无声也能继续</p>
+
+          <button id="primary-button" class="primary-button" type="button">开始转动</button>
+
+          <div class="progress-copy" aria-hidden="true">
+            <span id="turn-count">0 / 8 圈</span>
+          </div>
+          <ol id="turn-track" class="turn-track" aria-label="八圈进度"></ol>
+        </div>
+      </section>
+
+      <section class="music-box-stage" aria-label="手摇音乐盒">
+        <div class="music-box">
+          <div class="lid">
+            <div id="lid-scene" class="lid-scene">
+              <div class="fallback-scene" aria-hidden="true">
+                <span class="fallback-moon"></span>
+                <span class="fallback-path"></span>
+                <span class="fallback-light fallback-light-left"></span>
+                <span class="fallback-light fallback-light-right"></span>
+              </div>
+              <img id="diorama-image" class="diorama-image diorama-image-muted" src="assets/paper-diorama.png" alt="两间亮灯小屋沿着纸雕小路相望的夜景">
+              <div class="diorama-reveal" aria-hidden="true">
+                <img id="diorama-reveal-image" class="diorama-image" src="assets/paper-diorama.png" alt="">
+              </div>
+              <div class="paper-curtain paper-curtain-left" aria-hidden="true"></div>
+              <div class="paper-curtain paper-curtain-right" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="hinge-row" aria-hidden="true">
+            <span></span><span></span>
+          </div>
+
+          <div class="box-base">
+            <div class="mechanism" aria-hidden="true">
+              <div class="support support-left"></div>
+              <div id="cylinder" class="cylinder"></div>
+              <div class="support support-right"></div>
+              <div class="comb">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div id="tooth-window" class="tooth-window" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="crank-zone">
+          <div class="crank-copy">
+            <svg viewBox="0 0 44 44" aria-hidden="true">
+              <path d="M34 29A14 14 0 1 0 11 27"></path>
+              <path d="m8 23 2.5 5.5 6-1"></path>
+            </svg>
+            <p id="crank-hint">拖动摇柄，或按 → 转一格</p>
+          </div>
+          <button id="crank-control" class="crank-control" type="button" aria-label="顺时针转动摇柄；按向右方向键或空格转一格" aria-keyshortcuts="ArrowRight Space" disabled>
+            <span class="crank-orbit" aria-hidden="true"></span>
+            <span class="crank-hub" aria-hidden="true"></span>
+            <span class="crank-arm" aria-hidden="true">
+              <span class="crank-knob"></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="mobile-controls">
+          <div class="mobile-progress-row">
+            <span id="mobile-turn-count">0 / 8 圈</span>
+            <ol id="mobile-turn-track" class="turn-track" aria-label="八圈进度"></ol>
+          </div>
+          <button id="mobile-primary-button" class="primary-button" type="button">开始转动</button>
+          <button id="mobile-sound-button" class="sound-button" type="button" aria-pressed="false">
+            <svg class="sound-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 10v4h4l5 4V6L8 10H4Z"></path>
+              <path class="sound-wave" d="M16 9.2a4 4 0 0 1 0 5.6M18.5 6.8a7.5 7.5 0 0 1 0 10.4"></path>
+              <path class="sound-slash" d="m5 4 15 16"></path>
+            </svg>
+            <span id="mobile-sound-label">声音</span>
+          </button>
+          <p id="mobile-sound-note" class="sound-note" hidden>无声也能继续</p>
+        </div>
+
+        <button id="advance-button" class="advance-button" type="button" disabled>转一格</button>
+      </section>
+    </main>
+
+    <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <script src="../../../shared/audio/tone-player.js"></script>
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
