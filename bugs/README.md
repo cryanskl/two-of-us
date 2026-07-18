@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把颜色调到一起：合册结语随移动步数偏离冻结文案](./2026-07-18-shared-color-result-copy-drift.md)
 - [把颜色调到一起：背景素材被负层级完全遮住](./2026-07-18-shared-color-background-stacking.md)
 - [baoyu-image-gen 的 codex-cli 后端在只有 npx 时因缺少 bun 失败](./2026-07-18-baoyu-imagegen-codex-cli-bun-missing.md)
 - [这一颗我先到：终局标题与正文重复显示两次](./2026-07-18-orbit-duplicate-terminal-copy.md)
