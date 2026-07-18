@@ -116,6 +116,38 @@ test("nested gift keeps its file protocol and staged privacy boundary", async ()
   assert.doesNotMatch(runtimeSource, /Math\.random/);
 });
 
+test("catalog exposes the installed A-level paper plane mail", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const mail = catalog.experiences.find((item) => item.id === "paper-plane-mail");
+
+  assert.equal(mail.category, "surprise");
+  assert.equal(mail.level, "A");
+  assert.equal(mail.installed, true);
+  assert.equal(mail.networkRequired, false);
+  assert.match(mail.entry, /paper-plane-mail\/index\.html$/);
+});
+
+test("paper plane mail keeps its file protocol and staged letter boundary", async () => {
+  const root = new URL("../../experiences/surprises/paper-plane-mail/", import.meta.url);
+  const [html, config, logic, app, css] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /assets\/night-post-desk\.png/);
+  assert.doesNotMatch(`${html}\n${app}`, /这封信，终于飞到了|有些话，放在心里太久|下一段路，也想继续和你一起走/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

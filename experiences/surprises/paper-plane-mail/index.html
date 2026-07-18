@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>纸飞机投递 · Two of Us</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2317233c'/%3E%3Cpath d='M8 28 57 8 39 55 29 36z' fill='%23f0e3c2' stroke='%23aa8650' stroke-width='3'/%3E%3Cpath d='m29 36 28-28-18 34z' fill='%23315c9b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app" data-phase="intro">
+    <nav class="topbar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <p id="attempt-status">本地投递 · 第 1 次</p>
+    </nav>
+
+    <div class="dispatch-grid">
+      <section class="flight-board" aria-labelledby="map-label">
+        <header class="map-header">
+          <h2 id="map-label">航路预测图</h2>
+          <p>微风 · 规则恒定</p>
+        </header>
+        <svg id="flight-map" viewBox="0 0 1000 620" role="img" aria-labelledby="flight-title flight-description">
+          <title id="flight-title">纸飞机投递航线</title>
+          <desc id="flight-description">纸飞机还在起点，等待调整仰角和力度。</desc>
+          <g id="map-base" aria-hidden="true"></g>
+          <g id="preview-layer" aria-hidden="true"></g>
+          <g id="trail-layer" aria-hidden="true"></g>
+          <g id="plane-layer" aria-hidden="true"></g>
+        </svg>
+        <div class="map-legend" aria-hidden="true">
+          <span>出发桌</span>
+          <span class="legend-route"></span>
+          <span>你的邮箱</span>
+        </div>
+      </section>
+
+      <section class="control-panel" aria-labelledby="page-title">
+        <header class="title-sheet">
+          <p class="eyebrow">LOCAL AIRMAIL / 只在本机</p>
+          <h1 id="page-title">纸飞机投递</h1>
+          <p>调好角度与力度，把这封信送到你手里。</p>
+        </header>
+
+        <div class="status-strip" role="status">
+          <span class="status-mark" aria-hidden="true">✦</span>
+          <strong id="status-title">等待起飞</strong>
+          <span class="status-mark" aria-hidden="true">✦</span>
+        </div>
+        <p id="event-message" class="event-message">一封信已经折成纸飞机。</p>
+
+        <section id="intro-pane" class="stage-pane intro-pane" aria-labelledby="intro-title">
+          <h2 id="intro-title">先把航线铺开</h2>
+          <p>不用赶时间。失败不会扣分，邮差会留下下一次提示。</p>
+          <button id="start-button" class="primary-action" type="button" data-action="start">开始投递</button>
+        </section>
+
+        <fieldset id="aim-pane" class="aim-pane" hidden>
+          <legend>调整航线</legend>
+
+          <div class="aim-control">
+            <div class="aim-heading">
+              <label for="angle-input">仰角</label>
+              <output id="angle-output" for="angle-input">20°</output>
+            </div>
+            <div class="range-row">
+              <button type="button" class="step-button" data-action="adjust" data-field="angle" data-delta="-1" aria-label="仰角减 1 度">−</button>
+              <input id="angle-input" type="range" min="12" max="38" step="1" value="20" aria-describedby="angle-help">
+              <button type="button" class="step-button" data-action="adjust" data-field="angle" data-delta="1" aria-label="仰角加 1 度">＋</button>
+            </div>
+            <p id="angle-help">低角贴近地面，高角会飞得更久。</p>
+          </div>
+
+          <div class="aim-control">
+            <div class="aim-heading">
+              <label for="power-input">力度</label>
+              <output id="power-output" for="power-input">70</output>
+            </div>
+            <div class="range-row">
+              <button type="button" class="step-button" data-action="adjust" data-field="power" data-delta="-1" aria-label="力度减 1 格">−</button>
+              <input id="power-input" type="range" min="0" max="100" step="1" value="70" aria-describedby="power-help">
+              <button type="button" class="step-button" data-action="adjust" data-field="power" data-delta="1" aria-label="力度加 1 格">＋</button>
+            </div>
+            <p id="power-help">力度越大，纸飞机的初速度越快。</p>
+          </div>
+
+          <button id="launch-button" class="primary-action" type="button" data-action="launch">放飞这封信</button>
+        </fieldset>
+
+        <section id="outcome-pane" class="stage-pane outcome-pane" hidden aria-labelledby="outcome-title">
+          <h2 id="outcome-title">航线结果</h2>
+          <p id="outcome-copy"></p>
+          <p id="hint-copy" class="hint-copy"></p>
+          <button id="outcome-action" class="primary-action" type="button"></button>
+        </section>
+
+        <section id="mail-stage" class="mail-stage" aria-label="待投递信件"></section>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>一架纸飞机，一封只给你的信</p>
+      <p>本地运行 · 不联网 · 不保存</p>
+    </footer>
+    <p id="live-region" class="visually-hidden" aria-live="polite"></p>
+  </main>
+
+  <script src="logic.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
