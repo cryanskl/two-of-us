@@ -681,6 +681,76 @@ test("steady together keeps its file protocol, exact input lifecycle, and attrib
   assert.match(portal, /"id": "steady-together"/);
 });
 
+test("catalog exposes the installed A-level moving home together experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const movingHome = catalog.experiences.find((item) => item.id === "moving-home-together");
+
+  assert.equal(movingHome.category, "co-op");
+  assert.equal(movingHome.level, "A");
+  assert.equal(movingHome.players, "2 人合作");
+  assert.equal(movingHome.devices, "单设备同屏");
+  assert.equal(movingHome.installed, true);
+  assert.equal(movingHome.networkRequired, false);
+  assert.match(movingHome.entry, /moving-home-together\/index\.html$/);
+});
+
+test("moving home together keeps its file protocol, kinematic, input, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/moving-home-together/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+  const networkSource = runtimeSource.replaceAll("http://www.w3.org/2000/svg", "");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(networkSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(logic, /Math\.(?:sin|cos)/);
+  assert.match(logic, /const ANGLE_TABLE = deepFreeze\(\[/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /classifyMovingHomeKey/);
+  assert.match(app, /const generations = \{ left: 0, right: 0 \}/);
+  assert.match(app, /pointerId: event\.pointerId/);
+  assert.match(app, /gap > logic\.MAX_FRAME_GAP_MS/);
+  assert.match(css, /assets\/moving-day-paper\.jpg/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /min-width:\s*120px/);
+  assert.match(css, /min-height:\s*120px/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /20e612681d1f9eabc9ea34dc98c4d27f985ffec6/);
+  assert.match(readme, /8c661469c9507d3ad6fbd2fea3f1aa71669c2fe3/);
+  assert.match(readme, /058bf6d982a0fb89b54050f929f6ea9dae53b714/);
+  assert.match(readme, /d83c483f912362fd6e57c74b0634ea3f1f3e0c82/);
+  assert.match(readme, /4d140761ba1af8f4448bc6bd4785b63fc8928c5c/);
+  assert.match(readme, /542c57a778bbf843eb2cb121e99d0b050d8c866e/);
+  assert.match(readme, /238e8273305bb2e3c76f9f0bb289fb127c3dff74/);
+  assert.match(readme, /b201684d1de0af90bc403814bbdee6aa96647130/);
+  assert.match(readme, /56674fb3ac40279141a202e5d19b84f30d99854d/);
+  assert.match(readme, /07123b871c103268375880980fd715b2b26b2ff0/);
+  assert.match(readme, /c7573530343759ace8e46438a1fa2c44515b5554/);
+  assert.match(readme, /OpenAI 内置 ImageGen/);
+  assert.match(readme, /第三方图片、商业游戏截图或开源项目资产输入：无/);
+  assert.match(attribution, /完整原创与零复制声明/);
+  assert.match(portal, /"id": "moving-home-together"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");

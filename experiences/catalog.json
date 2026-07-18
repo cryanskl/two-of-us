@@ -340,6 +340,19 @@
       "networkRequired": false
     },
     {
+      "id": "moving-home-together",
+      "title": "一起，把家搬进来",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/moving-home-together/index.html",
+      "readme": "experiences/co-op/moving-home-together/README.md",
+      "description": "两人各自控制沙发一端，在固定 S 形门厅共同平移、转弯并一起松手把它放稳。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",
