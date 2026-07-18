@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#07111f">
+  <title>把信号接回来 · Two of Us</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="signal-app" id="signal-app" data-phase="intro">
+    <header class="app-header">
+      <h1>把信号接回来</h1>
+      <p id="header-round" hidden></p>
+    </header>
+
+    <section class="phase-panel intro-panel" id="intro-panel" aria-labelledby="intro-title">
+      <div class="intro-orbit" aria-hidden="true"><span></span><span></span></div>
+      <h2 id="intro-title" tabindex="-1">把一封被星尘打散的传输，接回来</h2>
+      <p>面对面放好这台设备。一个人描述星路，一个人按规则领航。</p>
+      <p class="honor-copy">双方看到不同信息，请只读自己朝向的一边。</p>
+      <button class="primary-action" type="button" data-action="start">开始校准</button>
+    </section>
+
+    <section class="phase-panel handoff-panel" id="handoff-panel" aria-labelledby="handoff-title" hidden>
+      <h2 id="handoff-title" tabindex="-1">这一轮，交换视角</h2>
+      <p>两边都准备好以后，题面和规则才会同时出现。</p>
+      <div class="ready-seats">
+        <article class="ready-seat ready-seat--north">
+          <span class="seat-mark" aria-hidden="true">◇</span>
+          <h3 id="north-ready-name">北席</h3>
+          <p id="north-ready-role">领航员 · 按优先规则判断</p>
+          <button type="button" data-action="ready" data-seat="north">我准备好了</button>
+        </article>
+        <article class="ready-seat ready-seat--south">
+          <span class="seat-mark" aria-hidden="true">△</span>
+          <h3 id="south-ready-name">南席</h3>
+          <p id="south-ready-role">操作员 · 描述三条星路</p>
+          <button type="button" data-action="ready" data-seat="south">我准备好了</button>
+        </article>
+      </div>
+      <p class="handoff-note">窄屏时把设备依次递给两席确认；第二席准备后会直接开始。</p>
+    </section>
+
+    <section class="game-table" id="game-table" aria-labelledby="playing-title" hidden>
+      <h2 class="visually-hidden" id="playing-title" tabindex="-1">听对方说，再接回一条星路</h2>
+      <section class="workspace north-workspace" id="north-workspace" aria-labelledby="north-workspace-title">
+        <div class="north-workspace__rotator">
+          <header class="workspace-header">
+            <span class="seat-mark" aria-hidden="true">◇</span>
+            <div><p id="north-workspace-name">北席</p><h3 id="north-workspace-title"></h3></div>
+          </header>
+          <div class="workspace-content" id="north-workspace-content"></div>
+        </div>
+      </section>
+
+      <section class="shared-gauge" aria-label="共享轮次与倒计时">
+        <div><span>轮次</span><strong id="round-number">1 / 4</strong></div>
+        <div class="time-gauge"><span>剩余</span><strong id="remaining-seconds">45</strong><small>秒</small></div>
+        <div><span>操作员</span><strong id="operator-name">南席</strong></div>
+        <button type="button" data-action="pause" aria-label="暂停这一轮">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+          暂停
+        </button>
+      </section>
+
+      <section class="workspace south-workspace" id="south-workspace" aria-labelledby="south-workspace-title">
+        <header class="workspace-header">
+          <span class="seat-mark" aria-hidden="true">△</span>
+          <div><p id="south-workspace-name">南席</p><h3 id="south-workspace-title"></h3></div>
+        </header>
+        <div class="workspace-content" id="south-workspace-content"></div>
+      </section>
+    </section>
+
+    <section class="phase-panel paused-panel" id="paused-panel" aria-labelledby="paused-title" hidden>
+      <div class="signal-line is-still" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h2 id="paused-title" tabindex="-1">这一轮暂停了</h2>
+      <p>时间和信号都停在这里。</p>
+      <button class="primary-action" type="button" data-action="resume">继续这一轮</button>
+    </section>
+
+    <section class="phase-panel timeout-panel" id="timeout-panel" aria-labelledby="timeout-title" hidden>
+      <div class="signal-line is-faded" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h2 id="timeout-title" tabindex="-1">信号淡出了</h2>
+      <p>不公布答案。原题再听一次。</p>
+      <button class="primary-action" type="button" data-action="retry">再听一次</button>
+    </section>
+
+    <section class="phase-panel result-panel" id="result-panel" aria-labelledby="result-title" hidden>
+      <div class="result-mark" aria-hidden="true">✓</div>
+      <h2 id="result-title" tabindex="-1">这一段接回来了</h2>
+      <p id="result-branch"></p>
+      <p id="result-rule"></p>
+      <p class="result-handoff">下一轮交换操作员与领航员。</p>
+      <button class="primary-action" type="button" data-action="next">交换位置，继续</button>
+    </section>
+
+    <section class="complete-panel" id="complete-panel" aria-labelledby="complete-title" hidden>
+      <h2 id="complete-title" tabindex="-1">传输已完整</h2>
+      <p class="complete-lead">在漫长的夜里，我们终于听见彼此。</p>
+      <div class="transmission" id="transmission" aria-label="接回的四段私人传输"></div>
+      <div class="constellation" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <ol class="round-records" id="round-records" aria-label="四轮接收记录"></ol>
+      <button class="primary-action" type="button" data-action="restart">重新接收</button>
+      <a class="library-link" href="../../../index.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7M8 12h11"/></svg>
+        返回作品库
+      </a>
+    </section>
+
+    <p class="persistent-status" id="persistent-status"></p>
+    <p class="visually-hidden" id="live-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <noscript>需要启用 JavaScript 才能一起接回信号。</noscript>
+  </main>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
