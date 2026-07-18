@@ -87,6 +87,8 @@
 | [78-light-trail-hunt-design.md](./78-light-trail-hunt-design.md) | “光轨围猎”的桌面、手机、平局概念，制图纸令牌、Canvas 绘制、允许文案与响应式提取清单 |
 | [79-light-trail-hunt-verification.md](./79-light-trail-hunt-verification.md) | “光轨围猎”的 21 项逻辑、462 项全仓、file/localhost、三档响应式、双 Pointer 与视觉保真验收 |
 | [80-orbit-star-race-verification.md](./80-orbit-star-race-verification.md) | “这一颗我先到”的 15 项逻辑、462 项全仓、file/localhost、5–1 实玩、三档响应式、资产降级与视觉保真验收 |
+| [81-shared-color-studio-research.md](./81-shared-color-studio-research.md) | A 级“把颜色调到一起”的双人分轴、离散 OkLCh、固定来源、可访问反馈、许可证与零复制调研 |
+| [82-shared-color-studio-spec.md](./82-shared-color-studio-spec.md) | A 级“把颜色调到一起”的五张色笺、整数 tick、双轴交换律、阶段 DOM、颜色回退与验收规格 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

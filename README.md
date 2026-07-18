@@ -98,6 +98,8 @@
 - [“光轨围猎”视觉设计](./docs/78-light-trail-hunt-design.md)
 - [“光轨围猎”验收记录](./docs/79-light-trail-hunt-verification.md)
 - [A 级“这一颗我先到”验收记录](./docs/80-orbit-star-race-verification.md)
+- [A 级“把颜色调到一起”定向调研](./docs/81-shared-color-studio-research.md)
+- [A 级“把颜色调到一起”实现规格](./docs/82-shared-color-studio-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
