@@ -140,7 +140,7 @@ Playwright CLI 命令层主动阻止 `file:` 导航，因此另启 headless Goog
 - [桌面首屏高度预算固定多出 2px](../bugs/2026-07-18-paper-soccer-desktop-height-budget.md)
 - [普通换手反馈在玩家名之前多出空格](../bugs/2026-07-18-paper-soccer-turn-copy-spacing.md)
 - [规格允许了图结构上不可能出现的普通换手困死](../bugs/2026-07-18-paper-soccer-impossible-switch-trap.md)
-- [落笔前图状态：实现无向路径、借力与困死](../learn/2026-07-18-pre-move-graph-state-and-bounce.md)
+- [落笔前图状态：无向边、借力与困死的统一判定](../learn/2026-07-18-pre-move-graph-state-and-bounce.md)
 
 ## 7. 借鉴与来源复核
 

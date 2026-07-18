@@ -6,7 +6,7 @@
 
 ## 已沉淀
 
-- [落笔前图状态：实现无向路径、借力与困死](./2026-07-18-pre-move-graph-state-and-bounce.md)
+- [落笔前图状态：无向边、借力与困死的统一判定](./2026-07-18-pre-move-graph-state-and-bounce.md)
 - [阶段门控的渐进惊喜：让状态拥有文案与焦点](./2026-07-17-stage-gated-progressive-surprise.md)
 - [Token 守卫的双角色协作交接](./2026-07-17-token-guarded-cooperative-handoff.md)
 - [可达随机题面：先生成材料，再从材料派生目标](./2026-07-17-reachable-random-puzzle-generation.md)
