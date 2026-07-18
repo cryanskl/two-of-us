@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [离线纪念日仪器：近似边界、阶段 DOM 与圆环跨输入](./2026-07-18-local-date-dial-boundaries.md)
 - [手摇交互：单调进度、共享出口与音频 epoch](./2026-07-18-hand-crank-progress-and-audio-epoch.md)
 - [只口头作答的双人仪式：把安全感写进状态机](./2026-07-18-spoken-answer-ritual-boundary.md)
 - [可恢复的私人答案 Gate：不留输入，也不让对方卡住](./2026-07-18-recoverable-private-answer-gate.md)
