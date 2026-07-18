@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [在雾上，写给你：笔迹达标后焦点没有进入确认动作](./2026-07-19-fog-window-ready-focus-gap.md)
+- [在雾上，写给你：1280×800 首屏看不到状态和主动作](./2026-07-19-fog-window-desktop-actions-below-fold.md)
+- [在雾上，写给你：移动完成态重开按钮被信件滚动区裁切](./2026-07-19-fog-window-mobile-restart-clipped.md)
 - [一起，把家搬进来：伪造状态允许沙发中心落到世界外](./2026-07-19-moving-home-forged-pose-outside-world.md)
 - [一起，把家搬进来：移动端主动作被压到 44px](./2026-07-19-moving-home-mobile-primary-target-height.md)
 - [稳稳地，和你一起向前：非等幅坡势与严格镜像 Gate 矛盾](./2026-07-18-steady-together-asymmetric-bias-mirror-contract.md)
