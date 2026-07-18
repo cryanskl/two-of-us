@@ -118,6 +118,7 @@
 | [109-moving-home-together-design.md](./109-moving-home-together-design.md) | “一起，把家搬进来”的三状态 ImageGen 概念、纸艺搬家设计系统、生产背景、移动重排与 fidelity Gate |
 | [110-moving-home-together-verification.md](./110-moving-home-together-verification.md) | “一起，把家搬进来”的 129 项逻辑、831 项全仓、43 项目录、生产动作重放、三档响应式、来源、bugs/learn 与受限截图证据验收 |
 | [111-fog-window-letter-research.md](./111-fog-window-letter-research.md) | A 级“在雾上，写给你”的双遍同轨迹、整数笔迹锚点、Canvas/Pointer、固定来源、许可证与零复制调研 |
+| [112-fog-window-letter-spec.md](./112-fog-window-letter-spec.md) | A 级“在雾上，写给你”的整数笔迹 Gate、锚点抽稀、线段命中、Pointer generation、阶段 DOM 与可访问等价规格 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
