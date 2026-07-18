@@ -625,6 +625,62 @@ test("same pace star keeps its file protocol, four-edge input, and attribution b
   assert.match(portal, /"id": "same-pace-star"/);
 });
 
+test("catalog exposes the installed A-level steady together experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const steady = catalog.experiences.find((item) => item.id === "steady-together");
+
+  assert.equal(steady.category, "co-op");
+  assert.equal(steady.level, "A");
+  assert.equal(steady.players, "2 人合作");
+  assert.equal(steady.devices, "单设备同屏");
+  assert.equal(steady.installed, true);
+  assert.equal(steady.networkRequired, false);
+  assert.match(steady.entry, /steady-together\/index\.html$/);
+});
+
+test("steady together keeps its file protocol, exact input lifecycle, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/steady-together/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+  const networkSource = runtimeSource.replaceAll("http://www.w3.org/2000/svg", "");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(networkSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /classifySteadyKey/);
+  assert.match(app, /gap > logic\.MAX_FRAME_GAP_MS/);
+  assert.match(css, /assets\/balance-journey\.webp/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /70790b1c0cc57aabddd93f58ad456e473db44d2e/);
+  assert.match(readme, /8cc21a213394f0e701ca0643af3fef32562f5d91/);
+  assert.match(readme, /238e8273305bb2e3c76f9f0bb289fb127c3dff74/);
+  assert.match(readme, /OpenAI 内置 ImageGen/);
+  assert.match(readme, /第三方图像输入：无/);
+  assert.match(attribution, /完整零复制与原创声明/);
+  assert.match(portal, /"id": "steady-together"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
