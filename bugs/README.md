@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [把月亮拨回那一天：月相目标四字段被日期三字段校验拒绝](./2026-07-18-moon-target-shape-reset.md)
+- [把月亮拨回那一天：静态协议正则误报 CSS `rows:`](./2026-07-18-protocol-regex-matched-css-rows.md)
 - [把这首转给你：共享播放器路径与单目录便携承诺冲突](./2026-07-18-hand-crank-standalone-copy-contract.md)
 - [把这首转给你：图片早于监听器失败时没有进入备用场景](./2026-07-18-hand-crank-cached-image-failure.md)
 - [把这首转给你：缺失 favicon 污染 localhost 控制台](./2026-07-18-hand-crank-favicon-404.md)
