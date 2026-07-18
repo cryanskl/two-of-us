@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一格归谁：规则实现把整数步数改成时间事件数组](./2026-07-18-dots-boxes-state-contract-drift.md)
 - [把月亮拨回那一天：重开后 live region 保留成功播报](./2026-07-18-moon-stale-live-region-after-restart.md)
 - [把月亮拨回那一天：localhost 启动缺失 favicon 污染控制台](./2026-07-18-moon-localhost-favicon-404.md)
 - [把月亮拨回那一天：手机开场首屏没有可执行动作](./2026-07-18-moon-mobile-intro-action-below-fold.md)

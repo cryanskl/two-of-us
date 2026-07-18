@@ -11,10 +11,10 @@
   const PHASES = deepFreeze({ INTRO: "intro", PLAYING: "playing", FINISHED: "finished" });
   const CONFIG_KEYS = deepFreeze(["composeResult", "playerNames"]);
   const STATE_KEYS = deepFreeze([
-    "phase", "starter", "currentPlayer", "playerNames", "moves", "boxes",
-    "scores", "moveNumber", "lastMove", "revision",
+    "phase", "starter", "currentPlayer", "playerNames", "edges", "boxes",
+    "scores", "moves", "lastMove", "revision",
   ]);
-  const MOVE_KEYS = deepFreeze(["edgeId", "player"]);
+  const EDGE_KEYS = deepFreeze(["id", "owner"]);
   const BOX_KEYS = deepFreeze(["id", "owner"]);
   const LAST_MOVE_KEYS = deepFreeze(["edgeId", "player", "capturedBoxIds", "kind"]);
   const RESULT_KEYS = deepFreeze(["body", "title"]);
@@ -139,56 +139,6 @@
     return used !== null && required.every((edgeId) => used.has(edgeId));
   }
 
-  function replayMoves(starter, moves) {
-    try {
-      if (!isPlayer(starter) || !Array.isArray(moves) || moves.length > TOTAL_EDGES) return null;
-      const usedEdges = new Set();
-      const replayedMoves = [];
-      const boxes = ALL_BOX_IDS.map((id) => ({ id, owner: null }));
-      const scores = [0, 0];
-      let currentPlayer = starter;
-      let lastMove = null;
-      let phase = PHASES.PLAYING;
-
-      for (const rawMove of moves) {
-        if (phase === PHASES.FINISHED || !isPlainRecord(rawMove) || !hasExactKeys(rawMove, MOVE_KEYS)) return null;
-        if (!parseEdgeId(rawMove.edgeId) || !isPlayer(rawMove.player)
-          || rawMove.player !== currentPlayer || usedEdges.has(rawMove.edgeId)) return null;
-
-        const player = currentPlayer;
-        usedEdges.add(rawMove.edgeId);
-        replayedMoves.push({ edgeId: rawMove.edgeId, player });
-        const capturedBoxIds = getAdjacentBoxIds(rawMove.edgeId).filter((boxId) => {
-          const box = boxes[ALL_BOX_IDS.indexOf(boxId)];
-          return box.owner === null && getBoxEdgeIds(boxId).every((edgeId) => usedEdges.has(edgeId));
-        });
-        for (const boxId of capturedBoxIds) boxes[ALL_BOX_IDS.indexOf(boxId)] = { id: boxId, owner: player };
-        scores[player] += capturedBoxIds.length;
-
-        const finished = scores[0] + scores[1] === TOTAL_BOXES;
-        const kind = finished
-          ? "finished"
-          : capturedBoxIds.length === 2 ? "capture-two" : capturedBoxIds.length === 1 ? "capture-one" : "switch";
-        currentPlayer = finished || capturedBoxIds.length > 0 ? player : 1 - player;
-        phase = finished ? PHASES.FINISHED : PHASES.PLAYING;
-        lastMove = { edgeId: rawMove.edgeId, player, capturedBoxIds, kind };
-      }
-
-      return deepFreeze({
-        phase,
-        starter,
-        currentPlayer,
-        moves: replayedMoves,
-        boxes,
-        scores,
-        moveNumber: replayedMoves.length,
-        lastMove,
-      });
-    } catch (_error) {
-      return null;
-    }
-  }
-
   function createInitialState(configValue) {
     const config = sanitizeConfig(configValue);
     return freezeState({
@@ -196,10 +146,10 @@
       starter: 0,
       currentPlayer: 0,
       playerNames: config.playerNames,
-      moves: [],
+      edges: [],
       boxes: emptyBoxes(),
       scores: [0, 0],
-      moveNumber: 0,
+      moves: 0,
       lastMove: null,
       revision: 0,
     });
@@ -210,15 +160,49 @@
       if (!isPlainRecord(value) || !hasExactKeys(value, STATE_KEYS)) return false;
       if (!Object.values(PHASES).includes(value.phase)) return false;
       if (!isPlayer(value.starter) || !isPlayer(value.currentPlayer) || !isValidNames(value.playerNames)) return false;
-      if (!Array.isArray(value.moves) || !Array.isArray(value.boxes) || !Array.isArray(value.scores)) return false;
-      if (!Number.isInteger(value.moveNumber) || value.moveNumber < 0 || value.moveNumber > TOTAL_EDGES) return false;
+      if (!Array.isArray(value.edges) || value.edges.length > TOTAL_EDGES) return false;
+      if (!Array.isArray(value.boxes) || value.boxes.length !== TOTAL_BOXES) return false;
+      if (!Array.isArray(value.scores) || value.scores.length !== 2
+        || !value.scores.every((score) => Number.isInteger(score) && score >= 0)) return false;
+      if (!Number.isInteger(value.moves) || value.moves < 0 || value.moves !== value.edges.length) return false;
       if (!Number.isSafeInteger(value.revision) || value.revision < 0) return false;
-      const replayed = replayMoves(value.starter, value.moves);
-      if (!replayed || value.moveNumber !== replayed.moveNumber) return false;
-      if (!sameBoxes(value.boxes, replayed.boxes) || !sameNumberArray(value.scores, replayed.scores)) return false;
-      if (value.currentPlayer !== replayed.currentPlayer || !sameLastMove(value.lastMove, replayed.lastMove)) return false;
-      if (value.phase === PHASES.INTRO) return value.moveNumber === 0;
-      return value.phase === replayed.phase;
+
+      const edgeOwners = new Map();
+      let previousOrder = -1;
+      for (const edge of value.edges) {
+        if (!isPlainRecord(edge) || !hasExactKeys(edge, EDGE_KEYS) || !isPlayer(edge.owner)) return false;
+        const order = EDGE_ORDER.get(edge.id);
+        if (order === undefined || order <= previousOrder || edgeOwners.has(edge.id)) return false;
+        previousOrder = order;
+        edgeOwners.set(edge.id, edge.owner);
+      }
+
+      const usedEdges = new Set(edgeOwners.keys());
+      const countedScores = [0, 0];
+      for (let index = 0; index < value.boxes.length; index += 1) {
+        const box = value.boxes[index];
+        if (!isPlainRecord(box) || !hasExactKeys(box, BOX_KEYS) || box.id !== ALL_BOX_IDS[index]) return false;
+        if (box.owner !== null && !isPlayer(box.owner)) return false;
+        const closed = getBoxEdgeIds(box.id).every((edgeId) => usedEdges.has(edgeId));
+        if (closed !== (box.owner !== null)) return false;
+        if (box.owner !== null) countedScores[box.owner] += 1;
+      }
+      if (value.scores[0] !== countedScores[0] || value.scores[1] !== countedScores[1]) return false;
+      const occupiedBoxes = countedScores[0] + countedScores[1];
+
+      if (value.moves === 0) {
+        if (value.lastMove !== null || value.currentPlayer !== value.starter) return false;
+      } else if (!isValidLastMove(value, edgeOwners)) {
+        return false;
+      }
+
+      if (value.phase === PHASES.INTRO) return value.moves === 0 && occupiedBoxes === 0;
+      if (value.phase === PHASES.PLAYING) {
+        return occupiedBoxes < TOTAL_BOXES && value.edges.length < TOTAL_EDGES
+          && (value.lastMove === null || value.lastMove.kind !== "finished");
+      }
+      return occupiedBoxes === TOTAL_BOXES && value.edges.length === TOTAL_EDGES
+        && value.lastMove !== null && value.lastMove.kind === "finished";
     } catch (_error) {
       return false;
     }
@@ -233,22 +217,33 @@
   function claimEdge(state, edgeId) {
     const safe = validStateOrInitial(state);
     if (safe.recovered || safe.state.phase !== PHASES.PLAYING || typeof edgeId !== "string") return safe.state;
-    if (!parseEdgeId(edgeId) || safe.state.moves.some((move) => move.edgeId === edgeId)) return safe.state;
-    const replayed = replayMoves(safe.state.starter, [
-      ...safe.state.moves,
-      { edgeId, player: safe.state.currentPlayer },
-    ]);
-    if (!replayed) return safe.state;
+    if (!parseEdgeId(edgeId) || safe.state.edges.some((edge) => edge.id === edgeId)) return safe.state;
+    const player = safe.state.currentPlayer;
+    const edges = [...safe.state.edges, { id: edgeId, owner: player }]
+      .sort((left, right) => EDGE_ORDER.get(left.id) - EDGE_ORDER.get(right.id));
+    const usedEdges = new Set(edges.map((edge) => edge.id));
+    const capturedBoxIds = getAdjacentBoxIds(edgeId).filter((boxId) => {
+      const box = safe.state.boxes.find((candidate) => candidate.id === boxId);
+      return box.owner === null && getBoxEdgeIds(boxId).every((id) => usedEdges.has(id));
+    });
+    const captured = new Set(capturedBoxIds);
+    const boxes = safe.state.boxes.map((box) => captured.has(box.id) ? { id: box.id, owner: player } : box);
+    const scores = [...safe.state.scores];
+    scores[player] += capturedBoxIds.length;
+    const finished = scores[0] + scores[1] === TOTAL_BOXES;
+    const kind = finished
+      ? "finished"
+      : capturedBoxIds.length === 2 ? "capture-two" : capturedBoxIds.length === 1 ? "capture-one" : "switch";
     return freezeState({
-      phase: replayed.phase,
+      phase: finished ? PHASES.FINISHED : PHASES.PLAYING,
       starter: safe.state.starter,
-      currentPlayer: replayed.currentPlayer,
+      currentPlayer: capturedBoxIds.length > 0 ? player : 1 - player,
       playerNames: safe.state.playerNames,
-      moves: replayed.moves,
-      boxes: replayed.boxes,
-      scores: replayed.scores,
-      moveNumber: replayed.moveNumber,
-      lastMove: replayed.lastMove,
+      edges,
+      boxes,
+      scores,
+      moves: safe.state.moves + 1,
+      lastMove: { edgeId, player, capturedBoxIds, kind },
       revision: safe.state.revision + 1,
     });
   }
@@ -262,10 +257,10 @@
       starter,
       currentPlayer: starter,
       playerNames: safe.state.playerNames,
-      moves: [],
+      edges: [],
       boxes: emptyBoxes(),
       scores: [0, 0],
-      moveNumber: 0,
+      moves: 0,
       lastMove: null,
       revision: safe.state.revision + 1,
     });
@@ -277,10 +272,6 @@
     const winnerIndex = finished
       ? safe.scores[0] === safe.scores[1] ? null : safe.scores[0] > safe.scores[1] ? 0 : 1
       : null;
-    const ownerByEdge = new Map(safe.moves.map((move) => [move.edgeId, move.player]));
-    const edges = ALL_EDGE_IDS
-      .filter((edgeId) => ownerByEdge.has(edgeId))
-      .map((edgeId) => ({ id: edgeId, owner: ownerByEdge.get(edgeId) }));
     return deepFreeze({
       phase: safe.phase,
       starter: safe.starter,
@@ -288,10 +279,10 @@
       currentPlayerName: safe.playerNames[safe.currentPlayer],
       playerNames: [...safe.playerNames],
       scores: [...safe.scores],
-      moveNumber: safe.moveNumber,
+      moves: safe.moves,
       remainingBoxes: TOTAL_BOXES - safe.scores[0] - safe.scores[1],
-      remainingEdges: TOTAL_EDGES - safe.moveNumber,
-      edges,
+      remainingEdges: TOTAL_EDGES - safe.edges.length,
+      edges: safe.edges.map((edge) => ({ ...edge })),
       boxes: safe.boxes.map((box) => ({ ...box })),
       lastMove: safe.lastMove ? cloneLastMove(safe.lastMove) : null,
       result: finished ? { winnerIndex, isTie: winnerIndex === null } : null,
@@ -323,10 +314,10 @@
       starter: value.starter,
       currentPlayer: value.currentPlayer,
       playerNames: [...value.playerNames],
-      moves: value.moves.map((move) => ({ edgeId: move.edgeId, player: move.player })),
+      edges: value.edges.map((edge) => ({ id: edge.id, owner: edge.owner })),
       boxes: value.boxes.map((box) => ({ id: box.id, owner: box.owner })),
       scores: [...value.scores],
-      moveNumber: value.moveNumber,
+      moves: value.moves,
       lastMove: value.lastMove ? cloneLastMove(value.lastMove) : null,
       revision: value.revision,
     });
@@ -351,24 +342,22 @@
       : deepFreeze({ title: `${playerNames[winnerIndex]}赢下这一页`, body: "最后一格也有归属了。" });
   }
 
-  function sameBoxes(left, right) {
-    return Array.isArray(left) && left.length === right.length
-      && left.every((box, index) => isPlainRecord(box) && hasExactKeys(box, BOX_KEYS)
-        && box.id === right[index].id && box.owner === right[index].owner);
-  }
-
-  function sameNumberArray(left, right) {
-    return Array.isArray(left) && left.length === right.length
-      && left.every((value, index) => value === right[index]);
-  }
-
-  function sameLastMove(left, right) {
-    if (left === null || right === null) return left === right;
-    return isPlainRecord(left) && hasExactKeys(left, LAST_MOVE_KEYS)
-      && left.edgeId === right.edgeId && left.player === right.player && left.kind === right.kind
-      && Array.isArray(left.capturedBoxIds)
-      && left.capturedBoxIds.length === right.capturedBoxIds.length
-      && left.capturedBoxIds.every((boxId, index) => boxId === right.capturedBoxIds[index]);
+  function isValidLastMove(state, edgeOwners) {
+    const move = state.lastMove;
+    if (!isPlainRecord(move) || !hasExactKeys(move, LAST_MOVE_KEYS)) return false;
+    if (!parseEdgeId(move.edgeId) || !isPlayer(move.player) || edgeOwners.get(move.edgeId) !== move.player) return false;
+    if (!Array.isArray(move.capturedBoxIds) || move.capturedBoxIds.length > 2) return false;
+    const adjacent = getAdjacentBoxIds(move.edgeId);
+    const expectedCaptured = adjacent.filter((boxId) => {
+      const box = state.boxes.find((candidate) => candidate.id === boxId);
+      return box.owner === move.player && getBoxEdgeIds(boxId).every((id) => edgeOwners.has(id));
+    });
+    if (move.capturedBoxIds.length !== expectedCaptured.length
+      || move.capturedBoxIds.some((boxId, index) => boxId !== expectedCaptured[index])) return false;
+    if (move.kind === "switch") return move.capturedBoxIds.length === 0 && state.currentPlayer === 1 - move.player;
+    if (move.kind === "capture-one") return move.capturedBoxIds.length === 1 && state.currentPlayer === move.player;
+    if (move.kind === "capture-two") return move.capturedBoxIds.length === 2 && state.currentPlayer === move.player;
+    return move.kind === "finished" && move.capturedBoxIds.length >= 1 && state.currentPlayer === move.player;
   }
 
   function cloneLastMove(move) {
@@ -391,7 +380,7 @@
         return ids.every((id) => parseEdgeId(id)) ? new Set(ids) : null;
       }
       if (!Array.isArray(edges)) return null;
-      const ids = edges.map((edge) => typeof edge === "string" ? edge : edge?.edgeId ?? edge?.id);
+      const ids = edges.map((edge) => typeof edge === "string" ? edge : edge?.id);
       return ids.every((id) => parseEdgeId(id)) ? new Set(ids) : null;
     } catch (_error) {
       return null;
@@ -468,7 +457,6 @@
     getBoxEdgeIds,
     getAdjacentBoxIds,
     isBoxClosed,
-    replayMoves,
     createInitialState,
     isDotsAndBoxesState,
     start,
