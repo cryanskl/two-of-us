@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [稳稳地，和你一起向前：FFmpeg 可执行但没有 WebP 编码器](./2026-07-18-steady-together-webp-encoder-unavailable.md)
 - [这一拍，刚好和你：浏览器截图字节为 JPEG 却保存成 PNG 扩展名](./2026-07-18-four-hands-harmony-screenshot-extension.md)
 - [这一拍，刚好和你：README 只跳转详版声明，未独立满足来源 Gate](./2026-07-18-four-hands-harmony-readme-attribution-gate.md)
 - [这一拍，刚好和你：移动断点把三个交互目标压到 44px](./2026-07-18-four-hands-harmony-mobile-touch-targets.md)

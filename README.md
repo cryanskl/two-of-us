@@ -121,6 +121,7 @@
 - [A 级“稳稳地，和你一起向前”定向调研](./docs/101-steady-together-research.md)
 - [A 级“稳稳地，和你一起向前”实现规格](./docs/102-steady-together-spec.md)
 - [“稳稳地，和你一起向前”分步实施计划](./docs/103-steady-together-plan.md)
+- [“稳稳地，和你一起向前”视觉设计](./docs/104-steady-together-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
