@@ -9,14 +9,14 @@
   const TOTAL_BOXES = BOARD_SIZE * BOARD_SIZE;
   const TOTAL_EDGES = DOT_COUNT * BOARD_SIZE * 2;
   const PHASES = deepFreeze({ INTRO: "intro", PLAYING: "playing", FINISHED: "finished" });
+  const CONFIG_KEYS = deepFreeze(["composeResult", "playerNames"]);
   const STATE_KEYS = deepFreeze([
-    "phase", "starter", "currentPlayer", "playerNames", "edges", "boxes",
-    "scores", "moves", "lastMove", "revision",
+    "phase", "starter", "currentPlayer", "playerNames", "moves", "boxes",
+    "scores", "moveNumber", "lastMove", "revision",
   ]);
-  const EDGE_KEYS = deepFreeze(["id", "owner"]);
+  const MOVE_KEYS = deepFreeze(["edgeId", "player"]);
   const BOX_KEYS = deepFreeze(["id", "owner"]);
   const LAST_MOVE_KEYS = deepFreeze(["edgeId", "player", "capturedBoxIds", "kind"]);
-  const CONFIG_KEYS = deepFreeze(["composeResult", "playerNames"]);
   const RESULT_KEYS = deepFreeze(["body", "title"]);
 
   const ALL_EDGE_IDS = deepFreeze(buildAllEdgeIds());
@@ -37,12 +37,12 @@
     const visited = seen || new Set();
     if (visited.has(value)) return value;
     visited.add(value);
-    Object.freeze(value);
     for (const key of Reflect.ownKeys(value)) deepFreeze(value[key], visited);
-    return value;
+    return Object.freeze(value);
   }
 
   function sanitizeConfig(value) {
+    if (value === undefined) return DEFAULT_CONFIG;
     try {
       if (!isPlainRecord(value) || !hasExactKeys(value, CONFIG_KEYS)) return DEFAULT_CONFIG;
       if (!Array.isArray(value.playerNames) || value.playerNames.length !== 2) return DEFAULT_CONFIG;
@@ -53,10 +53,10 @@
       return deepFreeze({
         playerNames: [...playerNames],
         composeResult(context) {
-          return formatter(context);
+          return Reflect.apply(formatter, undefined, [context]);
         },
       });
-    } catch {
+    } catch (_error) {
       return DEFAULT_CONFIG;
     }
   }
@@ -64,9 +64,9 @@
   function makeEdgeId(orientation, row, column) {
     if (orientation !== "H" && orientation !== "V") return null;
     if (!Number.isInteger(row) || !Number.isInteger(column)) return null;
-    const rowMax = orientation === "H" ? DOT_COUNT - 1 : BOARD_SIZE - 1;
-    const columnMax = orientation === "H" ? BOARD_SIZE - 1 : DOT_COUNT - 1;
-    return row >= 0 && row <= rowMax && column >= 0 && column <= columnMax
+    const rowMaximum = orientation === "H" ? DOT_COUNT - 1 : BOARD_SIZE - 1;
+    const columnMaximum = orientation === "H" ? BOARD_SIZE - 1 : DOT_COUNT - 1;
+    return row >= 0 && row <= rowMaximum && column >= 0 && column <= columnMaximum
       ? `${orientation}:${row}:${column}`
       : null;
   }
@@ -136,20 +136,70 @@
     const required = getBoxEdgeIds(boxId);
     if (required.length !== 4) return false;
     const used = edgeIdSet(edges);
-    return used !== null && required.every((id) => used.has(id));
+    return used !== null && required.every((edgeId) => used.has(edgeId));
+  }
+
+  function replayMoves(starter, moves) {
+    try {
+      if (!isPlayer(starter) || !Array.isArray(moves) || moves.length > TOTAL_EDGES) return null;
+      const usedEdges = new Set();
+      const replayedMoves = [];
+      const boxes = ALL_BOX_IDS.map((id) => ({ id, owner: null }));
+      const scores = [0, 0];
+      let currentPlayer = starter;
+      let lastMove = null;
+      let phase = PHASES.PLAYING;
+
+      for (const rawMove of moves) {
+        if (phase === PHASES.FINISHED || !isPlainRecord(rawMove) || !hasExactKeys(rawMove, MOVE_KEYS)) return null;
+        if (!parseEdgeId(rawMove.edgeId) || !isPlayer(rawMove.player)
+          || rawMove.player !== currentPlayer || usedEdges.has(rawMove.edgeId)) return null;
+
+        const player = currentPlayer;
+        usedEdges.add(rawMove.edgeId);
+        replayedMoves.push({ edgeId: rawMove.edgeId, player });
+        const capturedBoxIds = getAdjacentBoxIds(rawMove.edgeId).filter((boxId) => {
+          const box = boxes[ALL_BOX_IDS.indexOf(boxId)];
+          return box.owner === null && getBoxEdgeIds(boxId).every((edgeId) => usedEdges.has(edgeId));
+        });
+        for (const boxId of capturedBoxIds) boxes[ALL_BOX_IDS.indexOf(boxId)] = { id: boxId, owner: player };
+        scores[player] += capturedBoxIds.length;
+
+        const finished = scores[0] + scores[1] === TOTAL_BOXES;
+        const kind = finished
+          ? "finished"
+          : capturedBoxIds.length === 2 ? "capture-two" : capturedBoxIds.length === 1 ? "capture-one" : "switch";
+        currentPlayer = finished || capturedBoxIds.length > 0 ? player : 1 - player;
+        phase = finished ? PHASES.FINISHED : PHASES.PLAYING;
+        lastMove = { edgeId: rawMove.edgeId, player, capturedBoxIds, kind };
+      }
+
+      return deepFreeze({
+        phase,
+        starter,
+        currentPlayer,
+        moves: replayedMoves,
+        boxes,
+        scores,
+        moveNumber: replayedMoves.length,
+        lastMove,
+      });
+    } catch (_error) {
+      return null;
+    }
   }
 
   function createInitialState(configValue) {
-    const config = sanitizeConfig(configValue === undefined ? DEFAULT_CONFIG : configValue);
+    const config = sanitizeConfig(configValue);
     return freezeState({
       phase: PHASES.INTRO,
       starter: 0,
       currentPlayer: 0,
       playerNames: config.playerNames,
-      edges: [],
-      boxes: ALL_BOX_IDS.map((id) => ({ id, owner: null })),
+      moves: [],
+      boxes: emptyBoxes(),
       scores: [0, 0],
-      moves: 0,
+      moveNumber: 0,
       lastMove: null,
       revision: 0,
     });
@@ -159,54 +209,17 @@
     try {
       if (!isPlainRecord(value) || !hasExactKeys(value, STATE_KEYS)) return false;
       if (!Object.values(PHASES).includes(value.phase)) return false;
-      if (!isPlayer(value.starter) || !isPlayer(value.currentPlayer)) return false;
-      if (!isValidNames(value.playerNames)) return false;
-      if (!Array.isArray(value.edges) || value.edges.length > TOTAL_EDGES) return false;
-      if (!Array.isArray(value.boxes) || value.boxes.length !== TOTAL_BOXES) return false;
-      if (!Array.isArray(value.scores) || value.scores.length !== 2
-        || !value.scores.every((score) => Number.isInteger(score) && score >= 0)) return false;
-      if (!Number.isInteger(value.moves) || value.moves < 0 || value.moves !== value.edges.length) return false;
-      if (!Number.isInteger(value.revision) || value.revision < 0) return false;
-
-      const edgeOwners = new Map();
-      let previousOrder = -1;
-      for (const edge of value.edges) {
-        if (!isPlainRecord(edge) || !hasExactKeys(edge, EDGE_KEYS) || !isPlayer(edge.owner)) return false;
-        const order = EDGE_ORDER.get(edge.id);
-        if (order === undefined || order <= previousOrder || edgeOwners.has(edge.id)) return false;
-        previousOrder = order;
-        edgeOwners.set(edge.id, edge.owner);
-      }
-
-      const usedEdges = new Set(edgeOwners.keys());
-      const countedScores = [0, 0];
-      for (let index = 0; index < value.boxes.length; index += 1) {
-        const box = value.boxes[index];
-        if (!isPlainRecord(box) || !hasExactKeys(box, BOX_KEYS) || box.id !== ALL_BOX_IDS[index]) return false;
-        if (box.owner !== null && !isPlayer(box.owner)) return false;
-        const closed = getBoxEdgeIds(box.id).every((edgeId) => usedEdges.has(edgeId));
-        if (closed !== (box.owner !== null)) return false;
-        if (box.owner !== null) countedScores[box.owner] += 1;
-      }
-      if (value.scores[0] !== countedScores[0] || value.scores[1] !== countedScores[1]) return false;
-      const occupiedBoxes = countedScores[0] + countedScores[1];
-
-      if (value.moves === 0) {
-        if (value.lastMove !== null || value.currentPlayer !== value.starter) return false;
-      } else if (!isValidLastMove(value, edgeOwners)) {
-        return false;
-      }
-
-      if (value.phase === PHASES.INTRO) {
-        return value.moves === 0 && occupiedBoxes === 0;
-      }
-      if (value.phase === PHASES.PLAYING) {
-        return occupiedBoxes < TOTAL_BOXES && value.edges.length < TOTAL_EDGES
-          && (value.lastMove === null || value.lastMove.kind !== "finished");
-      }
-      return occupiedBoxes === TOTAL_BOXES && value.edges.length === TOTAL_EDGES
-        && value.lastMove !== null && value.lastMove.kind === "finished";
-    } catch {
+      if (!isPlayer(value.starter) || !isPlayer(value.currentPlayer) || !isValidNames(value.playerNames)) return false;
+      if (!Array.isArray(value.moves) || !Array.isArray(value.boxes) || !Array.isArray(value.scores)) return false;
+      if (!Number.isInteger(value.moveNumber) || value.moveNumber < 0 || value.moveNumber > TOTAL_EDGES) return false;
+      if (!Number.isSafeInteger(value.revision) || value.revision < 0) return false;
+      const replayed = replayMoves(value.starter, value.moves);
+      if (!replayed || value.moveNumber !== replayed.moveNumber) return false;
+      if (!sameBoxes(value.boxes, replayed.boxes) || !sameNumberArray(value.scores, replayed.scores)) return false;
+      if (value.currentPlayer !== replayed.currentPlayer || !sameLastMove(value.lastMove, replayed.lastMove)) return false;
+      if (value.phase === PHASES.INTRO) return value.moveNumber === 0;
+      return value.phase === replayed.phase;
+    } catch (_error) {
       return false;
     }
   }
@@ -220,34 +233,22 @@
   function claimEdge(state, edgeId) {
     const safe = validStateOrInitial(state);
     if (safe.recovered || safe.state.phase !== PHASES.PLAYING || typeof edgeId !== "string") return safe.state;
-    if (!parseEdgeId(edgeId) || safe.state.edges.some((edge) => edge.id === edgeId)) return safe.state;
-
-    const player = safe.state.currentPlayer;
-    const edges = [...safe.state.edges, { id: edgeId, owner: player }]
-      .sort((left, right) => EDGE_ORDER.get(left.id) - EDGE_ORDER.get(right.id));
-    const usedEdges = new Set(edges.map((edge) => edge.id));
-    const capturedBoxIds = getAdjacentBoxIds(edgeId).filter((boxId) => {
-      const box = safe.state.boxes.find((candidate) => candidate.id === boxId);
-      return box.owner === null && getBoxEdgeIds(boxId).every((id) => usedEdges.has(id));
-    });
-    const captured = new Set(capturedBoxIds);
-    const boxes = safe.state.boxes.map((box) => captured.has(box.id) ? { id: box.id, owner: player } : box);
-    const scores = [...safe.state.scores];
-    scores[player] += capturedBoxIds.length;
-    const finished = scores[0] + scores[1] === TOTAL_BOXES;
-    const kind = finished
-      ? "finished"
-      : capturedBoxIds.length === 2 ? "capture-two" : capturedBoxIds.length === 1 ? "capture-one" : "switch";
-
+    if (!parseEdgeId(edgeId) || safe.state.moves.some((move) => move.edgeId === edgeId)) return safe.state;
+    const replayed = replayMoves(safe.state.starter, [
+      ...safe.state.moves,
+      { edgeId, player: safe.state.currentPlayer },
+    ]);
+    if (!replayed) return safe.state;
     return freezeState({
-      ...safe.state,
-      phase: finished ? PHASES.FINISHED : PHASES.PLAYING,
-      currentPlayer: capturedBoxIds.length > 0 ? player : 1 - player,
-      edges,
-      boxes,
-      scores,
-      moves: safe.state.moves + 1,
-      lastMove: { edgeId, player, capturedBoxIds, kind },
+      phase: replayed.phase,
+      starter: safe.state.starter,
+      currentPlayer: replayed.currentPlayer,
+      playerNames: safe.state.playerNames,
+      moves: replayed.moves,
+      boxes: replayed.boxes,
+      scores: replayed.scores,
+      moveNumber: replayed.moveNumber,
+      lastMove: replayed.lastMove,
       revision: safe.state.revision + 1,
     });
   }
@@ -261,10 +262,10 @@
       starter,
       currentPlayer: starter,
       playerNames: safe.state.playerNames,
-      edges: [],
-      boxes: ALL_BOX_IDS.map((id) => ({ id, owner: null })),
+      moves: [],
+      boxes: emptyBoxes(),
       scores: [0, 0],
-      moves: 0,
+      moveNumber: 0,
       lastMove: null,
       revision: safe.state.revision + 1,
     });
@@ -272,10 +273,14 @@
 
   function getViewModel(state) {
     const safe = validStateOrInitial(state).state;
-    const isFinished = safe.phase === PHASES.FINISHED;
-    const winnerIndex = isFinished
+    const finished = safe.phase === PHASES.FINISHED;
+    const winnerIndex = finished
       ? safe.scores[0] === safe.scores[1] ? null : safe.scores[0] > safe.scores[1] ? 0 : 1
       : null;
+    const ownerByEdge = new Map(safe.moves.map((move) => [move.edgeId, move.player]));
+    const edges = ALL_EDGE_IDS
+      .filter((edgeId) => ownerByEdge.has(edgeId))
+      .map((edgeId) => ({ id: edgeId, owner: ownerByEdge.get(edgeId) }));
     return deepFreeze({
       phase: safe.phase,
       starter: safe.starter,
@@ -283,16 +288,13 @@
       currentPlayerName: safe.playerNames[safe.currentPlayer],
       playerNames: [...safe.playerNames],
       scores: [...safe.scores],
-      moves: safe.moves,
+      moveNumber: safe.moveNumber,
       remainingBoxes: TOTAL_BOXES - safe.scores[0] - safe.scores[1],
-      remainingEdges: TOTAL_EDGES - safe.edges.length,
-      edges: safe.edges.map((edge) => ({ ...edge })),
+      remainingEdges: TOTAL_EDGES - safe.moveNumber,
+      edges,
       boxes: safe.boxes.map((box) => ({ ...box })),
-      lastMove: safe.lastMove ? {
-        ...safe.lastMove,
-        capturedBoxIds: [...safe.lastMove.capturedBoxIds],
-      } : null,
-      result: isFinished ? { winnerIndex, isTie: winnerIndex === null } : null,
+      lastMove: safe.lastMove ? cloneLastMove(safe.lastMove) : null,
+      result: finished ? { winnerIndex, isTie: winnerIndex === null } : null,
       controlsDisabled: safe.phase !== PHASES.PLAYING,
     });
   }
@@ -300,7 +302,7 @@
   function resolveResultCopy(state, configValue) {
     const safe = validStateOrInitial(state);
     if (safe.recovered || safe.state.phase !== PHASES.FINISHED) return null;
-    const config = sanitizeConfig(configValue === undefined ? DEFAULT_CONFIG : configValue);
+    const config = sanitizeConfig(configValue);
     const scores = [...safe.state.scores];
     const winnerIndex = scores[0] === scores[1] ? null : scores[0] > scores[1] ? 0 : 1;
     const playerNames = [...safe.state.playerNames];
@@ -309,36 +311,10 @@
       const custom = config.composeResult(context);
       const copy = sanitizeResultCopy(custom);
       if (copy) return copy;
-    } catch {
-      // 用户语气函数永远不能阻断终局。
+    } catch (_error) {
+      // 私人语气函数不能阻断终局。
     }
     return defaultResultCopy(winnerIndex, playerNames);
-  }
-
-  function isValidLastMove(state, edgeOwners) {
-    const move = state.lastMove;
-    if (!isPlainRecord(move) || !hasExactKeys(move, LAST_MOVE_KEYS)) return false;
-    if (!parseEdgeId(move.edgeId) || !isPlayer(move.player) || edgeOwners.get(move.edgeId) !== move.player) return false;
-    if (!Array.isArray(move.capturedBoxIds) || move.capturedBoxIds.length > 2) return false;
-    const adjacent = getAdjacentBoxIds(move.edgeId);
-    const closedAdjacent = adjacent.filter((boxId) => {
-      const box = state.boxes.find((candidate) => candidate.id === boxId);
-      return box.owner !== null && getBoxEdgeIds(boxId).every((id) => edgeOwners.has(id));
-    });
-    if (closedAdjacent.some((boxId) => state.boxes.find((box) => box.id === boxId).owner !== move.player)) return false;
-    if (!sameStringArray(move.capturedBoxIds, closedAdjacent)) return false;
-    if (move.capturedBoxIds.some((boxId) => !parseBoxId(boxId))) return false;
-
-    if (move.kind === "switch") {
-      return move.capturedBoxIds.length === 0 && state.currentPlayer === 1 - move.player;
-    }
-    if (move.kind === "capture-one") {
-      return move.capturedBoxIds.length === 1 && state.currentPlayer === move.player;
-    }
-    if (move.kind === "capture-two") {
-      return move.capturedBoxIds.length === 2 && state.currentPlayer === move.player;
-    }
-    return move.kind === "finished" && move.capturedBoxIds.length >= 1 && state.currentPlayer === move.player;
   }
 
   function freezeState(value) {
@@ -347,16 +323,11 @@
       starter: value.starter,
       currentPlayer: value.currentPlayer,
       playerNames: [...value.playerNames],
-      edges: value.edges.map((edge) => ({ id: edge.id, owner: edge.owner })),
+      moves: value.moves.map((move) => ({ edgeId: move.edgeId, player: move.player })),
       boxes: value.boxes.map((box) => ({ id: box.id, owner: box.owner })),
       scores: [...value.scores],
-      moves: value.moves,
-      lastMove: value.lastMove ? {
-        edgeId: value.lastMove.edgeId,
-        player: value.lastMove.player,
-        capturedBoxIds: [...value.lastMove.capturedBoxIds],
-        kind: value.lastMove.kind,
-      } : null,
+      moveNumber: value.moveNumber,
+      lastMove: value.lastMove ? cloneLastMove(value.lastMove) : null,
       revision: value.revision,
     });
   }
@@ -380,6 +351,39 @@
       : deepFreeze({ title: `${playerNames[winnerIndex]}赢下这一页`, body: "最后一格也有归属了。" });
   }
 
+  function sameBoxes(left, right) {
+    return Array.isArray(left) && left.length === right.length
+      && left.every((box, index) => isPlainRecord(box) && hasExactKeys(box, BOX_KEYS)
+        && box.id === right[index].id && box.owner === right[index].owner);
+  }
+
+  function sameNumberArray(left, right) {
+    return Array.isArray(left) && left.length === right.length
+      && left.every((value, index) => value === right[index]);
+  }
+
+  function sameLastMove(left, right) {
+    if (left === null || right === null) return left === right;
+    return isPlainRecord(left) && hasExactKeys(left, LAST_MOVE_KEYS)
+      && left.edgeId === right.edgeId && left.player === right.player && left.kind === right.kind
+      && Array.isArray(left.capturedBoxIds)
+      && left.capturedBoxIds.length === right.capturedBoxIds.length
+      && left.capturedBoxIds.every((boxId, index) => boxId === right.capturedBoxIds[index]);
+  }
+
+  function cloneLastMove(move) {
+    return {
+      edgeId: move.edgeId,
+      player: move.player,
+      capturedBoxIds: [...move.capturedBoxIds],
+      kind: move.kind,
+    };
+  }
+
+  function emptyBoxes() {
+    return ALL_BOX_IDS.map((id) => ({ id, owner: null }));
+  }
+
   function edgeIdSet(edges) {
     try {
       if (edges instanceof Set) {
@@ -387,9 +391,9 @@
         return ids.every((id) => parseEdgeId(id)) ? new Set(ids) : null;
       }
       if (!Array.isArray(edges)) return null;
-      const ids = edges.map((edge) => typeof edge === "string" ? edge : edge && edge.id);
+      const ids = edges.map((edge) => typeof edge === "string" ? edge : edge?.edgeId ?? edge?.id);
       return ids.every((id) => parseEdgeId(id)) ? new Set(ids) : null;
-    } catch {
+    } catch (_error) {
       return null;
     }
   }
@@ -415,7 +419,8 @@
 
   function hasExactKeys(value, expected) {
     const keys = Reflect.ownKeys(value);
-    return keys.length === expected.length && keys.every((key) => typeof key === "string" && expected.includes(key));
+    return keys.length === expected.length
+      && keys.every((key) => typeof key === "string" && expected.includes(key));
   }
 
   function isPlainRecord(value) {
@@ -438,15 +443,11 @@
     return cleanText(value, 8);
   }
 
-  function cleanText(value, maxLength) {
+  function cleanText(value, maximum) {
     if (typeof value !== "string") return null;
     const text = value.trim();
     const length = [...text].length;
-    return length >= 1 && length <= maxLength ? text : null;
-  }
-
-  function sameStringArray(left, right) {
-    return left.length === right.length && left.every((value, index) => value === right[index]);
+    return length >= 1 && length <= maximum ? text : null;
   }
 
   return deepFreeze({
@@ -467,6 +468,7 @@
     getBoxEdgeIds,
     getAdjacentBoxIds,
     isBoxClosed,
+    replayMoves,
     createInitialState,
     isDotsAndBoxesState,
     start,
