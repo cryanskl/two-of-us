@@ -83,6 +83,7 @@
 | [75-light-trail-hunt-research.md](./75-light-trail-hunt-research.md) | A 级“光轨围猎”的同时输入、原子碰撞、固定来源、许可证与零复制调研 |
 | [76-light-trail-hunt-spec.md](./76-light-trail-hunt-spec.md) | A 级“光轨围猎”的可重放 tick、原子碰撞 API、三轮赛制、阶段 DOM 与验收规格 |
 | [77-light-trail-hunt-plan.md](./77-light-trail-hunt-plan.md) | “光轨围猎”的视觉、逻辑、前端、目录、浏览器、bug、learn 与验收独立提交计划 |
+| [78-orbit-star-race-design.md](./78-orbit-star-race-design.md) | A 级“这一颗我先到”的黄铜星盘、桌面/移动/终局概念、生成资产、降级与视觉验收清单 |
 | [78-light-trail-hunt-design.md](./78-light-trail-hunt-design.md) | “光轨围猎”的桌面、手机、平局概念，制图纸令牌、Canvas 绘制、允许文案与响应式提取清单 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 

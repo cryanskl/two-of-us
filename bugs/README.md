@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一颗我先到：ImageGen 精灵图预览棋盘格并非真实透明通道](./2026-07-18-imagegen-fake-transparent-sprite-atlas.md)
 - [这一格归谁：localhost 自动请求 favicon 返回 404](./2026-07-18-dots-boxes-localhost-favicon-404.md)
 - [这一格归谁：并行提交后主线程沿用旧状态规格](./2026-07-18-dots-boxes-state-contract-drift.md)
 - [把月亮拨回那一天：重开后 live region 保留成功播报](./2026-07-18-moon-stale-live-region-after-restart.md)
