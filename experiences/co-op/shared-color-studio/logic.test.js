@@ -119,7 +119,10 @@ test("CommonJS and browser globals expose matching APIs", () => {
 });
 
 test("composeStudioResult has a complete working default", () => {
-  assert.match(config.composeStudioResult({ completed: new Array(5), moves: { hue: 3, lightness: 4 } }), /五张/);
+  assert.equal(
+    config.composeStudioResult({ completed: new Array(5), moves: { hue: 3, lightness: 4 } }),
+    "你转过色相，我照亮明暗。最后留下的是我们一起调出的颜色。",
+  );
   assert.match(config.composeStudioResult({ completed: new Array(2), moves: { hue: 0, lightness: 0 } }), /2 张/);
 });
 

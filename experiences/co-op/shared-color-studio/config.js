@@ -8,13 +8,10 @@
   "use strict";
 
   function composeStudioResult(view) {
-    // TODO（欢迎你来改）：把下面 6 行换成只属于你们的合册文案。
+    // TODO（欢迎你来改）：把下面 5 行换成只属于你们的合册文案。
     const completed = Array.isArray(view?.completed) ? view.completed.length : 0;
-    const moves = view?.moves && typeof view.moves === "object" ? view.moves : { hue: 0, lightness: 0 };
-    const totalMoves = Number(moves.hue || 0) + Number(moves.lightness || 0);
     if (completed < 5) return `已经收下 ${completed} 张色笺，下一张还在等你们。`;
-    if (totalMoves > 0) return `五张颜色都合拍了，最后一张用了 ${totalMoves} 步。`;
-    return "五张颜色都合拍了，收好这本只属于你们的色册。";
+    return "你转过色相，我照亮明暗。最后留下的是我们一起调出的颜色。";
   }
 
   function deepFreeze(value) {
