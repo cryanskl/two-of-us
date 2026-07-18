@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [可重放点线游戏：事件时间线、规范边投影与并行快照](./2026-07-18-replayable-edges-and-concurrent-snapshots.md)
 - [离线纪念日仪器：近似边界、阶段 DOM 与圆环跨输入](./2026-07-18-local-date-dial-boundaries.md)
 - [手摇交互：单调进度、共享出口与音频 epoch](./2026-07-18-hand-crank-progress-and-audio-epoch.md)
 - [只口头作答的双人仪式：把安全感写进状态机](./2026-07-18-spoken-answer-ritual-boundary.md)
