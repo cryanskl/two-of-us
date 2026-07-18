@@ -301,6 +301,19 @@
       "networkRequired": false
     },
     {
+      "id": "four-hands-harmony",
+      "title": "这一拍，刚好和你",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/four-hands-harmony/index.html",
+      "readme": "experiences/co-op/four-hands-harmony/README.md",
+      "description": "低音席与高音席在 200ms 内按下公开目标并共同保持，五次合成原创和弦后留下赠予短句。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",

@@ -492,6 +492,61 @@ test("signal repair keeps its file protocol, rule source, and attribution bounda
   assert.match(portal, /"id": "signal-repair-manual"/);
 });
 
+test("catalog exposes the installed A-level four hands harmony", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const harmony = catalog.experiences.find((item) => item.id === "four-hands-harmony");
+
+  assert.equal(harmony.category, "co-op");
+  assert.equal(harmony.level, "A");
+  assert.equal(harmony.players, "2 人合作");
+  assert.equal(harmony.devices, "单设备同屏");
+  assert.equal(harmony.installed, true);
+  assert.equal(harmony.networkRequired, false);
+  assert.match(harmony.entry, /four-hands-harmony\/index\.html$/);
+});
+
+test("four hands harmony keeps its file protocol, input, audio, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/four-hands-harmony/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+  const networkSource = runtimeSource.replaceAll("http://www.w3.org/2000/svg", "");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(networkSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.match(html, /\.\.\/\.\.\/shared\/audio\/tone-player\.js/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /classifyHarmonyKey/);
+  assert.match(app, /createElementNS\("http:\/\/www\.w3\.org\/2000\/svg"/);
+  assert.match(css, /assets\/harmony-table\.webp/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /589edde7f895ee0cd2b8068133c74e7c4d521046/);
+  assert.match(attribution, /733def1c41939a7bb2ec4dc1be3603e3ae70af51/);
+  assert.match(attribution, /8b40faa043f1e7734e7f560c0c181160c85f979e/);
+  assert.match(attribution, /2cb08afe19bc6583e281773d283033bde60e7d51/);
+  assert.match(attribution, /OpenAI ImageGen/);
+  assert.match(attribution, /零复制/);
+  assert.match(portal, /"id": "four-hands-harmony"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
