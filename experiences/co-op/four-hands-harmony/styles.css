@@ -1,0 +1,740 @@
+:root {
+  --bg-fallback: #f4efe6;
+  --paper: #fffdf8;
+  --paper-soft: #f8f3ea;
+  --ink: #2d2b27;
+  --ink-muted: #69645b;
+  --line: #d8c9ad;
+  --brass: #b68a43;
+  --brass-dark: #7e5b27;
+  --low: #667b5f;
+  --low-soft: #dce4d7;
+  --high: #c86e2c;
+  --high-soft: #f3dfc9;
+  --danger-neutral: #7b5948;
+  --shadow-paper: 0 10px 28px rgb(71 55 34 / 12%);
+  --shadow-key: 0 5px 0 #d6cfc2, 0 8px 18px rgb(57 47 34 / 12%);
+  --radius-small: 10px;
+  --radius-medium: 18px;
+  --radius-seal: 34% 34% 44% 44% / 24% 24% 50% 50%;
+  --motion-fast: 140ms;
+  --motion-mark: 260ms;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  color: var(--ink);
+  background: var(--bg-fallback);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-width: 280px;
+  min-height: 100%;
+  background: var(--bg-fallback);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  color: var(--ink);
+  background-color: var(--bg-fallback);
+  background-image: url("./assets/harmony-table.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+button,
+a { font: inherit; }
+
+button { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--brass-dark);
+  outline-offset: 3px;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  width: min(1400px, calc(100% - 64px));
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: max(14px, env(safe-area-inset-top)) 0 max(12px, env(safe-area-inset-bottom));
+}
+
+.topbar {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.back-link,
+.sound-toggle {
+  min-height: 48px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.sound-toggle {
+  display: inline-flex;
+  min-width: 118px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border: 1px solid rgb(126 91 39 / 45%);
+  border-radius: 999px;
+  background: rgb(255 253 248 / 88%);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgb(71 55 34 / 8%);
+}
+
+.sound-toggle[aria-checked="false"] .sound-wave { display: none; }
+
+.hero {
+  min-height: 66px;
+  padding: 1px 0 8px;
+  text-align: center;
+}
+
+.hero h1,
+.complete-title,
+.letter h2 {
+  font-family: "Iowan Old Style", "Songti SC", STSong, serif;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(46px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: .03em;
+}
+
+.hero p {
+  margin: 5px 0 0;
+  color: var(--ink-muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.phase-host {
+  min-height: 0;
+}
+
+.score-strip {
+  width: min(930px, 100%);
+  margin: 0 auto 14px;
+  padding: 10px 22px;
+  border: 1px solid rgb(182 138 67 / 40%);
+  background: rgb(255 253 248 / 93%);
+  box-shadow: var(--shadow-paper);
+}
+
+.score-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.score-step {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 62px;
+  place-items: center;
+  align-content: center;
+  gap: 2px;
+  border-bottom: 2px solid var(--line);
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.score-step::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 29px;
+  width: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.score-step:last-child::after { display: none; }
+
+.score-number {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  font: 600 17px/1 "Iowan Old Style", "Songti SC", STSong, serif;
+}
+
+.score-title,
+.score-state {
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-state { font-weight: 750; }
+
+.score-step[aria-current="step"] {
+  border-bottom-color: var(--brass-dark);
+  color: var(--brass-dark);
+}
+
+.score-step[aria-current="step"] .score-number {
+  border: 3px double var(--brass);
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--brass);
+}
+
+.score-step.is-complete {
+  border-bottom-color: var(--low);
+  color: var(--low);
+}
+
+.score-check {
+  width: 13px;
+  height: 13px;
+  margin-right: 3px;
+  vertical-align: -2px;
+}
+
+.intro-panel,
+.paused-panel {
+  width: min(760px, 100%);
+  margin: 22px auto 0;
+  padding: 34px clamp(20px, 5vw, 54px);
+  border: 1px solid var(--line);
+  background: rgb(255 253 248 / 94%);
+  text-align: center;
+  box-shadow: var(--shadow-paper);
+}
+
+.intro-panel h2,
+.paused-panel h2 {
+  margin: 0 0 10px;
+  font: 600 clamp(25px, 3vw, 34px)/1.2 "Iowan Old Style", "Songti SC", STSong, serif;
+}
+
+.intro-panel p,
+.paused-panel p {
+  margin: 7px auto;
+  color: var(--ink-muted);
+  line-height: 1.55;
+}
+
+.primary-action,
+.secondary-action,
+.pause-action {
+  min-height: 48px;
+  border-radius: var(--radius-small);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.primary-action {
+  min-width: min(320px, 100%);
+  margin-top: 18px;
+  padding: 12px 24px;
+  border: 1px solid var(--brass-dark);
+  color: #fffdf8;
+  background: var(--low);
+  box-shadow: 0 5px 0 #4d6148;
+}
+
+.primary-action:active { transform: translateY(3px); box-shadow: 0 2px 0 #4d6148; }
+
+.performance {
+  min-height: 0;
+}
+
+.measure-label {
+  margin: 0 0 7px;
+  color: var(--brass-dark);
+  font-size: 14px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.performance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .92fr) minmax(0, 1fr);
+  grid-template-areas: "low chord high";
+  align-items: center;
+  gap: clamp(16px, 2vw, 30px);
+}
+
+.voice-low { grid-area: low; }
+.chord-mark { grid-area: chord; }
+.voice-high { grid-area: high; }
+
+.voice-rail {
+  min-width: 0;
+  margin: 0;
+  padding: 13px 16px 18px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.voice-low { background: rgb(220 228 215 / 91%); }
+.voice-high { background: rgb(243 223 201 / 91%); }
+
+.voice-rail legend {
+  width: 100%;
+  padding: 0 8px 7px;
+  font: 600 18px/1.2 "Iowan Old Style", "Songti SC", STSong, serif;
+  text-align: center;
+}
+
+.voice-low legend { color: var(--low); }
+.voice-high legend { color: var(--high); }
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(64px, 1fr));
+  gap: 9px;
+}
+
+.note-key {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: clamp(112px, 14vh, 144px);
+  place-items: center;
+  align-content: center;
+  gap: 7px;
+  padding: 20px 6px 12px;
+  border: 1px solid #bdb4a6;
+  border-radius: var(--radius-small);
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-key);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  transition: transform var(--motion-fast) ease, box-shadow var(--motion-fast) ease, border-color var(--motion-fast) ease;
+}
+
+.note-key kbd {
+  font: 600 clamp(42px, 4.7vw, 68px)/1 "Iowan Old Style", "Songti SC", STSong, serif;
+}
+
+.note-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.key-state {
+  min-height: 17px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.note-key.is-target {
+  border: 3px double currentColor;
+  outline: 2px solid var(--paper);
+  outline-offset: -7px;
+}
+
+.voice-low .note-key.is-target { color: var(--low); }
+.voice-high .note-key.is-target { color: var(--high); }
+
+.note-key.is-held {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 #d6cfc2, 0 3px 8px rgb(57 47 34 / 10%);
+}
+
+.note-key.is-complete { border-style: solid; border-width: 3px; }
+
+.chord-mark {
+  position: relative;
+  display: grid;
+  min-height: 310px;
+  align-content: center;
+  gap: 10px;
+  padding: 26px clamp(20px, 3vw, 40px);
+  border: 1px solid var(--brass);
+  border-radius: var(--radius-seal);
+  background: rgb(255 253 248 / 95%);
+  box-shadow: var(--shadow-paper);
+  text-align: center;
+}
+
+.target-pair {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.target {
+  display: grid;
+  gap: 2px;
+}
+
+.target-key {
+  font: 600 clamp(58px, 5.2vw, 78px)/1 "Iowan Old Style", "Songti SC", STSong, serif;
+}
+
+.target-note { font-size: 22px; font-weight: 700; }
+.target-low { color: var(--low); }
+.target-high { color: var(--high); }
+.pair-plus { color: var(--brass); font-size: 30px; font-weight: 500; }
+
+.instruction {
+  min-height: 24px;
+  margin: 3px 0 0;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.complete-word {
+  min-height: 18px;
+  color: var(--brass-dark);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.hold-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 14px;
+  overflow: hidden;
+  border: 1px solid var(--brass);
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+
+.hold-part {
+  transform: scaleX(0);
+  transition: transform 80ms linear;
+}
+
+.hold-low {
+  background: var(--low);
+  transform-origin: left;
+  transform: scaleX(var(--low-progress, 0));
+}
+
+.hold-high {
+  background: var(--high);
+  transform-origin: right;
+  transform: scaleX(var(--high-progress, 0));
+}
+
+.progress-copy {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.pause-row { margin-top: 12px; text-align: center; }
+
+.pause-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border: 1px solid var(--brass-dark);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgb(255 253 248 / 90%);
+}
+
+.complete-view {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.complete-seals {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin: 7px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.complete-seal {
+  display: grid;
+  min-height: 112px;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  padding: 12px 5px;
+  border: 3px double var(--brass);
+  border-radius: var(--radius-seal);
+  background: rgb(255 253 248 / 94%);
+  box-shadow: var(--shadow-paper);
+}
+
+.complete-seal strong {
+  font: 600 28px/1 "Iowan Old Style", "Songti SC", STSong, serif;
+  color: var(--brass-dark);
+}
+
+.complete-seal span { font-size: 13px; font-weight: 700; }
+
+.letter {
+  position: relative;
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 32px clamp(20px, 6vw, 64px);
+  border: 1px solid var(--line);
+  background: rgb(255 253 248 / 96%);
+  box-shadow: var(--shadow-paper);
+}
+
+.letter h2 {
+  margin: 0 0 16px;
+  color: var(--low);
+  font-size: clamp(29px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.letter h2:focus-visible {
+  outline: 3px solid var(--brass-dark);
+  outline-offset: 6px;
+}
+
+.letter-message { margin: 0; font-size: 17px; line-height: 1.7; }
+.signature { margin: 18px 0 0; color: var(--high); font-weight: 700; text-align: right; }
+
+.complete-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.complete-actions .primary-action { margin-top: 0; }
+
+.secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  color: var(--ink-muted);
+  background: transparent;
+  text-decoration: none;
+}
+
+.privacy {
+  align-self: end;
+  margin: 9px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+noscript { display: block; color: var(--danger-neutral); text-align: center; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  body { background-attachment: scroll; }
+
+  .app {
+    width: min(100% - 32px, 560px);
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+
+  .topbar { min-height: 44px; }
+  .back-link, .sound-toggle { min-height: 44px; font-size: 13px; }
+  .sound-toggle { min-width: 102px; padding-inline: 11px; }
+  .hero { min-height: 54px; padding-bottom: 5px; }
+  .hero h1 { font-size: clamp(30px, 9vw, 36px); }
+  .hero p { margin-top: 2px; font-size: 13px; }
+
+  .score-strip { margin-bottom: 8px; padding: 5px 7px; }
+  .score-list { gap: 4px; }
+  .score-step { min-height: 53px; }
+  .score-step::after { right: -4px; top: 25px; width: 4px; }
+  .score-number { width: 27px; height: 27px; font-size: 15px; }
+  .score-title, .score-state { font-size: 10px; }
+
+  .measure-label { margin-bottom: 4px; font-size: 12px; }
+  .performance-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "chord" "low" "high";
+    gap: 8px;
+  }
+
+  .chord-mark {
+    min-height: 148px;
+    grid-template-columns: minmax(150px, .9fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: 6px 16px;
+    padding: 12px 20px;
+    border-radius: var(--radius-medium);
+  }
+
+  .target-pair { grid-row: 1 / 4; }
+  .target-key { font-size: clamp(38px, 12vw, 48px); }
+  .target-note { font-size: 16px; }
+  .pair-plus { font-size: 22px; }
+  .instruction { min-height: 40px; margin: 0; font-size: 14px; }
+  .complete-word { font-size: 11px; }
+  .hold-track { height: 12px; }
+  .progress-copy { font-size: 11px; }
+
+  .voice-rail { padding: 7px 8px 11px; }
+  .voice-rail legend { padding-bottom: 4px; font-size: 15px; }
+  .keys { gap: 7px; }
+  .note-key { min-height: 64px; padding: 8px 3px 5px; gap: 2px; }
+  .note-key kbd { font-size: clamp(34px, 11vw, 44px); }
+  .note-name { font-size: 11px; }
+  .key-state { min-height: 13px; font-size: 9px; }
+
+  .pause-row { margin-top: 7px; }
+  .pause-action { min-height: 44px; padding-block: 6px; font-size: 14px; }
+  .privacy { margin-top: 6px; font-size: 10px; }
+
+  .intro-panel, .paused-panel { margin-top: 12px; padding: 24px 18px; }
+  .complete-seals { gap: 7px; margin-bottom: 13px; }
+  .complete-seal { min-height: 82px; padding: 7px 3px; }
+  .complete-seal strong { font-size: 21px; }
+  .complete-seal span { font-size: 10px; }
+  .letter { padding: 24px 18px; }
+  .complete-actions { gap: 14px; }
+}
+
+@media (max-width: 340px) {
+  .app { width: calc(100% - 24px); }
+  .topbar { gap: 8px; }
+  .back-link span { font-size: 12px; }
+  .sound-toggle { min-width: 96px; }
+  .sound-toggle.is-unavailable {
+    min-width: 0;
+    max-width: 176px;
+    padding-inline: 8px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+  .sound-toggle.is-unavailable svg { display: none; }
+  .hero h1 { font-size: 30px; }
+  .score-title { visibility: hidden; height: 0; }
+  .score-step[aria-current="step"] .score-title { visibility: visible; height: auto; }
+  .score-step { min-height: 47px; }
+  .score-step::after { top: 23px; }
+  .chord-mark { min-height: 142px; grid-template-columns: 132px minmax(0, 1fr); padding-inline: 12px; }
+  .voice-rail { padding-inline: 5px; }
+  .keys { gap: 4px; }
+  .note-key { min-height: 58px; }
+  .note-key kbd { font-size: 34px; }
+  .complete-actions { flex-direction: column; gap: 7px; }
+}
+
+@media (max-height: 860px) and (min-width: 761px) {
+  .app { padding-top: 8px; }
+  .hero { min-height: 55px; }
+  .hero h1 { font-size: 46px; }
+  .score-strip { margin-bottom: 9px; padding-block: 6px; }
+  .score-step { min-height: 50px; }
+  .chord-mark { min-height: 260px; }
+  .note-key { min-height: 105px; }
+  .pause-row { margin-top: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .note-key.is-held,
+  .note-key.is-pointer-down,
+  .primary-action:active {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  body {
+    color: CanvasText;
+    background: Canvas;
+    background-image: none;
+  }
+
+  .sound-toggle,
+  .score-strip,
+  .intro-panel,
+  .paused-panel,
+  .voice-rail,
+  .chord-mark,
+  .note-key,
+  .complete-seal,
+  .letter,
+  .pause-action {
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  .score-step[aria-current="step"],
+  .score-step.is-complete,
+  .note-key.is-target,
+  .note-key.is-held,
+  .complete-seal {
+    color: Highlight;
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+  }
+
+  .hold-track { background: Canvas; border-color: CanvasText; }
+  .hold-part { background: Highlight; }
+  .primary-action { color: HighlightText; background: Highlight; box-shadow: none; }
+}
