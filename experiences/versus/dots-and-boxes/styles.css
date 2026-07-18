@@ -1,0 +1,727 @@
+:root {
+  --desk: #3c3631;
+  --desk-deep: #2f2a26;
+  --paper: #f4eddd;
+  --paper-light: #fbf7ed;
+  --graphite: #282824;
+  --muted: #6d665d;
+  --grid: #cfd3cf;
+  --red: #b43a28;
+  --red-wash: rgba(180, 58, 40, 0.17);
+  --blue: #24569a;
+  --blue-wash: rgba(36, 86, 154, 0.16);
+  --focus: #111111;
+  color: var(--graphite);
+  background: var(--desk);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 280px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  padding: 22px;
+  background-color: var(--desk);
+  background-image:
+    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.035), transparent 28%),
+    radial-gradient(circle at 86% 84%, rgba(0, 0, 0, 0.12), transparent 31%);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+.paper-shell {
+  display: flex;
+  width: min(1460px, 100%);
+  min-height: calc(100vh - 44px);
+  margin: 0 auto;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(40, 40, 36, 0.48);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(207, 211, 207, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(207, 211, 207, 0.16) 1px, transparent 1px),
+    url("assets/paper-texture.png");
+  background-size: 26px 26px, 26px 26px, cover;
+  box-shadow: 13px 17px 34px rgba(16, 13, 11, 0.32);
+}
+
+.topbar,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 50px;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(40, 40, 36, 0.24);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.topbar p,
+.footer p {
+  margin: 0;
+}
+
+.back-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  color: var(--graphite);
+  text-decoration: none;
+}
+
+.back-link svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.back-link:hover {
+  color: var(--red);
+}
+
+.back-link:focus-visible,
+.primary-action:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.game-layout {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(330px, 0.72fr) minmax(520px, 1.28fr);
+  gap: clamp(30px, 5vw, 78px);
+  align-items: center;
+  width: min(1260px, calc(100% - 72px));
+  margin: 0 auto;
+  padding: 28px 0;
+}
+
+.story-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-block h1 {
+  margin: 0;
+  font-family: "Songti SC", STSong, SimSun, Georgia, serif;
+  font-size: clamp(58px, 5.8vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.94;
+}
+
+.rule-copy {
+  max-width: 440px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.rule-mobile {
+  display: none;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 34px;
+  padding: 18px 0;
+  border-top: 2px solid var(--graphite);
+  border-bottom: 1px solid rgba(40, 40, 36, 0.32);
+}
+
+.score-rule {
+  background: rgba(40, 40, 36, 0.25);
+}
+
+.player-score {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 13px;
+  align-items: center;
+  min-width: 0;
+  opacity: 0.6;
+  transition: opacity 160ms ease;
+}
+
+.player-score.is-current,
+.player-score.is-winner,
+body[data-stage="intro"] .player-score:first-child {
+  opacity: 1;
+}
+
+.ink-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 2px solid currentColor;
+  font-family: "Songti SC", STSong, SimSun, serif;
+  font-size: 18px;
+  font-weight: 800;
+  transform: rotate(-3deg);
+}
+
+.player-score--red {
+  color: var(--red);
+}
+
+.player-score--blue {
+  color: var(--blue);
+}
+
+.player-score h2,
+.player-score p {
+  margin: 0;
+}
+
+.player-score h2 {
+  overflow: hidden;
+  color: currentColor;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-score p {
+  display: flex;
+  align-items: baseline;
+  color: currentColor;
+}
+
+.player-score strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 48px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 0.95;
+}
+
+.player-score p span {
+  margin-left: 5px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.status-panel {
+  margin-top: 24px;
+}
+
+.status-panel > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.status-panel h2,
+.status-panel p {
+  margin: 0;
+}
+
+.status-panel h2 {
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.status-panel #remaining-status {
+  flex: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+#event-message {
+  min-height: 44px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(40, 40, 36, 0.25);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.action-stage {
+  min-height: 62px;
+  margin-top: 18px;
+}
+
+.primary-action {
+  min-width: min(100%, 292px);
+  min-height: 56px;
+  border: 1px solid var(--graphite);
+  border-radius: 2px;
+  padding: 12px 24px;
+  color: var(--paper-light);
+  background: var(--graphite);
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 rgba(180, 58, 40, 0.28);
+}
+
+.primary-action:hover {
+  background: var(--red);
+}
+
+.result-sheet {
+  padding-left: 15px;
+  border-left: 4px solid var(--graphite);
+}
+
+.result-sheet.is-red {
+  border-color: var(--red);
+}
+
+.result-sheet.is-blue {
+  border-color: var(--blue);
+}
+
+.result-sheet h2,
+.result-sheet p {
+  margin: 0;
+}
+
+.result-sheet h2 {
+  font-family: "Songti SC", STSong, SimSun, Georgia, serif;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.result-sheet p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.result-sheet + .primary-action {
+  margin-top: 16px;
+}
+
+.board-stage {
+  position: relative;
+  display: flex;
+  width: min(100%, 720px);
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  border: 1px solid rgba(40, 40, 36, 0.38);
+  padding: clamp(34px, 6.2vw, 78px);
+  background-color: rgba(251, 247, 237, 0.7);
+  box-shadow: 8px 11px 0 rgba(40, 40, 36, 0.12);
+}
+
+.board-stage::before {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(40, 40, 36, 0.12);
+  content: "";
+  pointer-events: none;
+}
+
+.paper-corner {
+  position: absolute;
+  top: 18px;
+  right: 23px;
+  width: 72px;
+  height: 2px;
+  background: var(--blue);
+  opacity: 0.48;
+  transform: rotate(2deg);
+}
+
+.board {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  grid-template-columns: 16px repeat(4, minmax(44px, 1fr) 16px);
+  grid-template-rows: 16px repeat(4, minmax(44px, 1fr) 16px);
+  isolation: isolate;
+}
+
+.board-dot {
+  z-index: 5;
+  align-self: center;
+  justify-self: center;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--graphite);
+  border-radius: 50%;
+  background: var(--paper-light);
+  box-shadow: 0 0 0 2px rgba(244, 237, 221, 0.82);
+  pointer-events: none;
+}
+
+.box-owner {
+  z-index: 0;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  place-items: center;
+  color: transparent;
+  font-family: "Songti SC", STSong, SimSun, serif;
+  font-size: clamp(18px, 2.2vw, 30px);
+  font-weight: 800;
+  opacity: 0;
+  transform: scale(0.86) rotate(-2deg);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: none;
+}
+
+.box-owner.is-red,
+.box-owner.is-blue {
+  opacity: 1;
+  transform: scale(1) rotate(-2deg);
+}
+
+.box-owner.is-red {
+  color: var(--red);
+  background: var(--red-wash);
+}
+
+.box-owner.is-blue {
+  color: var(--blue);
+  background: var(--blue-wash);
+  transform: scale(1) rotate(2deg);
+}
+
+.edge-button {
+  position: relative;
+  z-index: 3;
+  align-self: center;
+  justify-self: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  padding: 0;
+  color: var(--graphite);
+  background: transparent;
+  cursor: pointer;
+}
+
+.edge-button--horizontal {
+  width: 100%;
+  height: 44px;
+}
+
+.edge-button--vertical {
+  width: 44px;
+  height: 100%;
+}
+
+.edge-button::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 99px;
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.edge-button--horizontal::before {
+  width: calc(100% + 4px);
+  height: 5px;
+  transform: translate(-50%, -50%) scaleX(0.72);
+}
+
+.edge-button--vertical::before {
+  width: 5px;
+  height: calc(100% + 4px);
+  transform: translate(-50%, -50%) scaleY(0.72);
+}
+
+.edge-button:not(:disabled):hover::before,
+.edge-button:not(:disabled):focus-visible::before {
+  opacity: 0.34;
+}
+
+.edge-button--horizontal:not(:disabled):hover::before,
+.edge-button--horizontal:not(:disabled):focus-visible::before,
+.edge-button--horizontal.is-claimed::before {
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+.edge-button--vertical:not(:disabled):hover::before,
+.edge-button--vertical:not(:disabled):focus-visible::before,
+.edge-button--vertical.is-claimed::before {
+  transform: translate(-50%, -50%) scaleY(1);
+}
+
+.edge-button.is-claimed::before {
+  opacity: 1;
+}
+
+.edge-button.is-red {
+  color: var(--red);
+}
+
+.edge-button.is-blue {
+  color: var(--blue);
+}
+
+.edge-button:disabled {
+  cursor: default;
+}
+
+.edge-button:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--paper-light);
+}
+
+.board-help {
+  position: absolute;
+  right: 24px;
+  bottom: 18px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer {
+  min-height: 44px;
+  border-top: 1px solid rgba(40, 40, 36, 0.24);
+  border-bottom: 0;
+  font-size: 12px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  clip-path: inset(50%) !important;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 0;
+  }
+
+  .paper-shell {
+    min-height: 100vh;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .topbar,
+  .footer {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .topbar p {
+    display: none;
+  }
+
+  .game-layout {
+    display: flex;
+    width: min(100% - 24px, 620px);
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+    padding: 22px 0 30px;
+  }
+
+  .story-panel {
+    display: contents;
+  }
+
+  .title-block {
+    order: 1;
+  }
+
+  .title-block h1 {
+    font-size: clamp(48px, 14vw, 66px);
+    letter-spacing: -0.07em;
+    line-height: 0.92;
+  }
+
+  .title-block h1 br {
+    display: none;
+  }
+
+  .rule-copy {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .rule-desktop {
+    display: none;
+  }
+
+  .rule-mobile {
+    display: inline;
+  }
+
+  .scoreboard {
+    order: 2;
+    margin-top: 0;
+    padding: 12px 0;
+  }
+
+  .player-score strong {
+    font-size: 40px;
+  }
+
+  .board-stage {
+    order: 3;
+    width: 100%;
+    padding: clamp(31px, 10vw, 62px);
+  }
+
+  .status-panel {
+    order: 4;
+    margin-top: 0;
+  }
+
+  .action-stage {
+    order: 5;
+    min-height: 0;
+    margin-top: -2px;
+  }
+
+  .primary-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .game-layout {
+    width: min(100% - 24px, 366px);
+    gap: 16px;
+    padding-top: 16px;
+  }
+
+  .title-block h1 {
+    font-size: 48px;
+  }
+
+  .scoreboard {
+    gap: 11px;
+  }
+
+  .player-score {
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+  }
+
+  .ink-mark {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  .player-score h2 {
+    font-size: 14px;
+  }
+
+  .player-score strong {
+    font-size: 34px;
+  }
+
+  .board-stage {
+    padding: 30px;
+  }
+
+  .board-help,
+  .paper-corner {
+    display: none;
+  }
+
+  .status-panel h2 {
+    font-size: 18px;
+  }
+
+  .footer {
+    display: block;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 330px) {
+  .game-layout {
+    width: min(100% - 20px, 310px);
+  }
+
+  .title-block h1 {
+    font-size: 43px;
+  }
+
+  .rule-copy {
+    font-size: 15px;
+  }
+
+  .scoreboard {
+    gap: 7px;
+  }
+
+  .ink-mark {
+    display: none;
+  }
+
+  .player-score {
+    grid-template-columns: 1fr;
+  }
+
+  .board-stage {
+    padding: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

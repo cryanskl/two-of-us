@@ -549,6 +549,43 @@ test("echo arena keeps its file protocol, audio, and local privacy boundary", as
   assert.match(attribution, /零代码、零素材借用边界|零代码、零素材借用/);
 });
 
+test("catalog exposes the installed A-level dots and boxes duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const game = catalog.experiences.find((item) => item.id === "dots-and-boxes");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /dots-and-boxes\/index\.html$/);
+});
+
+test("dots and boxes keeps its file protocol and canonical local board boundary", async () => {
+  const root = new URL("../../experiences/versus/dots-and-boxes/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/){1,2}shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /logic\.getAllEdgeIds\(\)/);
+  assert.match(css, /assets\/paper-texture\.png/);
+  assert.doesNotMatch(html, /concept-(?:desktop|mobile)/);
+  assert.match(readme, /## 借鉴与来源声明/);
+  assert.match(attribution, /^# 借鉴与来源声明/m);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");
