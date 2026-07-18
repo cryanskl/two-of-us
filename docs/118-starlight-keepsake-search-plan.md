@@ -41,7 +41,7 @@
   - `design/starlight-keepsake-search/concept-desktop-complete.png`；
 - 生产资产：`experiences/surprises/starlight-keepsake-search/assets/keepsake-night.jpg`；
 - 设计文档：`docs/119-starlight-keepsake-search-design.md`；
-- 背景必须在冻结坐标附近清楚包含车票、双杯、照片、钥匙、窗边星光；不含 UI、可读秘密、品牌、水印、人物或手；
+- 背景必须清楚包含车票、双杯、照片、钥匙、窗边星光；P4 用接受资产实测中心校准一次规格坐标，随后冻结；不含 UI、可读秘密、品牌、水印、人物或手；
 - 提取：颜色锁、字体、容器、光圈/暗幕处理、控制样式、图标、首屏允许文案、三视口重排、至少五项 fidelity ledger；
 - 检查：`view_image` 原始尺寸、文件类型/尺寸、`npm run verify`、`git diff --check`；
 - 提交：`design: freeze starlight keepsake search`。

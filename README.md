@@ -136,6 +136,7 @@
 - [A 级“把夜晚照成我们”定向调研](./docs/116-starlight-keepsake-search-research.md)
 - [A 级“把夜晚照成我们”可执行规格](./docs/117-starlight-keepsake-search-spec.md)
 - [“把夜晚照成我们”分步实施计划](./docs/118-starlight-keepsake-search-plan.md)
+- [“把夜晚照成我们”视觉设计与资产说明](./docs/119-starlight-keepsake-search-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

@@ -125,6 +125,7 @@
 | [116-starlight-keepsake-search-research.md](./116-starlight-keepsake-search-research.md) | A 级“把夜晚照成我们”的移动光心、连续停留发现、永久纪念物、完整点亮、固定来源与零复制调研 |
 | [117-starlight-keepsake-search-spec.md](./117-starlight-keepsake-search-spec.md) | A 级“把夜晚照成我们”的五目标地图、整数停留 tick、Pointer/键盘会话、阶段秘密、配置与验收规格 |
 | [118-starlight-keepsake-search-plan.md](./118-starlight-keepsake-search-plan.md) | “把夜晚照成我们”的视觉前置、逻辑/前端子任务、独立提交、目录、bugs/learn、浏览器与 fidelity 闭环计划 |
+| [119-starlight-keepsake-search-design.md](./119-starlight-keepsake-search-design.md) | “把夜晚照成我们”的三状态 ImageGen 概念、夜桌寻物设计系统、视觉校准热区、生产背景、移动重排与 fidelity Gate |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
