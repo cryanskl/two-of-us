@@ -63,11 +63,9 @@ button {
   box-shadow: 13px 17px 34px rgba(16, 13, 11, 0.32);
 }
 
-.topbar,
-.footer {
+.topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   min-height: 50px;
   padding: 0 28px;
   border-bottom: 1px solid rgba(40, 40, 36, 0.24);
@@ -77,16 +75,12 @@ button {
   letter-spacing: 0.08em;
 }
 
-.topbar p,
-.footer p {
-  margin: 0;
-}
-
 .back-link {
   display: inline-flex;
+  width: 44px;
   min-height: 44px;
   align-items: center;
-  gap: 9px;
+  justify-content: center;
   color: var(--graphite);
   text-decoration: none;
 }
@@ -136,6 +130,7 @@ button {
   font-weight: 700;
   letter-spacing: -0.075em;
   line-height: 0.94;
+  white-space: nowrap;
 }
 
 .rule-copy {
@@ -334,36 +329,12 @@ body[data-stage="intro"] .player-score:first-child {
 }
 
 .board-stage {
-  position: relative;
   display: flex;
   width: min(100%, 720px);
   aspect-ratio: 1;
   align-items: center;
   justify-content: center;
   justify-self: center;
-  border: 1px solid rgba(40, 40, 36, 0.38);
-  padding: clamp(34px, 6.2vw, 78px);
-  background-color: rgba(251, 247, 237, 0.7);
-  box-shadow: 8px 11px 0 rgba(40, 40, 36, 0.12);
-}
-
-.board-stage::before {
-  position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(40, 40, 36, 0.12);
-  content: "";
-  pointer-events: none;
-}
-
-.paper-corner {
-  position: absolute;
-  top: 18px;
-  right: 23px;
-  width: 72px;
-  height: 2px;
-  background: var(--blue);
-  opacity: 0.48;
-  transform: rotate(2deg);
 }
 
 .board {
@@ -510,22 +481,6 @@ body[data-stage="intro"] .player-score:first-child {
   box-shadow: 0 0 0 4px var(--paper-light);
 }
 
-.board-help {
-  position: absolute;
-  right: 24px;
-  bottom: 18px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.footer {
-  min-height: 44px;
-  border-top: 1px solid rgba(40, 40, 36, 0.24);
-  border-bottom: 0;
-  font-size: 12px;
-}
-
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -547,14 +502,9 @@ body[data-stage="intro"] .player-score:first-child {
     box-shadow: none;
   }
 
-  .topbar,
-  .footer {
+  .topbar {
     padding-right: 16px;
     padding-left: 16px;
-  }
-
-  .topbar p {
-    display: none;
   }
 
   .game-layout {
@@ -578,10 +528,6 @@ body[data-stage="intro"] .player-score:first-child {
     font-size: clamp(48px, 14vw, 66px);
     letter-spacing: -0.07em;
     line-height: 0.92;
-  }
-
-  .title-block h1 br {
-    display: none;
   }
 
   .rule-copy {
@@ -611,7 +557,6 @@ body[data-stage="intro"] .player-score:first-child {
   .board-stage {
     order: 3;
     width: 100%;
-    padding: clamp(31px, 10vw, 62px);
   }
 
   .status-panel {
@@ -664,24 +609,8 @@ body[data-stage="intro"] .player-score:first-child {
     font-size: 34px;
   }
 
-  .board-stage {
-    padding: 30px;
-  }
-
-  .board-help,
-  .paper-corner {
-    display: none;
-  }
-
   .status-panel h2 {
     font-size: 18px;
-  }
-
-  .footer {
-    display: block;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    line-height: 1.7;
   }
 }
 
@@ -710,9 +639,6 @@ body[data-stage="intro"] .player-score:first-child {
     grid-template-columns: 1fr;
   }
 
-  .board-stage {
-    padding: 25px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

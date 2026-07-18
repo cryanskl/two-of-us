@@ -6,7 +6,6 @@
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#3c3631">
     <title>这一格归谁 · Two of Us</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f4eddd'/%3E%3Cg stroke='%23282824' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M13 13h38M13 32h38M13 51h38M13 13v38M32 13v38M51 13v38'/%3E%3C/g%3E%3Crect x='15' y='15' width='15' height='15' fill='%23b43a28' opacity='.7'/%3E%3Crect x='34' y='34' width='15' height='15' fill='%2324569a' opacity='.7'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="./styles.css">
     <script src="./config.js" defer></script>
     <script src="./logic.js" defer></script>
@@ -17,15 +16,13 @@
       <nav class="topbar" aria-label="体验导航">
         <a class="back-link" href="../../../index.html" aria-label="返回 Two of Us 体验目录">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7M8 12h9"></path></svg>
-          <span>Two of Us</span>
         </a>
-        <p>同一张纸 · 轮流落笔</p>
       </nav>
 
       <div class="game-layout">
         <section class="story-panel" aria-labelledby="page-title">
           <header class="title-block">
-            <h1 id="page-title">这一格<br>归谁</h1>
+            <h1 id="page-title">这一格归谁</h1>
             <p class="rule-copy">
               <span class="rule-desktop">轮流连起相邻的点。圈住一格，它就归你，而且还能再走一步。</span>
               <span class="rule-mobile">轮流连点，围成一格就继续。</span>
@@ -63,16 +60,11 @@
 
         <section class="board-stage" aria-labelledby="board-heading">
           <h2 id="board-heading" class="visually-hidden">四乘四线框占地棋盘</h2>
-          <div class="paper-corner paper-corner--top" aria-hidden="true"></div>
           <div id="board" class="board" aria-describedby="board-help"></div>
-          <p id="board-help" class="board-help">选择两点之间的空白线段落笔。</p>
+          <p id="board-help" class="visually-hidden">选择两点之间的空白线段落笔。</p>
         </section>
       </div>
 
-      <footer class="footer">
-        <p>16 格 · 40 笔 · 围住一格继续</p>
-        <p>本地运行 · 不联网 · 不保存</p>
-      </footer>
       <p id="live-region" class="visually-hidden" aria-live="polite"></p>
       <noscript>需要启用 JavaScript 才能开始这一格归谁。</noscript>
     </main>

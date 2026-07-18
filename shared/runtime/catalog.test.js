@@ -571,13 +571,14 @@ test("dots and boxes keeps its file protocol and canonical local board boundary"
     readFile(new URL("README.md", root), "utf8"),
     readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
   ]);
-  const runtimeSource = [html, config, logic, app].join("\n");
+  const runtimeSource = [html, config, logic, app, css].join("\n");
 
   assert.doesNotMatch(html, /type=["']module["']/i);
   assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
   assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
   assert.doesNotMatch(runtimeSource, /Math\.random/);
-  assert.doesNotMatch(runtimeSource, /(?:\.\.\/){1,2}shared\//);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
   assert.match(app, /logic\.getAllEdgeIds\(\)/);
   assert.match(css, /assets\/paper-texture\.png/);

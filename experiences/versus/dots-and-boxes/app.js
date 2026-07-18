@@ -82,7 +82,7 @@
       owner.className = "box-owner";
       owner.style.gridRow = String(box.row * 2 + 2);
       owner.style.gridColumn = String(box.column * 2 + 2);
-      owner.setAttribute("aria-hidden", "true");
+      owner.setAttribute("role", "img");
       boxNodes.set(boxId, owner);
       fragment.append(owner);
     }
@@ -90,7 +90,6 @@
   }
 
   function commitEdge(edgeId) {
-    const previous = state;
     const next = logic.claimEdge(state, edgeId);
     if (next === state) return;
     state = next;
@@ -133,6 +132,7 @@
   }
 
   function renderBoard(view) {
+    board.dataset.moveNumber = String(view.moveNumber);
     const edgeOwners = new Map(view.edges.map((edge) => [edge.id, edge.owner]));
     for (const [edgeId, button] of edgeButtons) {
       const owner = edgeOwners.get(edgeId);
@@ -141,27 +141,32 @@
       button.classList.toggle("is-claimed", claimed);
       button.classList.toggle("is-red", owner === 0);
       button.classList.toggle("is-blue", owner === 1);
-      button.setAttribute("aria-label", edgeLabel(edgeId, owner, view.currentPlayerName));
+      button.setAttribute("aria-label", edgeLabel(edgeId, owner, view.currentPlayerName, view.playerNames));
     }
 
     for (const boxState of view.boxes) {
       const node = boxNodes.get(boxState.id);
       node.classList.toggle("is-red", boxState.owner === 0);
       node.classList.toggle("is-blue", boxState.owner === 1);
-      node.textContent = boxState.owner === null ? "" : view.playerNames[boxState.owner].slice(0, 1);
+      node.textContent = boxState.owner === null ? "" : boxState.owner === 0 ? "朱" : "蓝";
+      node.setAttribute("aria-label", boxLabel(boxState, view.playerNames));
     }
   }
 
-  function edgeLabel(edgeId, owner, currentPlayerName) {
+  function edgeLabel(edgeId, owner, currentPlayerName, playerNames) {
     const edge = logic.parseEdgeId(edgeId);
-    const start = edge.orientation === "H"
-      ? `第 ${edge.row + 1} 行第 ${edge.column + 1} 个点`
-      : `第 ${edge.row + 1} 行第 ${edge.column + 1} 个点`;
+    const start = `第 ${edge.row + 1} 行第 ${edge.column + 1} 个点`;
     const end = edge.orientation === "H"
       ? `同行右侧相邻点`
       : `同列下方相邻点`;
-    if (owner === 0 || owner === 1) return `${start}到${end}的线，已由${state.playerNames[owner]}落笔`;
+    if (owner === 0 || owner === 1) return `${start}到${end}的线，已由${playerNames[owner]}落笔`;
     return `${start}到${end}的空线，${currentPlayerName}可以落笔`;
+  }
+
+  function boxLabel(boxState, playerNames) {
+    const box = logic.parseBoxId(boxState.id);
+    const position = `第 ${box.row + 1} 行第 ${box.column + 1} 格`;
+    return boxState.owner === null ? `${position}，尚未归属` : `${position}，归${playerNames[boxState.owner]}`;
   }
 
   function renderAction(view) {
