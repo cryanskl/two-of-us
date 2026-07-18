@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [规则先于动画：固定步长、连续碰撞与 reduced motion](./2026-07-18-rule-authority-before-motion.md)
 - [落笔前图状态：无向边、借力与困死的统一判定](./2026-07-18-pre-move-graph-state-and-bounce.md)
 - [阶段门控的渐进惊喜：让状态拥有文案与焦点](./2026-07-17-stage-gated-progressive-surprise.md)
 - [Token 守卫的双角色协作交接](./2026-07-17-token-guarded-cooperative-handoff.md)

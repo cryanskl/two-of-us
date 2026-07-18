@@ -61,6 +61,7 @@
 | [53-paper-soccer-verification.md](./53-paper-soccer-verification.md) | “纸上球局”的进球/借力/困死实玩、file 直开、响应式与视觉忠实度验收记录 |
 | [54-paper-plane-mail-spec.md](./54-paper-plane-mail-spec.md) | A 级“纸飞机投递”的固定步长抛体、邮箱碰撞、阶段信件与午夜邮务台视觉规格 |
 | [55-echo-arena-spec.md](./55-echo-arena-spec.md) | A 级“回声擂台”的四音复现/追加、播放 token、共享 tone player 与模拟排练台视觉规格 |
+| [56-paper-plane-mail-verification.md](./56-paper-plane-mail-verification.md) | “纸飞机投递”的失败/命中/揭信实玩、file 直开、reduced motion、响应式与视觉忠实度验收记录 |
 | [60-local-first-second-pass-research.md](./60-local-first-second-pass-research.md) | A–D 全量候选、横纵向比较、实现优先级与来源声明建议 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

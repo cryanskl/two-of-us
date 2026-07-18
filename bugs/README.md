@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [纸飞机投递：± 步进按钮小于 56px](./2026-07-18-paper-plane-step-target.md)
 - [纸上球局：整张交互 SVG 的图片角色隐藏了内部合法落点](./2026-07-18-paper-soccer-interactive-svg-role.md)
 - [纸上球局：桌面首屏高度预算固定多出 2px](./2026-07-18-paper-soccer-desktop-height-budget.md)
 - [纸上球局：普通换手反馈在玩家名之前多出空格](./2026-07-18-paper-soccer-turn-copy-spacing.md)
