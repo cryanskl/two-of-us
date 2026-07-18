@@ -112,6 +112,7 @@
 - [A 级“这一拍，刚好和你”实现规格](./docs/92-four-hands-harmony-spec.md)
 - [“这一拍，刚好和你”分步实施计划](./docs/93-four-hands-harmony-plan.md)
 - [“这一拍，刚好和你”视觉设计](./docs/94-four-hands-harmony-design.md)
+- [“这一拍，刚好和你”验收记录](./docs/95-four-hands-harmony-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
