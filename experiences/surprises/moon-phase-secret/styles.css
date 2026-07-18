@@ -783,6 +783,18 @@ body[data-stage="unlocked"] .moon-face {
     row-gap: 26px;
   }
 
+  body[data-stage="intro"] .experience-shell {
+    grid-template-areas:
+      "title"
+      "action"
+      "instrument"
+      "clues";
+  }
+
+  body[data-stage="intro"] .action-stage {
+    justify-self: center;
+  }
+
   .title-block {
     align-self: auto;
     padding: 0;
