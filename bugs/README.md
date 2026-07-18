@@ -8,6 +8,11 @@
 
 ## 已记录
 
+- [把这首转给你：共享播放器路径与单目录便携承诺冲突](./2026-07-18-hand-crank-standalone-copy-contract.md)
+- [把这首转给你：图片早于监听器失败时没有进入备用场景](./2026-07-18-hand-crank-cached-image-failure.md)
+- [把这首转给你：缺失 favicon 污染 localhost 控制台](./2026-07-18-hand-crank-favicon-404.md)
+- [把这首转给你：按钮混入滑块 aria-value 语义](./2026-07-18-hand-crank-button-slider-aria-conflict.md)
+- [把这首转给你：自定义旋律齿位仍按固定四格取模](./2026-07-18-hand-crank-motif-tooth-range.md)
 - [把这首转给你：桌面原生尺寸残留可滚动高度](./2026-07-18-hand-crank-desktop-scroll-residue.md)
 - [把这首转给你：移动端摇柄覆盖主按钮并产生窄屏溢出](./2026-07-18-hand-crank-mobile-control-overlap.md)
 - [把这首转给你：反转后“转一格”可能没有产生新音](./2026-07-18-hand-crank-discrete-step-after-reverse.md)

@@ -1,12 +1,12 @@
 # 「把这首转给你」验收记录
 
-> 验收日期：2026-07-18；调研提交：`84b8273`；规格提交：`60cc669`；功能提交：`a56d798`。
+> 验收日期：2026-07-18；调研提交：`84b8273`；规格提交：`60cc669`；功能提交：`a56d798`；浏览器修复：`6dd61c0`、`200c8fd`、`a01e83e`。
 
 ## 1. 结论
 
 「把这首转给你」已作为第 25 个无第三方运行依赖的 A 级作品接入门户。真实 `file://` 入口完成了开始、连续圆周拖拽、键盘逐格、八圈完成、阶段留言、重玩、静音、离线、缺图回退、reduced motion、响应式与控制台验收。
 
-运行时只读取同目录文件，不请求远程服务，不持久化姓名、文案或进度。旋律、交互规则和运行代码均为本仓库原创；机械音乐盒和浏览器音频资料只用于理解机制与平台边界，借鉴声明见作品 [`README.md`](../experiences/surprises/hand-crank-music-box/README.md) 与 [`assets/ATTRIBUTION.md`](../experiences/surprises/hand-crank-music-box/assets/ATTRIBUTION.md)。
+运行时只读取仓库内本地文件：作品目录、纸雕资产与统一的 [`shared/audio/tone-player.js`](../shared/audio/tone-player.js)；不请求远程服务，不持久化姓名、文案或进度。旋律、交互规则和运行代码均为本仓库原创；机械音乐盒和浏览器音频资料只用于理解机制与平台边界，借鉴声明见作品 [`README.md`](../experiences/surprises/hand-crank-music-box/README.md) 与 [`assets/ATTRIBUTION.md`](../experiences/surprises/hand-crank-music-box/assets/ATTRIBUTION.md)。
 
 ## 2. 自动检查
 
@@ -22,7 +22,7 @@
 ## 3. 浏览器方法与环境
 
 - 首选应用内 Browser 插件；当前运行时报告 `No browser is available`，且故障文档解析到不同插件版本目录，详见 [`bugs/2026-07-18-browser-plugin-version-drift.md`](../bugs/2026-07-18-browser-plugin-version-drift.md)；
-- 回退方法：`playwright-cli` 驱动本机 headed Chromium，先打开空白页，再由受控页面真实导航到 `file://`；
+- 回退方法：`playwright-cli` 驱动本机 headed Chromium 验证 localhost 全流程；已有 headed Chrome 会话真实打开 `file://` 且控制台为零错误，另用系统 Chrome headless 直接打开同一 `file://` 入口生成桌面证明图；
 - 入口：`file:///Users/zenith/Desktop/two-of-us/experiences/surprises/hand-crank-music-box/index.html`；
 - 桌面原生概念尺寸：1504×1046；
 - 手机验证尺寸：390×844；窄屏 Gate：320×760。
@@ -36,9 +36,13 @@
 | intro → playing | 主动作隐藏，摇柄启用，焦点转到摇柄；最终留言节点仍为 0 |
 | 真实圆周拖拽 | 顺时针完整一圈推进 4 格，进度准确显示 `1 / 8 圈` |
 | 键盘逐格 | `ArrowRight` 连续 4 次同样推进到 `1 / 8 圈` |
+| 混合键盘 | `ArrowRight` 与 `Space` 各自一次都精确增加一格 |
+| 反转再追平 | 反向四分之一圈、再顺时针回到旧峰值时格数不变；超过峰值后才产生新格 |
+| 第 31 / 32 格 | 第 31 格最终留言节点为 0；第 32 格唯一进入 `complete` 并创建一份留言 |
 | 完成八圈 | 第 32 格进入 `complete`，只创建 1 份最终留言，标题为“这段路，想和你慢慢走” |
 | 再转一次 | 状态回到 intro、步数归零、最终留言节点销毁 |
 | 静音 | `aria-pressed` 切换为 `true`，无声状态不阻断推进 |
+| AudioContext 缺失 | 注入不存在的 AudioContext 后仍推进到第 1 格，显示“无声也能继续”，控制台 0 error |
 | 离线 | 页面加载后切断网络，`navigator.onLine = false` 时仍能开始并完成一圈 |
 | 图片失败 | 两张纸雕图片均移除 `src` 并隐藏，代码原生月亮、小路与灯光回退场景接管 |
 
@@ -90,6 +94,11 @@
 - 反转后直接在当前角度增加一格，可能只回到旧峰值而不产生新音：离散推进先对齐 `peakAngle`；
 - 390px 下居中的摇柄覆盖主按钮，320px 下旋钮再产生 6px 横向溢出：窄屏让摇柄落入右侧预留栏，最窄断点增加 6px 安全区；
 - `.sr-only` 的 1px 盒仍参与桌面高度计算并留下滚动残留：补齐经典 `margin: -1px` 裁切约定；
+- 原生按钮混入 slider 的 `aria-value*`：保留 button 语义，以动态 `aria-label` 读出圈数和格数；
+- 非法角度返回 `NaN`、UI 却只检查 `null`：入口统一拒绝所有非有限增量；
+- favicon 404 与图片早于监听器失败会污染/破坏降级：增加空内联 favicon，并同时覆盖已失败与后续 `error` 两条图片路径；
+- 自定义 8–16 音动机的活动齿位误用每圈四格取模：改为按实际 `motif.length` 派生并动态生成齿窗；
+- “只复制作品目录仍完整有声”的完成定义与统一播放器路径冲突：明确完整仓库可直接打开，便携包需携带共享播放器；
 - 应用内 Browser 插件版本漂移：仓库不修改外部插件，以 headed Chromium 完成同等验收。
 
 对应项目 bug 与通用经验已写入 `bugs/` 和 `learn/`。
