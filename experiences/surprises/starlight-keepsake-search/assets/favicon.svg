@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="夜色中的一束暖光">
+  <defs>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffd18a" stop-opacity=".95"/>
+      <stop offset=".42" stop-color="#f0bd72" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f0bd72" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="11" fill="#0b1020"/>
+  <path d="M8 43C20 34 43 34 56 43V56H8Z" fill="#4a2f28"/>
+  <circle cx="37" cy="29" r="22" fill="url(#glow)"/>
+  <circle cx="37" cy="29" r="7" fill="none" stroke="#ffe1a8" stroke-width="3"/>
+  <path d="M52 10v9M47.5 14.5h9" stroke="#f3e7d0" stroke-width="2" stroke-linecap="round"/>
+</svg>

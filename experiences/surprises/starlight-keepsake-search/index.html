@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="移动一束小灯，让夜里的五点微光慢慢留下来。">
+    <title>把夜晚照成我们</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js" defer></script>
+    <script src="logic.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="keepsake-app" id="keepsake-app" data-phase="intro">
+      <header class="story-header" aria-labelledby="page-title">
+        <h1 id="page-title">把夜晚照成我们</h1>
+        <div class="title-rule" aria-hidden="true"><span></span></div>
+        <p class="subtitle">有些小事藏在暗处，等你慢一点，把光停在它们身上。</p>
+        <p class="instruction" id="instruction">
+          提起这盏灯，找找房间里留下的五点微光。看见以后别急着走，停一会儿，它才会记住你。
+        </p>
+        <h2 class="visible-status" id="visible-status">灯还在桌面中央。</h2>
+        <div class="completion-host" id="completion-host"></div>
+      </header>
+
+      <section class="stage-panel" aria-label="夜晚纪念物搜索">
+        <div
+          class="night-stage is-idle"
+          id="night-stage"
+          role="region"
+          tabindex="0"
+          aria-label="移动光心的夜桌"
+          aria-describedby="instruction visible-status keyboard-help"
+        >
+          <img class="night-image" id="night-image" src="assets/keepsake-night.jpg" alt="" aria-hidden="true">
+          <canvas id="veil-canvas" width="1000" height="620" aria-hidden="true"></canvas>
+          <canvas id="light-canvas" width="1000" height="620" aria-hidden="true"></canvas>
+          <div class="forced-stage" id="forced-stage" aria-hidden="true">
+            <span class="forced-light" id="forced-light"></span>
+            <span class="forced-targets" id="forced-targets"></span>
+          </div>
+          <p class="canvas-fallback" id="canvas-fallback" hidden>
+            当前浏览器不能显示移动光圈，你仍然可以用“直接点亮”打开完整内容。
+          </p>
+        </div>
+        <p class="keyboard-help" id="keyboard-help">
+          舞台获得焦点后可用方向键移动，按 Home 回到中央。
+        </p>
+      </section>
+
+      <section class="actions" id="actions" aria-label="操作">
+        <button class="button button-primary" type="button" data-action="start">提起灯</button>
+        <button class="button button-primary" type="button" data-action="pause" hidden>先把灯放下</button>
+        <button class="button button-primary" type="button" data-action="resume" hidden>再提起灯</button>
+        <button class="button" type="button" data-action="direct">不方便寻找，直接点亮</button>
+      </section>
+
+      <section class="discoveries" aria-labelledby="found-title">
+        <div class="progress-heading">
+          <h2 id="found-title">已经亮起</h2>
+          <p id="progress-copy"><strong>0</strong> / 5</p>
+        </div>
+        <ol class="progress-dots" id="progress-dots" aria-hidden="true">
+          <li></li><li></li><li></li><li></li><li></li>
+        </ol>
+        <ol class="found-list" id="found-list"></ol>
+      </section>
+
+      <p class="privacy-note"><span aria-hidden="true">▢</span> 本地 · 不保存</p>
+      <p class="live-status" id="live-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>需要启用 JavaScript 才能移动这盏灯；页面不会联网，也不会保存你的寻找过程。</noscript>
+    </main>
+  </body>
+</html>
