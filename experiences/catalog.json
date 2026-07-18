@@ -158,6 +158,19 @@
       "networkRequired": false
     },
     {
+      "id": "moon-phase-secret",
+      "title": "把月亮拨回那一天",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/moon-phase-secret/index.html",
+      "readme": "experiences/surprises/moon-phase-secret/README.md",
+      "description": "根据三条私人线索校准月份、日期和离线近似月相，三轴同时对齐后才展开本地留言。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

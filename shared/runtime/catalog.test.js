@@ -222,6 +222,47 @@ test("hand-crank music box keeps its file protocol, audio, secret, and attributi
   assert.match(attribution, /^# 借鉴与来源声明$/m);
 });
 
+test("catalog exposes the installed A-level moon phase secret", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const moonPhase = catalog.experiences.find((item) => item.id === "moon-phase-secret");
+
+  assert.equal(moonPhase.category, "surprise");
+  assert.equal(moonPhase.level, "A");
+  assert.equal(moonPhase.installed, true);
+  assert.equal(moonPhase.networkRequired, false);
+  assert.match(moonPhase.entry, /moon-phase-secret\/index\.html$/);
+});
+
+test("moon phase secret keeps its file protocol, source, secret, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/moon-phase-secret/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|FileReader|getUserMedia|MediaDevices|DeviceMotionEvent)\b/);
+  assert.doesNotMatch(runtimeSource, /document\.cookie|navigator\.serviceWorker/i);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(css, /gradient\s*\(/i);
+  assert.match(css, /touch-action:\s*none/i);
+  assert.match(html, /assets\/moon-surface\.png/);
+  assert.doesNotMatch(`${html}\n${app}\n${portal}`, /原来月亮也记得|那一天之后，普通的日子也开始有了坐标/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /本机明文|不是加密/);
+  assert.match(attribution, /OpenAI ImageGen/);
+  assert.match(attribution, /SunCalc/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0b1220">
+    <title>把月亮拨回那一天 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-stage="intro" data-moon-phase="0">
+    <a class="back-link" href="../../../index.html" aria-label="返回体验库">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7M8 12h10"></path>
+      </svg>
+    </a>
+
+    <main class="experience-shell">
+      <header class="title-block">
+        <h1>把月亮拨回那一天</h1>
+        <span class="title-rule" aria-hidden="true"></span>
+        <p>跟着三条线索，把月份、日期和月相拨回那一天。</p>
+      </header>
+
+      <section id="clue-stage" class="clue-stage" aria-labelledby="clue-title" hidden>
+        <h2 id="clue-title">三条线索</h2>
+        <ol id="clue-list" class="clue-list"></ol>
+      </section>
+
+      <section class="instrument-stage" aria-label="月相校准仪">
+        <div id="calibrator" class="calibrator">
+          <div id="minor-ticks" class="minor-ticks" aria-hidden="true"></div>
+          <div id="month-labels" class="month-labels" aria-hidden="true"></div>
+          <span class="month-pointer" aria-hidden="true"></span>
+
+          <button id="month-ring" class="ring-control month-ring-control" type="button" disabled></button>
+
+          <div id="phase-labels" class="phase-labels" aria-hidden="true"></div>
+          <span class="phase-pointer" aria-hidden="true"></span>
+          <button id="phase-ring" class="ring-control phase-ring-control" type="button" disabled></button>
+
+          <div id="moon-face" class="moon-face" aria-hidden="true">
+            <img id="moon-image" src="assets/moon-surface.png" alt="">
+            <span class="moon-crater moon-crater-one"></span>
+            <span class="moon-crater moon-crater-two"></span>
+            <span class="moon-crater moon-crater-three"></span>
+            <span class="moon-shadow"></span>
+            <span class="moon-seal"></span>
+          </div>
+
+          <div class="mechanical-day" aria-hidden="true">
+            <span id="mechanical-day-value">01</span>
+            <small>日</small>
+          </div>
+        </div>
+
+        <div class="control-bank" aria-label="校准读数与调节">
+          <div class="adjuster" data-kind="month">
+            <button class="step-button" type="button" data-adjust="month" data-delta="1" aria-label="月份加一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+            </button>
+            <p class="adjuster-label">月份</p>
+            <p id="month-readout" class="adjuster-value">1 月</p>
+            <button class="step-button" type="button" data-adjust="month" data-delta="-1" aria-label="月份减一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg>
+            </button>
+          </div>
+
+          <div class="adjuster" data-kind="day">
+            <button class="step-button" type="button" data-adjust="day" data-delta="1" aria-label="日期加一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+            </button>
+            <p class="adjuster-label">日期</p>
+            <p id="day-readout" class="adjuster-value">1 日</p>
+            <button class="step-button" type="button" data-adjust="day" data-delta="-1" aria-label="日期减一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg>
+            </button>
+          </div>
+
+          <div class="adjuster" data-kind="phase">
+            <button class="step-button" type="button" data-adjust="phase" data-delta="1" aria-label="月相加一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+            </button>
+            <p class="adjuster-label">月相</p>
+            <p id="phase-readout" class="adjuster-value">新月</p>
+            <button class="step-button" type="button" data-adjust="phase" data-delta="-1" aria-label="月相减一" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <p id="combined-readout" class="combined-readout" aria-live="polite">— 年 · 1 月 · 1 日 · 新月</p>
+      </section>
+
+      <section class="action-stage" aria-label="校准操作">
+        <button id="primary-button" class="primary-button" type="button">开始校准</button>
+        <ul id="feedback-list" class="feedback-list" aria-live="polite" aria-atomic="true" hidden></ul>
+      </section>
+    </main>
+
+    <p id="status-live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

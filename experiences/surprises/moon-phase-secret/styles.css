@@ -1,0 +1,980 @@
+:root {
+  color-scheme: dark;
+  --background: #0b1220;
+  --surface: #151f30;
+  --surface-deep: #0e1727;
+  --moon: #e7e3dc;
+  --moon-shadow: #68768b;
+  --silver: #aeb9c8;
+  --cobalt: #4169a8;
+  --vermilion: #c86659;
+  --text: #f0ede5;
+  --muted: #9ca8b8;
+  --border: rgba(174, 185, 200, .34);
+  --month-angle: 30deg;
+  --phase-angle: 0deg;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  background: var(--background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--background);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 4px;
+}
+
+.back-link {
+  position: fixed;
+  z-index: 30;
+  top: 24px;
+  left: 28px;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  color: var(--silver);
+  border: 1px solid rgba(174, 185, 200, .54);
+  border-radius: 999px;
+  background: var(--background);
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.back-link:hover {
+  color: var(--text);
+  border-color: var(--text);
+  transform: translateX(-2px);
+}
+
+.back-link svg {
+  width: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.experience-shell {
+  display: grid;
+  width: min(100%, 1504px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 70px clamp(42px, 4.8vw, 72px) 52px;
+  grid-template-columns: minmax(320px, 34fr) minmax(680px, 66fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "title instrument"
+    "clues instrument"
+    "action instrument";
+  column-gap: clamp(34px, 3.2vw, 52px);
+  align-items: center;
+}
+
+.title-block {
+  grid-area: title;
+  align-self: end;
+  padding-top: 34px;
+}
+
+.title-block h1 {
+  max-width: 440px;
+  margin: 0;
+  color: var(--text);
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+  font-size: clamp(56px, 4.8vw, 72px);
+  font-weight: 500;
+  letter-spacing: .05em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.title-rule {
+  position: relative;
+  display: block;
+  width: min(100%, 415px);
+  height: 1px;
+  margin: 24px 0 26px;
+  background: var(--border);
+}
+
+.title-rule::after {
+  position: absolute;
+  top: 50%;
+  left: 76%;
+  width: 8px;
+  height: 8px;
+  content: "";
+  background: var(--silver);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 0 0 0 6px var(--background);
+}
+
+.title-block p {
+  max-width: 435px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(18px, 1.45vw, 22px);
+  letter-spacing: .025em;
+  line-height: 1.8;
+}
+
+.clue-stage {
+  width: min(100%, 455px);
+  grid-area: clues;
+  align-self: center;
+}
+
+.clue-stage h2 {
+  margin: 0 0 15px;
+  color: var(--silver);
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: .14em;
+}
+
+.clue-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clue-list::before {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 5px;
+  width: 1px;
+  content: "";
+  border-left: 1px dashed rgba(174, 185, 200, .5);
+}
+
+.clue-list li {
+  position: relative;
+  display: grid;
+  min-height: 70px;
+  padding: 15px 0 15px 21px;
+  align-items: center;
+  color: var(--text);
+  border-bottom: 1px solid rgba(174, 185, 200, .18);
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.55;
+}
+
+.clue-list li::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  content: "";
+  border: 1px solid var(--silver);
+  border-radius: 999px;
+  background: var(--background);
+  transform: translate(-50%, -50%);
+}
+
+.clue-number {
+  color: var(--silver);
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+.instrument-stage {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  grid-area: instrument;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.calibrator {
+  position: relative;
+  container-type: inline-size;
+  width: min(100%, 720px, calc(100vh - 285px));
+  min-width: 500px;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  border: 2px solid var(--silver);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 0 0 8px var(--background), 0 0 0 10px rgba(174, 185, 200, .48), inset 0 0 0 8px var(--surface-deep), 0 24px 36px rgba(0, 0, 0, .34);
+  isolation: isolate;
+}
+
+.calibrator::before,
+.calibrator::after {
+  position: absolute;
+  content: "";
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.calibrator::before {
+  inset: 5.5%;
+}
+
+.calibrator::after {
+  inset: 27%;
+}
+
+.minor-ticks,
+.month-labels,
+.phase-labels {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.minor-tick {
+  position: absolute;
+  width: 1px;
+  height: 2.2%;
+  background: rgba(174, 185, 200, .42);
+  transform: translate(-50%, -50%) rotate(var(--tick-angle));
+  transform-origin: center;
+}
+
+.minor-tick:nth-child(5n + 1) {
+  height: 3.2%;
+  background: var(--silver);
+}
+
+.month-label,
+.phase-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.month-label {
+  width: 62px;
+  height: 42px;
+  color: #cfd6df;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(16px, 1.55vw, 23px);
+  font-variant-numeric: tabular-nums;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.month-label.is-current {
+  color: var(--text);
+  border: 1px solid var(--cobalt);
+  border-radius: 4px;
+  background: var(--cobalt);
+}
+
+.phase-label {
+  width: 70px;
+  height: 70px;
+}
+
+.phase-mini {
+  position: relative;
+  display: block;
+  width: clamp(24px, 3.2vw, 40px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(174, 185, 200, .58);
+  border-radius: 999px;
+  background: var(--moon);
+  box-shadow: 0 0 0 4px var(--surface);
+}
+
+.phase-label.is-current .phase-mini {
+  border-color: var(--text);
+  box-shadow: 0 0 0 4px var(--cobalt);
+}
+
+.mini-shadow,
+.moon-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--background);
+  transition: clip-path 620ms ease, opacity 620ms ease;
+}
+
+.phase-mini[data-index="0"] .mini-shadow,
+body[data-moon-phase="0"] .moon-shadow { clip-path: inset(0); opacity: .96; }
+.phase-mini[data-index="1"] .mini-shadow,
+body[data-moon-phase="1"] .moon-shadow { clip-path: polygon(0 0, 72% 0, 54% 100%, 0 100%); opacity: .94; }
+.phase-mini[data-index="2"] .mini-shadow,
+body[data-moon-phase="2"] .moon-shadow { clip-path: inset(0 50% 0 0); opacity: .94; }
+.phase-mini[data-index="3"] .mini-shadow,
+body[data-moon-phase="3"] .moon-shadow { clip-path: inset(0 74% 0 0); opacity: .94; }
+.phase-mini[data-index="4"] .mini-shadow,
+body[data-moon-phase="4"] .moon-shadow { opacity: 0; }
+.phase-mini[data-index="5"] .mini-shadow,
+body[data-moon-phase="5"] .moon-shadow { clip-path: inset(0 0 0 74%); opacity: .94; }
+.phase-mini[data-index="6"] .mini-shadow,
+body[data-moon-phase="6"] .moon-shadow { clip-path: inset(0 0 0 50%); opacity: .94; }
+.phase-mini[data-index="7"] .mini-shadow,
+body[data-moon-phase="7"] .moon-shadow { clip-path: polygon(28% 0, 100% 0, 100% 100%, 46% 100%); opacity: .94; }
+
+.ring-control {
+  position: absolute;
+  z-index: 2;
+  padding: 0;
+  touch-action: none;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: grab;
+}
+
+.ring-control:active {
+  cursor: grabbing;
+}
+
+.ring-control:disabled {
+  cursor: default;
+}
+
+.month-ring-control {
+  inset: 0;
+}
+
+.phase-ring-control {
+  z-index: 4;
+  inset: 22%;
+}
+
+.month-pointer,
+.phase-pointer {
+  position: absolute;
+  z-index: 7;
+  left: calc(50% - 1px);
+  width: 2px;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+}
+
+.month-pointer {
+  top: 3%;
+  height: 47%;
+  transform: rotate(var(--month-angle));
+}
+
+.month-pointer::after,
+.phase-pointer::after {
+  display: block;
+  width: 14px;
+  height: 14px;
+  content: "";
+  border: 2px solid var(--text);
+  background: var(--vermilion);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 0 0 0 3px var(--surface-deep);
+}
+
+.phase-pointer {
+  top: 22%;
+  height: 28%;
+  transform: rotate(var(--phase-angle));
+}
+
+.phase-pointer::after {
+  width: 10px;
+  height: 10px;
+  background: var(--cobalt);
+}
+
+.moon-face {
+  position: absolute;
+  z-index: 6;
+  inset: 34%;
+  overflow: hidden;
+  border: 2px solid var(--silver);
+  border-radius: 999px;
+  background: var(--moon);
+  box-shadow: 0 0 0 8px var(--surface-deep), 0 0 0 10px var(--border), 0 10px 24px rgba(0, 0, 0, .4);
+  transition: box-shadow 620ms ease, transform 620ms ease;
+}
+
+.moon-face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .94;
+  transition: opacity 620ms ease;
+}
+
+.moon-crater {
+  position: absolute;
+  display: none;
+  border: 2px solid rgba(104, 118, 139, .48);
+  border-radius: 999px;
+  background: #c5c8c8;
+  box-shadow: inset 4px 4px 0 rgba(104, 118, 139, .18);
+}
+
+.moon-crater-one { top: 21%; left: 18%; width: 23%; aspect-ratio: 1; }
+.moon-crater-two { right: 18%; bottom: 22%; width: 17%; aspect-ratio: 1; }
+.moon-crater-three { top: 35%; right: 24%; width: 10%; aspect-ratio: 1; }
+
+.image-failed .moon-face img {
+  display: none;
+}
+
+.image-failed .moon-crater {
+  display: block;
+}
+
+.moon-seal {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--surface-deep);
+  opacity: 0;
+  transform: scale(.82);
+  transition: opacity 620ms ease, transform 620ms ease;
+}
+
+body[data-stage="intro"] .moon-seal {
+  opacity: .9;
+  transform: scale(1);
+}
+
+body[data-stage="unlocked"] .moon-shadow,
+body[data-stage="unlocked"] .moon-seal {
+  opacity: 0;
+}
+
+body[data-stage="unlocked"] .moon-face {
+  box-shadow: 0 0 0 8px var(--surface-deep), 0 0 0 10px var(--text), 0 0 32px rgba(231, 227, 220, .42);
+  transform: scale(1.03);
+}
+
+.mechanical-day {
+  position: absolute;
+  z-index: 8;
+  right: 5%;
+  bottom: 5%;
+  display: grid;
+  width: clamp(70px, 8vw, 100px);
+  height: clamp(82px, 9vw, 112px);
+  place-content: center;
+  color: var(--text);
+  border: 2px solid var(--silver);
+  border-radius: 12px;
+  background: var(--surface-deep);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, .38), inset 0 0 0 5px var(--surface);
+  text-align: center;
+}
+
+.mechanical-day span {
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4vw, 50px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.mechanical-day small {
+  margin-top: 7px;
+  color: var(--silver);
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: 15px;
+}
+
+.control-bank {
+  display: grid;
+  width: min(100%, 660px);
+  margin-top: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.adjuster {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 74px;
+  padding: 0 49px;
+  place-content: center;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.adjuster-label,
+.adjuster-value {
+  margin: 0;
+}
+
+.adjuster-label {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .14em;
+}
+
+.adjuster-value {
+  margin-top: 3px;
+  overflow: hidden;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(18px, 1.7vw, 23px);
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step-button {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  place-items: center;
+  color: var(--silver);
+  border: 1px solid rgba(174, 185, 200, .55);
+  border-radius: 999px;
+  background: var(--surface-deep);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.step-button:first-child { left: 0; }
+.step-button:last-child { right: 0; }
+
+.step-button:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--text);
+  background: var(--cobalt);
+}
+
+.step-button:disabled {
+  cursor: default;
+  opacity: .42;
+}
+
+.step-button svg {
+  width: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+.combined-readout {
+  width: min(100%, 660px);
+  min-height: 45px;
+  margin: 10px 0 0;
+  padding: 11px 20px;
+  color: var(--silver);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+}
+
+.action-stage {
+  width: min(100%, 410px);
+  grid-area: action;
+  align-self: start;
+}
+
+.primary-button {
+  display: block;
+  width: min(100%, 380px);
+  min-height: 72px;
+  padding: 14px 24px;
+  color: var(--text);
+  border: 1px solid #e5a69d;
+  border-radius: 4px;
+  background: var(--vermilion);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .28), inset 0 0 0 4px rgba(11, 18, 32, .16);
+  cursor: pointer;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(24px, 2vw, 30px);
+  letter-spacing: .14em;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.primary-button:hover {
+  border-color: var(--text);
+  background: #b95549;
+  transform: translateY(-2px);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.feedback-list {
+  display: grid;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  gap: 7px;
+}
+
+.feedback-list li {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.feedback-symbol {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: var(--text);
+  border: 1px solid var(--silver);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.feedback-list li.is-aligned {
+  color: var(--text);
+}
+
+.feedback-list li.is-aligned .feedback-symbol {
+  border-color: var(--cobalt);
+  background: var(--cobalt);
+}
+
+.final-message {
+  width: min(100%, 450px);
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  animation: final-reveal 620ms ease both;
+}
+
+.final-recipient {
+  margin: 0 0 12px;
+  color: var(--silver);
+  font-size: 15px;
+  letter-spacing: .15em;
+}
+
+.final-message h2 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: clamp(28px, 2.6vw, 40px);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.final-body {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+@keyframes final-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 1150px) and (min-width: 801px) {
+  .experience-shell {
+    grid-template-columns: minmax(290px, 34fr) minmax(560px, 66fr);
+    padding-right: 32px;
+    padding-left: 32px;
+    column-gap: 24px;
+  }
+
+  .calibrator {
+    min-width: 520px;
+  }
+
+  .title-block h1 {
+    font-size: 54px;
+  }
+}
+
+@media (max-width: 800px) {
+  .back-link {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .experience-shell {
+    display: grid;
+    min-height: 100vh;
+    padding: 72px 12px 28px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "title"
+      "instrument"
+      "clues"
+      "action";
+    row-gap: 26px;
+  }
+
+  .title-block {
+    align-self: auto;
+    padding: 0;
+    text-align: center;
+  }
+
+  .title-block h1 {
+    max-width: none;
+    font-size: clamp(36px, 10.8vw, 46px);
+    letter-spacing: .04em;
+    line-height: 1.25;
+  }
+
+  .title-rule {
+    width: min(76%, 320px);
+    margin: 18px auto 17px;
+  }
+
+  .title-block p {
+    max-width: 350px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .instrument-stage {
+    height: auto;
+  }
+
+  .calibrator {
+    width: min(calc(100vw - 24px), 470px);
+    min-width: 0;
+  }
+
+  .month-label {
+    width: 45px;
+    height: 32px;
+    font-size: clamp(13px, 4.3vw, 17px);
+  }
+
+  .phase-label {
+    width: 48px;
+    height: 48px;
+  }
+
+  .phase-mini {
+    width: clamp(22px, 7vw, 32px);
+  }
+
+  .mechanical-day {
+    right: 3.5%;
+    bottom: 3.5%;
+    width: 65px;
+    height: 72px;
+  }
+
+  .mechanical-day span {
+    font-size: 29px;
+  }
+
+  .control-bank {
+    width: min(100%, 470px);
+    margin-top: 22px;
+    gap: 12px;
+  }
+
+  .adjuster {
+    min-height: 144px;
+    padding: 49px 4px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .adjuster-label {
+    font-size: 13px;
+  }
+
+  .adjuster-value {
+    font-size: clamp(20px, 6vw, 27px);
+  }
+
+  .step-button {
+    top: auto;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  .step-button:first-child {
+    top: -1px;
+  }
+
+  .step-button:last-child {
+    right: auto;
+    bottom: -1px;
+  }
+
+  .combined-readout {
+    width: min(100%, 470px);
+    min-height: 58px;
+    margin-top: 18px;
+    padding: 15px 10px;
+    font-size: clamp(15px, 4.7vw, 20px);
+    letter-spacing: .035em;
+  }
+
+  .clue-stage,
+  .action-stage {
+    width: min(100%, 470px);
+    margin: 0 auto;
+  }
+
+  .clue-stage h2 {
+    margin-bottom: 10px;
+  }
+
+  .clue-list li {
+    min-height: 64px;
+    grid-template-columns: 36px 1fr;
+    gap: 8px;
+    font-size: 16px;
+  }
+
+  .clue-number {
+    font-size: 22px;
+  }
+
+  .primary-button {
+    width: 100%;
+    min-height: 58px;
+    font-size: 23px;
+  }
+
+  .final-message {
+    width: 100%;
+  }
+}
+
+@media (max-width: 350px) {
+  .experience-shell {
+    padding-right: 10px;
+    padding-left: 10px;
+    row-gap: 22px;
+  }
+
+  .calibrator {
+    width: calc(100vw - 20px);
+  }
+
+  .title-block h1 {
+    font-size: 34px;
+  }
+
+  .title-block p {
+    font-size: 15px;
+  }
+
+  .control-bank {
+    gap: 8px;
+  }
+
+  .adjuster {
+    min-height: 136px;
+  }
+
+  .adjuster-value {
+    font-size: 20px;
+  }
+
+  .combined-readout {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .moon-face,
+  .phase-mini {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+    background: var(--moon);
+  }
+
+  .moon-shadow,
+  .mini-shadow {
+    background: var(--background);
+  }
+}
