@@ -109,6 +109,7 @@
 | [100-same-pace-star-verification.md](./100-same-pace-star-verification.md) | “慢一点，也和你一起”的 77 项逻辑、615 项全仓、41 项目录、三档响应式、生命周期、资源降级、来源与 learn 验收 |
 | [101-steady-together-research.md](./101-steady-together-research.md) | A 级“稳稳地，和你一起向前”的三段坡势合作机制、整数动力学、零依赖判断、固定来源与零复制边界 |
 | [102-steady-together-spec.md](./102-steady-together-spec.md) | A 级“稳稳地，和你一起向前”的整数升力、三段坡势、复合稳定 Gate、检查点、终点保持与输入生命周期规格 |
+| [103-steady-together-plan.md](./103-steady-together-plan.md) | “稳稳地，和你一起向前”的视觉前置、逻辑/前端子任务、独立提交、浏览器实玩、bugs/learn 与验收闭环计划 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
