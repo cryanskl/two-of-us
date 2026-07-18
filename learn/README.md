@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [高频页面渲染：用结构键保住 DOM 身份与键盘焦点](./2026-07-18-structural-render-key-focus-stability.md)
 - [条件推理题：用规则 Token 同源生成文案、谓词与唯一解](./2026-07-18-rule-token-single-source-unique-solution.md)
 - [正交离散合作：把颜色显示与成功规则分开](./2026-07-18-orthogonal-discrete-coop-color-rules.md)
 - [可重放轨道争夺：claim 权威、平衡 seed 与哑光精灵](./2026-07-18-seeded-orbit-claims-and-matte-sprites.md)
