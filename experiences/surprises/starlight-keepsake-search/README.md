@@ -47,6 +47,10 @@
 - `assets/keepsake-night.jpg`：本项目通过 ImageGen 生成并校准的本地生产背景。
 - `ATTRIBUTION.md`：研究参考、素材输入链、排除项与零复制声明。
 
+## 借鉴与来源声明
+
+本作品调研了 PixiJS、PixiJS Filters、Konva 与 Phaser 的公开实现边界，但运行时零第三方依赖、没有复制其源码；背景由 OpenAI 内置 ImageGen 为本项目生成。完整的版本、固定 commit、许可证、著作权、排除项与零复制说明见 `ATTRIBUTION.md`。
+
 ## 验证
 
 在仓库根目录运行：

@@ -184,6 +184,19 @@
       "networkRequired": false
     },
     {
+      "id": "starlight-keepsake-search",
+      "title": "把夜晚照成我们",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/starlight-keepsake-search/index.html",
+      "readme": "experiences/surprises/starlight-keepsake-search/README.md",
+      "description": "移动一盏小灯，在五件纪念物上连续停留；每次发现都会永久留下短句，找齐后整幅夜景与本地私信一同亮起。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

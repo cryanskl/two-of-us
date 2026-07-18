@@ -328,6 +328,69 @@ test("fog window letter keeps its file protocol, private DOM, trace, and attribu
   assert.match(portal, /"id": "fog-window-letter"/);
 });
 
+test("catalog exposes the installed A-level starlight keepsake search", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const starlight = catalog.experiences.find((item) => item.id === "starlight-keepsake-search");
+
+  assert.equal(starlight.category, "surprise");
+  assert.equal(starlight.level, "A");
+  assert.equal(starlight.players, "1 人准备，1 人体验");
+  assert.equal(starlight.devices, "单设备");
+  assert.equal(starlight.installed, true);
+  assert.equal(starlight.networkRequired, false);
+  assert.match(starlight.entry, /starlight-keepsake-search\/index\.html$/);
+});
+
+test("starlight search keeps its file protocol, dwell, private DOM, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/starlight-keepsake-search/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|MediaDevices|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /document\.cookie|navigator\.clipboard/i);
+  assert.doesNotMatch(runtimeSource, /Math\.random|getImageData|putImageData|(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|\beval\s*\(/);
+  assert.match(html, /<canvas[^>]+aria-hidden=["']true["']/i);
+  assert.match(html, /<div class="completion-host" id="completion-host"><\/div>/);
+  assert.doesNotMatch(`${html}\n${portal}`, /那张车票|两只杯子|没拍完的照片|放在一起的钥匙|窗边那颗星|你找到的不是散落的东西/);
+  assert.match(app, /setPointerCapture/);
+  assert.match(app, /getCoalescedEvents/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /logic\.MAX_FRAME_GAP_MS/);
+  assert.match(logic, /FOCUS_TICKS = 14/);
+  assert.match(logic, /MAX_TICKS_PER_ACTION = 5/);
+  assert.match(logic, /\{ id: "k5", x: 948, y: 360, radius: 52 \}/);
+  assert.match(html, /src=["']assets\/keepsake-night\.jpg["']/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 离线、隐私与规则边界$/m);
+  assert.match(readme, /本机明文|不是加密/);
+  assert.match(attribution, /2c5818b0e75b835ba5980844136b10cbdc3982a9/);
+  assert.match(attribution, /e9d1ca987864f121680bb0d7e9612c05b37748de/);
+  assert.match(attribution, /ae5bbf7181d0201466045afbbab2297c8ffa7b90/);
+  assert.match(attribution, /7304c64effaa4a1be5b8bf02ab13143a76108a19/);
+  assert.match(attribution, /OpenAI 内置 ImageGen/);
+  assert.match(attribution, /零复制/);
+  assert.match(portal, /"id": "starlight-keepsake-search"/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
