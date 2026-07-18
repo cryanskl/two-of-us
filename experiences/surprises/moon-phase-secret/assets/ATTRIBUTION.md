@@ -23,3 +23,5 @@
 调研对照了 BSD 许可的 [`mourner/suncalc@bbc91f6`](https://github.com/mourner/suncalc/tree/bbc91f689ede3ff7173011947d435b3fb6c0485d)。本作没有复制、运行、vendoring 或改写 SunCalc 源码，也没有引入其包；只记录“完整天文库不应为八档纪念日谜题增加依赖”的技术取舍。
 
 日期状态机、八相近似、角度量化、配置策略、中文文案、DOM、CSS 和测试均由本仓库原创。私人日期和留言由使用者自行填写，不属于仓库示例资产的来源声明范围。
+
+`favicon.svg` 是本仓库代码原生绘制的符号化月相图标，不包含第三方图形或字体。
