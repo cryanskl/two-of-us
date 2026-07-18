@@ -275,6 +275,19 @@
       "networkRequired": false
     },
     {
+      "id": "shared-color-studio",
+      "title": "把颜色调到一起",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/shared-color-studio/index.html",
+      "readme": "experiences/co-op/shared-color-studio/README.md",
+      "description": "两人分别控制色相与明度，在倒计时内把共享调色纸对齐目标刻度，共同收下五张色笺。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",

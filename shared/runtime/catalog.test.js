@@ -395,6 +395,54 @@ test("closer cards keeps its file protocol, spoken-answer, and attribution bound
   assert.match(attribution, /^# 借鉴与来源声明$/m);
 });
 
+test("catalog exposes the installed A-level shared color studio", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const studio = catalog.experiences.find((item) => item.id === "shared-color-studio");
+
+  assert.equal(studio.category, "co-op");
+  assert.equal(studio.level, "A");
+  assert.equal(studio.players, "2 人合作");
+  assert.equal(studio.devices, "单设备同屏");
+  assert.equal(studio.installed, true);
+  assert.equal(studio.networkRequired, false);
+  assert.match(studio.entry, /shared-color-studio\/index\.html$/);
+});
+
+test("shared color studio keeps its file protocol, deterministic rules, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/shared-color-studio/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /classifyControlCode/);
+  assert.match(app, /getColorTokens/);
+  assert.match(css, /assets\/pigment-table\.webp/);
+  assert.match(css, /touch-action:\s*manipulation/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /9f7b45e530489bf2459f68356b79b357ee49e54c/);
+  assert.match(attribution, /ad9bcebc86a8fe6388686858601a04f4a88b08ed/);
+  assert.match(attribution, /c677d8cd2123bc1e24099bb81468934d5a05172f/);
+  assert.match(attribution, /未复制规范示例代码/);
+  assert.match(portal, /"id": "shared-color-studio"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
