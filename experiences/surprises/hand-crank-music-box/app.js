@@ -89,7 +89,10 @@
     elements.crank.addEventListener("lostpointercapture", clearPointerSession);
     elements.crank.addEventListener("keydown", handleCrankKeydown);
 
-    for (const image of elements.dioramaImages) image.addEventListener("error", useImageFallback, { once: true });
+    for (const image of elements.dioramaImages) {
+      image.addEventListener("error", useImageFallback, { once: true });
+      if (image.complete && image.naturalWidth === 0) useImageFallback();
+    }
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pagehide", closeAudio, { once: true });
   }
@@ -139,7 +142,7 @@
     const nextPointerAngle = pointerAngle(event);
     const delta = logic.normalizeAngularDelta(previousPointerAngle, nextPointerAngle);
     previousPointerAngle = nextPointerAngle;
-    if (delta === null) return;
+    if (!Number.isFinite(delta)) return;
     commitState(logic.applyAngularDelta(state, delta));
     event.preventDefault();
   }
@@ -279,10 +282,10 @@
     const complete = state.phase === "complete";
     elements.crank.disabled = !playing;
     elements.advanceButton.disabled = !playing;
-    elements.crank.setAttribute("aria-valuemin", "0");
-    elements.crank.setAttribute("aria-valuemax", String(logic.TOTAL_STEPS));
-    elements.crank.setAttribute("aria-valuenow", String(state.stepIndex));
-    elements.crank.setAttribute("aria-valuetext", `${state.completedTurns} / ${logic.TOTAL_TURNS} 圈，第 ${state.stepIndex} / ${logic.TOTAL_STEPS} 格`);
+    elements.crank.setAttribute(
+      "aria-label",
+      `顺时针转动摇柄；当前 ${state.completedTurns} / ${logic.TOTAL_TURNS} 圈，第 ${state.stepIndex} / ${logic.TOTAL_STEPS} 格；按向右方向键或空格转一格`,
+    );
 
     for (const button of elements.primaryButtons) {
       button.hidden = playing;
