@@ -96,6 +96,7 @@
 - [“光轨围猎”分步实施计划](./docs/77-light-trail-hunt-plan.md)
 - [A 级“这一颗我先到”视觉设计](./docs/78-orbit-star-race-design.md)
 - [“光轨围猎”视觉设计](./docs/78-light-trail-hunt-design.md)
+- [“光轨围猎”验收记录](./docs/79-light-trail-hunt-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
