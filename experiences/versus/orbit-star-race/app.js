@@ -151,7 +151,9 @@
   function announceStateTransition(previous, next) {
     if (next.claims.length > previous.claims.length) {
       const view = logic.getViewModel(next);
-      elements.liveRegion.textContent = `${view.status.title}。${view.status.body}`;
+      elements.liveRegion.textContent = next.phase === "finished"
+        ? ""
+        : `${view.status.title}。${view.status.body}`;
       lastAnnouncedClaimCount = next.claims.length;
       lastAnnouncedPhase = next.phase;
       return;
@@ -187,8 +189,9 @@
       button.style.setProperty("--cooldown", String(player.cooldownRatio));
     }
 
-    elements.statusTitle.textContent = view.status.title;
-    elements.statusBody.textContent = view.status.body;
+    const statusCopy = view.phase === "finished" ? logic.resolveResultCopy(state, config) : view.status;
+    elements.statusTitle.textContent = statusCopy.title;
+    elements.statusBody.textContent = statusCopy.body;
     elements.matchStatus.textContent = matchCopy(view);
     elements.starCounter.textContent = view.phase === "intro"
       ? "星轨待命"
@@ -216,22 +219,12 @@
       return;
     }
 
-    const copy = logic.resolveResultCopy(state, config);
-    const result = document.createElement("section");
-    result.className = "result-copy";
-    const title = document.createElement("h2");
-    title.id = "result-title";
-    title.tabIndex = -1;
-    title.textContent = copy.title;
-    const body = document.createElement("p");
-    body.textContent = copy.body;
     const restart = document.createElement("button");
     restart.type = "button";
     restart.className = "primary-action";
     restart.dataset.action = "restart";
     restart.textContent = "再绕一圈";
-    result.append(title, body, restart);
-    elements.actionStage.replaceChildren(result);
+    elements.actionStage.replaceChildren(restart);
   }
 
   function positionObject(element, angle, lane) {
@@ -296,7 +289,7 @@
     globalThis.requestAnimationFrame(() => {
       if (token !== focusToken) return;
       if (kind === "result") {
-        document.querySelector("#result-title")?.focus({ preventScroll: true });
+        elements.statusTitle.focus({ preventScroll: true });
         return;
       }
       elements.controlButtons.find((button) => button.dataset.player === "0" && button.dataset.direction === "-1" && !button.disabled)
