@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [同时输入游戏：原子 tick、失败尝试与可重放裁决](./2026-07-18-simultaneous-tick-atomic-collision.md)
 - [可重放点线游戏：事件时间线、规范边投影与并行快照](./2026-07-18-replayable-edges-and-concurrent-snapshots.md)
 - [离线纪念日仪器：近似边界、阶段 DOM 与圆环跨输入](./2026-07-18-local-date-dial-boundaries.md)
 - [手摇交互：单调进度、共享出口与音频 epoch](./2026-07-18-hand-crank-progress-and-audio-epoch.md)
