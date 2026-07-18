@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [藏好这一味：失焦事件对象被误当成遮盖原因](./2026-07-19-secret-recipe-lifecycle-event-reason.md)
+- [藏好这一味：SVG 命名空间再次触发离线协议误报](./2026-07-19-secret-recipe-svg-namespace-offline-gate.md)
 - [把夜晚照成我们：发现列表增长推动舞台并破坏后续命中](./2026-07-19-starlight-search-stage-shift.md)
 - [把夜晚照成我们：桌面标题把“们”挤成孤字](./2026-07-19-starlight-search-title-orphan.md)
 - [在雾上，写给你：笔迹达标后焦点没有进入确认动作](./2026-07-19-fog-window-ready-focus-gap.md)
