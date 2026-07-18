@@ -69,6 +69,7 @@
 | [61-closer-cards-spec.md](./61-closer-cards-spec.md) | A 级“靠近一点”的六张谈话仪式、无惩罚跳过、原创题库、隐私与视觉规格 |
 | [62-closer-cards-verification.md](./62-closer-cards-verification.md) | “靠近一点”的完整六张实玩、阶段 DOM、file 直开、响应式与视觉忠实度验收记录 |
 | [63-hand-crank-music-box-research.md](./63-hand-crank-music-box-research.md) | A 级手摇音乐盒的产品缺口、Web Audio 手势边界、机械类比、技术选型与零复制声明 |
+| [64-hand-crank-music-box-spec.md](./64-hand-crank-music-box-spec.md) | A 级“把这首转给你”的净顺时针角度、逐音推进、无声降级、原创资产、配置策略与响应式规格 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
