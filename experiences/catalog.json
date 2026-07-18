@@ -314,6 +314,19 @@
       "networkRequired": false
     },
     {
+      "id": "same-pace-star",
+      "title": "慢一点，也和你一起",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/same-pace-star/index.html",
+      "readme": "experiences/co-op/same-pace-star/README.md",
+      "description": "两人轮换领拍，依次按住、接住并松开四个节拍，六次共同点亮星光。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",

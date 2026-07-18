@@ -565,6 +565,66 @@ test("four hands harmony keeps its file protocol, input, audio, and attribution 
   assert.match(portal, /"id": "four-hands-harmony"/);
 });
 
+test("catalog exposes the installed A-level same pace star", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const samePace = catalog.experiences.find((item) => item.id === "same-pace-star");
+
+  assert.equal(samePace.category, "co-op");
+  assert.equal(samePace.level, "A");
+  assert.equal(samePace.players, "2 人合作");
+  assert.equal(samePace.devices, "单设备同屏");
+  assert.equal(samePace.installed, true);
+  assert.equal(samePace.networkRequired, false);
+  assert.match(samePace.entry, /same-pace-star\/index\.html$/);
+});
+
+test("same pace star keeps its file protocol, four-edge input, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/same-pace-star/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, portal] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+  const networkSource = runtimeSource.replaceAll("http://www.w3.org/2000/svg", "");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(networkSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /classifySamePaceKey/);
+  assert.match(app, /rawConfig\.composeSamePaceMessage/);
+  assert.match(css, /assets\/quiet-sky\.webp/);
+  assert.match(css, /touch-action:\s*none/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /6ae2b07cead1c953ccbdcabba7a245dc6294950f/);
+  assert.match(readme, /debd32208441f7ba68d34badf0aa5ab73cb66cf3/);
+  assert.match(readme, /740527679c95a6b77b8d9157c8945a060d2dcdb2/);
+  assert.match(readme, /f4ba61f5ea964405532fe97c4ea9a6313f150444/);
+  assert.match(readme, /9377fd656f519b60524b92f09bcc9e6d937b2017/);
+  assert.match(readme, /238e8273305bb2e3c76f9f0bb289fb127c3dff74/);
+  assert.match(readme, /07123b871c103268375880980fd715b2b26b2ff0/);
+  assert.match(readme, /OpenAI 内置 ImageGen/);
+  assert.match(readme, /第三方输入：无/);
+  assert.match(attribution, /完整零复制与原创声明/);
+  assert.match(portal, /"id": "same-pace-star"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");
