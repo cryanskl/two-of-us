@@ -84,6 +84,7 @@
 - [A 级把这首转给你验收记录](./docs/65-hand-crank-music-box-verification.md)
 - [A 级月相密语定向调研](./docs/66-moon-phase-secret-research.md)
 - [A 级月相密语实现规格](./docs/67-moon-phase-secret-spec.md)
+- [A 级月相密语视觉设计](./docs/68-moon-phase-secret-design.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
 - [双人对抗类调研](./docs/30-versus-research.md)
