@@ -1302,6 +1302,54 @@ test("memory bid keeps its file protocol, private sequence, and attribution boun
   assert.match(attribution, /零代码、零素材复制/);
 });
 
+test("catalog exposes the installed A-level soft sumo duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const game = catalog.experiences.find((item) => item.id === "soft-sumo");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备同屏");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /soft-sumo\/index\.html$/);
+  assert.match(portal, /"id": "soft-sumo"/);
+});
+
+test("soft sumo keeps its deterministic file-protocol and attribution boundaries", async () => {
+  const root = new URL("../../experiences/versus/soft-sumo/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /pointercancel/);
+  assert.match(app, /lostpointercapture/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /cancel-charge/);
+  assert.match(logic, /replayRound/);
+  assert.match(logic, /replaySession/);
+  assert.match(css, /assets\/arena-background\.webp/);
+  assert.match(css, /assets\/token-atlas\.webp/);
+  assert.match(readme, /双击 `index\.html`/);
+  assert.match(attribution, /b10f099c613501bf11bf0d4c9e7ca238ac8e0e58/);
+  assert.match(attribution, /8a67787735585f02c4b46eabf7b9fcc1c7c321da/);
+  assert.match(attribution, /227b71b6974ea57ab7e96d40f6374287bd6a0e77/);
+  assert.match(attribution, /没有复制或引入/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");
