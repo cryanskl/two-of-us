@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [有限公开升价的对称赛制：偶数先手、证明责任与播放 generation](./2026-07-19-even-round-open-bidding-and-playback-generation.md)
 - [热座秘密的公开投影与重复元素反馈](./2026-07-19-hot-seat-public-projection-and-multiset-feedback.md)
 - [确定性连续停留：整数 tick、生命周期断点与稳定舞台](./2026-07-19-deterministic-dwell-discovery.md)
 - [像素无关的双遍轨迹确认：锚点、线段命中与 Canvas 分层](./2026-07-19-pixel-independent-two-pass-trace.md)
