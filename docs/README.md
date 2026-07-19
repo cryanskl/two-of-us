@@ -136,6 +136,7 @@
 | [127-memory-bid-spec.md](./127-memory-bid-spec.md) | A 级“这一串，我还记得”的八件生成约束、公开升价、证明责任、四轮对称先手、阶段 view 与可执行验收规格 |
 | [128-memory-bid-design.md](./128-memory-bid-design.md) | “这一串，我还记得”的三状态 ImageGen 概念、深夜铁路失物账簿系统、生产图集与 fidelity Gate |
 | [129-memory-bid-plan.md](./129-memory-bid-plan.md) | “这一串，我还记得”的逻辑/前端分工、独立提交、目录、bugs/learn、浏览器与视觉闭环计划 |
+| [130-memory-bid-verification.md](./130-memory-bid-verification.md) | “这一串，我还记得”的 26 项逻辑、1213 项全仓、47 项目录、自动/手动四轮、五档响应式、无图实玩、视觉对照、来源与 bugs/learn 验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
