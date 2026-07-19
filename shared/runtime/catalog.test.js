@@ -1207,6 +1207,52 @@ test("secret recipe code keeps its file protocol, hot-seat privacy, and attribut
   assert.match(attribution, /没有复制、改写、翻译、移植/);
 });
 
+test("catalog exposes the installed A-level memory bid duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const game = catalog.experiences.find((item) => item.id === "memory-bid");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备轮流");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /memory-bid\/index\.html$/);
+  assert.match(portal, /"id": "memory-bid"/);
+});
+
+test("memory bid keeps its file protocol, private sequence, and attribution boundary", async () => {
+  const root = new URL("../../experiences/versus/memory-bid/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /visibilitychange/);
+  assert.match(logic, /getMemoryBidView/);
+  assert.match(logic, /generation/);
+  assert.match(css, /assets\/auction-table\.jpg/);
+  assert.match(css, /assets\/keepsake-atlas\.png/);
+  assert.match(readme, /序列只存在当前页面的本机内存中/);
+  assert.match(attribution, /c617a162eef46b5817b7e7ed59f50ae7aefe4fab/);
+  assert.match(attribution, /326c7565d40f43917243c2c54ea6b826470e2472/);
+  assert.match(attribution, /92b41bcc9b043362afcd5ed3f4196ca4d633abce/);
+  assert.match(attribution, /d15bc7d93f3219db18e465afdd88cc99b04ed5d8/);
+  assert.match(attribution, /零代码、零素材复制/);
+});
+
 test("catalog exposes the installed A-level kitchen relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const kitchen = catalog.experiences.find((item) => item.id === "kitchen-relay");

@@ -4,7 +4,7 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 38 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 39 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
@@ -144,6 +144,9 @@
 - [“藏好这一味”分步实施计划](./docs/124-secret-recipe-code-plan.md)
 - [“藏好这一味”验收记录](./docs/125-secret-recipe-code-verification.md)
 - [A 级“这一串，我还记得”定向调研](./docs/126-memory-bid-research.md)
+- [A 级“这一串，我还记得”可执行规格](./docs/127-memory-bid-spec.md)
+- [“这一串，我还记得”视觉设计与资产说明](./docs/128-memory-bid-design.md)
+- [“这一串，我还记得”分步实施计划](./docs/129-memory-bid-plan.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

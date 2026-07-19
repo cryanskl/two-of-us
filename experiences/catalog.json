@@ -562,6 +562,19 @@
       "networkRequired": false
     },
     {
+      "id": "memory-bid",
+      "title": "这一串，我还记得",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/memory-bid/index.html",
+      "readme": "experiences/versus/memory-bid/README.md",
+      "description": "共同看过八件旧物后公开升价，最高报价者按顺序证明；固定四轮且双方各先开价两次。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "reaction-duel",
       "title": "反应力对决",
       "category": "versus",
