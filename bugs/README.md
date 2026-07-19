@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [三枚以后，都是我们：1280×800 最终长信超出首屏](./2026-07-19-future-cookie-finale-desktop-overflow.md)
+- [三枚以后，都是我们：390px 标题把“们”挤成孤字](./2026-07-19-future-cookie-mobile-title-orphan.md)
 - [三枚以后，都是我们：来源声明标题未满足仓库机器 Gate](./2026-07-19-future-cookie-attribution-heading-contract.md)
 - [三枚以后，都是我们：public view 缺少开场文案](./2026-07-19-future-cookie-public-view-intro-gap.md)
 - [这一串，我还记得：390px 标题把“得”挤成孤字](./2026-07-19-memory-bid-mobile-title-orphan.md)
