@@ -225,9 +225,9 @@ ATTRIBUTION.md
 | --- | --- | --- | --- |
 | [PipeWalker v1.1](https://github.com/artemsen/pipewalker/tree/72c4cfa37c48a60aebcd537061163ccb3eabc806) | tag `v1.1`，commit `72c4cfa37c48a60aebcd537061163ccb3eabc806`；MIT；Copyright © 2024 Artem Senichev | 把多个组件连接为完整网络的可读反馈 | C++/SDL2 代码、旋转拼管规则、关卡、算法、截图、图标、音效、字体、构建和文案 |
 | [Grid2Op v1.12.5](https://github.com/Grid2op/grid2op/tree/a1736886d18c14f6e19520813d2b3e432179e3b9) | tag `v1.12.5`，commit `a1736886d18c14f6e19520813d2b3e432179e3b9`；MPL-2.0；Copyright © 2019–2020 RTE France | topology action、observation、安全约束与环境推进分层 | Python 包、潮流后端、动作/观察 API、RL 接口、数据集、算法、测试、notebook、图和文字 |
-| [Power Overload 2.1.6](https://github.com/tburrows13/PowerOverload/tree/8d618116d7491c9a289bbbf886c340a197f38303) | 工作树 commit `8d618116d7491c9a289bbbf886c340a197f38303`；`info.json` 为 `2.1.6`，tag `v2.1.6` 指向打包提交 `94d188c1233331e1136894e1d5e867684e91197c`；MIT；Copyright © 2022 Tom Burrows | 子网容量、变压器隔离和过载反馈这一抽象问题 | Factorio 模组代码、API、实体、配方、数值、贴图、音效、文案、随机破坏和任何游戏素材 |
+| [Power Overload 2.1.6](https://github.com/tburrows13/PowerOverload/tree/8d618116d7491c9a289bbbf886c340a197f38303) | annotated tag `v2.1.6` 的 tag object 为 `94d188c1233331e1136894e1d5e867684e91197c`，解引用 commit 为 `8d618116d7491c9a289bbbf886c340a197f38303`；`info.json` 为 `2.1.6`；MIT；Copyright © 2022 Tom Burrows | 子网容量、变压器隔离和过载反馈这一抽象问题 | Factorio 模组代码、API、实体、配方、数值、贴图、音效、文案、随机破坏和任何游戏素材 |
 
-版本注记：Power Overload 的 tag 与当前 `2.1.6` 工作树 commit 不同，因此声明同时记录二者，不把 HEAD 冒充 tag。许可证原文位于固定工作树的 `LICENCE.txt`，Factorio 模组页也登记 MIT。
+版本注记：Power Overload 使用 annotated tag；普通 tag ref 返回 tag object `94d188c...`，`v2.1.6^{}` 与 HEAD 都解析到 commit `8d61811...`。声明同时记录标签对象和解引用提交，不把标签对象误称为源码提交。许可证原文位于固定提交的 `LICENCE.txt`，Factorio 模组页也登记 MIT。
 
 即便这些许可证允许一定范围的复制，本作仍选择零复制。如果以后实际使用实质代码、文档段落或素材，必须单独提交许可证正文、版权声明、文件级借鉴边界和重新验收结果。
 
