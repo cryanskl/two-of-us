@@ -147,6 +147,7 @@
 | [138-soft-sumo-design.md](./138-soft-sumo-design.md) | “软软相扑”的三状态 ImageGen 概念、编织圆场设计系统、生产背景/图集与 fidelity Gate |
 | [139-soft-sumo-plan.md](./139-soft-sumo-plan.md) | “软软相扑”的逻辑/前端分工、独立提交、目录、bugs/learn、浏览器与视觉闭环计划 |
 | [140-soft-sumo-verification.md](./140-soft-sumo-verification.md) | “软软相扑”的 27 项逻辑、1280 项全仓、49 项目录、三档响应式、暂停恢复、视觉对照、来源与已知设备补测项 |
+| [141-moon-base-power-research.md](./141-moon-base-power-research.md) | A 级“月面，保持有光”的双母线、双席权限、整数容量联锁、连续安全窗、324 状态穷举、固定来源与零复制调研 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
