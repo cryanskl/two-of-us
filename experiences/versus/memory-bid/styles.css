@@ -1176,7 +1176,9 @@ button.proof-slot {
   }
 
   .work-title {
-    max-width: 170px;
+    max-width: none;
+    font-size: clamp(1.2rem, 5vw, 1.4rem);
+    letter-spacing: .02em;
   }
 
   .scoreboard {
@@ -1243,6 +1245,12 @@ button.proof-slot {
   .privacy-note {
     margin-top: 10px;
     font-size: .8rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .work-title {
+    font-size: 1.05rem;
   }
 }
 
