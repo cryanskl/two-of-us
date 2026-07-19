@@ -289,7 +289,7 @@
         || state.revealVisible || state.revealPaused || state.pauseReason !== null || state.playbackGeneration !== 0
         || state.sequences.length || state.bids.length || state.currentBid !== null || state.highBidderIndex !== null
         || state.activeBidderIndex !== null || state.proofDraft.length || state.scores[0] || state.scores[1]
-        || state.roundResults.length) failState();
+        || state.roundResults.length || state.announcementSerial !== 0 || state.lastNotice !== null) failState();
       return state;
     }
 

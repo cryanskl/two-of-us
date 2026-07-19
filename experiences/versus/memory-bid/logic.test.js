@@ -111,6 +111,10 @@ test("初始状态精确、递归冻结且可 JSON 往返", () => {
   assert.deepEqual(state, expected);
   assert.equal(logic.assertState(state), state);
   assert.deepEqual(logic.assertState(clone(state)), expected);
+  const forged = clone(state);
+  forged.announcementSerial = 1;
+  forged.lastNotice = "match-started";
+  assert.throws(() => logic.assertState(forged), TypeError);
   assertDeepFrozen(state);
 });
 
