@@ -239,6 +239,7 @@ experiences/surprises/future-cookie-notes/
   phase,
   title,
   subtitle,
+  intro, // collecting 为开场文案，ready / finale 为 null
   progress: { opened, total: 3, text },
   notes: Array<{
     id,
@@ -424,10 +425,10 @@ experiences/surprises/future-cookie-notes/
 
 ### 13.4 public view 与秘密
 
-1. 初始 collecting 三项都没有 `body` 键；
+1. 初始 collecting 的 `intro` 精确为安全配置开场文案，三项都没有 `body` 键；
 2. 打开一项后只该项有 `body`，其余正文不存在于序列化 view；
-3. ready 三项都有 `body`，但序列化 view 不含 `invitation / closing / signature / finalTitle`；
-4. finale 才含完整文字；
+3. ready 的 `intro` 精确为 `null`，三项都有 `body`，但序列化 view 不含 `invitation / closing / signature / finalTitle`；
+4. finale 的 `intro` 仍精确为 `null`，且只有该阶段才含完整最终文字；
 5. view 笔记永远按语义顺序，不按 `openedOrder` 重排；
 6. progress、announcement、ready/finale 空值和文案精确；
 7. view 递归冻结且与 state / config 断开引用。

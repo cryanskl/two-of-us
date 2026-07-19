@@ -90,7 +90,7 @@ experiences/surprises/future-cookie-notes/logic.test.js
 - `collecting / ready / finale` 三阶段，`OPEN_NOTE / ASSEMBLE / RESTART` 三精确 action schema；
 - 三个 ID 唯一打开、第三枚只进 ready、主动合成、终局重开和非法动作幂等；
 - `assertState` 拒绝多字段、畸形原型、阶段/长度不一致、重复/未知 ID；
-- public view 只公开已打开正文，ready 不公开最终文字，finale 才完整公开；
+- public view 在 collecting 公开 `intro` 与已打开正文，ready / finale 的 `intro` 精确为 `null`，ready 不公开最终文字，finale 才完整公开；
 - view 笔记始终按 `NOTE_IDS` 语义顺序，不按 `openedOrder` 重排；
 - 六种打开排列、确定性重放、JSON 往返、输入不变、冻结/断开引用、异常与越界反例；
 - 准备者可选 5–10 行 TODO 只位于 `DEFAULT_CONFIG` 和 `composeInvitation`，默认不修改仍完整运行。
