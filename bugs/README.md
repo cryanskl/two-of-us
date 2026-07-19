@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [这一串，我还记得：系统 Python 缺 Pillow，图集去背无法启动](./2026-07-19-memory-bid-chroma-python-runtime.md)
+- [这一串，我还记得：图集精灵在证明按钮中坍缩为零尺寸](./2026-07-19-memory-bid-sprite-grid-collapse.md)
+- [这一串，我还记得：最高报价证明页超出 1280×800 首屏](./2026-07-19-memory-bid-proof-desktop-overflow.md)
 - [藏好这一味：失焦事件对象被误当成遮盖原因](./2026-07-19-secret-recipe-lifecycle-event-reason.md)
 - [藏好这一味：SVG 命名空间再次触发离线协议误报](./2026-07-19-secret-recipe-svg-namespace-offline-gate.md)
 - [把夜晚照成我们：发现列表增长推动舞台并破坏后续命中](./2026-07-19-starlight-search-stage-shift.md)
