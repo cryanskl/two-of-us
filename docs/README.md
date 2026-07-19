@@ -132,6 +132,7 @@
 | [123-secret-recipe-code-design.md](./123-secret-recipe-code-design.md) | “藏好这一味”的三状态 ImageGen 概念、午夜药房账本设计系统、生产背景、移动重排与 fidelity Gate |
 | [124-secret-recipe-code-plan.md](./124-secret-recipe-code-plan.md) | “藏好这一味”的逻辑/前端子任务、独立提交、目录、bugs/learn、浏览器与 fidelity 闭环计划 |
 | [125-secret-recipe-code-verification.md](./125-secret-recipe-code-verification.md) | “藏好这一味”的 22 项逻辑、1185 项全仓、46 项目录、完整双轮实玩、阶段 DOM、三档响应式、视觉对照、来源与 bugs/learn 验收 |
+| [126-memory-bid-research.md](./126-memory-bid-research.md) | A 级“这一串，我还记得”的公开升价、顺序证明、双展示模式、阶段公开投影、固定来源、商标边界与零复制调研 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

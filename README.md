@@ -143,6 +143,7 @@
 - [“藏好这一味”视觉设计与资产说明](./docs/123-secret-recipe-code-design.md)
 - [“藏好这一味”分步实施计划](./docs/124-secret-recipe-code-plan.md)
 - [“藏好这一味”验收记录](./docs/125-secret-recipe-code-verification.md)
+- [A 级“这一串，我还记得”定向调研](./docs/126-memory-bid-research.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
