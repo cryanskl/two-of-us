@@ -263,7 +263,7 @@ match-result --RESTART--> intro
 
 `START` 初始化第 1 轮、spawn variant 0、150 tick 倒数。countdown 的 STEP 仍要求合法 inputs，但完全忽略其值并逐 tick 递减；进入 playing 的同一 STEP 不执行物理，防止提前蓄力。
 
-`PAUSE` 对两位玩家应用同一个 `cancelChargeState`：只把 `chargeTicks` 归零、把 `wasCharging` 设为 false；`cooldownTicks` 不变。位置、速度、aim、round tick、得分和日志全部保留。`RESUME` 进入 90 tick 倒数，倒数结束后才继续原位置比赛。
+`PAUSE` 对两位玩家应用同一个 `cancelChargeState`：只把 `chargeTicks` 归零、把 `wasCharging` 设为 false；`cooldownTicks` 不变。位置、速度、aim、round tick 和得分全部保留，并在当前轮日志末尾追加 `{type:"cancel-charge",atTick:roundTick}`。若末尾已经是相同 atTick 的 cancel-charge，则幂等保留一条。`RESUME` 进入 90 tick 倒数，倒数结束后才继续原位置比赛。
 
 第 3 轮结束直接进入 match-result。NEXT_ROUND 不得在 match-result 生效。RESTART 只在 match-result 生效并保留已清洗配置。
 
@@ -285,7 +285,7 @@ match-result --RESTART--> intro
   players: [body0, body1],
   scores: [integer, integer],
   completedRounds: [roundResult...],
-  currentInputLog: [inputPair...],
+  currentInputLog: [roundEvent...],
   pauseReason,
   revision
 }
@@ -319,7 +319,14 @@ roundResult：
 }
 ```
 
-inputPair 是两个冻结 input 的冻结数组。
+roundEvent 是以下两个精确冻结结构之一：
+
+```text
+{ type: "step", inputs: [input0, input1] }
+{ type: "cancel-charge", atTick: non-negative integer }
+```
+
+step 的 inputs 是两个冻结 input 的冻结数组。cancel-charge 的 `atTick` 必须等于它之前的 step 事件数；额外字段、错误顺序、未来 tick 和连续同 tick 重复 cancel 全部非法。
 
 ### phase 不变量
 
@@ -330,11 +337,11 @@ inputPair 是两个冻结 input 的冻结数组。
 - round-result：completedRounds 长度 = roundIndex + 1 且小于 3，currentInputLog 空；
 - match-result：completedRounds 恰好 3，currentInputLog 空，scores 可完全由三轮 winner 派生；
 - 所有阶段 players 数组顺序固定为 seat 0 / seat 1；
-- `roundTick === currentInputLog.length` 仅在 countdown/playing/paused；
+- `roundTick === currentInputLog 中 step 事件数` 仅在 countdown/playing/paused；
 - scores 等于 completedRounds 中各 winner 次数，round-result/match-result 不接受调用方直接写分数；
 - state、copy、body、日志、轮次和字符串数组递归冻结。
 
-`assertState` 对 JSON 往返状态执行完整严格验证，包括从每轮 inputLog 重放并核对 winner/reason/ticks、从 completedRounds 重算 score、从 currentInputLog 重放核对 players/roundTick。校验 paused，或 `roundTick > 0` 的恢复 countdown 时，先对重放所得 players 应用与 `PAUSE` 完全相同的 `cancelChargeState`，再比较 players；这一步只取消 charge/wasCharging，不能改 cooldown、位置或速度。正常 reducer 可对内部已验证冻结 state 使用可信快路径，但不能因此接受伪造外部对象。
+`assertState` 对 JSON 往返状态执行完整严格验证，包括从每轮 inputLog 重放并核对 winner/reason/ticks、从 completedRounds 重算 score、从 currentInputLog 按顺序应用 step 与 cancel-charge 并核对 players/roundTick。cancel-charge 只取消 charge/wasCharging，不能改 cooldown、位置或速度；因此 paused、恢复 countdown、恢复后的 playing 和最终 roundResult 使用同一条重放路径，不需要按当前 phase 猜测历史暂停。正常 reducer 可对内部已验证冻结 state 使用可信快路径，但不能因此接受伪造外部对象。
 
 ## 10. STEP：瞄准、蓄力与冲刺
 
@@ -444,16 +451,17 @@ out1 = isOutside(players[1], arenaRadius)
 | false | true | winner 0，reason `player-1-out` |
 | true | true | winner null，reason `double-out` |
 
-完成 tick 的规范化 input 仍进入 inputLog，roundResult.ticks 与日志长度一致。单方胜者得 1 分；double-out 不得分。
+完成 tick 的规范化 input 仍作为 step 事件进入 inputLog，roundResult.ticks 与 step 事件数一致，不要求等于包含控制事件的日志长度。单方胜者得 1 分；double-out 不得分。
 
 ## 14. 回放合同
 
 `replayRound(inputLog, spawnVariant)`：
 
 1. 从对应 spawn 创建纯 round 初态；
-2. 对每个 inputPair 严格调用同一 `simulateRoundTick`；
-3. outcome 后仍有日志条目则拒绝；
-4. 返回 `{players, roundTick, arenaRadius, outcome}` 的冻结副本。
+2. 对每个 step 事件严格调用同一 `simulateRoundTick(event.inputs)`；
+3. 对每个 cancel-charge 事件先核对 atTick，再调用同一个 `cancelChargeState`；
+4. outcome 后仍有任何事件则拒绝；
+5. 返回 `{players, roundTick, arenaRadius, outcome}` 的冻结副本。
 
 `replaySession(log)` 的 log：
 
