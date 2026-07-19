@@ -152,6 +152,7 @@
 - [A 级“三枚以后，都是我们”可执行规格](./docs/132-future-cookie-notes-spec.md)
 - [“三枚以后，都是我们”视觉设计与资产说明](./docs/133-future-cookie-notes-design.md)
 - [“三枚以后，都是我们”分步实施计划](./docs/134-future-cookie-notes-plan.md)
+- [“三枚以后，都是我们”验收记录](./docs/135-future-cookie-notes-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

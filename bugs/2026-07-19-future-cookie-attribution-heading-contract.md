@@ -30,5 +30,4 @@ README 的借鉴章节被仓库统一验收器识别，详细声明仍链接到 
 
 - [x] README 仍链接 `ATTRIBUTION.md`
 - [x] 详细声明固定两个 MIT 项目、一个排除项和生成资产链
-- [ ] 目录接入完成后重新运行 `npm run verify`
-
+- [x] 目录接入完成后重新运行 `npm run verify`

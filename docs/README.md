@@ -141,6 +141,7 @@
 | [132-future-cookie-notes-spec.md](./132-future-cookie-notes-spec.md) | “三枚以后，都是我们”的三签配置、严格 reducer、public view、焦点与 A 级验收规格 |
 | [133-future-cookie-notes-design.md](./133-future-cookie-notes-design.md) | “三枚以后，都是我们”的三状态 ImageGen 概念、夜茶桌设计系统、生产背景/图集与 fidelity Gate |
 | [134-future-cookie-notes-plan.md](./134-future-cookie-notes-plan.md) | “三枚以后，都是我们”的逻辑/前端分工、独立提交、目录、bugs/learn、浏览器与视觉闭环计划 |
+| [135-future-cookie-notes-verification.md](./135-future-cookie-notes-verification.md) | “三枚以后，都是我们”的 36 项逻辑、1251 项全仓、阶段 DOM、响应式、降级、来源与视觉忠实度验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
