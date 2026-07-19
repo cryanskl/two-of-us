@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="软软相扑双软垫图标">
+  <rect width="64" height="64" rx="14" fill="#071018"/>
+  <circle cx="25" cy="32" r="14" fill="#d65f4f" stroke="#f4e8ca" stroke-width="3"/>
+  <circle cx="39" cy="32" r="14" fill="#9bc2b9" stroke="#172129" stroke-width="3"/>
+  <path d="M11 51c12 5 30 5 42 0" fill="none" stroke="#b88945" stroke-width="3" stroke-linecap="round"/>
+</svg>
