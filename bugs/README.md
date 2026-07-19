@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一串，我还记得：390px 标题把“得”挤成孤字](./2026-07-19-memory-bid-mobile-title-orphan.md)
 - [这一串，我还记得：竞价阶段保留上一条展示播报](./2026-07-19-memory-bid-stale-live-announcement.md)
 - [这一串，我还记得：系统 Python 缺 Pillow，图集去背无法启动](./2026-07-19-memory-bid-chroma-python-runtime.md)
 - [这一串，我还记得：图集精灵在证明按钮中坍缩为零尺寸](./2026-07-19-memory-bid-sprite-grid-collapse.md)
