@@ -78,7 +78,7 @@ experiences/versus/memory-bid/
 ```
 
 - `index.html` 以 `config.js → logic.js → app.js` 顺序加载经典脚本；
-- `config.js` 和 `logic.js` 使用 UMD 风格，同时支持浏览器全局与 Node `require()`；
+- `config.js` 和 `logic.js` 使用 UMD 风格：浏览器经典脚本挂载全局；本仓库因根 `package.json` 为 `type: module`，Node 测试以 dynamic import 执行后读取 `globalThis`；复制到 CommonJS 边界时保留 `module.exports`；
 - 不使用 ESM、fetch、XHR、WebSocket、Worker、Service Worker、浏览器存储、CDN、外部字体、音频、摄像头、麦克风或传感器；
 - 目录可单独复制，不读取仓库 `shared/`；
 - 所有资源使用相对路径；图片失败时规则、文字、焦点与按钮仍完整；

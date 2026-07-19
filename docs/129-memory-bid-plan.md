@@ -10,13 +10,13 @@
 
 ## 2. 公共接口冻结
 
-`config.js` 同时导出 CommonJS 与 `window.MemoryBidConfig`：
+`config.js` 以 UMD 导出 `window.MemoryBidConfig`；仓库内 Node 测试用 dynamic import 后读取 `globalThis`，复制到 CommonJS 边界时保留 `module.exports`：
 
 ```js
 { DEFAULT_CONFIG, composeMatchNote }
 ```
 
-`logic.js` 同时导出 CommonJS 与 `window.MemoryBidLogic`：
+`logic.js` 以 UMD 导出 `window.MemoryBidLogic`；仓库内 Node 测试同样读取 dynamic import 执行后的 `globalThis`，CommonJS 边界仍可使用 `module.exports`：
 
 ```js
 {
