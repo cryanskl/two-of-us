@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [三枚以后，都是我们：图集与 CSS 备用饼干双重渲染](./2026-07-19-future-cookie-sprite-fallback-double-render.md)
 - [三枚以后，都是我们：1280×800 最终长信超出首屏](./2026-07-19-future-cookie-finale-desktop-overflow.md)
 - [三枚以后，都是我们：390px 标题把“们”挤成孤字](./2026-07-19-future-cookie-mobile-title-orphan.md)
 - [三枚以后，都是我们：来源声明标题未满足仓库机器 Gate](./2026-07-19-future-cookie-attribution-heading-contract.md)

@@ -25,6 +25,7 @@
   }
 
   app.addEventListener("click", handleClick);
+  watchCookieAsset();
   render();
   liveRegion.textContent = view.announcement;
 
@@ -182,5 +183,18 @@
 
   function twoDigits(value) {
     return String(value).padStart(2, "0");
+  }
+
+  function watchCookieAsset() {
+    const probe = new Image();
+    probe.addEventListener("load", () => {
+      document.body.classList.remove("cookie-asset-failed");
+      document.body.classList.add("cookie-asset-ready");
+    }, { once: true });
+    probe.addEventListener("error", () => {
+      document.body.classList.remove("cookie-asset-ready");
+      document.body.classList.add("cookie-asset-failed");
+    }, { once: true });
+    probe.src = "./assets/future-cookie-atlas.png";
   }
 })();
