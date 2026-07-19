@@ -1241,6 +1241,7 @@ test("memory bid keeps its file protocol, private sequence, and attribution boun
   assert.doesNotMatch(app, /\.innerHTML\s*=/);
   assert.match(app, /replaceChildren/);
   assert.match(app, /visibilitychange/);
+  assert.match(app, /八件旧物已经收好，开始竞价/);
   assert.match(logic, /getMemoryBidView/);
   assert.match(logic, /generation/);
   assert.match(css, /assets\/auction-table\.jpg/);

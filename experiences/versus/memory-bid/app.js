@@ -554,8 +554,10 @@
   function announceView(enabled) {
     if (!enabled || view.announcementSerial === lastAnnouncementSerial) return;
     lastAnnouncementSerial = view.announcementSerial;
-    const notice = noticeText(view.notice);
-    if (notice) liveRegion.textContent = notice;
+    const notice = view.phase === "bidding" && view.notice === "reveal-hidden"
+      ? "八件旧物已经收好，开始竞价。"
+      : noticeText(view.notice);
+    liveRegion.textContent = notice;
   }
 
   function noticeText(notice) {
