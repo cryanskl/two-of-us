@@ -391,6 +391,54 @@ test("starlight search keeps its file protocol, dwell, private DOM, and attribut
   assert.match(portal, /"id": "starlight-keepsake-search"/);
 });
 
+test("catalog exposes the installed A-level future cookie notes surprise", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "future-cookie-notes");
+
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /future-cookie-notes\/index\.html$/);
+  assert.match(portal, /"id": "future-cookie-notes"/);
+});
+
+test("future cookie notes keeps its file protocol, staged DOM, and attribution boundary", async () => {
+  const root = new URL("../../experiences/surprises/future-cookie-notes/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random|Date\.now|(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|\beval\s*\(/);
+  assert.doesNotMatch(app, /safeConfig\.(?:title|subtitle|intro|readyTitle|finalTitle|notes|closing|signature|privacy|invitation)/);
+  assert.match(app, /getFutureCookieNotesView/);
+  assert.match(app, /replaceChildren/);
+  assert.match(logic, /intro: state\.phase === "collecting"/);
+  assert.match(css, /assets\/night-tea-table\.jpg/);
+  assert.match(css, /assets\/future-cookie-atlas\.png/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /不是密码学加密/);
+  assert.match(attribution, /f378d26989b929d23160efc9b9adfa282f191c39/);
+  assert.match(attribution, /867fb314a3f40835c9d7d82828b91da4b3426471/);
+  assert.match(attribution, /70e9f73e9132663998af66da971f06e67ad13c88/);
+  assert.match(attribution, /零代码、零素材复制/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

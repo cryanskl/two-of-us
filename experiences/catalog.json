@@ -197,6 +197,19 @@
       "networkRequired": false
     },
     {
+      "id": "future-cookie-notes",
+      "title": "三枚以后，都是我们",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/future-cookie-notes/index.html",
+      "readme": "experiences/surprises/future-cookie-notes/README.md",
+      "description": "任意敲开什么时候、去哪里和一起做什么三枚未来签，收齐后主动把三段约定拼成一封邀请。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

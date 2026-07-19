@@ -137,6 +137,10 @@
 | [128-memory-bid-design.md](./128-memory-bid-design.md) | “这一串，我还记得”的三状态 ImageGen 概念、深夜铁路失物账簿系统、生产图集与 fidelity Gate |
 | [129-memory-bid-plan.md](./129-memory-bid-plan.md) | “这一串，我还记得”的逻辑/前端分工、独立提交、目录、bugs/learn、浏览器与视觉闭环计划 |
 | [130-memory-bid-verification.md](./130-memory-bid-verification.md) | “这一串，我还记得”的 26 项逻辑、1213 项全仓、47 项目录、自动/手动四轮、五档响应式、无图实玩、视觉对照、来源与 bugs/learn 验收 |
+| [131-future-cookie-notes-research.md](./131-future-cookie-notes-research.md) | A 级“三枚以后，都是我们”的无序收集、有序合成、许可候选、排除数据包、阶段隐私与零复制调研 |
+| [132-future-cookie-notes-spec.md](./132-future-cookie-notes-spec.md) | “三枚以后，都是我们”的三签配置、严格 reducer、public view、焦点与 A 级验收规格 |
+| [133-future-cookie-notes-design.md](./133-future-cookie-notes-design.md) | “三枚以后，都是我们”的三状态 ImageGen 概念、夜茶桌设计系统、生产背景/图集与 fidelity Gate |
+| [134-future-cookie-notes-plan.md](./134-future-cookie-notes-plan.md) | “三枚以后，都是我们”的逻辑/前端分工、独立提交、目录、bugs/learn、浏览器与视觉闭环计划 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
@@ -153,7 +157,7 @@
 
 | 分类 | 已实现样板 | 当前结果 |
 | --- | --- | --- |
-| 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/)、[未来车票](../experiences/surprises/future-ticket/)、[拍立得显影](../experiences/surprises/instant-photo/)、[一层一层](../experiences/surprises/nested-gift/)、[纸飞机投递](../experiences/surprises/paper-plane-mail/)、[星码解锁](../experiences/surprises/star-code-unlock/)、[把这首转给你](../experiences/surprises/hand-crank-music-box/)、[把月亮拨回那一天](../experiences/surprises/moon-phase-secret/)、[在雾上，写给你](../experiences/surprises/fog-window-letter/) 与 [把夜晚照成我们](../experiences/surprises/starlight-keepsake-search/) | 建立可编辑 `config.js`、分段回忆、盲选揭晓、交替手势显影、多手势逐层拆盒、确定性投递、私人答案 Gate、逐音手摇、三轴日期仪器、双遍同轨迹揭信、空间连续停留发现与结尾邀请流程 |
+| 单人惊喜 | [拆信封告白](../experiences/surprises/memory-letter/)、[未来车票](../experiences/surprises/future-ticket/)、[拍立得显影](../experiences/surprises/instant-photo/)、[一层一层](../experiences/surprises/nested-gift/)、[纸飞机投递](../experiences/surprises/paper-plane-mail/)、[星码解锁](../experiences/surprises/star-code-unlock/)、[把这首转给你](../experiences/surprises/hand-crank-music-box/)、[把月亮拨回那一天](../experiences/surprises/moon-phase-secret/)、[在雾上，写给你](../experiences/surprises/fog-window-letter/)、[把夜晚照成我们](../experiences/surprises/starlight-keepsake-search/) 与 [三枚以后，都是我们](../experiences/surprises/future-cookie-notes/) | 建立可编辑 `config.js`、分段回忆、盲选揭晓、交替手势显影、多手势逐层拆盒、确定性投递、私人答案 Gate、逐音手摇、三轴日期仪器、双遍同轨迹揭信、空间连续停留发现、无序收集与有序合成邀请流程 |
 | 双人合作 | [同机你画我猜](../experiences/co-op/hot-seat-pictionary/)、[双光点归巢](../experiences/co-op/twin-light-maze/)、[同心牵引](../experiences/co-op/tethered-heart/)、[为你引航](../experiences/co-op/lighthouse-passage/)、[节拍接力](../experiences/co-op/rhythm-relay/)、[默契电报码](../experiences/co-op/telegraph-codebook/)、[双人小馆](../experiences/co-op/kitchen-relay/)、[靠近一点](../experiences/co-op/closer-cards/)、[把颜色调到一起](../experiences/co-op/shared-color-studio/)、[把信号接回来](../experiences/co-op/signal-repair-manual/)、[这一拍，刚好和你](../experiences/co-op/four-hands-harmony/)、[慢一点，也和你一起](../experiences/co-op/same-pace-star/)、[稳稳地，和你一起向前](../experiences/co-op/steady-together/) 与 [一起，把家搬进来](../experiences/co-op/moving-home-together/) | 建立热座交接、联合状态、连续约束、非对称领航、序列记忆、编码/译码、同步传菜、无评分倾听、正交离散双轴校准、互补信息条件推理、同步共同和声、按下/松开四边沿交接、连续平衡运输和双端长刚体转角十四种合作样板 |
 | 双人对抗 | [反应力对决](../experiences/versus/reaction-duel/)、[心动拔河](../experiences/versus/ribbon-tug/)、[气球胆量局](../experiences/versus/balloon-dare/)、[数字凑靶](../experiences/versus/number-target/)、[纸上球局](../experiences/versus/paper-soccer/)、[回声擂台](../experiences/versus/echo-arena/)、[这一格归谁](../experiences/versus/dots-and-boxes/)、[光轨围猎](../experiences/versus/light-trail-hunt/)、[这一颗我先到](../experiences/versus/orbit-star-race/)、[藏好这一味](../experiences/versus/secret-recipe-code/) 与 [这一串，我还记得](../experiences/versus/memory-bid/) | 建立抢跑判定、固定步公平输入、主动止盈、公开市场草拟、图结构封路、顺序记忆、规范边占地、同时转向原子碰撞、反向轨道共享裁决、热座秘密多重集合反馈和公开升价证明责任十一种对抗样板 |
 
@@ -169,11 +173,11 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上，写给你、把夜晚照成我们、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串，我还记得、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
+- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上，写给你、把夜晚照成我们、三枚以后，都是我们、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串，我还记得、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
 - 已归档：原始 RAR 和与项目不匹配的 Azure workflow；
-- 已执行：三十九个无第三方运行依赖的独立 A 级样板；新增“这一串，我还记得”覆盖八件序列约束、公开升价、证明责任、四轮对称先手、双展示模式 generation 与阶段公开投影，其余样板能力详见各自规格与验收记录；
+- 已执行：四十个无第三方运行依赖的独立 A 级样板；新增“三枚以后，都是我们”覆盖无序三签收集、固定语义合成、显式最终揭晓与阶段 public view，其余样板能力详见各自规格与验收记录；
 - 已实现首个 C 级样板：同心解锁，复用共享房间协议完成双设备同时按住机关；
 - 已实现第二个 C 级样板：隔屏画猜，增加主机权威状态、定向秘密消息与归一化笔迹同步；
 - 已实现首个 C 级对抗样板：连心四子棋，增加确定性棋盘 reducer、轮流落子和双端胜负同步；
