@@ -8,6 +8,12 @@
 
 ## 已记录
 
+- [月面供电：1440×900 operating 多出 20px 纵向滚动](./2026-07-20-moon-power-desktop-operating-overflow.md)
+- [月面供电：手动暂停缺少权威 pauseReason](./2026-07-20-moon-power-manual-pause-enum-mismatch.md)
+- [月面供电：真实 KeyboardEvent 快捷键全部失效](./2026-07-20-moon-power-native-keyboard-event.md)
+- [月面供电：移动端暂停按钮只有 36px 高](./2026-07-20-moon-power-pause-touch-target.md)
+- [月面供电：radio 获焦后双席快捷键被全部屏蔽](./2026-07-20-moon-power-radio-focus-shortcuts.md)
+- [月面供电视觉稿：本机无可用 WebP 编码器](./2026-07-20-moon-power-webp-encoder-unavailable.md)
 - [月面配电调研：annotated tag 对象被误写成源码提交](./2026-07-19-moon-power-annotated-tag-object.md)
 - [三枚以后，都是我们：图集与 CSS 备用饼干双重渲染](./2026-07-19-future-cookie-sprite-fallback-double-render.md)
 - [三枚以后，都是我们：1280×800 最终长信超出首屏](./2026-07-19-future-cookie-finale-desktop-overflow.md)
