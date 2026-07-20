@@ -996,8 +996,74 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 34 项[\s\S]*双人合作 13 项[\s\S]*其余 26 项/);
+  assert.match(backlog, /已有 35 项[\s\S]*双人合作 14 项[\s\S]*其余 25 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
+});
+
+test("catalog exposes the installed A-level fog navigation experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const fogNavigation = catalog.experiences.find((item) => item.id === "fog-navigation");
+
+  assert.equal(fogNavigation.title, "雾里，跟着你走");
+  assert.equal(fogNavigation.category, "co-op");
+  assert.equal(fogNavigation.level, "A");
+  assert.equal(fogNavigation.players, "2 人合作");
+  assert.equal(fogNavigation.devices, "单设备轮流");
+  assert.equal(fogNavigation.installed, true);
+  assert.equal(fogNavigation.networkRequired, false);
+  assert.match(fogNavigation.entry, /fog-navigation\/index\.html$/);
+});
+
+test("fog navigation keeps its file protocol, private view, asset and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/fog-navigation/", import.meta.url);
+  const [html, config, levels, logic, app, css, readme, attribution, portal, backlog, coOpIndex, runtimeAsset, sourceAsset] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("levels.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", root), "utf8"),
+    readFile(new URL("assets/fog-table-background.png", root)),
+    readFile(new URL("../../docs/assets/fog-navigation/fog-table-background-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, levels, logic, app].join("\n");
+
+  assert.match(html, /<script src="config\.js"><\/script>[\s\S]*<script src="levels\.js"><\/script>[\s\S]*<script src="logic\.js"><\/script>[\s\S]*<script src="app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.doesNotMatch(app, /FOG_NAVIGATION_LEVELS/);
+  assert.match(app, /getPublicView/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /window\.addEventListener\("blur"/);
+  assert.match(app, /classifyDirectionKey/);
+  assert.match(css, /assets\/fog-table-background\.png/);
+  assert.match(css, /@media \(max-width: 359px\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /55f487ca0384c9a10d19a705504c83def21654a1/);
+  assert.match(attribution, /46782e248c2db9d379a5e4f13bb8323f18dff04b/);
+  assert.match(attribution, /542c57a778bbf843eb2cb121e99d0b050d8c866e/);
+  assert.match(attribution, /10daea21682eb3a868a03043452c8254178b8504/);
+  assert.match(attribution, /1e2c17c332307b0f112895114b9dadc0db2b948f/);
+  assert.match(attribution, /OpenAI ImageGen 资产/);
+  assert.match(attribution, /零复制声明/);
+  assert.deepEqual(runtimeAsset, sourceAsset);
+  assert.match(portal, /"id": "fog-navigation"/);
+  assert.match(coOpIndex, /\.\/fog-navigation\//);
+  assert.match(backlog, /已有 35 项[\s\S]*双人合作 14 项[\s\S]*其余 25 项/);
+  assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {

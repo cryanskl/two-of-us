@@ -405,6 +405,19 @@
       "networkRequired": false
     },
     {
+      "id": "fog-navigation",
+      "title": "雾里，跟着你走",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备轮流",
+      "entry": "experiences/co-op/fog-navigation/index.html",
+      "readme": "experiences/co-op/fog-navigation/README.md",
+      "description": "领航员限时看完整地图，交接后驾驶员只看 5×5 局部雾窗，靠口述完成四段换角路线。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",
