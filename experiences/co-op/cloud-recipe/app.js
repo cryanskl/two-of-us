@@ -405,7 +405,13 @@
 
     if (focusKey) {
       const replacement = document.querySelector(`[data-focus-key="${focusKey}"]`);
-      if (replacement instanceof HTMLElement && !replacement.hasAttribute("disabled")) replacement.focus();
+      if (replacement instanceof HTMLElement && !replacement.hasAttribute("disabled")) {
+        replacement.focus();
+      } else if (!initial && previousPhase !== view.phase) {
+        const fallback = stage.querySelector("#phase-heading")
+          || controlsHost.querySelector(".boundary-button:not(:disabled)");
+        if (fallback instanceof HTMLElement) fallback.focus();
+      }
     } else if (!initial && previousPhase !== view.phase) {
       const phaseHeading = stage.querySelector("#phase-heading");
       if (phaseHeading instanceof HTMLElement) phaseHeading.focus();

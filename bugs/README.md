@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一场雨，我们一起接：进入计时阶段后焦点掉到页面根部](./2026-07-21-cloud-recipe-falling-focus-loss.md)
 - [这一场雨，我们一起接：来源声明标题未满足仓库机器 Gate](./2026-07-21-cloud-recipe-attribution-heading-contract.md)
 - [这一场雨，我们一起接：真实 KeyboardEvent 快捷键全部失效](./2026-07-21-cloud-recipe-native-keyboard-event.md)
 - [这一场雨，我们一起接：最大 revision 重开返回非法状态](./2026-07-21-cloud-recipe-restart-revision-overflow.md)

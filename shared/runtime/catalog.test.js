@@ -1118,6 +1118,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.match(app, /requestAnimationFrame/);
   assert.match(app, /visibilitychange/);
   assert.match(app, /classifyBoundaryKey/);
+  assert.match(app, /\.boundary-button:not\(:disabled\)/);
   assert.match(css, /assets\/weather-kitchen-background\.png/);
   assert.match(css, /assets\/cloud-ribbon\.png/);
   assert.match(css, /@media \(max-width: 340px\)/);
