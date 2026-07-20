@@ -159,6 +159,7 @@
 | [150-fog-navigation-verification.md](./150-fog-navigation-verification.md) | “雾里，跟着你走”的 30 项逻辑、1343 项全仓、51 项目录、四轮换角、阶段隐私、响应式、来源与视觉忠实度验收 |
 | [151-cloud-recipe-research.md](./151-cloud-recipe-research.md) | A 级“这一场雨，我们一起接”的唯一接雨区间、双席权限、固定九波、三项 MIT 来源审计与零复制边界调研 |
 | [152-cloud-recipe-spec.md](./152-cloud-recipe-spec.md) | A 级“这一场雨，我们一起接”的 7 道 9 波、唯一成功区间、双席 action、固定 tick、阶段 DOM 与验收规格 |
+| [153-cloud-recipe-design.md](./153-cloud-recipe-design.md) | “这一场雨，我们一起接”的三态 ImageGen 概念、天气调饮台设计系统、三张生产资产、响应式与 fidelity ledger |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
