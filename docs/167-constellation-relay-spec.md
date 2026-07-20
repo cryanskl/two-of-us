@@ -97,6 +97,7 @@
 ```js
 {
   POINTS, TARGET_EDGES, START_POINT_ID, END_POINT_ID, SEATS, RESULT_CODES,
+  DEFAULT_CONFIG, normalizeConfig,
   classifySegmentIntersection, countCompletions, evaluateConnection,
   createInitialState, reduce, getPublicView
 }
@@ -229,6 +230,8 @@ window.CONSTELLATION_RELAY_CONFIG = {
 };
 ```
 
+- `DEFAULT_CONFIG` 是上述默认值的递归冻结副本；
+- `normalizeConfig(raw)` 是页面消费配置的唯一入口，返回递归冻结且与输入断开引用的合法配置；
 - seat 名 Unicode 去首尾空白后为 1–12 个字素，二者不得相同；
 - completionNote 去空白后为 1–80 个字素；
 - 任一字段、原型或类型非法时整份原子回退，不部分采用；
