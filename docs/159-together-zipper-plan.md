@@ -1,7 +1,7 @@
 # “把两边，拉成我们”分步实施计划
 
 - 日期：2026-07-21
-- 状态：已冻结，待执行
+- 状态：已执行并验收；结果见 [`160-together-zipper-verification.md`](./160-together-zipper-verification.md)
 - 对应调研：[`156-together-zipper-research.md`](./156-together-zipper-research.md)
 - 对应规格：[`157-together-zipper-spec.md`](./157-together-zipper-spec.md)
 - 对应设计：[`158-together-zipper-design.md`](./158-together-zipper-design.md)
