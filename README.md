@@ -167,6 +167,7 @@
 - [A 级“雾里，跟着你走”实现规格](./docs/147-fog-navigation-spec.md)
 - [“雾里，跟着你走”视觉设计](./docs/148-fog-navigation-design.md)
 - [“雾里，跟着你走”分步实施计划](./docs/149-fog-navigation-plan.md)
+- [“雾里，跟着你走”验收记录](./docs/150-fog-navigation-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
