@@ -10,6 +10,7 @@
 
 - [雾里，跟着你走：390px 包含断点把方向键降到 52px](./2026-07-20-fog-navigation-390-touch-target-boundary.md)
 - [雾里，跟着你走：冻结 Proxy 违反属性描述符不变量](./2026-07-20-fog-navigation-frozen-proxy-invariant.md)
+- [雾里，跟着你走：1280×720 驾驶标题与方向盘重叠](./2026-07-20-fog-navigation-low-height-desktop-overlap.md)
 - [合作分类索引：四个已安装作品未被列出](./2026-07-20-co-op-readme-missing-four-experiences.md)
 - [月面供电：发布后创意池仍标记为未实现](./2026-07-20-moon-power-idea-backlog-stale.md)
 - [月面供电：1440×900 operating 多出 20px 纵向滚动](./2026-07-20-moon-power-desktop-operating-overflow.md)
