@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [七日小花园：修饰键组合误触照料卡并吞掉浏览器快捷键](./2026-07-21-seven-day-garden-modifier-shortcuts.md)
+- [七日小花园：入场动画覆盖图集定位与备用图层透明度](./2026-07-21-seven-day-garden-plant-animation-transform.md)
+- [七日小花园：1280px 桌面植株没有达到冻结稿尺寸 Gate](./2026-07-21-seven-day-garden-desktop-plant-width.md)
 - [七日小花园：成功日结的前缀长度与日序不变量冲突](./2026-07-21-seven-day-garden-day-result-prefix-invariant.md)
 - [把两边，拉成我们：规格摘要把六种卡顿原因写成五种](./2026-07-21-together-zipper-jam-reason-count.md)
 - [这一场雨，我们一起接：进入计时阶段后焦点掉到页面根部](./2026-07-21-cloud-recipe-falling-focus-loss.md)
