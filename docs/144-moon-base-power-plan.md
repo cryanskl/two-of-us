@@ -70,7 +70,7 @@ experiences/co-op/moon-base-power/
 - load cycle 严格使用 `[off,...allowedBuses]`，非法当前值回 `off`；
 - A/S/D、J/K/L 分类，repeat 或 ctrl/alt/meta/shift 一律忽略；
 - 89 tick 不完成、90 tick 完成、不安全归零；
-- pause/resume、blur/hidden/stalled、restart revision 与长帧外壳合同；
+- pause/resume、manual/blur/hidden/long-frame、restart revision 与长帧外壳合同；
 - `isPowerState` 覆盖所有跨字段不变量和阶段一致性；
 - public view 不泄露 raw config、函数或内部动作日志；
 - replay 深相等且不修改输入动作。

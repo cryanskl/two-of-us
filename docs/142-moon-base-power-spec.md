@@ -252,7 +252,7 @@ comms: off, L, R
     controls,
     transferAmount
   }],
-  pauseReason: null | "hidden" | "blur" | "long-frame",
+  pauseReason: null | "manual" | "hidden" | "blur" | "long-frame",
   resumePhase: null | "operating",
   revision: non-negative integer
 }
@@ -270,7 +270,7 @@ comms: off, L, R
 - `setLoad(state, load, bus)`：仅 operating；同值返回同一引用；不可用 bus 在纯逻辑层仍可形成不安全状态；
 - `tick(state)`：仅 operating；不安全时 stableTicks 归零；安全时加一；第 90 tick 原子进入 shift-result 或 complete；
 - `nextShift(state)`：仅前两关 shift-result；shiftIndex + 1，重置 controls/stableTicks，进入 handoff；
-- `pause(state, reason)`：仅 operating → paused；保留 controls、evaluation 和 stableTicks；
+- `pause(state, reason)`：仅 operating → paused；reason 只接受 `manual | hidden | blur | long-frame`，保留 controls、evaluation 和 stableTicks；
 - `resume(state)`：仅 paused → operating；清 pause 字段并增加 revision；
 - `restart(state)`：任意合法阶段回到与初始加载除 revision 外深相等的 intro；revision 必须为旧值 + 1，使旧 rAF/token 失效；
 - `getPublicView(state, config?)`：返回渲染所需冻结投影；
@@ -285,7 +285,7 @@ comms: off, L, R
 - intro/handoff/operating/paused 的 `completedShifts.length === shiftIndex`；shift-result 的长度为 `shiftIndex + 1` 且 shiftIndex 只能 0/1；complete 必须 `shiftIndex===2` 且正好 3 条 summary；
 - completed summaries 依次对应 level 0..n-1，每条 controls 由生产 evaluator 判安全，stableTicks 固定 90，transferAmount 与 evaluation 一致；
 - intro/handoff 的 controls 为本关默认态且 stableTicks=0；operating/paused 为 0..89；shift-result/complete 固定 90；
-- paused 时 pauseReason 为三个许可值之一且 `resumePhase="operating"`；其他阶段二者都为 null；
+- paused 时 pauseReason 为四个许可值之一且 `resumePhase="operating"`；其他阶段二者都为 null；
 - revision 是非负安全整数，shiftIndex/stableTicks/summary 数值也必须是安全整数；
 - 对象只接受冻结 schema 的精确字段集合，拒绝额外字段、缺字段、函数、NaN、Infinity 和原型污染键。
 
