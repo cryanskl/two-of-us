@@ -225,7 +225,9 @@ window.SEVEN_DAY_GARDEN_CONFIG = Object.freeze({
 不变量：
 
 - intro 恰为第 0 日、初始库存、空 commitments、attempt 1、空结果、空前缀、revision 0；
-- `completedDays.length === dayIndex`，complete 例外为 7 条且 `dayIndex === 6`；
+- `intro / day-intro / first-pick / handoff / second-pick / jammed` 阶段满足 `completedDays.length === dayIndex`；
+- `day-result` 已经原子追加当天记录但尚未推进日序，因此满足 `completedDays.length === dayIndex + 1`；
+- complete 恰有 7 条 completed days 且 `dayIndex === 6`；
 - completed days 必须是冻结七日表的严格前缀，记录的两张卡必须能重算为 accepted；
 - 非结果阶段 `lastResult === null`；
 - `first-pick` 两席均未选，`handoff / second-pick` 只有当天先手已选；
