@@ -431,6 +431,19 @@
       "networkRequired": false
     },
     {
+      "id": "together-zipper",
+      "title": "把两边，拉成我们",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/together-zipper/index.html",
+      "readme": "experiences/co-op/together-zipper/README.md",
+      "description": "左右席在同一公共时间窗各拉一次，逐齿合上三段 15 齿拉链；卡住只重试当前齿。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",

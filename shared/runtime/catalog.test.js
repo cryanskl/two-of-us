@@ -996,7 +996,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
+  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1062,7 +1062,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
+  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1135,8 +1135,81 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
+  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
+});
+
+test("catalog exposes the installed A-level together zipper experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const zipper = catalog.experiences.find((item) => item.id === "together-zipper");
+
+  assert.equal(zipper.title, "把两边，拉成我们");
+  assert.equal(zipper.category, "co-op");
+  assert.equal(zipper.level, "A");
+  assert.equal(zipper.players, "2 人合作");
+  assert.equal(zipper.devices, "单设备同屏");
+  assert.equal(zipper.installed, true);
+  assert.equal(zipper.networkRequired, false);
+  assert.match(zipper.entry, /together-zipper\/index\.html$/);
+});
+
+test("together zipper keeps its file protocol, timing, asset and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/together-zipper/", import.meta.url);
+  const [
+    html, config, logic, app, css, readme, attribution, portal, backlog, coOpIndex,
+    runtimeBackground, sourceBackground, runtimePull, sourcePull, runtimeKeepsake, sourceKeepsake,
+  ] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", root), "utf8"),
+    readFile(new URL("assets/tailor-table-background.png", root)),
+    readFile(new URL("../../docs/assets/together-zipper/tailor-table-background-source.png", import.meta.url)),
+    readFile(new URL("assets/brass-zipper-pull.png", root)),
+    readFile(new URL("../../docs/assets/together-zipper/brass-zipper-pull-source.png", import.meta.url)),
+    readFile(new URL("assets/completed-keepsake.png", root)),
+    readFile(new URL("../../docs/assets/together-zipper/completed-keepsake-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js" defer><\/script>[\s\S]*<script src="\.\/logic\.js" defer><\/script>[\s\S]*<script src="\.\/app\.js" defer><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /getPublicView/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /classifyPullKey/);
+  assert.match(app, /current\.tooth\.total/);
+  assert.match(css, /assets\/tailor-table-background\.png/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /@media \(max-width: 340px\)/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /4995fbf1573f0dbdfac00bfe99c18523b610f24d/);
+  assert.match(attribution, /a449fcdf3b1060c35a7cfd0e897e31c0a0e36a48/);
+  assert.match(attribution, /40feae4081352485ea014117b22e08a14f268ee9/);
+  assert.match(attribution, /b4c0ba419a6ba33d5b2e35d1d977b656befcac25/);
+  assert.match(attribution, /OpenAI ImageGen 原创生产资产/);
+  assert.match(attribution, /零复制声明/);
+  assert.deepEqual(runtimeBackground, sourceBackground);
+  assert.deepEqual(runtimePull, sourcePull);
+  assert.deepEqual(runtimeKeepsake, sourceKeepsake);
+  assert.match(portal, /"id": "together-zipper"/);
+  assert.match(coOpIndex, /\.\/together-zipper\//);
+  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
+  assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {
