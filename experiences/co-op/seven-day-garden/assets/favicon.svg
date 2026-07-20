@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="七日小花园花盆图标">
+  <rect width="64" height="64" rx="14" fill="#f4ead7"/>
+  <path d="M32 43V22" fill="none" stroke="#355c49" stroke-width="4" stroke-linecap="round"/>
+  <path d="M31 29C20 29 17 22 17 16c9-1 15 4 14 13Z" fill="#78906f" stroke="#355c49" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M33 35c10 0 14-6 14-12-9-1-15 3-14 12Z" fill="#b9c7a8" stroke="#355c49" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="32" cy="17" r="7" fill="#bd6d54"/>
+  <circle cx="32" cy="17" r="3" fill="#d2aa61"/>
+  <path d="M19 42h26l-4 14H23l-4-14Z" fill="#bd6d54" stroke="#9b4f3f" stroke-width="2" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f4ead7" />
+    <title>把七天，养成一朵花 · Two of Us</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body class="seven-day-garden">
+    <main id="garden-app" class="app-shell">
+      <header class="app-header">
+        <div class="title-lockup">
+          <p class="eyebrow">七日共同照料</p>
+          <h1>把七天，养成一朵花</h1>
+          <p>七天，一盆花，两只公开的工具篮。</p>
+        </div>
+        <ol id="week-ribbon" class="week-ribbon" aria-label="七日养成进度"></ol>
+      </header>
+
+      <section id="stage" class="stage-shell" aria-labelledby="phase-heading"></section>
+
+      <nav class="utility-links" aria-label="体验导航">
+        <a href="../../../index.html">返回体验目录</a>
+        <span>本机运行 · 不联网 · 不保存</span>
+      </nav>
+
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>需要启用 JavaScript，才能一起养成这朵花。</noscript>
+    </main>
+  </body>
+</html>
