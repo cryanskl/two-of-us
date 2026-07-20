@@ -996,7 +996,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 35 项[\s\S]*双人合作 14 项[\s\S]*其余 25 项/);
+  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1062,8 +1062,80 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 35 项[\s\S]*双人合作 14 项[\s\S]*其余 25 项/);
+  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
+});
+
+test("catalog exposes the installed A-level cloud recipe experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const cloudRecipe = catalog.experiences.find((item) => item.id === "cloud-recipe");
+
+  assert.equal(cloudRecipe.title, "这一场雨，我们一起接");
+  assert.equal(cloudRecipe.category, "co-op");
+  assert.equal(cloudRecipe.level, "A");
+  assert.equal(cloudRecipe.players, "2 人合作");
+  assert.equal(cloudRecipe.devices, "单设备同屏");
+  assert.equal(cloudRecipe.installed, true);
+  assert.equal(cloudRecipe.networkRequired, false);
+  assert.match(cloudRecipe.entry, /cloud-recipe\/index\.html$/);
+});
+
+test("cloud recipe keeps its file protocol, rule, asset and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/cloud-recipe/", import.meta.url);
+  const [
+    html, config, logic, app, css, readme, attribution, portal, backlog, coOpIndex,
+    runtimeBackground, sourceBackground, runtimeCloud, sourceCloud, runtimeBottles, sourceBottles,
+  ] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", root), "utf8"),
+    readFile(new URL("assets/weather-kitchen-background.png", root)),
+    readFile(new URL("../../docs/assets/cloud-recipe/weather-kitchen-background-source.png", import.meta.url)),
+    readFile(new URL("assets/cloud-ribbon.png", root)),
+    readFile(new URL("../../docs/assets/cloud-recipe/cloud-ribbon-source.png", import.meta.url)),
+    readFile(new URL("assets/weather-ingredients.png", root)),
+    readFile(new URL("../../docs/assets/cloud-recipe/weather-bottles-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.match(html, /<script src="config\.js"><\/script>[\s\S]*<script src="logic\.js"><\/script>[\s\S]*<script src="app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /getPublicView/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /classifyBoundaryKey/);
+  assert.match(css, /assets\/weather-kitchen-background\.png/);
+  assert.match(css, /assets\/cloud-ribbon\.png/);
+  assert.match(css, /@media \(max-width: 340px\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /65e8fa086d40233295615a2bf1d8aa255dc0eb84/);
+  assert.match(attribution, /67b56217bce938baafa2c133a221c4a715e13cd5/);
+  assert.match(attribution, /0b5300749c310f52e793493d50f0e4734db888b2/);
+  assert.match(attribution, /OpenAI 内置 ImageGen/);
+  assert.match(attribution, /零复制声明/);
+  assert.deepEqual(runtimeBackground, sourceBackground);
+  assert.deepEqual(runtimeCloud, sourceCloud);
+  assert.deepEqual(runtimeBottles, sourceBottles);
+  assert.match(portal, /"id": "cloud-recipe"/);
+  assert.match(coOpIndex, /\.\/cloud-recipe\//);
+  assert.match(backlog, /已有 36 项[\s\S]*双人合作 15 项[\s\S]*其余 24 项/);
+  assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {

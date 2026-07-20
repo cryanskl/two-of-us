@@ -418,6 +418,19 @@
       "networkRequired": false
     },
     {
+      "id": "cloud-recipe",
+      "title": "这一场雨，我们一起接",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/cloud-recipe/index.html",
+      "readme": "experiences/co-op/cloud-recipe/README.md",
+      "description": "两人各守云朵一边，把接雨区间调到唯一正确宽度，接齐三份固定配方的彩滴并避开灰滴。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",
