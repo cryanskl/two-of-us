@@ -8,6 +8,11 @@
 
 ## 已记录
 
+- [星座接线员：焦点调度引入规格禁止的动画帧依赖](./2026-07-21-constellation-relay-focus-raf.md)
+- [星座接线员：全局键盘保护漏掉合法 contenteditable 形式](./2026-07-21-constellation-relay-editable-key-guard.md)
+- [星座接线员：第十根接通后焦点仍停在星点](./2026-07-21-constellation-relay-result-focus.md)
+- [星座接线员：移动视觉顺序与 DOM/Tab 顺序相反](./2026-07-21-constellation-relay-mobile-dom-order.md)
+- [星座接线员：721–829px 双栏最小宽度必然横向溢出](./2026-07-21-constellation-relay-mid-width-overflow.md)
 - [星座接线员：自定义数组与延迟 Proxy 绕过状态校验](./2026-07-21-constellation-relay-hostile-state-snapshot.md)
 - [星座接线员：加载自检把关卡点误传给严格坐标 API](./2026-07-21-constellation-relay-internal-point-dto.md)
 - [星座接线员：规格要求归一化配置但没有公开入口](./2026-07-21-constellation-relay-config-normalization-api.md)
