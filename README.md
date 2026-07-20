@@ -179,6 +179,7 @@
 - [“把两边，拉成我们”分步实施计划](./docs/159-together-zipper-plan.md)
 - [“把两边，拉成我们”验收记录](./docs/160-together-zipper-verification.md)
 - [A 级“把七天，养成一朵花”定向调研](./docs/161-seven-day-garden-research.md)
+- [A 级“把七天，养成一朵花”实现规格](./docs/162-seven-day-garden-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
