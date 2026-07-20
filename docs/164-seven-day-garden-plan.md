@@ -1,7 +1,7 @@
 # “把七天，养成一朵花”分步实施计划
 
 - 日期：2026-07-21
-- 状态：待执行
+- 状态：已执行（自动化策略限制下保留真实 `file://` 与设备辅助模式人工 Gate）
 - 对应调研：[`161-seven-day-garden-research.md`](./161-seven-day-garden-research.md)
 - 对应规格：[`162-seven-day-garden-spec.md`](./162-seven-day-garden-spec.md)
 - 对应设计：[`163-seven-day-garden-design.md`](./163-seven-day-garden-design.md)
@@ -14,13 +14,15 @@
 1. 调研：已提交 `cc02570`；
 2. 规格：已提交 `b765077`；
 3. 视觉、ImageGen 源稿与生产资产：已提交 `82c5b79`；
-4. 本实施计划：单独提交；
-5. 逻辑、配置与逻辑测试：单独提交；
-6. 前端、README、ATTRIBUTION 与 favicon：单独提交；
-7. catalog、分类索引、创意池与目录测试：单独提交；
-8. 浏览器发现的独立 bug：一个问题一个记录，与修复一起或紧随修复提交；
-9. 可跨项目复用的 learn：单独提交；
-10. 最终验证报告与状态索引：单独提交。
+4. 本实施计划：已提交 `713fc45`；
+5. 规格不变量修复：已提交 `2e9fc74`；
+6. 逻辑、配置与逻辑测试：已提交 `92e4d79`；
+7. 前端、README、ATTRIBUTION 与 favicon：已提交 `9bf8f62`；
+8. 浏览器发现的独立 bug：已提交 `653335c`；
+9. catalog、分类索引、创意池与目录测试：已提交 `3937888`；
+10. 目录 Gate 误报复盘：已提交 `cacd6f3`；
+11. 可跨项目复用的 learn：已提交 `61a1db9`；
+12. 最终验证报告与状态索引：本次提交。
 
 每次 commit 前必须执行：
 
@@ -183,4 +185,4 @@ bugs/YYYY-MM-DD-seven-day-garden-<slug>.md
 - 最终验证文档记录测试总数、目录总数、浏览器路径、截图、资产哈希、fidelity ledger、限制和相关 commits；
 - worktree clean。
 
-本作品完成不等于长期目标完成；完成后继续选择下一候选，不调用 goal complete。
+执行结果与保留的人工 Gate 见 [`165-seven-day-garden-verification.md`](./165-seven-day-garden-verification.md)。本作品完成不等于长期目标完成；完成后继续选择下一候选，不调用 goal complete。
