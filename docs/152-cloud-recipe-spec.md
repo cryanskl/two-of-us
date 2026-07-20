@@ -379,9 +379,11 @@ experiences/co-op/cloud-recipe/
     ├── cloud-ribbon.png
     └── weather-ingredients.png
 
-test/
-├── cloud-recipe.test.mjs
-└── cloud-recipe-catalog.test.mjs
+experiences/co-op/cloud-recipe/
+└── logic.test.js
+
+shared/runtime/
+└── catalog.test.js
 ```
 
 - `logic.js`：UMD/IIFE 双暴露 `window.CloudRecipeLogic` 与 `module.exports`，纯规则、校验、配置和 view；

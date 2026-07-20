@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [这一场雨，我们一起接：真实 KeyboardEvent 快捷键全部失效](./2026-07-21-cloud-recipe-native-keyboard-event.md)
+- [这一场雨，我们一起接：最大 revision 重开返回非法状态](./2026-07-21-cloud-recipe-restart-revision-overflow.md)
+- [这一场雨，我们一起接：定向测试未进入统一 npm test](./2026-07-21-cloud-recipe-test-discovery.md)
 - [雾里，跟着你走：390px 包含断点把方向键降到 52px](./2026-07-20-fog-navigation-390-touch-target-boundary.md)
 - [雾里，跟着你走：冻结 Proxy 违反属性描述符不变量](./2026-07-20-fog-navigation-frozen-proxy-invariant.md)
 - [雾里，跟着你走：1280×720 驾驶标题与方向盘重叠](./2026-07-20-fog-navigation-low-height-desktop-overlap.md)

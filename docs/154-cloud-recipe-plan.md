@@ -40,7 +40,7 @@ git branch --show-current && git rev-parse --show-toplevel
 ```text
 experiences/co-op/cloud-recipe/config.js
 experiences/co-op/cloud-recipe/logic.js
-test/cloud-recipe.test.mjs
+experiences/co-op/cloud-recipe/logic.test.js
 ```
 
 职责：
@@ -56,7 +56,7 @@ test/cloud-recipe.test.mjs
 完成 Gate：
 
 ```bash
-node --test test/cloud-recipe.test.mjs
+node --test experiences/co-op/cloud-recipe/logic.test.js
 npm test
 git diff --check
 ```
@@ -106,7 +106,7 @@ git diff --check
 3. 再审前端 diff、资产哈希、来源声明和阶段 DOM；
 4. 跑静态验证与全仓测试，修正后独立提交前端部分；
 5. 更新 `shared/runtime/catalog.js`、co-op 分类 README、根 README 数量与 `docs/40-idea-backlog.md` 的 C13 状态；
-6. 新建 `test/cloud-recipe-catalog.test.mjs`，验证本地路径、经典脚本、来源、离线、语义与资产；
+6. 在 `shared/runtime/catalog.test.js` 增加本作目录测试，验证本地路径、经典脚本、来源、离线、语义与资产；
 7. 独立提交 catalog 部分。
 
 若子任务发现规格矛盾，必须停止相关实现并回报；主线程在 `bugs/` 记录根因与修正，更新规格后再继续，不能让两个实现各自猜测。
