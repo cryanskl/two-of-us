@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [星座接线员：自定义数组与延迟 Proxy 绕过状态校验](./2026-07-21-constellation-relay-hostile-state-snapshot.md)
+- [星座接线员：加载自检把关卡点误传给严格坐标 API](./2026-07-21-constellation-relay-internal-point-dto.md)
 - [星座接线员：规格要求归一化配置但没有公开入口](./2026-07-21-constellation-relay-config-normalization-api.md)
 - [七日小花园：目录 Gate 在 CSS 中检查由 JavaScript 持有的图集路径](./2026-07-21-seven-day-garden-catalog-sprite-owner.md)
 - [七日小花园：修饰键组合误触照料卡并吞掉浏览器快捷键](./2026-07-21-seven-day-garden-modifier-shortcuts.md)
