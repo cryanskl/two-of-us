@@ -161,6 +161,7 @@
 | [152-cloud-recipe-spec.md](./152-cloud-recipe-spec.md) | A 级“这一场雨，我们一起接”的 7 道 9 波、唯一成功区间、双席 action、固定 tick、阶段 DOM 与验收规格 |
 | [153-cloud-recipe-design.md](./153-cloud-recipe-design.md) | “这一场雨，我们一起接”的三态 ImageGen 概念、天气调饮台设计系统、三张生产资产、响应式与 fidelity ledger |
 | [154-cloud-recipe-plan.md](./154-cloud-recipe-plan.md) | “这一场雨，我们一起接”的逻辑/前端子任务边界、独立提交、目录、浏览器、bugs/learn 与视觉闭环计划 |
+| [155-cloud-recipe-verification.md](./155-cloud-recipe-verification.md) | “这一场雨，我们一起接”的 24 项逻辑、1369 项全仓、52 项目录、完整九波、双输入、三档响应式、来源、bugs/learn 与人工 Gate 验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

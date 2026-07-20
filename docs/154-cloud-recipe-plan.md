@@ -1,7 +1,7 @@
 # “这一场雨，我们一起接”分步实施计划
 
 - 日期：2026-07-21
-- 状态：已冻结，待执行
+- 状态：已执行；验收与保留人工 Gate 见 [`155-cloud-recipe-verification.md`](./155-cloud-recipe-verification.md)
 - 对应调研：[`151-cloud-recipe-research.md`](./151-cloud-recipe-research.md)
 - 对应规格：[`152-cloud-recipe-spec.md`](./152-cloud-recipe-spec.md)
 - 对应设计：[`153-cloud-recipe-design.md`](./153-cloud-recipe-design.md)
