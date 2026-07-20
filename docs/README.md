@@ -152,6 +152,7 @@
 | [143-moon-base-power-design.md](./143-moon-base-power-design.md) | “月面，保持有光”的桌面/移动/完成概念、虚构月面控制室设计系统、生产背景、文案锁与 fidelity ledger |
 | [144-moon-base-power-plan.md](./144-moon-base-power-plan.md) | “月面，保持有光”的逻辑/前端文件边界、独立提交、目录、浏览器、bugs/learn 与视觉闭环计划 |
 | [145-moon-base-power-verification.md](./145-moon-base-power-verification.md) | “月面，保持有光”的 28 项逻辑、1310 项全仓、50 项目录、三班混合输入、三档响应式、来源与视觉忠实度验收 |
+| [146-fog-navigation-research.md](./146-fog-navigation-research.md) | A 级“雾里，跟着你走”的限时完整图、阶段隐私、固定局部视野、BFS 可解/合作必要性、固定来源与零复制调研 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
