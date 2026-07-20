@@ -494,10 +494,10 @@
 
   function classifyPowerKey(state, event) {
     if (!isPowerState(state) || state.phase !== "operating" || !event || typeof event !== "object") return null;
-    const repeat = Boolean(safeRead(event, "repeat"));
-    const modified = ["ctrlKey", "altKey", "metaKey", "shiftKey"].some((key) => Boolean(safeRead(event, key)));
+    const repeat = Boolean(safeEventRead(event, "repeat"));
+    const modified = ["ctrlKey", "altKey", "metaKey", "shiftKey"].some((key) => Boolean(safeEventRead(event, key)));
     if (repeat || modified) return null;
-    const code = safeRead(event, "code");
+    const code = safeEventRead(event, "code");
     if (code === "KeyA") return deepFreeze({ type: "TOGGLE_FEED", feed: "solar" });
     if (code === "KeyS") return deepFreeze({ type: "TOGGLE_FEED", feed: "battery" });
     if (code === "KeyD") return deepFreeze({ type: "SET_TIE", direction: nextValue(TIES, state.controls.tie) });
@@ -506,6 +506,14 @@
     const sequence = [OFF, ...LEVELS[state.shiftIndex].allowedBuses[load]];
     const currentIndex = sequence.indexOf(state.controls[load]);
     return deepFreeze({ type: "SET_LOAD", load, bus: currentIndex < 0 ? OFF : sequence[(currentIndex + 1) % sequence.length] });
+  }
+
+  function safeEventRead(event, key) {
+    try {
+      return event[key];
+    } catch (_error) {
+      return undefined;
+    }
   }
 
   function nextValue(values, current) {

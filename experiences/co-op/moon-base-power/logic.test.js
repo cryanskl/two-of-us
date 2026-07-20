@@ -447,6 +447,22 @@ test("keyboard classification separates seats, modifiers and legal load cycles",
   assert.deepEqual(logic.classifyPowerKey(state, event("KeyJ")), { type: "SET_LOAD", load: "oxygen", bus: "off" });
 });
 
+test("keyboard classification reads native-style inherited event accessors", () => {
+  const state = operatingState();
+  const nativeLikeEvent = Object.create({
+    get code() { return "KeyA"; },
+    get repeat() { return false; },
+    get ctrlKey() { return false; },
+    get altKey() { return false; },
+    get metaKey() { return false; },
+    get shiftKey() { return false; },
+  });
+  assert.deepEqual(logic.classifyPowerKey(state, nativeLikeEvent), { type: "TOGGLE_FEED", feed: "solar" });
+
+  const hostileEvent = Object.create({ get code() { throw new Error("no"); } });
+  assert.equal(logic.classifyPowerKey(state, hostileEvent), null);
+});
+
 test("frame contract consumes at most five ticks and long frames consume zero", () => {
   assert.deepEqual(logic.consumeFrame(0, 0), { pauseReason: null, ticks: 0, accumulatorMs: 0 });
   const normal = logic.consumeFrame(0, logic.TICK_MS * 5);
