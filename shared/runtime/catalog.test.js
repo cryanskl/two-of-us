@@ -927,6 +927,64 @@ test("moving home together keeps its file protocol, kinematic, input, and attrib
   assert.match(portal, /"id": "moving-home-together"/);
 });
 
+test("catalog exposes the installed A-level moon base power experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const moonPower = catalog.experiences.find((item) => item.id === "moon-base-power");
+
+  assert.equal(moonPower.category, "co-op");
+  assert.equal(moonPower.level, "A");
+  assert.equal(moonPower.players, "2 人合作");
+  assert.equal(moonPower.devices, "单设备同屏");
+  assert.equal(moonPower.installed, true);
+  assert.equal(moonPower.networkRequired, false);
+  assert.match(moonPower.entry, /moon-base-power\/index\.html$/);
+});
+
+test("moon base power keeps its file protocol, deterministic, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/moon-base-power/", import.meta.url);
+  const [html, config, levels, logic, app, css, readme, attribution, portal, runtimeAsset, sourceAsset] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("levels.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("assets/control-room-background.png", root)),
+    readFile(new URL("../../docs/assets/moon-base-power/control-room-background-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, levels, logic, app].join("\n");
+
+  assert.match(html, /<script src="config\.js"><\/script>[\s\S]*<script src="levels\.js"><\/script>[\s\S]*<script src="logic\.js"><\/script>[\s\S]*<script src="app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /classifyPowerKey/);
+  assert.match(app, /consumeFrame/);
+  assert.match(app, /replaceChildren/);
+  assert.match(css, /assets\/control-room-background\.png/);
+  assert.match(css, /min-height:\s*48px/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /72c4cfa37c48a60aebcd537061163ccb3eabc806/);
+  assert.match(attribution, /a1736886d18c14f6e19520813d2b3e432179e3b9/);
+  assert.match(attribution, /94d188c1233331e1136894e1d5e867684e91197c/);
+  assert.match(attribution, /8d618116d7491c9a289bbbf886c340a197f38303/);
+  assert.match(attribution, /OpenAI 内置 ImageGen/);
+  assert.match(attribution, /零复制/);
+  assert.deepEqual(runtimeAsset, sourceAsset);
+  assert.match(portal, /"id": "moon-base-power"/);
+});
+
 test("catalog exposes the installed A-level rhythm relay", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const relay = catalog.experiences.find((item) => item.id === "rhythm-relay");

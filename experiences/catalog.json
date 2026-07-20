@@ -392,6 +392,19 @@
       "networkRequired": false
     },
     {
+      "id": "moon-base-power",
+      "title": "月面，保持有光",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/moon-base-power/index.html",
+      "readme": "experiences/co-op/moon-base-power/README.md",
+      "description": "一人控制供电与联络，一人安排氧气、照明和通信，在三次班次中找出唯一安全路由并共同稳定三秒。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",
