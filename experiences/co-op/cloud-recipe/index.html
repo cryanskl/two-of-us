@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#dceef6">
+    <meta name="description" content="这一场雨，我们一起接：一款两人各守云朵一边的本地合作游戏。">
+    <title>这一场雨，我们一起接</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="cloud-recipe">
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-bottle" aria-hidden="true"></span>
+          <div>
+            <h1>这一场雨，我们一起接</h1>
+            <p>你守一边，我守一边，把云朵调到刚刚好。</p>
+          </div>
+        </div>
+        <div id="progress-status" class="progress-status" aria-live="off"></div>
+      </header>
+      <section class="stage-shell" aria-label="当前游戏阶段">
+        <div id="stage"></div>
+      </section>
+      <section id="controls" class="controls-host" aria-label="双席控制"></section>
+      <nav id="utility-links" class="utility-links" aria-label="体验导航"></nav>
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+    <noscript>
+      <p class="noscript">这一场雨，我们一起接需要启用 JavaScript。</p>
+    </noscript>
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
