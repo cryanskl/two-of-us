@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [合作分类索引：四个已安装作品未被列出](./2026-07-20-co-op-readme-missing-four-experiences.md)
 - [月面供电：发布后创意池仍标记为未实现](./2026-07-20-moon-power-idea-backlog-stale.md)
 - [月面供电：1440×900 operating 多出 20px 纵向滚动](./2026-07-20-moon-power-desktop-operating-overflow.md)
 - [月面供电：手动暂停缺少权威 pauseReason](./2026-07-20-moon-power-manual-pause-enum-mismatch.md)

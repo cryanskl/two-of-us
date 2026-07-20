@@ -9,6 +9,18 @@ test("portal gives every experience link a title-specific accessible name", asyn
   assert.match(portal, /link\.setAttribute\("aria-label", `打开《\$\{item\.title\}》`\)/);
 });
 
+test("co-op index links every cataloged co-op experience", async () => {
+  const root = new URL("../../", import.meta.url);
+  const [catalog, index] = await Promise.all([
+    loadCatalog(root),
+    readFile(new URL("experiences/co-op/README.md", root), "utf8"),
+  ]);
+
+  for (const item of catalog.experiences.filter((entry) => entry.category === "co-op")) {
+    assert.ok(index.includes(`(./${item.id}/)`), `co-op README is missing ${item.id}`);
+  }
+});
+
 test("catalog exposes an installed A-level Love Tree", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const loveTree = catalog.experiences.find((item) => item.id === "love-tree");
