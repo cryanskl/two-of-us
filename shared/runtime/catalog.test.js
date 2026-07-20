@@ -996,7 +996,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
+  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1062,7 +1062,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
+  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1135,7 +1135,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
+  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1208,8 +1208,77 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 37 项[\s\S]*双人合作 16 项[\s\S]*其余 23 项/);
+  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
+});
+
+test("catalog exposes the installed A-level seven day garden experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const garden = catalog.experiences.find((item) => item.id === "seven-day-garden");
+
+  assert.equal(garden.title, "把七天，养成一朵花");
+  assert.equal(garden.category, "co-op");
+  assert.equal(garden.level, "A");
+  assert.equal(garden.players, "2 人合作");
+  assert.equal(garden.devices, "单设备轮流");
+  assert.equal(garden.installed, true);
+  assert.equal(garden.networkRequired, false);
+  assert.match(garden.entry, /seven-day-garden\/index\.html$/);
+});
+
+test("seven day garden keeps its file protocol, rule, asset and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/seven-day-garden/", import.meta.url);
+  const [
+    html, config, logic, app, css, readme, attribution, portal, backlog, coOpIndex,
+    runtimeBackground, sourceBackground, runtimeKeepsake, sourceKeepsake,
+  ] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", root), "utf8"),
+    readFile(new URL("assets/garden-table-background.png", root)),
+    readFile(new URL("../../docs/assets/seven-day-garden/garden-table-background-source.png", import.meta.url)),
+    readFile(new URL("assets/completion-keepsake.png", root)),
+    readFile(new URL("../../docs/assets/seven-day-garden/completion-keepsake-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js" defer><\/script>[\s\S]*<script src="\.\/logic\.js" defer><\/script>[\s\S]*<script src="\.\/app\.js" defer><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random|\bDate\b/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /getPublicView/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /classifyResourceKey/);
+  assert.match(app, /hasCommandModifier/);
+  assert.match(css, /assets\/garden-table-background\.png/);
+  assert.match(app, /assets\/plant-states\.png/);
+  assert.match(css, /assets\/completion-keepsake\.png/);
+  assert.match(css, /@media \(max-width: 380px\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /382cfbce3a0618a3de25ae3197cbb9b4462dffaa9273672bb725d87c02eee0c7/);
+  assert.match(attribution, /75409d8bb8d9b9f2a07409e6f228ce6fec324e6d913c77a215c4309f2a9c2316/);
+  assert.match(attribution, /3a0f2aa921936bcb08cd95b1e7430c568bd457382b0d133004123484ca35b146/);
+  assert.match(attribution, /OpenAI 内置 ImageGen/);
+  assert.match(attribution, /零复制声明/);
+  assert.deepEqual(runtimeBackground, sourceBackground);
+  assert.deepEqual(runtimeKeepsake, sourceKeepsake);
+  assert.match(portal, /"id": "seven-day-garden"/);
+  assert.match(coOpIndex, /\.\/seven-day-garden\//);
+  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {
