@@ -164,6 +164,7 @@
 - [“月面，保持有光”分步实施计划](./docs/144-moon-base-power-plan.md)
 - [“月面，保持有光”验收记录](./docs/145-moon-base-power-verification.md)
 - [A 级“雾里，跟着你走”定向调研](./docs/146-fog-navigation-research.md)
+- [A 级“雾里，跟着你走”实现规格](./docs/147-fog-navigation-spec.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
