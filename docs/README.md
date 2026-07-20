@@ -149,6 +149,7 @@
 | [140-soft-sumo-verification.md](./140-soft-sumo-verification.md) | “软软相扑”的 27 项逻辑、1280 项全仓、49 项目录、三档响应式、暂停恢复、视觉对照、来源与已知设备补测项 |
 | [141-moon-base-power-research.md](./141-moon-base-power-research.md) | A 级“月面，保持有光”的双母线、双席权限、整数容量联锁、连续安全窗、324 状态穷举、固定来源与零复制调研 |
 | [142-moon-base-power-spec.md](./142-moon-base-power-spec.md) | “月面，保持有光”的三班唯一解、纯 evaluator、有序故障码、30Hz/90 tick、双席输入、配置与 A 级验收规格 |
+| [143-moon-base-power-design.md](./143-moon-base-power-design.md) | “月面，保持有光”的桌面/移动/完成概念、虚构月面控制室设计系统、生产背景、文案锁与 fidelity ledger |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
