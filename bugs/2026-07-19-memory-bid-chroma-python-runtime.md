@@ -48,3 +48,6 @@
 
 - `2201058 design: freeze memory bid`
 
+## 2026-07-21 复现补记
+
+“把七天，养成一朵花”的八阶段植物图集再次用 shell 默认 `python` 运行同一脚本，稳定复现 `Pillow is required for chroma-key removal`。沿用本记录方案，通过 `codex_app__load_workspace_dependencies` 取得捆绑解释器后成功生成 1774×887 RGBA 图集：四角 alpha 均为 0，SHA-256 为 `75409d8bb8d9b9f2a07409e6f228ce6fec324e6d913c77a215c4309f2a9c2316`。仓库 manifest、lockfile与 A 级运行路径均未增加 Python/Pillow。
