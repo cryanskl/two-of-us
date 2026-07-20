@@ -175,6 +175,7 @@
 - [“这一场雨，我们一起接”验收记录](./docs/155-cloud-recipe-verification.md)
 - [A 级“把两边，拉成我们”定向调研](./docs/156-together-zipper-research.md)
 - [A 级“把两边，拉成我们”实现规格](./docs/157-together-zipper-spec.md)
+- [“把两边，拉成我们”视觉设计与资产说明](./docs/158-together-zipper-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

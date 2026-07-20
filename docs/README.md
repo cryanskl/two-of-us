@@ -164,6 +164,7 @@
 | [155-cloud-recipe-verification.md](./155-cloud-recipe-verification.md) | “这一场雨，我们一起接”的 24 项逻辑、1369 项全仓、52 项目录、完整九波、双输入、三档响应式、来源、bugs/learn 与人工 Gate 验收 |
 | [156-together-zipper-research.md](./156-together-zipper-research.md) | A 级“把两边，拉成我们”的固定 tick 逐齿同步、合作必要性、三项 MIT 来源审计、混合许可证排除与零复制边界调研 |
 | [157-together-zipper-spec.md](./157-together-zipper-spec.md) | A 级“把两边，拉成我们”的三段 15 齿、闭时间窗、第一次输入、12 tick 反馈、七阶段 reducer 与验收规格 |
+| [158-together-zipper-design.md](./158-together-zipper-design.md) | “把两边，拉成我们”的三态 ImageGen 概念、午夜裁缝桌设计系统、三张生产资产、响应式与 fidelity ledger |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
