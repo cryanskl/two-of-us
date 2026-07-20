@@ -172,6 +172,7 @@
 | [163-seven-day-garden-design.md](./163-seven-day-garden-design.md) | “把七天，养成一朵花”的三态 ImageGen 概念、清晨植物手账系统、三张原创资产、透明图集、响应式与 fidelity ledger |
 | [164-seven-day-garden-plan.md](./164-seven-day-garden-plan.md) | “把七天，养成一朵花”的逻辑/前端文件所有权、独立提交、目录、浏览器、bugs/learn 与视觉闭环计划 |
 | [165-seven-day-garden-verification.md](./165-seven-day-garden-verification.md) | “把七天，养成一朵花”的 45 项逻辑、1449 项全仓、54 项目录、完整七日、三档响应式、来源、bugs/learn 与视觉忠实度验收 |
+| [166-constellation-relay-research.md](./166-constellation-relay-research.md) | A 级“把星光，一笔一笔交给你”的 9 点 10 边 Euler 接线、四条完整路线、整数相交、固定来源与零复制边界调研 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
