@@ -1069,7 +1069,7 @@ a:focus-visible,
   }
 
   .stage-shell {
-    min-height: calc(100vh - 92px);
+    min-height: calc(100vh - 118px);
   }
 
   .briefing-layout {
@@ -1083,6 +1083,10 @@ a:focus-visible,
 
   .driver-grid-wrap {
     width: min(56vh, 540px);
+  }
+
+  .controls-host {
+    top: 72%;
   }
 }
 
