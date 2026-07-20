@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#171218">
+  <title>把星光，一笔一笔交给你 · Two of Us</title>
+  <meta name="description" content="两个人在同一台设备上轮流接完十根星线，共同拼出一只双翼星鸢。">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="constellation-relay">
+  <main class="app-shell" id="constellation-app" data-phase="intro">
+    <header class="app-header">
+      <div class="title-block">
+        <a class="back-link" href="../../../index.html" aria-label="返回 Two of Us 体验目录">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7M8 12h11"></path></svg>
+          <span>Two of Us</span>
+        </a>
+        <h1>把星光，一笔一笔交给你</h1>
+        <p>同一个线头，轮流接完十根星线。不能重复，不能穿线，也别把下一步困住。</p>
+      </div>
+
+      <section class="header-status" aria-label="接线进度与当前轮值">
+        <div class="progress-readout">
+          <span>已接</span>
+          <strong id="completed-count">0</strong>
+          <span aria-hidden="true">/</span>
+          <span class="total-count">10</span>
+        </div>
+        <div class="seat-shift" id="seat-shift">
+          <div class="seat-chip seat-chip--a" id="seat-a">
+            <span class="seat-mark" aria-hidden="true">A</span>
+            <span class="seat-copy"><small>席位 A</small><strong id="seat-name-a">你</strong></span>
+            <span class="seat-count"><b id="seat-count-a">0</b>/5</span>
+          </div>
+          <div class="seat-chip seat-chip--b" id="seat-b">
+            <span class="seat-mark" aria-hidden="true">B</span>
+            <span class="seat-copy"><small>席位 B</small><strong id="seat-name-b">TA</strong></span>
+            <span class="seat-count"><b id="seat-count-b">0</b>/5</span>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <section class="workbench" aria-label="星鸢接线观测台">
+      <aside class="phase-stack" aria-label="当前行动">
+        <section class="phase-panel phase-panel--intro" data-phase-panel="intro" aria-labelledby="intro-title">
+          <p class="panel-label">夜班接线台</p>
+          <h2 id="intro-title" tabindex="-1">一根线，两个人接到底</h2>
+          <p>目标轮廓始终公开。每次只接一根，成功后把线头交给对方。</p>
+          <button class="primary-action" type="button" data-action="START">开始接线</button>
+        </section>
+
+        <section class="phase-panel phase-panel--handoff" data-phase-panel="handoff" aria-labelledby="handoff-title" hidden>
+          <p class="panel-label">公开交接</p>
+          <h2 id="handoff-title" tabindex="-1">请把观测台交给下一位</h2>
+          <p id="handoff-copy">请把观测台交给你</p>
+          <button class="primary-action" type="button" data-action="TAKE_OVER">接过观测台</button>
+        </section>
+
+        <section class="phase-panel phase-panel--choosing" data-phase-panel="choosing" aria-labelledby="choosing-title" hidden>
+          <p class="panel-label">正在接线</p>
+          <h2 id="choosing-title" tabindex="-1">从亮着的线头继续</h2>
+          <p id="choosing-copy">你，从亮着的线头接向下一颗星。</p>
+          <div class="attempt-readout"><span>当前尝试</span><strong id="attempt-count">1</strong></div>
+          <p class="key-help">方向键移动 · Enter / Space 接线 · Esc 回线头</p>
+        </section>
+
+        <section class="phase-panel phase-panel--edge-result" data-phase-panel="edge-result" aria-labelledby="edge-result-title" hidden>
+          <p class="panel-label">线路已固定</p>
+          <h2 id="edge-result-title" tabindex="-1">接通</h2>
+          <p>接通。现在把线头交给下一位。</p>
+          <button class="primary-action" type="button" data-action="NEXT_TURN">交给下一位</button>
+        </section>
+
+        <section class="phase-panel phase-panel--jammed" data-phase-panel="jammed" aria-labelledby="jammed-title" hidden>
+          <div class="broken-wire" aria-hidden="true"><i></i><i></i></div>
+          <p class="panel-label">线路未接入</p>
+          <h2 id="jammed-title" tabindex="-1">换一颗星试试</h2>
+          <p id="jammed-copy">这根线暂时接不上。</p>
+          <button class="primary-action primary-action--danger" type="button" data-action="RETRY_EDGE">重新接这根线</button>
+        </section>
+
+        <section class="phase-panel phase-panel--constellation-result" data-phase-panel="constellation-result" aria-labelledby="constellation-result-title" hidden>
+          <p class="panel-label">星鸢已经完整</p>
+          <h2 id="constellation-result-title" tabindex="-1">十根星线全部接通</h2>
+          <p>两席各接五根。最后一步，由你们一起留下。</p>
+          <button class="primary-action" type="button" data-action="FINISH">留下这束星光</button>
+        </section>
+
+        <section class="phase-panel phase-panel--complete" data-phase-panel="complete" aria-labelledby="complete-title" hidden>
+          <p class="panel-label">共同完成</p>
+          <h2 id="complete-title" tabindex="-1">我们把同一束星光交了十次</h2>
+          <p class="completion-score"><strong>5 / 5</strong><span>两席刚好各完成五段</span></p>
+          <p class="completion-note" id="completion-note"></p>
+          <img class="completion-keepsake" id="completion-keepsake" src="./assets/completion-keepsake.png" alt="完成后的双翼星鸢纪念图">
+          <button class="primary-action" type="button" data-action="RESTART">重新开始</button>
+        </section>
+      </aside>
+
+      <section class="board-panel" aria-labelledby="board-title">
+        <div class="board-heading">
+          <div>
+            <span>公共接线图</span>
+            <h2 id="board-title">双翼星鸢</h2>
+          </div>
+          <p id="board-summary">9 个插孔 · 10 根星线</p>
+        </div>
+        <div class="board-surface" id="board-surface">
+          <svg class="wire-layer" id="wire-layer" viewBox="0 0 1000 1000" aria-hidden="true">
+            <g id="target-layer" class="target-layer"></g>
+            <g id="completed-layer" class="completed-layer"></g>
+            <g id="ghost-layer" class="ghost-layer"></g>
+          </svg>
+          <div class="star-controls" id="star-controls" role="group" aria-labelledby="board-title" aria-describedby="board-instructions"></div>
+          <p class="visually-hidden" id="board-instructions">使用方向键在九颗星之间移动焦点。在接线阶段，按回车或空格把当前线头接向聚焦的星；按 Escape 回到当前线头。</p>
+        </div>
+      </section>
+
+      <section class="seat-legend" aria-labelledby="legend-title">
+        <h2 id="legend-title">两席线色</h2>
+        <div class="legend-row legend-row--a"><span class="legend-line" aria-hidden="true"></span><strong>A · <span id="legend-name-a">你</span></strong><small>实线 · 实心端帽</small></div>
+        <div class="legend-row legend-row--b"><span class="legend-line" aria-hidden="true"></span><strong>B · <span id="legend-name-b">TA</span></strong><small>虚线 · 双环端帽</small></div>
+      </section>
+
+      <section class="log-panel" aria-labelledby="log-title">
+        <div class="log-heading">
+          <h2 id="log-title">接线记录</h2>
+          <span id="log-count">0 / 10</span>
+        </div>
+        <ol class="connection-log" id="connection-log">
+          <li class="log-empty">还没有接入星线。</li>
+        </ol>
+      </section>
+    </section>
+
+    <p class="visually-hidden" id="live-status" role="status" aria-live="polite" aria-atomic="true"></p>
+  </main>
+
+  <script src="./logic.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

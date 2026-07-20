@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">把星光，一笔一笔交给你</title>
+  <desc id="desc">暗梅色接线板上，一根橙线与一根薄荷线在瓷白插孔交接。</desc>
+  <rect width="64" height="64" rx="14" fill="#171218"/>
+  <path d="M10 43 25 27 37 36 54 18" fill="none" stroke="#0b090c" stroke-linecap="round" stroke-width="10"/>
+  <path d="M10 43 25 27" fill="none" stroke="#e88535" stroke-linecap="round" stroke-width="6"/>
+  <path d="m25 27 12 9 17-18" fill="none" stroke="#8bc8a8" stroke-dasharray="8 3" stroke-linecap="round" stroke-width="6"/>
+  <g fill="#eee7d9" stroke="#a99b88" stroke-width="2">
+    <circle cx="10" cy="43" r="6"/>
+    <circle cx="25" cy="27" r="6"/>
+    <circle cx="37" cy="36" r="6"/>
+    <circle cx="54" cy="18" r="6"/>
+  </g>
+  <g fill="#171218">
+    <circle cx="10" cy="43" r="2"/>
+    <circle cx="25" cy="27" r="2"/>
+    <circle cx="37" cy="36" r="2"/>
+    <circle cx="54" cy="18" r="2"/>
+  </g>
+</svg>
