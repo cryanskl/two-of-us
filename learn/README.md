@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [热座导航：阶段私密地图与局部同构合作证明](./2026-07-20-stage-private-map-and-local-isomorphism.md)
 - [约束网络合作题：守恒、穷举、连续窗与平台事件边界](./2026-07-20-constrained-network-puzzle-and-platform-events.md)
 - [双体互推游戏：原子出圈、冲量分层与控制事件重放](./2026-07-19-atomic-ring-out-impulse-and-control-replay.md)
 - [自由探索与确定成句：顺序分层和 public view 对账](./2026-07-19-exploration-semantic-order-and-public-view.md)
