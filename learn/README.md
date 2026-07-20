@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [有限库存精确覆盖：后缀可解性、原子前缀与独立穷举 Oracle](./2026-07-21-exact-cover-prefix-commit.md)
 - [闭时间窗合作：整数 tick、事件顺序与自动化时钟](./2026-07-21-closed-window-coop-event-order.md)
 - [双边界唯一接取区间：邻接负样本、操作顺序与合作必要性](./2026-07-21-two-boundary-unique-catch-interval.md)
 - [热座导航：阶段私密地图与局部同构合作证明](./2026-07-20-stage-private-map-and-local-isomorphism.md)
