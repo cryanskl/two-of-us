@@ -174,6 +174,7 @@
 | [165-seven-day-garden-verification.md](./165-seven-day-garden-verification.md) | “把七天，养成一朵花”的 45 项逻辑、1449 项全仓、54 项目录、完整七日、三档响应式、来源、bugs/learn 与视觉忠实度验收 |
 | [166-constellation-relay-research.md](./166-constellation-relay-research.md) | A 级“把星光，一笔一笔交给你”的 9 点 10 边 Euler 接线、四条完整路线、整数相交、固定来源与零复制边界调研 |
 | [167-constellation-relay-spec.md](./167-constellation-relay-spec.md) | A 级“把星光，一笔一笔交给你”的冻结关卡、整数几何、后缀求解、七阶段状态机、焦点与响应式验收规格 |
+| [168-constellation-relay-design.md](./168-constellation-relay-design.md) | “把星光，一笔一笔交给你”的三态 ImageGen 概念、夜班接线台系统、两张原创资产、响应式、fidelity ledger 与 agency signoff |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

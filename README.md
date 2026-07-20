@@ -185,6 +185,7 @@
 - [“把七天，养成一朵花”验收记录](./docs/165-seven-day-garden-verification.md)
 - [A 级“把星光，一笔一笔交给你”定向调研](./docs/166-constellation-relay-research.md)
 - [A 级“把星光，一笔一笔交给你”可执行规格](./docs/167-constellation-relay-spec.md)
+- [“把星光，一笔一笔交给你”视觉设计与资产冻结](./docs/168-constellation-relay-design.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
