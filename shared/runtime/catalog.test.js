@@ -996,7 +996,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1062,7 +1062,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1135,7 +1135,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1208,7 +1208,7 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
@@ -1277,8 +1277,77 @@ test("seven day garden keeps its file protocol, rule, asset and attribution boun
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "seven-day-garden"/);
   assert.match(coOpIndex, /\.\/seven-day-garden\//);
-  assert.match(backlog, /已有 38 项[\s\S]*双人合作 17 项[\s\S]*其余 22 项/);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
   assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
+});
+
+test("catalog exposes the installed A-level constellation relay experience", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const relay = catalog.experiences.find((item) => item.id === "constellation-relay");
+
+  assert.equal(relay.title, "把星光，一笔一笔交给你");
+  assert.equal(relay.category, "co-op");
+  assert.equal(relay.level, "A");
+  assert.equal(relay.players, "2 人合作");
+  assert.equal(relay.devices, "单设备轮流");
+  assert.equal(relay.installed, true);
+  assert.equal(relay.networkRequired, false);
+  assert.match(relay.entry, /constellation-relay\/index\.html$/);
+});
+
+test("constellation relay keeps its file protocol, graph, asset and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/constellation-relay/", import.meta.url);
+  const [
+    html, config, logic, app, css, readme, attribution, portal, backlog, coOpIndex,
+    runtimeBackground, sourceBackground, runtimeKeepsake, sourceKeepsake,
+  ] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("style.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.md", root), "utf8"),
+    readFile(new URL("assets/observatory-console-background.png", root)),
+    readFile(new URL("../../docs/assets/constellation-relay/observatory-console-background-source.png", import.meta.url)),
+    readFile(new URL("assets/completion-keepsake.png", root)),
+    readFile(new URL("../../docs/assets/constellation-relay/completion-keepsake-source.png", import.meta.url)),
+  ]);
+  const runtimeSource = [html, config, logic, app].join("\n");
+
+  assert.match(html, /<script src="\.\/logic\.js"><\/script>[\s\S]*<script src="\.\/config\.js"><\/script>[\s\S]*<script src="\.\/app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/(?!www\.w3\.org\/2000\/svg)|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random|\bDate\b/);
+  assert.doesNotMatch(runtimeSource, /shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /normalizeConfig/);
+  assert.match(app, /getPublicView/);
+  assert.match(app, /replaceChildren/);
+  assert.doesNotMatch(app, /requestAnimationFrame/);
+  assert.match(logic, /normalizeConfig/);
+  assert.match(logic, /classifySegmentIntersection/);
+  assert.match(logic, /countCompletions/);
+  assert.match(css, /assets\/observatory-console-background\.png/);
+  assert.match(css, /@media \(max-width: 340px\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /077022eef9197b4ea1aa6fed89775b6aa3cb16c1943f7f83859095953a95da63/);
+  assert.match(attribution, /55802680a4ab40a33e2ce52e6dba730e8c89e5e43b2d8998d30a8a189ffbb64b/);
+  assert.match(attribution, /OpenAI 内置 ImageGen/);
+  assert.match(attribution, /零复制/);
+  assert.deepEqual(runtimeBackground, sourceBackground);
+  assert.deepEqual(runtimeKeepsake, sourceKeepsake);
+  assert.match(portal, /"id": "constellation-relay"/);
+  assert.match(coOpIndex, /\.\/constellation-relay\//);
+  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /\[星座接线员（已实现为“把星光，一笔一笔交给你”）\]\(\.\.\/experiences\/co-op\/constellation-relay\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {
