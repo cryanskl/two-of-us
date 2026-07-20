@@ -171,6 +171,7 @@
 - [A 级“这一场雨，我们一起接”定向调研](./docs/151-cloud-recipe-research.md)
 - [A 级“这一场雨，我们一起接”实现规格](./docs/152-cloud-recipe-spec.md)
 - [“这一场雨，我们一起接”视觉设计与资产说明](./docs/153-cloud-recipe-design.md)
+- [“这一场雨，我们一起接”分步实施计划](./docs/154-cloud-recipe-plan.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)
