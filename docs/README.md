@@ -170,6 +170,7 @@
 | [161-seven-day-garden-research.md](./161-seven-day-garden-research.md) | A 级“把七天，养成一朵花”的双工具篮七日精确覆盖、唯一完整路线、后缀可解性、四项固定来源与零复制边界调研 |
 | [162-seven-day-garden-spec.md](./162-seven-day-garden-spec.md) | A 级“把七天，养成一朵花”的七日双篮精确覆盖、公开交接、后缀求解器、八阶段 reducer 与验收规格 |
 | [163-seven-day-garden-design.md](./163-seven-day-garden-design.md) | “把七天，养成一朵花”的三态 ImageGen 概念、清晨植物手账系统、三张原创资产、透明图集、响应式与 fidelity ledger |
+| [164-seven-day-garden-plan.md](./164-seven-day-garden-plan.md) | “把七天，养成一朵花”的逻辑/前端文件所有权、独立提交、目录、浏览器、bugs/learn 与视觉闭环计划 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
