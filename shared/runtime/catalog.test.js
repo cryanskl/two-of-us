@@ -942,7 +942,7 @@ test("catalog exposes the installed A-level moon base power experience", async (
 
 test("moon base power keeps its file protocol, deterministic, and attribution boundaries", async () => {
   const root = new URL("../../experiences/co-op/moon-base-power/", import.meta.url);
-  const [html, config, levels, logic, app, css, readme, attribution, portal, runtimeAsset, sourceAsset] = await Promise.all([
+  const [html, config, levels, logic, app, css, readme, attribution, portal, backlog, runtimeAsset, sourceAsset] = await Promise.all([
     readFile(new URL("index.html", root), "utf8"),
     readFile(new URL("config.js", root), "utf8"),
     readFile(new URL("levels.js", root), "utf8"),
@@ -952,6 +952,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
     readFile(new URL("README.md", root), "utf8"),
     readFile(new URL("ATTRIBUTION.md", root), "utf8"),
     readFile(new URL("../../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../../docs/40-idea-backlog.md", import.meta.url), "utf8"),
     readFile(new URL("assets/control-room-background.png", root)),
     readFile(new URL("../../docs/assets/moon-base-power/control-room-background-source.png", import.meta.url)),
   ]);
@@ -983,6 +984,8 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
+  assert.match(backlog, /已有 34 项[\s\S]*双人合作 13 项[\s\S]*其余 26 项/);
+  assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
 test("catalog exposes the installed A-level rhythm relay", async () => {

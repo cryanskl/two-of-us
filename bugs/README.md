@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [月面供电：发布后创意池仍标记为未实现](./2026-07-20-moon-power-idea-backlog-stale.md)
 - [月面供电：1440×900 operating 多出 20px 纵向滚动](./2026-07-20-moon-power-desktop-operating-overflow.md)
 - [月面供电：手动暂停缺少权威 pauseReason](./2026-07-20-moon-power-manual-pause-enum-mismatch.md)
 - [月面供电：真实 KeyboardEvent 快捷键全部失效](./2026-07-20-moon-power-native-keyboard-event.md)
