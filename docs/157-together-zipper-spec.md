@@ -189,7 +189,7 @@ window.TOGETHER_ZIPPER_CONFIG = Object.freeze({
 - intro 恰为 section/tooth 0、所有 tick 0、两席 null、attempt 1、无结果、空前缀、revision 0；
 - section-intro 指向当前尚未完成段的第 0 齿；playing 指向尚未完成的当前齿；
 - playing 的 pull tick 只能为 null 或当前允许窗内不大于 beatTick 的整数；
-- tooth-result 的 lastResult 只能是 success，jammed 只能是五种失败原因；
+- tooth-result 的 lastResult 只能是 success，jammed 只能是六种失败原因；
 - `completedTeeth` 只能是冻结 15 齿路线的严格前缀，不能跳齿、重复或伪造 attempts/tick/gap；
 - tooth-result 已把当前成功齿追加到前缀；jammed 不改变前缀；
 - section-result 的前缀恰好结束于当前段最后一齿；complete 恰好包含 15 条；

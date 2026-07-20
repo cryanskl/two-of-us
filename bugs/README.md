@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [把两边，拉成我们：规格摘要把六种卡顿原因写成五种](./2026-07-21-together-zipper-jam-reason-count.md)
 - [这一场雨，我们一起接：进入计时阶段后焦点掉到页面根部](./2026-07-21-cloud-recipe-falling-focus-loss.md)
 - [这一场雨，我们一起接：来源声明标题未满足仓库机器 Gate](./2026-07-21-cloud-recipe-attribution-heading-contract.md)
 - [这一场雨，我们一起接：真实 KeyboardEvent 快捷键全部失效](./2026-07-21-cloud-recipe-native-keyboard-event.md)
