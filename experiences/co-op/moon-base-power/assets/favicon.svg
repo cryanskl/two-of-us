@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="月面供电双母线">
+  <rect width="64" height="64" rx="8" fill="#071017"/>
+  <circle cx="18" cy="18" r="8" fill="#d99a42"/>
+  <path d="M18 29v25M46 10v44M18 38h28" fill="none" stroke="#eadfc7" stroke-width="5" stroke-linecap="square"/>
+  <path d="m38 32 8 6-8 6" fill="none" stroke="#79aaa2" stroke-width="4" stroke-linejoin="miter"/>
+</svg>
