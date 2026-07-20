@@ -183,3 +183,7 @@ bugs/YYYY-MM-DD-constellation-relay-<slug>.md
 - worktree clean。
 
 本作品完成不等于长期目标完成；完成后继续选择下一候选，不调用 goal complete。
+
+## 8. 执行状态
+
+2026-07-21 已按本计划完成调研、规格、视觉、逻辑、前端、bugs、catalog、learn 与浏览器闭环。最终证据、限制和独立提交见 [170-constellation-relay-verification.md](./170-constellation-relay-verification.md)。长期目标继续保持进行中。
