@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="雾中提灯">
+  <rect width="64" height="64" rx="10" fill="#10191d"/>
+  <path d="M23 21h18l4 9v20H19V30l4-9Z" fill="#f4ead2" stroke="#c7ad7f" stroke-width="3"/>
+  <path d="M26 21v-5c0-4 2-7 6-7s6 3 6 7v5" fill="none" stroke="#dda85a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M27 33h10v12H27z" fill="#dda85a" stroke="#8b3e33" stroke-width="2"/>
+  <path d="M24 53h16" fill="none" stroke="#dda85a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M8 27c5-4 9-4 14-1M42 24c6-3 10-2 14 2M7 38c5-3 9-3 13 0M44 37c5-2 9-1 13 2" fill="none" stroke="#8ba1a0" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+</svg>

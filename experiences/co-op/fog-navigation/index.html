@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#10191d">
+    <meta name="description" content="雾里，跟着你走：一款两人轮流看图与驾驶的本地合作游戏。">
+    <title>雾里，跟着你走</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="fog-navigation">
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-lantern" aria-hidden="true"></span>
+          <div>
+            <h1>雾里，跟着你走</h1>
+            <p>你记住整条路，我只看见脚边。</p>
+          </div>
+        </div>
+        <div id="round-status" class="round-status" tabindex="-1" aria-live="off"></div>
+      </header>
+      <section class="stage-shell" aria-label="当前游戏阶段">
+        <div id="stage"></div>
+      </section>
+      <div id="controls" class="controls-host"></div>
+      <div id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+    </main>
+    <noscript>
+      <p class="noscript">这个本地合作游戏需要启用 JavaScript 才能运行。</p>
+    </noscript>
+    <script src="config.js"></script>
+    <script src="levels.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
