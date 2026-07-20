@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#151923" />
+    <title>把两边，拉成我们 · Two of Us</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body class="together-zipper">
+    <main id="zipper-app" class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-stitch" aria-hidden="true"></span>
+          <div>
+            <h1>把两边，拉成我们</h1>
+            <p>你守左边，我守右边，等同一个节拍把两侧拉到一起。</p>
+          </div>
+        </div>
+        <div id="header-progress" class="header-progress" aria-label="拉链进度"></div>
+      </header>
+
+      <section id="stage" class="stage-shell" aria-label="同心拉链游戏区域"></section>
+
+      <nav class="utility-links" aria-label="体验导航">
+        <a href="../../../index.html">返回体验目录</a>
+        <span>本机运行 · 不联网 · 不保存</span>
+      </nav>
+
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>需要启用 JavaScript 才能一起拉好这条拉链。</noscript>
+    </main>
+  </body>
+</html>
