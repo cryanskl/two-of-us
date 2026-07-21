@@ -16,6 +16,8 @@
 
 > 等雪停下
 
+作品名与默认 `finalTitle` 为“雪停以后，是你”。它属于 complete 后才创建的私密结果，完成前不得出现在 DOM、ARIA、attribute、Canvas text 或固定公开文案中。
+
 固定说明：
 
 > 把四阵风收进雪球里。等雪慢慢落下，会有一句话留在里面。
@@ -220,7 +222,7 @@ helper 不读取 winds，不决定重复方向是否计数；重复由 reducer �
 
 ## 8. 浏览器坐标适配
 
-pointerdown 时 app 冻结本会话：
+pointerdown 先检查当前 public view 的 `canAddWind === true`，且不存在活动会话；非 gathering 阶段不 capture、不 `preventDefault`、不创建会话。随后读取并验证有限坐标与正数 `shortSide`，在 `try` 中成功执行 `setPointerCapture(pointerId)` 后，app 才冻结本会话：
 
 ```js
 {
@@ -247,6 +249,8 @@ dy = clamp(Math.trunc((clientY - anchorY) * 1000 / shortSide), -1000, 1000)
 - 第四阵风使 state armed 后立即安全 release capture、清会话；
 - pointerup/cancel/lost capture/blur/pagehide 清会话，不补方向；
 - 不使用 movementX/Y、event 数量、coalesced/predicted events、pressure 或 Date。
+
+app 维护单调递增的 `pointerGeneration`；准备成功、restart、离开 gathering、blur、pagehide 与显式清理都会使旧 generation 失效。render 发现 `canAddWind=false` 时，必须在 `try/catch` 中安全 release capture 并清会话；capture 失败也只清理，不派动作、不留下半会话。只有 `canAddWind=true` 时拖动面使用 `touch-action:none`，其他阶段恢复正常滚动。所有迟到的旧 generation 事件一律忽略。
 
 pointer 会话只存在 app 内存，不进入 reducer、view、console、storage 或 action log。
 
@@ -392,6 +396,7 @@ action 精确 `{type:"RESTART"}`。仅 complete 且 `revision <= MAX_REVISION - 
     { id:"left", label:"左", collected }
   ],
   collectedCount,
+  progressText,
   missingLabels,
   canStart,
   canAddWind,
@@ -413,6 +418,7 @@ action 精确 `{type:"RESTART"}`。仅 complete 且 `revision <= MAX_REVISION - 
 
 - invalid state 返回默认安全 intro view，不抛；
 - windControls/missingLabels 始终由 state winds 与固定顺序投影，不由页面计算；
+- progressText 是唯一主状态文案，由 view 冻结生成：intro 精确为 `正在把这只雪球准备好。`；gathering 精确为 `已收好 n / 4 阵风；还差：{missingLabels 按上、右、下、左顺序用“、”连接}`；armed 精确为 `四阵风都在了。准备好，就让雪落下。`；settling 精确为 `雪正在慢慢找到位置。`；complete 精确为 `雪已经停下，留言在这里。`；页面只渲染该字符串，不自行拼接；
 - canStart 仅 intro 且 revision≤MAX-7；
 - canAddWind 仅 gathering；canBeginSettle 仅 armed 且 revision≤MAX-2；
 - canRestart 仅 complete 且 revision≤MAX-8；
@@ -422,7 +428,7 @@ action 精确 `{type:"RESTART"}`。仅 complete 且 `revision <= MAX_REVISION - 
 - 不公开 patternRows、未来 point、config、Pointer、粒子、完整 content 或 action log；
 - 返回值与嵌套数组/对象全部递归冻结、与 state 断开引用。
 
-页面不得自行读取 config、计算方向完成数、拼 missing label、构造 target、判断阶段或越过字段遮蔽。
+页面不得自行读取 config、计算方向完成数、拼进度或 missing label、构造 target、判断阶段或越过字段遮蔽。
 
 ## 13. Hostile input
 
@@ -447,10 +453,10 @@ main 直接子级 DOM 顺序固定：
 
 ```text
 页头 → 固定说明 → 雪球舞台 → 四方向按钮 → 进度状态
-→ 落雪动作 → 完成结果 → 隐私说明 → live region
+→ 完成结果 → 主动作 → 隐私说明 → live region
 ```
 
-固定阶段文案：
+`progressText` 与主动作的固定阶段合同：
 
 | phase | 主状态 | 主动作 |
 | --- | --- | --- |
@@ -460,6 +466,8 @@ main 直接子级 DOM 顺序固定：
 | settling | `雪正在慢慢找到位置。` | `正在落下…`，`aria-disabled=true` |
 | complete | `雪已经停下，留言在这里。` | `再看一次` |
 
+主动作始终复用同一个 persistent native button：正常 intro/gathering 隐藏；准备失败的 intro 显示“重新准备”；armed 显示“让雪落下”；settling 保持同一节点并显示“正在落下…”、`aria-disabled=true`；complete 显示“再看一次”。
+
 四方向按钮是 persistent native button：
 
 - 只在 click 派 ADD_WIND，不在 pointerdown/touchend/keydown 派；
@@ -468,14 +476,40 @@ main 直接子级 DOM 顺序固定：
 - 每个至少 48×48px，焦点环使用 outline，不依赖阴影；
 - 拖动面是 pointer-only 装饰控制，不自造 role、不进 Tab；真实说明和四按钮提供全部语义。
 
+complete 才创建的结果子树必须精确为：
+
+```text
+section#final-message.result-letter
+├── p#pattern-label.pattern-label[data-field="patternLabel"]
+├── p.recipient-line：固定前缀“给 ” + span[data-field="recipient"]
+├── h2#final-title[data-field="finalTitle"][tabindex="-1"]
+├── p.final-note[data-field="finalNote"]
+└── p.signature：固定前缀“——” + span[data-field="sender"]
+```
+
+五个配置字段各自只进入上述一个指定文本节点，以 `textContent` 写入；`finalNote` 用 `white-space:pre-line` 保留 LF。既有“雪球舞台”在 complete 时成为可见完成图案容器，设置 `role="img" aria-labelledby="pattern-label"`；其他阶段移除这两个 attribute。它不进入结果 section，Canvas 或 CSS grid 子层一律 `aria-hidden=true`。离开 complete 时整棵结果子树移除，`h2#final-title` 是唯一允许程序化聚焦的结果节点。
+
 焦点：
 
 - 正常 ADD 后保留刚点击按钮焦点；若来自 drag，不抢焦点；
 - armed 后仅按上一条“方向按钮即将 disabled”规则修复焦点；其他来源不自动聚焦“让雪落下”；
 - BEGIN 后主动作保留同一 button 节点和焦点，改为 `aria-disabled=true` 并由 click guard 拒绝重复动作，不设置 native disabled，不跳进 Canvas；
-- complete 只把焦点移动一次到 `tabindex=-1` 的结果标题；
-- restart 后焦点落到第一个未收集方向按钮；
+- 前台可见且窗口仍有焦点时，第一次接受 COMPLETE 后只把焦点移动一次到 `h2#final-title`；结果在 DOM 顺序上位于“再看一次”之前，因此下一次 Tab 可到达重播按钮；
+- hidden/pagehide/window blur 触发的收尾绝不移动焦点，回到页面后也不补移；
+- restart 并重新准备成功后，焦点落到第一个未收集方向按钮；
 - visibility/blur 不主动抢回焦点。
+
+### 14.1 浏览器准备流程
+
+app 在首次 paint 前同步调用唯一的 `attemptPrepare()`。它只允许在 intro 且未运行时进入，并用 app-local reentrancy guard 拒绝重复点击：
+
+1. 调用 `createStartAction(window.SNOW_GLOBE_MESSAGE_CONFIG)`；用户配置非法由 helper 整份回默认，不视为准备失败；
+2. 返回合法 START 时 reduce/render gathering，清除失败提示并递增 `pointerGeneration`；
+3. helper 返回 null 或抛错时仍停在 intro，app-local `preparationFailed=true`，在同一个进度状态节点以固定提示 `暂时没准备好，请重新准备。` 覆盖 view 的 intro `progressText`，并显示同一个主按钮“重新准备”；这是唯一允许的 app-local 状态文案覆盖，不得输出异常、配置或私密字段；
+4. 重试仍走同一按钮、同一 guard 与同一路径；成功后聚焦第一个方向按钮，失败则保留焦点与提示；
+5. complete 点击“再看一次”先派 exact RESTART，再调用同一个 `attemptPrepare()`；连续点击在 guard 期间 no-op。
+
+`preparationFailed` 只属于 app，不进入 reducer、public view、storage 或 action log。
 
 ## 15. Canvas 与 settling 完成器
 
@@ -489,9 +523,11 @@ BEGIN_SETTLE 后：
 2. 从 view 读取 settleToken 与 visibleTargets；
 3. 最多前 N 枚装饰雪点归位 N 个 target，剩余雪点落到底部；
 4. rAF 只按 elapsed 绘制 900ms 表现，不派 tick action；
-5. rAF 到时、1400ms timeout、hidden、pagehide、window blur、偏好切为 reduce、Canvas exception 任一先到，调用 `finishSettling(capturedToken)`；
+5. rAF 到时、1400ms timeout、hidden、pagehide、window blur、偏好切为 reduce、Canvas exception 任一先到，调用 `finishSettling(capturedToken, focusPolicy)`；
 6. finish 先清 RAF/timer/listener，再派 exact COMPLETE_SETTLE；
 7. 后到路径、旧 token、重复回调由 phase/token 同引用 no-op。
+
+第一个被接受的前台完成路径只有在 `document.visibilityState === "visible"` 且 `document.hasFocus()` 时记录 `moveFocus=true`；hidden/pagehide/blur 一律传 false。render complete 仅在本次 action 被接受且 `moveFocus=true` 时聚焦结果标题。正常 rAF、前台 timeout、Canvas error 与 reduced-motion 快速完成可以聚焦；后台收尾返回页面后不补焦点。
 
 Promise/Animation rejection 必须 catch；Canvas context null 或 draw 抛错直接走 token 化 microtask complete。不得用动画位置、像素采样或 elapsed 判断业务结果。
 
@@ -546,7 +582,7 @@ Promise/Animation rejection 必须 catch；Canvas context null 或 draw 抛错�
 
 ## 19. 借鉴与许可证声明
 
-README/ATTRIBUTION 必须固定以下事实和零复制范围：
+开源借鉴层必须固定以下事实和零复制范围：
 
 - [tsParticles `627b3fc7d1a0d0fe524e2fea5f89fa7589b18d59`](https://github.com/tsparticles/tsparticles/commit/627b3fc7d1a0d0fe524e2fea5f89fa7589b18d59)，[MIT](https://github.com/tsparticles/tsparticles/blob/627b3fc7d1a0d0fe524e2fea5f89fa7589b18d59/LICENSE)，`Copyright (c) 2020 Matteo Bruni`；只参考雪花表现状态分层与统一清理，不复制源码/API/配置/默认参数/预设/素材/依赖；
 - [canvas-text-particle `9ee144a548aad85275318b30891c71dcf6e10f7b`](https://github.com/dango0812/canvas-text-particle/commit/9ee144a548aad85275318b30891c71dcf6e10f7b)，[ISC](https://github.com/dango0812/canvas-text-particle/blob/9ee144a548aad85275318b30891c71dcf6e10f7b/LICENSE)，`Copyright (c) 2026, dango0812`；只参考粒子 ID 到目标点抽象，本作明确不用文字 Canvas/alpha 采样，不复制源码/公式/字体/参数/演示；
@@ -555,6 +591,8 @@ README/ATTRIBUTION 必须固定以下事实和零复制范围：
 - `alexgibson/shake.js` 固定 commit [`d232eee7a5f31e9fd37aa79aa83f1f206035ccc9`](https://github.com/alexgibson/shake.js/commit/d232eee7a5f31e9fd37aa79aa83f1f206035ccc9)：[`package.json`](https://github.com/alexgibson/shake.js/blob/d232eee7a5f31e9fd37aa79aa83f1f206035ccc9/package.json) 声称 MIT，但 GitHub License API 为 `NOASSERTION`；其 [LICENSE.md](https://github.com/alexgibson/shake.js/blob/d232eee7a5f31e9fd37aa79aa83f1f206035ccc9/LICENSE.md) 加入没有对应下文的 `except as noted below`。作为排除项，不复制或依赖；NextParticle、无许可证 CodePen/Gist、远程雪花图/字体/音效与商业 trade dress 全排除。
 
 生产代码、点阵、UI、文案与图形独立实现；零第三方运行依赖。ImageGen 资产逐项记录提示词、日期、尺寸、格式、SHA-256 和第三方输入“无”。
+
+声明分两层：README 为以上每个固定开源项目提供来源、commit、许可证、借鉴摘要与零运行依赖声明，并另列用于校准交互与无障碍的 [Pointer Events](https://www.w3.org/TR/pointerevents/)、[WCAG 2.5.7 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)、[WCAG 2.5.4 Motion Actuation](https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html)、[WCAG 2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)、[WCAG 1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) 与 [WCAG 1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)；`assets/ATTRIBUTION.md` 再完整展开许可证、版权、实际借鉴和排除边界。标准页必须明确不是代码、素材或运行依赖。
 
 ## 20. 纯逻辑测试矩阵
 
@@ -569,7 +607,7 @@ README/ATTRIBUTION 必须固定以下事实和零复制范围：
 7. BEGIN/COMPLETE 正确 token、错/旧 token、重复完成、错误 phase；
 8. RESTART revision 不归零；START/各阶段/RESTART headroom 边界；
 9. hostile ready/gathering/armed/settling 不足 headroom 判 invalid，转换永不产生半途锁死；
-10. public view 每阶段 collected/missing/can flags；settling 只 targets；complete 前五个私密字段全 null；
+10. public view 每阶段 collected/missing/progressText/can flags；穷举 16 个 winds 子集验证固定顺序与精确进度文案；settling 只 targets；complete 前五个私密字段全 null；
 11. invalid state 安全 intro view；invalid state reduce 全新初态；合法 state+非法 action 原引用；JSON clone 合法 state 仍合法且 no-op 返回 clone 原引用；
 12. descriptor snapshot/Proxy/get late-throw、array subclass/custom iterator、winds accessor 等 hostile 矩阵；
 13. action log 与 JSON clone log 重放到字节等价 complete state/view；
@@ -579,12 +617,15 @@ README/ATTRIBUTION 必须固定以下事实和零复制范围：
 
 浏览器：
 
+- 首次准备、非法用户配置整份默认、helper null/throw、稳定失败提示、同按钮重试、reentrancy guard 与 restart→prepare 同路径；
 - 真实 `file://` 仅靠 Pointer 完成 up/right/down/left；outer/inner、对角 tie、重复、第二指、cancel/lost capture；
+- 非 gathering 的 pointerdown 不 capture/不阻止滚动；capture 失败无半会话；离开 gathering 释放；旧 generation 迟到事件 no-op；
 - 仅靠四按钮的 click/tap/Enter/Space，以 24 种顺序抽样完成；与 pointer golden sequence state 等价；
-- 第四次 Enter/Space 后 activeElement 是“让雪落下”；BEGIN 后 settling 期间仍是同一主按钮；complete 后唯一转到结果标题；
+- 第四次 Enter/Space 后 activeElement 是“让雪落下”；BEGIN 后 settling 期间仍是同一主按钮；前台 complete 后唯一转到结果标题且下一次 Tab 到“再看一次”；hidden/pagehide/blur 收尾与返回后都不移动焦点；
 - 四风齐不自动揭晓，只有“让雪落下”进入 settling；
 - rAF/timeout/hidden/pagehide/blur/reduced/Canvas error 多路径只 COMPLETE 一次；旧 token/重开回调 no-op；
 - 使用互不包含、也不出现在固定公开文案中的 sentinel 配置（recipient=`小雪-X7`、sender=`北风-Q2`、patternLabel=`图案-P9`、finalTitle=`标题-T4`、finalNote=`留言-N6`）：complete 前五值在 DOM/ARIA/attribute/Canvas text/console 为 0；complete 后各自只进入指定结果文本节点一次；Canvas 从未 fillText；
+- complete 结果 section 精确五个直接子节点、固定前缀、LF 保留；既有雪球舞台只在 complete 取得 `role=img` 并关联 patternLabel，restart 后移除 role/关联和整棵结果子树；
 - settling 前不含 target 坐标/点阵 data 属性；开局固定 72 雪点与 config active 无关；
 - Canvas null/throw 用 CSS 点阵完成；无 JS 不伪造完成；
 - 单一 live、焦点、aria-pressed、≥48px、forced-colors、reduced-motion；

@@ -188,6 +188,7 @@
 | [198-compliment-reels-design-proposal.md](./198-compliment-reels-design-proposal.md) | “夸夸印刷机”的八态 ImageGen 提案、响应式/无障碍边界、生成台账、借鉴声明与待确认 Gate |
 | [181-snow-globe-message-research.md](./181-snow-globe-message-research.md) | “雪球留言”的定向调研、许可候选与本地实现边界 |
 | [182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md) | “雪球留言”的可执行交互与验收规格 |
+| [199-snow-globe-message-brainstorm.md](./199-snow-globe-message-brainstorm.md) | “雪球留言”的公开/私密标题、进度文案、Pointer、焦点、准备失败与来源分层决策 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [185-flower-language-bouquet-research.md](./185-flower-language-bouquet-research.md) | “花语配方”的定向调研、花语来源与原创边界 |

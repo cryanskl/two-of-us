@@ -14,9 +14,15 @@ S11 可以做，而且不应被实现成另一张“左右摇九次”的拍立�
 
 推荐冻结为一个有限的单人惊喜：收礼者把雪球从中性位置分别带向上、右、下、左，任意顺序收齐四阵风；随后主动按下“让雪落下”。雪花只做一次短暂落定，组成准备者配置的 9×11 点阵图案，最后才出现昵称与整段私信。
 
-题名冻结为：
+作品名与完成后才出现的默认私密标题冻结为：
 
 > 雪停以后，是你
+
+页面在完成前只使用固定公开 H1：
+
+> 等雪停下
+
+两者必须分开：`雪停以后，是你` 是作品名和默认 `finalTitle`，只有 complete 阶段才能进入 DOM；公开 H1 不复用任何私密配置。
 
 核心句：
 
@@ -158,7 +164,7 @@ window.SNOW_GLOBE_MESSAGE_CONFIG = {
   recipient: "你",
   sender: "我",
   patternRows: [/* 9 条、每条 11 个 . 或 # */],
-  patternLabel: "一颗雪花拼成的心",
+  patternLabel: "一颗由雪花拼成的心",
   finalTitle: "雪停以后，是你",
   finalNote: "风停下来的时候，我还是最想把这句话留给你。"
 };
@@ -168,7 +174,7 @@ window.SNOW_GLOBE_MESSAGE_CONFIG = {
 
 - 精确 9×11、仅 ASCII `.` / `#`；
 - active cell 建议 `16..72`，既可辨认又限制粒子量；
-- 称呼、标题、说明、私信与署名的字素范围和控制字符边界；
+- 称呼、标题、说明、私信与署名的 Unicode code point 范围和控制字符边界；
 - 配置非法时整份回默认，不做字段混搭；
 - pattern、目标点和文本均先快照、断开引用、递归冻结；
 - 不用系统字体、`fillText/getImageData` 或字体加载结果生成规则数据。
@@ -269,7 +275,7 @@ Canvas 只画无语义雪点，`aria-hidden=true`。规则和结果都由真实 
 - 进度使用真实文本：`已收好 2 / 4 阵风；还差上、左`；
 - live region 只播报首次方向、armed 和 complete，不在 pointermove/动画帧刷新；
 - armed 后不抢焦点；“让雪落下”进入正常 Tab 顺序；
-- complete 后一次性把焦点移到 `tabindex=-1` 的结果标题，live 只说“雪已经停下，留言已展开”，避免整封信重复朗读；
+- 仅当前台可见且窗口仍有焦点时，首次有效 complete 才一次性把焦点移到 `tabindex=-1` 的结果标题；hidden/pagehide/blur 收尾不聚焦，返回后不补移；live 只说“雪已经停下，留言已展开”，避免整封信重复朗读；
 - 方向按钮可使用 `aria-pressed`，雪球本身不伪装成 slider、joystick 或自造 role；
 - forced-colors 使用系统色、真实 border、文字方向和 `✓/已收好`，不依赖透明度、阴影、渐变或颜色；
 - `prefers-reduced-motion: reduce` 不播放风暴、摇屏、抛物、缩放、粒子漂移或淡入；BEGIN_SETTLE 后用 microtask 完成同一结果；
@@ -346,7 +352,7 @@ W3C WCAG 2.3.3 要求可禁用非必要的交互触发动画；2.5.4 要求设�
 - 不从系统 emoji 字体导出雪花位图，不复制真实品牌雪球、礼盒、卡通角色或贺卡 trade dress；
 - 生产雪点用原创 Canvas 基本几何或自绘 SVG；视觉概念和生成资产另按 ImageGen 记录提示词、日期、尺寸、格式与 SHA-256。
 
-README 与 `assets/ATTRIBUTION.md` 必须逐项写出以上固定来源、许可证、版权主体、实际借鉴抽象和未复制范围。即使最终零运行依赖，也不能省略调研借鉴声明。
+来源记录分两层：README 为每个固定开源项目提供来源、commit、许可证、借鉴摘要与零运行依赖声明，并同时列出 Pointer Events 与 WCAG 2.5.7、2.5.4、2.3.3、1.3.1、1.4.10 这些标准校准页；`assets/ATTRIBUTION.md` 再逐项完整展开许可证、版权主体、实际借鉴抽象和未复制范围。标准页要明确不是运行依赖、代码或素材来源。即使最终零运行依赖，也不能省略调研借鉴声明。
 
 ## 14. 测试矩阵草案
 
@@ -392,6 +398,6 @@ README 与 `assets/ATTRIBUTION.md` 必须逐项写出以上固定来源、许可
 
 ## 16. 推荐进入下一阶段
 
-**Go。** 冻结题名“雪停以后，是你”、目录 `snow-globe-message`、四方向集合、主动落雪 Gate、9×11 点阵、五阶段 reducer、token 化 settling、分阶段 public view、零传感器与完整借鉴声明。
+**Go。** 冻结作品名与默认私密标题“雪停以后，是你”、公开 H1“等雪停下”、目录 `snow-globe-message`、四方向集合、主动落雪 Gate、9×11 点阵、五阶段 reducer、token 化 settling、分阶段 public view、零传感器与完整借鉴声明。
 
-规格阶段需要继续精确定义：配置字素范围、默认 pattern canonical hash、direction helper 的平局优先级、inner/outer 定点阈值、exact state/action schema、revision headroom、点阵坐标公式、public view、animation finish arbiter、焦点/live 文案、hostile fixtures 与浏览器测试脚本。视觉实现仍需等待图像偏好确认并先生成/接受概念。
+后续规格已在 [182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md) 冻结：配置 Unicode code point 范围、默认 pattern canonical hash、direction helper 的平局优先级、inner/outer 定点阈值、exact state/action schema、revision headroom、点阵坐标公式、public view、animation finish arbiter、焦点/live 文案、hostile fixtures 与浏览器测试脚本。视觉实现仍需等待图像偏好确认并先生成/接受概念。
