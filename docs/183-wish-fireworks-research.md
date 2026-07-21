@@ -143,7 +143,8 @@ app 只保留当前短命会话：
 - pointerdown 后 capture 当前 pointer，显示稳定递增的蓄力条；
 - pointerdown 快照当时 public view 的 index/revision；后续绝不读取新的 completedCount 来替换它们；
 - pointerup 先验证匹配的 holding 会话，再检查释放点仍在冻结按钮矩形内；它把会话推进到 awaiting-click，并缓存本 generation 的 accepted/canceled activation candidate，不直接发射；
-- 随后的原生 click 是唯一提交点：同 generation 的 accepted pointer click 消费候选并派 LAUNCH，canceled 或无匹配 generation 的 pointer click 精确 no-op；
+- 随后的原生 click 是唯一提交点：正常动效且 Pointer Events 可用时，`detail===1` 且 pointerId 与同 generation accepted candidate 匹配才消费其蓄力值；canceled、缺失、不匹配或 `detail>1` 的 pointer click 精确 no-op；
+- 非 pointer 的 `detail===0` activation 永不消费旧 pointer candidate，而是先让旧 generation 失效，再快照当前选择高度并提交；
 - `pointercancel/lostpointercapture` 只取消仍处于 holding 的会话；matching pointerup 后预期发生的隐式 lost capture 只清 capture，不得删除同 generation 的 awaiting-click candidate；
 - awaiting-click candidate 只由对应 click、跨入口提交、`blur/hidden/pagehide` 或 generation 失效消费/清除；所有取消路径都幂等且不补发；
 - holding 的活动 pointer 与计时资源必须早于显式 release capture 清掉；awaiting-click candidate 独立保留到规定的消费路径，迟到事件不得撞入下一束；
@@ -163,11 +164,14 @@ chargeBand = floor((chargeUnits - 1) / 4)  // 0..4
 
 ### 6.2 键盘、语音与单击
 
-- 五档使用持久原生 `<select>`；“直接点燃”是持久原生 `<button type="button">`，其 click 读取选项并一次只派一个 LAUNCH；
-- 主按住按钮也始终处理原生 click：没有 pointer candidate 的 `click.detail===0` 键盘、语音、开关设备或 synthetic/AT click 使用当前所选高度；有效 pointer candidate 则使用刚刚量化的 units；
-- Pointer Events 不可用时，主按钮所有原生 click 都使用当前所选高度，不绑定 mouse/touch 双套事件；
+- 五档使用持久原生 `<select>`；“直接点燃”是持久原生 `<button type="button">`，其 click 读取选项并一次只派一个 LAUNCH；选项被篡改或缺失时 fail closed 到 band 2 / units 12；
+- 主按钮分流优先级固定：reduced-motion 或 Pointer Events 不可用时，`detail 0/1` 使用当前所选高度、`detail>1` no-op；正常动效且 Pointer Events 可用时，`detail===0` 使用所选高度、`detail===1` 只接受匹配 candidate、`detail>1` no-op；
+- Pointer Events 不可用时不绑定 mouse/touch 双套事件；
+- 两个按钮都忽略 pointer `click.detail>1`；Enter/Space 只让非 repeat keydown 走原生激活，`keydown.repeat` 必须 preventDefault，held-key 集合在 keyup/blur 清除；
 - `prefers-reduced-motion` 生效时不建立计时会话、不播放蓄力条；两个按钮都用当前所选高度发射并立即完成同一 shot；
-- bursting 时 reducer 先行拒绝重复动作；select 与两个按钮保留相同 DOM 节点和 tabindex，只设 `aria-disabled=true` 并由事件 guard 阻止操作，不使用 native `disabled`、不替换节点；
+- 运行中切入 reduced-motion：holding/awaiting-click 先递增 generation、取消 capture/计时/监听并清 candidate，用户须重新 click；bursting 保持原 token 并由 microtask 完成。切回 no-preference 不恢复旧会话或动画；
+- bursting 时 reducer 先行拒绝重复动作；两个按钮保留相同 DOM 节点和 tabindex，只设 `aria-disabled=true` 并由事件 guard 阻止操作，不使用 native `disabled`、不替换节点；
+- select 在 bursting 保持原生 enabled，可预选下一束高度；当前 shot 已锁定，change 不得回写它；
 - 按住按钮的提示必须明确“无需蓄满，每一束都会成功”，不能暗示某个秘密时间窗。
 
 W3C WCAG 2.1.1 明确要求键盘功能不能依赖单次击键的特定时长；2.5.2 鼓励在 up-event/click 提交并允许在提交前取消。因此五档选择器、click 唯一提交、直接入口和按钮外松开取消都属于首版验收条件，而不是可选增强。
@@ -286,7 +290,7 @@ dy = -240 + 60 × row
 - 不使用饱和红爆闪；背景亮度保持稳定，粒子只在局部区域单调淡出；
 - 动画建议 `800..1200ms`，下一束必须再次主动操作，永不自动连发；
 - 一个 token 化完成器统一拥有 RAF/WAAPI、timeout、媒体查询与生命周期监听；先到路径清理其余资源，迟到路径由 token/phase 变成 no-op；
-- reduced-motion 下不播放蓄力条；LAUNCH 使用选择器中的离散高度锁定同一 shot，随后用 microtask 直接完成当前字，不播放上升、扩张、位移、缩放、拖尾、淡入淡出或闪光；
+- reduced-motion 下不播放蓄力条；LAUNCH 使用选择器中的离散高度锁定同一 shot，随后用 microtask 直接完成当前字，不播放上升、扩张、位移、缩放、拖尾、淡入淡出或闪光；物理激活去重仍先于该 microtask，不能靠 bursting 阶段挡双击；
 - Canvas/context/尺寸失败时用 CSS 9×9 grid 形成当前字并完成同一 token，不跳过字符，也不一次解锁全部内容。
 
 WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash，除非低于相应阈值。本作采用更强、也更容易验收的规则：不制造重复闪烁，不依赖面积或亮度阈值豁免，也不在未经专业分析时声称“通过闪烁阈值测试”。WCAG 2.3.3 同时要求交互触发的非必要动画可被禁用，本作直接尊重系统降动效偏好。
@@ -295,12 +299,13 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 
 - 高度是原生 select，两个发射入口都是原生 button；不伪造 slider、meter 或 launch role；
 - 视觉蓄力条不连续写 live，稳定文本只说明“无需蓄满”；
-- 一个预先存在的 polite status 只在每束落定时播一次：`第 n 束留下：{label}`；升空进度使用普通可见文本，不逐帧播报高度或粒子；
-- 正常束完成后保留焦点在原按钮；第三束完成后把焦点移到 `tabindex=-1` 的结果标题，live 只说“烟火写完了”，不重复朗读整封信；
-- bursting 期间 select 与按钮节点均不替换、不 native-disable；验收 direct/hold 两条路径的 activeElement、下一次 Tab 和重复 Enter no-op；
+- 一个预先存在的 polite status 只在前两束落定时各播一次：`第 n 束留下：{label}`；升空进度使用普通可见文本，不逐帧播报高度或粒子；
+- 第三束完成只走结果焦点路径：创建完整三字与结语后，把焦点移到 `tabindex=-1` 且由 `aria-describedby` 关联完整三字的结果标题，不再连续覆写 live；
+- 页面 hidden/失焦时完成只记录 pendingResultFocus；恢复后仅当 activeElement 仍是 body 或原发射控件才聚焦结果，不能偷走用户已经移动的焦点；
+- 束一、二完成后保留焦点在原按钮；bursting 期间按钮节点不替换、不 native-disable，select 仍可操作；验收 direct/hold 两条路径的 activeElement、下一次 Tab 和重复 Enter no-op；
 - 已公开字使用真实 DOM 列表/字符节点；Canvas 和装饰粒子 `aria-hidden=true`；
 - 主目标至少 56px，使用明显 `:focus-visible` outline，状态不只靠颜色、位置或动画；
-- forced-colors 移除渐变、filter、mix-blend-mode、box-shadow 和背景图，改用系统色、真实 border/outline、字、束数和“已出现”文本；
+- forced-colors 隐藏 Canvas 装饰并启用 CSS 9×9 grid；移除渐变、filter、mix-blend-mode、box-shadow 和背景图，使用系统色、真实 border/outline、字、束数和“已出现”文本，不使用 `forced-color-adjust:none` 强保色；
 - 无 JavaScript 时只显示静态说明，不伪造三字或私信已经解锁。
 
 ## 12. 响应式 Gate
@@ -390,8 +395,8 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 3. elapsed→units→band、整数坐标、rounding 和完整 fixture；
 4. START/LAUNCH/COMPLETE_BURST/RESTART 的 exact schema、revision headroom 与非法输入语义；
 5. public view 每阶段的字段遮蔽和三组独立隐私 sentinel；
-6. pointer 外松开、cancel/lost capture、candidate/click 单提交、跨入口旧 generation、五档 direct、Pointer Events 缺失与键盘重复激活；
-7. 动画 token、timeout、hidden/pagehide、途中切 reduced-motion 与 Canvas 失败的统一完成路径；
+6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
+7. 动画 token、timeout、hidden/pagehide、holding/awaiting/bursting 途中切 reduced-motion 与 Canvas 失败的统一完成路径；
 8. 闪烁审计、forced-colors、六档视口、缩放、零网络和零 console error。
 
 生产视觉仍须等待统一 ImageGen 概念被用户接受；该 Gate 不阻塞本文件对规则、隐私、许可证与验收边界的冻结。
