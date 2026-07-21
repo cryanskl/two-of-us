@@ -12,7 +12,7 @@
 
 实现只有同时满足以下条件才算完成：
 
-- 三组初态、定点整数物理、256 格角度、四键权限、碰撞和五条件 Gate 与本规格一致；
+- 三组初态、定点整数物理、256 格角度、四键权限、碰撞和六项安全 Gate 与本规格一致；
 - 每段至少有一条固定 action fixture 可从初态重放到精确终态，三条金路径都包含两席有效输入；
 - 单席穷举、持续压键、擦边高速穿墙、失焦和过期输入均不能错误完成；
 - 纯规则层同时支持浏览器经典脚本与 CommonJS，页面不复制物理或 Gate；
@@ -28,6 +28,7 @@
 | --- | --- |
 | `index.html` | 稳定语义结构、首屏说明、无脚本提示与经典脚本顺序 |
 | `style.css` | 纸质轨道训练台、响应式、焦点、降动效与高对比 |
+| `package.json` | 仅声明 `{"type":"commonjs"}`，使本目录 `.js` 可被 Node 真实 `require()` |
 | `logic.js` | 常量、整数物理、微步碰撞、状态机、配置和公开视图 |
 | `config.js` | 两席称呼与 5–10 行完成赠言函数；不能修改规则 |
 | `app.js` | SVG/DOM 投影、固定步调度、键盘/Pointer 生命周期、焦点和 ARIA |
@@ -37,7 +38,7 @@
 | `ATTRIBUTION.md` | 固定来源、许可证、版权、零复制和生成资产证据 |
 | `assets/*` | 原创生成背景/材质；损坏时不影响玩法 |
 
-运行加载顺序必须是 `logic.js → config.js → app.js`。禁止 ES module、`fetch()`、Worker、CDN、远程字体、远程媒体和运行时第三方包。
+浏览器加载顺序必须是 `logic.js → config.js → app.js`。子目录 `package.json` 不得添加 dependencies、scripts、main 或入口重定向；`logic.js/config.js/golden-fixtures.js/logic.test.js` 必须由 Node 真实 `require()`，另在不提供 `module` 的 VM 中验证浏览器经典全局。禁止 ES module、`fetch()`、Worker、CDN、远程字体、远程媒体和运行时第三方包。
 
 ## 3. 冻结常量
 
@@ -396,15 +397,17 @@ action 必须是普通对象、精确 own data property、无多余 key：
 ```js
 {
   phase, legIndex, legCount, currentLeg,
+  statusText,
   physics: { x, y, vx, vy, angleIndex, angleError, angularVelocity },
   heldControls, stableTicks, requiredStableTicks,
   gate: { positionOk, velocityOk, angleOk, angularVelocityOk, controlsReleased, collisionFree, allOk },
+  gateVisible, gateStatusText,
   attempt, completedLegs, completedCount,
   seats, controls, lastResult, isComplete, summary, revision
 }
 ```
 
-页面不得自行计算速度阈值、环形角差、当前航段、成功、碰撞或稳定计数。summary 只在 mission-result/complete 存在：
+页面不得自行计算速度阈值、环形角差、当前航段、成功、碰撞、稳定计数、主状态或 Gate 呈现。内部完成记录的 `attitudeTicks/thrustTicks` 只用于合作证明；public `completedLegs` 精确投影为 `{legId,title,attempts}`，不得泄露个人控制量。summary 只在 mission-result/complete 存在：
 
 ```js
 {
@@ -417,6 +420,15 @@ action 必须是普通对象、精确 own data property、无多余 key：
 ```
 
 不公开个人控制 tick、速度评分、燃料、用时、评级、赢家、金路径或未来动作。
+
+`statusText` 精确使用第 16 节阶段主文案。Gate 呈现按阶段冻结：
+
+- intro/leg-intro/approaching：`gateVisible=true`，`gate` 是当前物理的六项计算；allOk false 时 `gateStatusText="六条条件还没有同时安全。"`，allOk true 且 stable 0..29 时为 `六条条件都安全，继续保持 {stable} / 30。`；
+- failed：`gateVisible=true`；其他五项保留最后安全位置的计算值，但强制 `collisionFree=false`、`allOk=false`，`gateStatusText="本次接近已经结束，路径未安全。"`；
+- docked：`gateVisible=true`、六项全 true、`gateStatusText="已经稳定 30 / 30。"`；
+- mission-result/complete：标准纪念姿态不参与新 Gate，`gateVisible=false`、`gateStatusText=""`；页面把 persistent Gate 与稳定区设为 hidden 并移出可访问树。
+
+failed 的 swept 失败候选只由 lastResult 表达，不写回权威坐标；因此必须使用上述 public 呈现覆盖，不能从最后安全位置重新计算出“路径安全”。
 
 ## 14. 配置与学习钩子
 
@@ -434,6 +446,7 @@ window.CAPSULE_DOCKING_CONFIG = {
 - `resolveCompletionNote` 用断开引用、递归冻结 summary 调用；
 - 抛错、thenable、非字符串、空白或超过 120 字素均回退默认；
 - 结果只进入 `textContent`；不能覆盖物理、键位、航段、Gate、资产路径或安全文案；
+- mission-result 只创建共同汇总；complete 才调用 composer 并创建完成赠言，未来赠言不得提前进入 hidden DOM、template、data attribute 或 accessible name；
 - 该 5–10 行函数是用户可学习和个性化的业务选择，不修改也能完整游玩。
 
 ## 15. 浏览器调度与输入生命周期
@@ -443,28 +456,34 @@ window.CAPSULE_DOCKING_CONFIG = {
 - 单一 rAF 只在 `phase === "approaching" && document.visibilityState === "visible" && document.hasFocus()` 时累积；
 - 每 tick 为 `1000/60` ms；每帧最多派发 `TICK {count:5}`；
 - 超出五步的积压丢弃并重置基准；进入 approaching 后的首次帧、窗口重新获得焦点和 resize 都只重置基准、不补算；
+- 每次启动循环创建新的 `rafGeneration`；任一退出 approaching、blur、hidden、pagehide 都先使旧 generation 失效，再取消帧并清 accumulator/baseline；已排队回调必须先核对 generation 与 phase，失配时不得 TICK 或重启循环；
+- focus、visible 与 BFCache `pageshow` 只在当前仍 approaching 时建立新 generation 与新基准，恢复首帧不补 tick；既定 SUSPEND 已回 leg-intro 时不得自动续跑或抢焦点；
 - reduced-motion 只改变表现，不改变规则 tick；
 - 不用 CSS animationend、SVG transform、音频或图片帧推进规则。
 
 ### 15.2 键盘
 
-- 页面为每个 control 维护来源集合：物理键盘来源为 `keyboard:<code>`，聚焦控制按钮的 Space/Enter 来源为 `button-key:<control>:<code>`，pointer 来源为 `pointer:<pointerId>`；来源总数从0到1才派 PRESS，从1到0才派 RELEASE；
-- 未跟踪的 `keydown` 若为 repeat、含 Ctrl/Meta/Alt、IME composing 或来自可编辑元素，不进入玩法；已经跟踪的 `keyup` 不受 modifier、composing、target 或当前 phase 过滤，必须先移除来源并在需要时派 RELEASE；
+- 每次进入 approaching 创建新的 `inputEpoch`；页面为每个 control 维护带 epoch 的来源集合：物理键盘来源为 `keyboard:<code>`，聚焦控制按钮的 Space/Enter 来源为 `button-key:<control>:<code>`，pointer 来源为 `pointer:<pointerId>`；来源总数从0到1才派 PRESS，从1到0才派 RELEASE；
+- 只有当前 approaching epoch 可创建四个物理控制来源；非 approaching 的物理 control key/pointer/click 不登记且不 preventDefault，阶段 `.primary-action` click 不属于 inputEpoch；
+- 未跟踪的 `keydown` 若为 repeat、含 Ctrl/Meta/Alt、IME composing 或来自可编辑元素，不进入玩法；当前 inputEpoch 内已经跟踪的 `keyup` 不受 modifier、composing 或 target 过滤，必须先移除来源并在需要时派 RELEASE；phase/epoch 已退出时来源已由统一清理移除，迟到 keyup 只安全 no-op，不向 reducer 派 RELEASE；
 - 聚焦四个控制 button 时，Space/Enter 的 keydown/keyup 按同一边沿规则表达按住/松开；二者阻止默认 click/滚动，浏览器合成的 click 不再派动作；
 - 只在 approaching 且事件属于 A/D/J/L，或焦点位于控制 button 且事件属于 Space/Enter 时 preventDefault；
 - Escape 在 approaching 派发 SUSPEND，其余阶段不抢占；
-- blur、hidden、pagehide 共用幂等 suspend，清 DOM 键/pointer 映射与 accumulator。
+- 自动 failed/docked、SUSPEND、blur、hidden、pagehide 都先使 inputEpoch 失效，再清 DOM 键/pointer 映射、fallback、pressed 样式与 accumulator；阶段已退出时只清本地来源，不向 reducer 派过期 RELEASE。
 
 ### 15.3 Pointer
 
 - 每个控制 button 在合法 `pointerdown` 捕获 pointer：mouse 只接受 `button===0`，touch/pen 不按 `isPrimary` 过滤；控制区使用 `touch-action:none`、`user-select:none` 并阻止长按菜单；
-- pointer ID 绑定唯一 seat/control；同一 control 可被多个来源持有；up/cancel/lost capture 进入统一幂等结束器。捕获失败时在 document 临时监听对应 up/cancel，结束后立即移除；
+- pointer ID 绑定唯一 seat/control；同一 control 可被多个来源持有；只有 pointer capture 成功，或 document 级 up/cancel fallback 成功安装后，才登记来源并派 PRESS；两者都失败时不开始；
+- up/cancel/lost capture/fallback 进入统一结束器：先原子取出并删除来源，只有首个结束事件拥有 RELEASE 权，之后移除 fallback；
 - 同席两 pointer 可同时按两键，规则按净轴抵消；click 不重复派发；
 - 每键至少44×44px，主动作至少48px；不依赖压力、拖动、hover、长按时长或双击。
 
 ## 16. 页面、文案与可访问性
 
 页面至少有一个 main、题名、短规则、当前航段/尝试、完整 SVG 舞台、四项遥测、六项 Gate、两个等权控制组、稳定进度、live region、有序完成日志和每阶段最多一个可见 `.primary-action`。
+
+初始化前交互根默认隐藏或禁用，app 成功读取 logic/config 后才设置 ready。阶段面板只创建当前标题、`statusText` 和当前主动作；舞台、遥测、Gate、两席控制、稳定进度和完成日志保持 persistent 节点身份。四个控制 button 只在 approaching 可用，其他阶段原生 disabled 且 `aria-pressed=false`。完成日志只创建已完成前缀；mission-result 才创建汇总，complete 才创建赠言，未来内容不得预埋。
 
 固定主文案：
 
@@ -479,15 +498,28 @@ window.CAPSULE_DOCKING_CONFIG = {
 | mission-result | `三次靠近，都被我们稳稳接住。` |
 | complete | `对接完成，这一程一起回家。` |
 
+主动作文字与 action 固定：
+
+| phase | 可见按钮 | action |
+| --- | --- | --- |
+| intro | `开始对接` | `START` |
+| leg-intro | `开始第 {n} 段` | `BEGIN_LEG` |
+| approaching | `暂停这一段` | `SUSPEND` |
+| failed | `重新靠近` | `RETRY_LEG` |
+| docked 1–2 | `进入下一段` | `NEXT_LEG` |
+| docked 3 | `查看共同记录` | `NEXT_LEG` |
+| mission-result | `收下这次对接` | `FINISH` |
+| complete | `再对接一次` | `RESTART` |
+
 - 四张遥测卡固定为：位置 `x / y`、线速度 `vx / vy`、船头角差 `angleError`、角速度 `angularVelocity`，整数单位分别写作 `距离单位`、`距离单位/tick`、`角度格`、`角度格/tick`，不得把 `(vx,vy)` 合成为另一套标量规则；
-- 六条 Gate 固定映射 `positionOk / velocityOk / angleOk / angularVelocityOk / controlsReleased / collisionFree`，逐条显示固定中文标签与 `安全/未安全`；`allOk` 只控制总提示和稳定进度，不作为第七条；
+- Gate 可见阶段始终显示六条：`positionOk → 位置进入接口`、`velocityOk → 线速度收住`、`angleOk → 船头对准`、`angularVelocityOk → 角速度收住`、`controlsReleased → 四键已松开`、`collisionFree → 路径无碰撞`，逐条显示 `安全/未安全`；`allOk` 只控制 `gateStatusText` 和稳定进度，不作为第七条；
 - 实时文本同时说明 `横向位置 / 纵向位置 / 线速度 / 船头角差 / 角速度 / 已松手`；
 - SVG 航向、颜色、喷焰不是唯一信息；
 - 两席用文字、位置、线型和色彩多重编码；
-- live region 只播开始、每个 attempt 的 Gate 第一次全绿、失败、对接、换段、暂停和完成，不逐 tick 读数；Gate latch 在 RETRY_LEG、NEXT_LEG、RESTART 时重置；SUSPEND 固定播报“已暂停并重置本段”；
+- live region 只播开始、每个 attempt 的 Gate 第一次全绿、失败、对接、换段、暂停和完成，不逐 tick 读数；精确事件句以 [207](./207-capsule-docking-brainstorm.md) 第 8 节为准。Gate latch 以 attempt 为作用域，在 RETRY_LEG、NEXT_LEG、RESTART 时重置；stable 打断后同 attempt 不重复播报；
 - 完成日志只说第 n 段、名称、共同完成和尝试次数，不显示两席控制量；
 - 四个控制 button 的 accessible name 固定包含席位、动作和物理键，例如“姿态席，向左转，A”；`aria-pressed` 只由权威 `view.heldControls` 投影，非 approaching 一律为 false，不以本地 pointer 样式推断；
-- 焦点转换固定如下；自动 failed/docked 在 DOM 更新后的单次微任务中聚焦标题，物理 tick 不移动焦点：
+- 焦点转换固定如下；所有可编程聚焦标题使用 `tabindex="-1"`。自动 failed/docked 在 DOM 更新后的单次微任务中聚焦标题，微任务捕获 `{revision,phase}` token，执行前失配即放弃；物理 tick 不移动焦点：
 
 | action/自动转换 | 转换后的焦点 |
 | --- | --- |
@@ -503,6 +535,8 @@ window.CAPSULE_DOCKING_CONFIG = {
 - `main` 直接子级 DOM 顺序固定为：页头 → 阶段面板（阶段标题、说明、唯一主动作）→ 舞台 → 遥测 → Gate → 姿态席 → 推进席 → 稳定进度 → 完成日志 → live region；移动端不使用 CSS `order` 或 `display:contents` 反转，DOM 与视觉顺序一致；
 - 200% zoom、读屏和纯键盘均可完成。
 
+无 JavaScript 固定只显示 H1、固定短规则、无答案静态观察窗轮廓、`请开启本地 JavaScript 后再开始对接；页面不会联网。` 与 `这是归一化的合作游戏，不是航天训练或真实操作建议。`。不得显示伪遥测、Gate、控制、日志、称呼、赠言、金路径或未来状态。
+
 ## 17. 视觉与响应式 Gate
 
 视觉冻结为“纸质近地轨道训练台”：深炭蓝观察窗、暖灰站体、珊瑚红姿态喷口、青绿主推/反推、象牙白仪表；使用原创几何，不仿 NASA/SpaceX 标志、任务徽章、国旗或现役接口。
@@ -517,6 +551,8 @@ window.CAPSULE_DOCKING_CONFIG = {
 上表四档尺寸只在 100% zoom 验收。另在 1280×800 与 1504×1046 以 200% zoom 验收单列回流、零横向滚动、允许纵滚；舞台随容器缩小并保持完整宽高比，不再套用 100% 的 `≥720×446` 最小值。
 
 所有适用档位还检查图片阻断、reduced-motion、forced-colors、焦点环、双 pointer、四按钮中心 elementFromPoint、文本截断和控制台/网络。移动端断言上述直接子级 DOM 顺序与视觉顺序一致。
+
+完整概念获用户明确接受前，禁止创建 `experiences/co-op/capsule-docking/` 生产目录中的代码、测试、样式或资产。视觉产物链固定为计划中的 `docs/208-capsule-docking-imagegen-brief.md` → `docs/assets/capsule-docking/` 原图与台账 → `docs/209-capsule-docking-design-proposal.md` 用户接受状态、design-system inventory 与 fidelity ledger → 端到端实施计划。概念必须明确覆盖 intro、至少两个差异初态的 leg-intro、approaching 部分 Gate、allOk 且 stable 0..29、hull-contact、drifted、docked、mission-result、complete，以及桌面/移动/小屏、200% zoom、图片阻断、reduced-motion、forced-colors 与无脚本。
 
 ## 18. 借鉴与资产声明
 
@@ -534,6 +570,7 @@ README/ATTRIBUTION 必须写明：
 逻辑：
 
 - 常量、递归冻结、三初态、trig 表校验、CommonJS/浏览器同构；
+- 子目录 `package.json` 精确内容、Node 真实 `require(logic/config/fixtures)` 与无 module 浏览器 VM；
 - roundDiv 正负半值、角度跨0/半圈、阻尼、钳制、双按抵消；
 - 更新顺序：新角度施力、无输入才阻尼、轴速度独立钳制；
 - circle/AABB 边角/相切±1、世界边界、最大斜速微步、失败优先级；
@@ -543,14 +580,18 @@ README/ATTRIBUTION 必须写明：
 - action schema、畸形 state、数组子类/custom prototype、accessor、继承 iterator/map、Proxy snapshot trap；合法 data descriptor Proxy 的 late-throw `get` 不得被调用；
 - 计数/乘法/累计安全整数上界；非法 state/config fallback 全程不抛；
 - JSON action log 重放到字节等价公共 view；view 无内部引用、个人统计、答案或搜索器；
+- public completed DTO 不含 control ticks；statusText、gateVisible/gateStatusText 覆盖七阶段与 allOk+stable 0..29；failed Gate 覆盖和 terminal hidden 精确；
 - 生产目录无网络、存储、随机、Date、DOM物理、音频、传感器、第三方运行 import。
 
 浏览器：
 
 - `file://` 三段完整金路径、至少一次 hull/drift 重试、mission、complete、restart；
 - 纯键盘与双 pointer 分别游玩；同 control 键盘+pointer、双 pointer 的来源边沿正确；双按抵消、pointercancel、捕获失败、blur/hidden/pagehide 不 stuck；
-- 已跟踪 keyup 在 modifier、editable、IME 或 phase 改变后仍释放；聚焦 button 的 Space/Enter 可按住/松开；
-- Gate 六字段文本、每-attempt live latch、日志、阶段焦点表、aria-pressed、主动作唯一；
+- 当前 epoch 的已跟踪 keyup 在 modifier、editable 或 IME 改变后仍释放；epoch 已退出的迟到 keyup 安全 no-op；聚焦 button 的 Space/Enter 可按住/松开；
+- 七阶段、八个主动作分支的精确文字/action；非 approaching 四控制原生 disabled；persistent 节点身份不重建；phase-owned 汇总/赠言与未来内容 absence；
+- Gate 六字段文本、每-attempt live latch、207 第 8 节精确事件句、日志、阶段焦点表、aria-pressed、主动作唯一；mission-result/complete 的 Gate 与稳定区 hidden 且不在可访问树；
+- inputEpoch/rafGeneration 迟到事件、capture 与 fallback 竞态、旧焦点微任务、pageshow 新基准均不得跨阶段生效；
+- 无 JavaScript 五项静态内容与 controls/Gate/log/result absence；
 - 四档 100% 视口、两档 200% zoom、单列回流、DOM/视觉顺序、图片阻断、reduced-motion、forced-colors；
 - 四键 elementFromPoint、零横向溢出、零 console error、零失败请求；
 - 最新截图与接受概念图逐项 fidelity ledger；
