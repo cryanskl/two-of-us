@@ -184,6 +184,7 @@
 | [176-capsule-docking-research.md](./176-capsule-docking-research.md) | “太空舱对接”的定向调研、参考边界与本地可行性 |
 | [177-capsule-docking-spec.md](./177-capsule-docking-spec.md) | “太空舱对接”的可执行玩法与验收规格 |
 | [207-capsule-docking-brainstorm.md](./207-capsule-docking-brainstorm.md) | “太空舱对接”的 public DTO、阶段 DOM、输入/rAF generation、六条 Gate、真实 CommonJS、无脚本与视觉确认 Gate 决策 |
+| [208-capsule-docking-imagegen-brief.md](./208-capsule-docking-imagegen-brief.md) | “太空舱对接”的十三张完整设计锚点、八组真实浏览器证据、双席语义、六条 Gate、文案锁、SVG intentional deviation 与资产边界 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |

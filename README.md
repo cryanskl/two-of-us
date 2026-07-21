@@ -43,6 +43,7 @@
 - [影子双人舞分步实施计划](./docs/203-shadow-duet-plan.md)
 - [影子双人舞 ImageGen 视觉简报](./docs/204-shadow-duet-imagegen-brief.md)
 - [太空舱对接实现前 Brainstorm](./docs/207-capsule-docking-brainstorm.md)
+- [太空舱对接 ImageGen 视觉简报](./docs/208-capsule-docking-imagegen-brief.md)
 - [C 级首款作品规格：同心解锁](./docs/06-together-lock-spec.md)
 - [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
 - [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)

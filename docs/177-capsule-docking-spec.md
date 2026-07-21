@@ -552,7 +552,7 @@ window.CAPSULE_DOCKING_CONFIG = {
 
 所有适用档位还检查图片阻断、reduced-motion、forced-colors、焦点环、双 pointer、四按钮中心 elementFromPoint、文本截断和控制台/网络。移动端断言上述直接子级 DOM 顺序与视觉顺序一致。
 
-完整概念获用户明确接受前，禁止创建 `experiences/co-op/capsule-docking/` 生产目录中的代码、测试、样式或资产。视觉产物链固定为计划中的 `docs/208-capsule-docking-imagegen-brief.md` → `docs/assets/capsule-docking/` 原图与台账 → `docs/209-capsule-docking-design-proposal.md` 用户接受状态、design-system inventory 与 fidelity ledger → 端到端实施计划。概念必须明确覆盖 intro、至少两个差异初态的 leg-intro、approaching 部分 Gate、allOk 且 stable 0..29、hull-contact、drifted、docked、mission-result、complete，以及桌面/移动/小屏、200% zoom、图片阻断、reduced-motion、forced-colors 与无脚本。
+完整概念获用户明确接受前，禁止创建 `experiences/co-op/capsule-docking/` 生产目录中的代码、测试、样式或资产。视觉产物链固定为 [208 视觉简报](./208-capsule-docking-imagegen-brief.md) → `docs/assets/capsule-docking/` 原图与台账 → `docs/209-capsule-docking-design-proposal.md` 用户接受状态、design-system inventory 与 fidelity ledger → 端到端实施计划。概念必须明确覆盖 intro、至少两个差异初态的 leg-intro、approaching 部分 Gate、allOk 且 stable 0..29、hull-contact、drifted、docked、mission-result、complete，以及桌面/移动/小屏、200% zoom、图片阻断、reduced-motion、forced-colors 与无脚本。
 
 ## 18. 借鉴与资产声明
 
@@ -563,7 +563,7 @@ README/ATTRIBUTION 必须写明：
 - 固定 commit、许可证、版权与排除范围和 `docs/176-capsule-docking-research.md` 一致；
 - 不复制源码、API、物理常量、奖励、动作/观察空间、求解器、测试、界面、品牌或素材；
 - NASA 资料只用于说明状态类别，不复制文档、图表、参数或训练结论；
-- ImageGen 逐项记录提示词、生成日期、尺寸、格式、SHA-256、第三方输入“无”；图片不得烘焙文字、按键、Gate 或答案。
+- ImageGen 设计锚点逐项记录提示词、生成日期、尺寸、格式、SHA-256、第三方输入“无”；锚点可用非权威 UI 表意布局与状态，但不作为精确文案或行为证据。进入生产运行目录的图片资产不得烘焙文字、按键、Gate 或答案。
 
 ## 19. 测试矩阵
 
