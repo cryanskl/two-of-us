@@ -199,6 +199,7 @@
 | [193-unified-optional-capability-setup-brainstorm.md](./193-unified-optional-capability-setup-brainstorm.md) | D 级大型可选能力接入根 setup 的方案取舍、许可确认与失败边界 |
 | [194-unified-optional-capability-setup-spec.md](./194-unified-optional-capability-setup-spec.md) | 基础依赖、TTY 询问、精确跳过、状态复读与安全错误输出规格 |
 | [195-unified-optional-capability-setup-plan.md](./195-unified-optional-capability-setup-plan.md) | 可选能力统一安装的分步实现、独立审查、文档与无下载验收计划 |
+| [196-unified-optional-capability-setup-verification.md](./196-unified-optional-capability-setup-verification.md) | Node 22 真实基础安装、模型零下载、1563 项整仓测试与独立审查验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

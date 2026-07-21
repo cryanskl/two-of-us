@@ -214,6 +214,7 @@
 - [D 级可选能力统一安装 Brainstorm](./docs/193-unified-optional-capability-setup-brainstorm.md)
 - [D 级可选能力统一安装规格](./docs/194-unified-optional-capability-setup-spec.md)
 - [D 级可选能力统一安装计划](./docs/195-unified-optional-capability-setup-plan.md)
+- [D 级可选能力统一安装验收记录](./docs/196-unified-optional-capability-setup-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

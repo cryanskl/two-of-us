@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [统一 setup：内层能力 CLI 的 stderr 绕过外层脱敏](./2026-07-21-setup-capability-stderr-leak.md)
 - [心愿烟火：降动效即时完成让重复激活跨束生效](./2026-07-21-wish-fireworks-reduced-motion-double-activation.md)
 - [星座接线员：焦点调度引入规格禁止的动画帧依赖](./2026-07-21-constellation-relay-focus-raf.md)
 - [星座接线员：全局键盘保护漏掉合法 contenteditable 形式](./2026-07-21-constellation-relay-editable-key-guard.md)
