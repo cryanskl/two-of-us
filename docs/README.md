@@ -184,6 +184,7 @@
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
+| [197-compliment-reels-imagegen-brief.md](./197-compliment-reels-imagegen-brief.md) | “夸夸印刷机”的八张多状态/响应式视觉简报、精确文案锁、禁用赌场符号与资产台账边界 |
 | [181-snow-globe-message-research.md](./181-snow-globe-message-research.md) | “雪球留言”的定向调研、许可候选与本地实现边界 |
 | [182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md) | “雪球留言”的可执行交互与验收规格 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |

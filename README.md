@@ -199,6 +199,7 @@
 - [夸夸老虎机定向调研](./docs/178-compliment-reels-research.md)
 - [夸夸老虎机文案审计](./docs/179-compliment-reels-copy-audit.md)
 - [夸夸老虎机可执行规格](./docs/180-compliment-reels-spec.md)
+- [夸夸印刷机 ImageGen 视觉简报](./docs/197-compliment-reels-imagegen-brief.md)
 - [雪球留言定向调研](./docs/181-snow-globe-message-research.md)
 - [雪球留言可执行规格](./docs/182-snow-globe-message-spec.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
