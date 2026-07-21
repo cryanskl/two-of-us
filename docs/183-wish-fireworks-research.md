@@ -20,6 +20,10 @@ S12 可以做，而且适合成为一个有限、无失败的单人惊喜：收�
 
 > 今晚，点三束光
 
+固定公开隐私说明冻结为：
+
+> 内容写在本地文件里；页面不上传、不另存，愿望会在最后一束落定后出现。
+
 固定说明：
 
 > 按住蓄光，松开就会发射；也可以选好高度后直接点燃。每一束都会成功。
@@ -152,6 +156,7 @@ app 只保留当前短命会话：
 - 任一入口准备提交 LAUNCH 时，先快照自己的 index/revision/units，再让所有旧 charge session、candidate 与 generation 失效；直接入口不能与仍按住的旧会话并存；
 - 不读取 pressure、tilt、twist、movement、raw/coalesced/predicted events 或设备 ID；
 - 原始 pointerId、时间和轨迹不进入 reducer、public view、console、storage 或日志。
+- `touch-action:none` 只在 normal-motion + ready 且可建立 holding 时作用于按住按钮；reduced、intro、bursting、complete 和准备失败恢复正常滚动。
 
 离散量化建议冻结为：
 
@@ -260,6 +265,7 @@ dy = -240 + 60 × row
   phase,
   completedCount,
   totalCount: 3,
+  progressText,
   revealedGlyphs,
   currentTargets,
   currentChargeBand,
@@ -276,6 +282,7 @@ dy = -240 + 60 × row
 
 阶段遮蔽：
 
+- progressText 由 public view 为 intro、ready0/1/2、bursting0/1/2 与 complete 提供精确文案，页面不按 phase/count 自行拼接；
 - intro/ready：`revealedGlyphs` 只含已完成前缀；未来 label/rows/targets 全不可见；
 - bursting：可公开当前 shot 的 target，让爆炸形成当前字；仍不公开未来字、最终标题、私信或署名；
 - 每次 COMPLETE 后，才把当前 glyph 加入真实 DOM 字列；
@@ -303,13 +310,13 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 - 高度是原生 select，两个发射入口都是原生 button；不伪造 slider、meter 或 launch role；
 - 视觉蓄力条不连续写 live，稳定文本只说明“无需蓄满”；
 - 一个预先存在的 polite status 只在前两束落定时各播一次：`第 n 束留下：{label}`；升空进度使用普通可见文本，不逐帧播报高度或粒子；
-- 第三束完成只走结果焦点路径：创建完整三字与结语后，把焦点移到 `tabindex=-1` 且由 `aria-describedby` 关联完整三字的结果标题，不再连续覆写 live；
-- 页面 hidden 或 `window.blur` 时完成只记录 pendingResultFocus；统一 `flushPendingResultFocus()` 由 `window.focus` 与 `visibilitychange(visible)` 调用，且仅在文档 visible、窗口有焦点、activeElement 仍是 body 或原发射控件时聚焦结果，不能偷走用户已经移动的焦点；控件自身 blur 不得被误当作 window blur；
+- 第三束前台完成只走结果焦点路径：创建完整三字与结语后，把焦点移到 `tabindex=-1` 且由 `aria-describedby` 关联完整三字的结果标题，不再连续覆写 live；
+- 页面 hidden、`window.blur` 或 pagehide 时完成只记录一次性 pendingResultFocus；window focus、visible 与 pageshow 共用同一 flush，首次恢复 visible+focused 时原子取出并清除，仅在当前 complete revision 精确等于 burstToken+1 且 activeElement 仍是 body 或原发射控件时聚焦，否则永久放弃，不能迟到或重复抢焦点；控件自身 blur 不得被误当作 window blur；
 - 束一、二完成后保留焦点在原按钮；bursting 期间按钮节点不替换、不 native-disable，select 仍可操作；验收 direct/hold 两条路径的 activeElement、下一次 Tab 和重复 Enter no-op；
 - 已公开字使用真实 DOM 列表/字符节点；Canvas 和装饰粒子 `aria-hidden=true`；
 - start、按住点燃、直接点燃与 restart 等所有原生按钮在六档视口均至少 56×56 CSS px；触控环境中的原生 select 可操作高度也至少 56px。使用明显 `:focus-visible` outline，状态不只靠颜色、位置或动画；
 - forced-colors 隐藏 Canvas 装饰并启用 CSS 9×9 grid；移除渐变、filter、mix-blend-mode、box-shadow 和背景图，使用系统色、真实 border/outline、字、束数和“已出现”文本，不使用 `forced-color-adjust:none` 强保色；
-- 无 JavaScript 时只显示静态说明，不伪造三字或私信已经解锁。
+- 无 JavaScript 时只显示公开 H1、固定说明、无语义静态夜空轮廓、`请开启 JavaScript 后再点燃三束光` 与固定隐私说明；隐藏三字列、进度、发射控制、结果和主动作，不伪造已经解锁。
 
 ## 12. 响应式 Gate
 
@@ -391,15 +398,15 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 
 结论：**Go，按 A 级自主实现。** 不需要新增依赖，也不需要复制参考项目代码。
 
-进入规格前必须冻结：
+后续规格已在 [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) 冻结：
 
 1. 默认“我/爱/你”三份 9×9 点阵、active count 与 canonical hash；
 2. 配置文本长度、控制字符与 hostile input 的精确合同；
 3. elapsed→units→band、整数坐标、rounding 和完整 fixture；
 4. START/LAUNCH/COMPLETE_BURST/RESTART 的 exact schema、revision headroom 与非法输入语义；
-5. public view 每阶段的字段遮蔽和三组独立隐私 sentinel；
+5. public view 每阶段的字段遮蔽、精确 progressText 和三组独立隐私 sentinel；
 6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、动态 reduced 的分桶旧 click 墓碑、touch→mouse 与 mouse→touch 迟到序列、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
 7. 动画 token、timeout、blur/hidden/pagehide 完整取消、holding/awaiting/bursting 途中切 reduced-motion、Canvas 失败与延迟结果焦点的统一完成路径；
-8. 小数 rect/client 坐标、闪烁审计、forced-colors、六档视口全控件 56px、缩放、零网络和零 console error。
+8. 小数 rect/client 坐标、页面/结果 DOM、开始失败重试、固定隐私说明、无 JS、闪烁审计、forced-colors、六档视口全控件 56px、缩放、零网络和零 console error。
 
 生产视觉仍须等待统一 ImageGen 概念被用户接受；该 Gate 不阻塞本文件对规则、隐私、许可证与验收边界的冻结。

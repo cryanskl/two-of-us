@@ -509,6 +509,7 @@ canRestart = complete && revision <= M−8
   phase,
   completedCount,
   totalCount: 3,
+  progressText,
   revealedGlyphs,
   currentTargets,
   currentChargeBand,
@@ -527,6 +528,7 @@ canRestart = complete && revision <= M−8
 ```
 
 - invalid state 返回安全初态 view；
+- `progressText` 是页面唯一动态主状态文案：intro 精确为 `还没点亮第一束。`；ready0/1/2 分别为 `准备点燃第 1 / 3 束。`、`第 1 束已经留下；准备第 2 / 3 束。`、`前两束已经留下；准备第 3 / 3 束。`；bursting0/1/2 分别为 `第 1 / 3 束正在升空。`、`第 2 / 3 束正在升空。`、`第 3 / 3 束正在升空。`；complete 精确为 `三束光都留在夜空里。`；
 - `revealedGlyphs` 只含 index `< completedCount` 的前缀；每项精确 `{id,label,targets}`；
 - revealedGlyph targets 固定使用 band 2，使稳定三字列不受实际蓄力影响；
 - bursting 的 currentTargets 使用 currentShot 实际 band；currentChargeBand 与 burstToken 仅此阶段非 null；
@@ -536,9 +538,51 @@ canRestart = complete && revision <= M−8
 - view 永不返回 raw rows、完整 content、timestamp、pointer、candidate、selectedBand 或 action log；
 - view 与全部嵌套对象递归冻结、与 state 断引用。
 
-正常页面只能消费 public view。未到阶段的内容不得进入 hidden/template、ARIA、class/id/data/title/style、CSS `content`、SVG text、Canvas `fillText`、离屏缓存、console、URL/history、storage、clipboard 或网络。
+正常页面只能消费 public view；页面只渲染 `progressText`，不按 phase/count 另拼主状态。未到阶段的内容不得进入 hidden/template、ARIA、class/id/data/title/style、CSS `content`、SVG text、Canvas `fillText`、离屏缓存、console、URL/history、storage、clipboard 或网络。
 
 `config.js` 与 reducer state 仍是本地内存/磁盘明文，不是密码学加密；承诺只限正常页面分阶段呈现、不上传、不额外持久化。
+
+### 11.1 页面、结果与开始流程
+
+`main` 直接子级 DOM 顺序固定：
+
+```text
+页头 → 固定说明 → 夜空舞台 → 已公开三字列 → 进度状态
+→ 发射控制 → 完成结果 → 主动作 → 固定隐私说明 → live region
+```
+
+固定公开隐私说明精确为：
+
+> 内容写在本地文件里；页面不上传、不另存，愿望会在最后一束落定后出现。
+
+它不读取或拼接配置字段，也不得改写为“已加密”或“源文件不可见”。已公开三字列是 persistent `ol#revealed-glyphs`，固定 `aria-label="已经留在夜空里的字"`，只为 public view 中的 `revealedGlyphs` 创建按序 `li`；当前与未来 label 不预置。
+
+发射控制精确包含：label `烟火高度`、持久原生 select（`低 / 较低 / 中 / 较高 / 高`）、持久原生按钮 `按住蓄光` 与 `直接点燃`，以及固定提示 `无需蓄满，每一束都会成功。`。intro 隐藏整组；ready 显示并可操作；bursting 保留同一节点，select 仍 enabled，两按钮 `aria-disabled=true`；complete 隐藏整组。
+
+complete 才创建的结果子树精确为：
+
+```text
+section#final-message.result-letter
+├── p#pattern-label.pattern-label[data-field="patternLabel"]
+├── p.recipient-line：固定前缀“给 ” + span[data-field="recipient"]
+├── h2#final-title[data-field="finalTitle"][tabindex="-1"]
+├── p.final-note[data-field="finalNote"]
+└── p.signature：固定前缀“——” + span[data-field="sender"]
+```
+
+`h2#final-title` 精确设置 `aria-describedby="revealed-glyphs pattern-label"`。五个配置字段各自只进入上述一个指定文本节点，以 `textContent` 写入；`finalNote` 使用 `white-space:pre-line` 保留 LF。离开 complete 时移除整棵结果子树。夜空 Canvas/CSS grid 始终 `aria-hidden=true`，最终含义由已公开三字列、patternLabel 和结果文本共同表达。
+
+主动作复用一个 persistent native button：intro 正常显示 `开始点光`，准备失败显示 `重新准备`；ready/bursting 隐藏；complete 显示 `再看一次`。结果在 DOM 顺序上位于主动作前，因此聚焦结果标题后的下一次 Tab 可到达 `再看一次`。
+
+唯一 `attemptStart({focusOnSuccess})` 只允许在 intro 且未运行时进入，并有 app-local reentrancy guard：
+
+1. 用户点击 `开始点光` 或 `重新准备` 后调用 `createStartAction(window.WISH_FIREWORKS_CONFIG)`；非法用户配置由 helper 整份回默认，不算失败；
+2. 合法 START 同步 reduce/render ready，清准备失败提示；`focusOnSuccess=true` 时聚焦 `按住蓄光`；
+3. helper 返回 null 或抛错时仍留在 intro，app-local `preparationFailed=true`，在同一进度节点以 `暂时没准备好，请重新准备。` 覆盖 intro `progressText`，主动作显示 `重新准备`；不得输出异常、配置或私密字段；
+4. 重试走同一按钮、同一 guard 与同一路径；失败保留焦点与固定提示；重复点击在 guard 期间 no-op；
+5. complete 点击 `再看一次` 先派 exact RESTART，再调用 `attemptStart({focusOnSuccess:true})`；成功直接回 ready，失败留在 intro 重试。
+
+`preparationFailed` 与 guard 只属于 app，不进入 reducer、public view、DOM attribute、storage 或 action log。页面不自动 START；首次打开必须由用户主动点击开始 Gate。
 
 ## 12. Pointer、click 与 select 适配
 
@@ -570,7 +614,7 @@ app 另保存 `suppressedMainPointerClicks` 与 `reducedPointerCandidate`。前�
 - matching pointerup 先停计时/RAF，把 holding 原子改成 awaiting-click candidate，再释放 capture；pointerup 不派 LAUNCH；
 - candidate 精确保存 generation、pointerId/type、accepted、chargeUnits、index、expectedRevision；非法/倒退时间或 outside 令 accepted=false；
 - pointercancel 原子取消 matching holding/awaiting-click/reduced candidate，并删除同 pointerType/pointerId 墓碑；lostpointercapture 只取消仍为 holding 且 generation/pointerId 匹配者，implicit lost capture 不删除 awaiting-click 或墓碑；
-- `touch-action:none` 只覆盖按住按钮，页面其他区域仍可滚动；
+- `touch-action:none` 只在 normal-motion + ready 且本次可以建立 holding 时覆盖按住按钮；reduced-motion、intro、bursting、complete 与准备失败时恢复 `touch-action:auto`，页面其他区域始终可滚动；
 - 右键、第二指、压力、倾角、twist、raw/coalesced/predicted events 全忽略。
 
 ### 12.2 主按钮 click 分流
@@ -664,9 +708,9 @@ Canvas/context/尺寸失败：
 - START 后聚焦主按住按钮；select change 不移焦；
 - bursting 时两个按钮保留相同节点/tabindex，设 `aria-disabled=true` 并由 handler early-return；不用 native disabled；
 - 束一、二 LAUNCH/COMPLETE 不主动移动焦点；一个预先存在的 polite status 仅在落定时写一次 `第 n 束留下：{label}`；
-- 第三束 complete 创建完整三字、标题和私信；不再连续写 status，而把焦点一次性移到 `tabindex=-1`、`aria-describedby` 指向完整三字的结果标题；
-- hidden 或 window blur 时完成只设 pendingResultFocus；统一 `flushPendingResultFocus()` 由 `window.focus` 与 `visibilitychange(visible)` 调用，且仅在 `document.visibilityState==="visible"`、`document.hasFocus()`、activeElement 是 body 或原 launch control 时聚焦并清 pending，不能抢走已经移动的焦点；控件 blur 不触发完成或冲刷；
-- RESTART 后聚焦 START；focus-visible 使用系统 outline；
+- 第三束 complete 创建完整三字、标题和私信；不再连续写 status。若完成发生时文档 visible 且窗口有焦点，立刻把焦点一次性移到 `h2#final-title`；
+- hidden、window blur 或 pagehide 完成只记录一次性 `pendingResultFocus={burstToken,launcher}`，绝不当场聚焦；`window.focus`、`visibilitychange(visible)` 与 `pageshow` 都调用同一个幂等 `flushPendingResultFocus()`。首次满足 visible+focused 时必须先原子取出并清除 pending：仅当当前 public view 为 complete、`view.revision === burstToken + 1`，且 activeElement 是 body 或原 launcher 时聚焦结果，否则永久放弃；以后不得迟到或重复聚焦；控件 blur 不触发完成或冲刷；
+- `再看一次` 的 RESTART 在派动作前清 pending，随后同 click 走 `attemptStart`；成功聚焦按住按钮，失败保留重试按钮焦点；focus-visible 使用系统 outline；
 - Canvas 不承载语义，已公开字是真实 DOM 列表/字符节点。
 
 触控尺寸：start、主按住点燃、直接点燃、restart 等全部原生 button 在六档视口都至少 56×56 CSS px；触控环境中的原生 select 可操作高度也至少 56px。尺寸 Gate 不得因横屏、safe-area、文本缩放或 forced-colors 被压缩。
@@ -678,6 +722,8 @@ forced-colors：
 - 移除 gradient、filter、mix-blend-mode、box-shadow、background-image；
 - 不使用 `forced-color-adjust:none` 强保色；
 - select 保持原生外观；aria-disabled 按钮同时有文字/边框状态，不能只变色。
+
+无 JavaScript 时只显示五项静态内容：公开 H1、固定说明、一个无语义静态夜空轮廓、`请开启 JavaScript 后再点燃三束光` 与固定隐私说明。默认 HTML/CSS 隐藏已公开三字列、进度、发射控制、完成结果和主动作；app 成功初始化后才显式启用交互区。静态夜空不得出现点阵字、火箭、已完成束数或私信轮廓，也不得声称愿望已经解锁。
 
 ## 15. 隐私 sentinel
 
@@ -744,11 +790,13 @@ all b1901a25789c9c412d35eab1b3466cf57fd2dcb8e833f33f8c22a317594c401b
 - revision 全边界与 headroom；
 - 错 index/revision/token、旧 token、重复 COMPLETE；
 - 三束前缀遮蔽、五档 currentTargets、最终 band-2 targets；
+- intro、ready0/1/2、bursting0/1/2 与 complete 的精确 `progressText`；
 - 所有力度序列得到字节等价 complete state/view；
 - action log 与 JSON-cloned log 字节等价。
 
 浏览器至少覆盖：
 
+- `开始点光` 主动 Gate、非法用户配置整份回默认、helper null/throw、固定安全提示、同按钮重试、reentrancy guard 与 `再看一次 → RESTART → attemptStart` 同路径；
 - pointer 0/49/50/199/200/949/950/5000ms、inside/outside、cancel、up 前 lost capture；
 - 200%/400% zoom 下 fractional rect/client 坐标、倒置 rect、NaN/Infinity 与越界坐标；
 - `pointerup → implicit lostpointercapture → click` 精确一次；capture throw 的 document fallback；第二指/右键；
@@ -758,9 +806,12 @@ all b1901a25789c9c412d35eab1b3466cf57fd2dcb8e833f33f8c22a317594c401b
 - select+direct、select+主键盘、无 Pointer Events 三条路径逐档得到五个 apex；非法 select 回中档；burst 中改 select 只影响下一束；
 - 初始 reduce；holding/awaiting 途中切入后旧 pointerup/click no-op；同类型不同 pointerId 的新 candidate 可提交且旧 exact click 迟到仍 no-op；同类型同 pointerId 首 click 清债、下一手势成功；touch→mouse 与 mouse→touch 后旧 click 仍 no-op；bursting 途中切入；切出不恢复；每 token 最多 COMPLETE 一次；
 - holding/awaiting/bursting 分别遇到 window blur、hidden、pagehide；capture、RAF、timer、fallback、candidate、held-key 与 UI 全清；timeout/animation-end 同时到达仍只完成一次；
-- 两入口 activeElement、burst 中 Tab、前两束 live、第三束完整短句、final focus 一次、hidden deferred focus 与 blur-only 后由 window focus 恢复；
+- `main` 精确直接子级顺序、persistent 三字列/主动作/发射控制、complete-only 五节点结果、字段唯一落点、LF、`aria-describedby` 与 restart 移除；
+- 两入口 activeElement、burst 中 Tab、前两束 live、第三束完整短句、前台 final focus 一次；hidden/blur/pagehide 不当场聚焦，window focus/visible/pageshow 共用 flush；token/revision 匹配才允许首次恢复聚焦，用户已移焦或 token 失配则永久放弃；
+- normal-ready 才有 `touch-action:none`；reduced、intro、bursting、complete、准备失败与页面其余区域可正常滚动；
 - forced-colors 隐藏 Canvas、CSS grid 可辨、系统色/outline/select/aria-disabled button；
 - 隐私 sentinel 每阶段与 Canvas/context/尺寸失败；
+- 禁用 JavaScript 后只出现冻结的五项静态内容，不含三字列、进度、发射控制、完成结果或主动作；
 - `file://` 零公网请求、零 storage、零 console error/warning。
 
 视口：
