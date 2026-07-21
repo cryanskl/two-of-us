@@ -510,11 +510,13 @@ state/action/config/content/plan/entropy/summary 全部遵守同一快照边界�
 main 直接子级 DOM 顺序固定：
 
 ```text
-页头 → 有限保证说明 → 三列压纸框 → 完整结果 → 已揭晓列表
+页头 → 有限保证说明 → 三列压纸框 → 完整结果 → 阶段说明 → 已揭晓列表
 → 特别结语 → 主把手 → fallback 提示 → live region
 ```
 
 移动端不使用 CSS order 或 display:contents 反转。
+
+阶段说明是稳定的 `main` 直接子级 `<p class="stage-copy">`，位于完整结果之后、已揭晓列表之前。准备失败时，其主文字后追加唯一条件性 `<span class="failure-diagnostic">暂时没排好，请重试准备</span>`；其他阶段不创建诊断副本。`stage-copy` 是持续可见正文，不复用 live region，也不把诊断塞进完整结果 `output`。
 
 固定阶段文案：
 

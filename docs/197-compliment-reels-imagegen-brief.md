@@ -1,7 +1,8 @@
 # “每一格，都是喜欢你的理由”ImageGen 视觉简报
 
 - 日期：2026-07-21
-- 状态：简报已冻结，等待首次图像生成偏好确认
+- 状态：简报已执行；八张候选已生成并原尺寸复核，等待视觉提案确认
+- 视觉提案：[`198-compliment-reels-design-proposal.md`](./198-compliment-reels-design-proposal.md)
 - 对应调研：[`178-compliment-reels-research.md`](./178-compliment-reels-research.md)
 - 文案审计：[`179-compliment-reels-copy-audit.md`](./179-compliment-reels-copy-audit.md)
 - 可执行规格：[`180-compliment-reels-spec.md`](./180-compliment-reels-spec.md)
