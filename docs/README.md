@@ -180,6 +180,7 @@
 | [171-shadow-duet-research.md](./171-shadow-duet-research.md) | “影子双人舞”的定向调研、许可候选与本地实现边界 |
 | [172-shadow-duet-spec.md](./172-shadow-duet-spec.md) | “影子双人舞”的可执行玩法、状态与验收规格 |
 | [203-shadow-duet-plan.md](./203-shadow-duet-plan.md) | “影子双人舞”的纯逻辑先行、视觉 Gate、输入/时钟、独立提交、bugs/learn 与浏览器闭环计划 |
+| [204-shadow-duet-imagegen-brief.md](./204-shadow-duet-imagegen-brief.md) | “影子双人舞”的十六张原生尺寸完整状态/响应式/降级视觉简报、双席语义、文案锁与资产边界 |
 | [176-capsule-docking-research.md](./176-capsule-docking-research.md) | “太空舱对接”的定向调研、参考边界与本地可行性 |
 | [177-capsule-docking-spec.md](./177-capsule-docking-spec.md) | “太空舱对接”的可执行玩法与验收规格 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
