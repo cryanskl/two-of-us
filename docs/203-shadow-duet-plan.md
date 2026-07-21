@@ -13,7 +13,7 @@
 
 因此本轮不重复发明玩法，直接按“纯规则先行、视觉后置”的边界实施：
 
-1. 先完成不依赖 DOM/RAF/图片的 `logic.js + config.js + logic.test.js`；
+1. 先完成不依赖 DOM/RAF/图片的子目录 CommonJS 边界与 `logic.js + config.js + logic.test.js`；
 2. 再写完整 ImageGen 视觉简报，生成并逐张审阅完整状态；
 3. 只有用户接受概念后，才实现生产 DOM、输入、样式和生成资产；
 4. 最后登记 catalog、来源、bugs/learn 与浏览器证据。
@@ -25,7 +25,7 @@
 1. 171 定向调研/brainstorm：已提交；
 2. 172 可执行规格：已提交；
 3. 本实施计划与索引：独立提交；
-4. `config.js + logic.js + logic.test.js`：独立提交；
+4. `package.json + config.js + logic.js + logic.test.js`：独立提交；
 5. ImageGen 完整状态简报：独立提交；
 6. 概念生成台账、原图与设计提案：独立提交；
 7. 用户接受后的 design-system inventory：独立提交；
@@ -48,7 +48,7 @@ git branch --show-current && git rev-parse --show-toplevel
 
 | 角色 | 只读输入 | 唯一可写路径 | 前置依赖 | 提交者 |
 | --- | --- | --- | --- | --- |
-| 规则实现子任务 | 171、172、203、相邻逻辑实现 | `experiences/co-op/shadow-duet/config.js`、`logic.js`、`logic.test.js` | 203 已提交 | 主线程审阅后提交 |
+| 规则实现子任务 | 171、172、203、相邻逻辑实现 | `experiences/co-op/shadow-duet/package.json`、`config.js`、`logic.js`、`logic.test.js` | 203 已提交 | 主线程审阅后提交 |
 | 视觉简报子任务 | 171、172、203、前端构建/ImageGen 指令 | `docs/204-shadow-duet-imagegen-brief.md` | 规则合同冻结；不要求 UI 代码 | 主线程审阅后提交 |
 | 概念与台账子任务 | 204、统一图像偏好 | `docs/assets/shadow-duet/*`、`docs/205-shadow-duet-design-proposal.md` | 用户确认图像工具/清晰度/配置范围 | 主线程逐图审阅后提交 |
 | 设计冻结子任务 | 用户接受的 205 原图 | `docs/205-shadow-duet-design-proposal.md` 的状态与 design-system inventory | 用户明确接受概念 | 主线程提交 |
@@ -67,15 +67,16 @@ git branch --show-current && git rev-parse --show-toplevel
 experiences/co-op/shadow-duet/config.js
 experiences/co-op/shadow-duet/logic.js
 experiences/co-op/shadow-duet/logic.test.js
+experiences/co-op/shadow-duet/package.json
 ```
 
 职责：
 
-- classic browser global/CommonJS 双出口，加载顺序 `logic.js → config.js → app.js`；
+- 子目录 `package.json` 仅固定 `type: commonjs`；classic browser global 与 Node 真实 `require()` 双出口，浏览器加载顺序 `logic.js → config.js → app.js`；
 - 精确冻结 `SEATS / POSES / SCENES / tick` 合同，并在模块加载时自检；
 - 使用捕获的 intrinsic 与 own-data descriptor snapshot 处理 hostile object、Array/Proxy、污染原型和 late throw；
-- 原子配置回退、Unicode 字素席位名、延迟 completion composer 与 thenable/异常/超长防护；
-- canonical 七阶段状态、精确 action schema、revision/attempt headroom 与 malformed-state 安全初态；
+- 原子配置回退、Unicode 字素席位名、无 `Intl.Segmenter` 的组合符/ZWJ/旗帜确定性回退、延迟 completion composer 与 thenable/异常/超长防护；
+- canonical 七阶段状态、精确 action schema、revision 与分阶段 attempt headroom 公式；`RETRY_SCENE` 递增后若侵占任一剩余幕的最低一次尝试则同对象 no-op；malformed-state 回安全初态；
 - 每席去重持有栈、释放回退、跨席隔离与 `SUSPEND`；
 - `STEP 1..5` 逐 tick 结算，证明 48–53、56–61、57–61 与 tick 62 边界；
 - 六幕失败/重试/完成/重开、双席必要性、JSON action-log 重放与冻结 public view；
@@ -88,6 +89,8 @@ experiences/co-op/shadow-duet/logic.test.js
 ```bash
 node --check experiences/co-op/shadow-duet/logic.js
 node --check experiences/co-op/shadow-duet/config.js
+node -e "require('./experiences/co-op/shadow-duet/logic.js')"
+node -e "require('./experiences/co-op/shadow-duet/config.js')"
 node --test experiences/co-op/shadow-duet/logic.test.js
 npm test
 npm run verify

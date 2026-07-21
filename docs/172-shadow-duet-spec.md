@@ -26,15 +26,16 @@
 | --- | --- |
 | `index.html` | 稳定语义结构、首屏文案、无脚本说明与经典脚本顺序 |
 | `style.css` | 纸幕剧场视觉、剪影姿势、四档布局、焦点、降动效与高对比 |
+| `package.json` | 将本体验子目录固定为 CommonJS 边界，使 `.js` UMD 文件可被真实 `require()` |
 | `logic.js` | 冻结姿势/六幕、持有栈、tick 结算、状态机、配置边界和公共视图 |
 | `config.js` | 两席称呼与 5–10 行完成赠言函数；不能改规则 |
 | `app.js` | DOM 渲染、固定步进循环、键盘/Pointer 生命周期、焦点与 ARIA |
-| `logic.test.js` | 纯逻辑、重放、敌对输入和静态边界测试 |
+| `logic.test.js` | 在子目录 CommonJS 边界内验证真实 `require()`、浏览器 VM、纯逻辑、重放、敌对输入和静态边界 |
 | `README.md` | 本地打开、玩法、信任/隐私边界、定制、借鉴声明、测试 |
 | `ATTRIBUTION.md` | 固定来源、许可证、版权、零复制范围与生成资产证据 |
 | `assets/*` | 原创生成式背景和剪影图集；失败时不影响规则可读性 |
 
-加载顺序必须是 `logic.js → config.js → app.js`。禁止 ES module、`fetch()`、Worker、CDN、远程字体、远程媒体和运行时包。
+浏览器加载顺序必须是 `logic.js → config.js → app.js`。子目录 `package.json` 只声明 `{"type":"commonjs"}`，不得添加依赖、脚本或入口重定向；`logic.js/config.js` 保持经典脚本兼容，同时必须由 Node 的真实 `require()` 返回其冻结 API。禁止 ES module、`fetch()`、Worker、CDN、远程字体、远程媒体和运行时包。
 
 ## 3. 冻结规则常量
 
@@ -153,7 +154,7 @@ MAX_STEP_TICKS = 5;
 - `phase` 只属于七阶段；`sceneIndex` 为 `0..5`；
 - 每席持有数组只含唯一合法 pose ID，长度 `0..4`，且必须是原生 `Array.prototype` 的 own data property；最后一项是当前姿势；
 - `completedScenes` 是 `SCENES` 从 0 开始的连续前缀，每条记录姿势与目标完全一致，`attempts` 为正安全整数；
-- `completedScenes` 中 `attempts` 的累计和始终为安全整数；六幕终局 summary 的 `totalAttempts` 直接使用该精确和；
+- `completedScenes` 中 `attempts` 的累计和始终为安全整数；当前幕未完成时必须满足 `sum(completed.attempts) + attempt + (SCENES.length - completedScenes.length - 1) <= Number.MAX_SAFE_INTEGER`，`pose-result` 必须满足 `sum(completed.attempts) + (SCENES.length - completedScenes.length) <= Number.MAX_SAFE_INTEGER`，从而为其余每幕各保留至少一次尝试；六幕终局 summary 的 `totalAttempts` 直接使用该精确和；
 - `attempt` 为 `1..Number.MAX_SAFE_INTEGER`；revision 为 `0..Number.MAX_SAFE_INTEGER`；
 - 每次有效动作 revision 加一；非法动作保持原对象与 revision；revision 或 attempt 溢出时 no-op。
 
@@ -234,7 +235,7 @@ MAX_STEP_TICKS = 5;
 | `dancing` | `{type:"RELEASE", seat, pose}` | tick ≤60、合法且已持有 | 移除持有，留在本阶段 |
 | `dancing` | `{type:"STEP", ticks}` | `ticks` 为 1..5 | 逐 tick 推进，可能进入 `pose-result/missed` |
 | `dancing` | `{type:"SUSPEND"}` | 无 | 清输入并回 `scene-intro`，attempt 不变 |
-| `missed` | `{type:"RETRY_SCENE"}` | attempt 未到上限 | attempt + 1，清结果，回 `scene-intro` |
+| `missed` | `{type:"RETRY_SCENE"}` | attempt + 1 后仍满足当前幕未完成的 headroom 公式 | attempt + 1，清结果，回 `scene-intro`；否则同对象 no-op |
 | `pose-result` | `{type:"NEXT_SCENE"}` | 已完成 1..5 幕 | sceneIndex + 1，tick/stable 归 0，attempt 归 1，清 lastResult，进 `scene-intro` |
 | `pose-result` | `{type:"NEXT_SCENE"}` | 已完成 6 幕 | tick/stable 归 0，attempt 归 1，清 lastResult，进 `act-result` |
 | `act-result` | `{type:"FINISH"}` | 六幕记录完整 | `complete` |
@@ -397,12 +398,13 @@ Pointer：
 - PRESS 去重、RELEASE 回退、跨席隔离、四键全持有、全释放；
 - tick 48/53/56/57/61/62 边界、窗口内打断、批量 STEP 中途停止；
 - 七阶段金路径、每幕失败/重试、暂停不增 attempt、六幕/重开；
+- attempt 总量在剩余 1..5 幕时“恰好保留最低额度”仍可完成，“再重试一次越界”则同对象 no-op；
 - 两席缺一不可，单席穷举永远不能完成任一幕；
 - action schema、原型污染、数组子类/null/custom prototype、accessor、畸形 state、安全整数上界；
 - `completedScenes/heldPoses` 的继承 iterator/map 抛错；顶层/嵌套 Proxy 的 `ownKeys/getOwnPropertyDescriptor/getPrototypeOf` 抛错；descriptor 校验后 `get` late-throw；
 - `reduce` 遇非法 state 回全新初态；`getPublicView` 遇非法 state 返回初态安全视图、非法 config 原子回默认，以上路径全部不抛；
 - JSON action log 从初态重放到字节等价公共完成视图；
-- 配置原子回退、Unicode 字素、重复名、composer 异常/thenable/超长/summary 篡改；
+- 配置原子回退、Unicode 字素、重复名、composer 异常/thenable/超长/summary 篡改；无 `Intl.Segmenter` 时仍以确定性回退正确处理组合附加符、变体选择符、肤色修饰、ZWJ 序列和区域旗帜对；
 - 公共 view 无内部引用、无个人失误/分数/未来输入泄漏；
 - 生产逻辑无网络、存储、随机、Date、DOM、音频、相机、模型和 runtime hook。
 
