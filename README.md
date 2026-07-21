@@ -8,9 +8,11 @@
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
-1. 首次双击 macOS 的 `setup.command` 或 Windows 的 `setup.bat`；
+1. 首次双击 macOS 的 `setup.command` 或 Windows 的 `setup.bat`；基础依赖完成后，交互终端会逐项询问是否安装 D 级可选能力；
 2. 以后双击 `start.command` 或 `start.bat`，门户会自动在浏览器打开；
 3. 同一 Wi-Fi 的另一台设备扫描门户二维码加入。
+
+拒绝可选能力不会影响 A/B/C 作品。非交互环境会自动跳过并给出精确安装命令；如只想安装基础依赖，可运行 `npm run setup -- --skip-optional`。模型不会在作品启动时隐式下载。
 
 每个已安装的 B/C/D 作品目录也有自己的 `start.command` 与 `start.bat`。完成一次根目录统一安装后，可以直接双击作品目录里的启动器直达该作品；若共享运行时已经启动，后续启动器会安全复用同一个端口和进程，不会重复常驻服务。
 
@@ -209,6 +211,9 @@
 - [可复用直达启动器规格](./docs/190-non-a-direct-launch-spec.md)
 - [可复用直达启动器实施计划](./docs/191-non-a-direct-launch-plan.md)
 - [可复用直达启动器验收记录](./docs/192-non-a-direct-launch-verification.md)
+- [D 级可选能力统一安装 Brainstorm](./docs/193-unified-optional-capability-setup-brainstorm.md)
+- [D 级可选能力统一安装规格](./docs/194-unified-optional-capability-setup-spec.md)
+- [D 级可选能力统一安装计划](./docs/195-unified-optional-capability-setup-plan.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

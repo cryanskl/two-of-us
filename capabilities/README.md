@@ -1,6 +1,6 @@
 # 可选能力包
 
-`capabilities/` 保存 D 级作品的能力声明、浏览器运行资产与第三方许可证。它不是根目录基础安装的一部分：不使用本地 AI、语音或大型资源的 A/B/C 级作品，不需要下载这些能力包。
+`capabilities/` 保存 D 级作品的能力声明、浏览器运行资产与第三方许可证。根目录统一安装会在基础依赖完成后逐项询问是否安装缺失能力；用户拒绝、使用 `--skip-optional` 或处于非交互环境时不会下载。不使用本地 AI、语音或大型资源的 A/B/C 级作品始终不需要这些能力包。
 
 ## 当前能力
 
@@ -29,7 +29,15 @@
 
 ## 管理命令
 
-统一入口为：
+首次安装优先双击根目录 `setup.command` / `setup.bat`，或运行：
+
+```text
+npm run setup
+```
+
+它只在交互终端询问可选能力，且必须得到当次确认才下载。仅安装基础依赖可运行 `npm run setup -- --skip-optional`；非交互环境也会跳过能力并打印后续命令。
+
+诊断、卸载或 CI 中明确预装单一能力时，使用精确管理入口：
 
 ```text
 node scripts/capabilities.mjs status
@@ -37,6 +45,8 @@ node scripts/capabilities.mjs install <capability-id>
 node scripts/capabilities.mjs doctor <capability-id>
 node scripts/capabilities.mjs remove <capability-id>
 ```
+
+无交互预装必须同时给出精确能力 ID 与 `--yes`，例如 `node scripts/capabilities.mjs install speech-whisper-base --yes`；不要用脚本默认接受未来新增的全部大型能力。
 
 安装只从 manifest 的固定 URL 下载，先写入 `.part`，再校验长度和 SHA-256；全部通过后才原子写入正式目录与 receipt。状态分为 `available`、`missing`、`corrupt` 和 `incompatible`，作品页面不能用单一布尔值代替完整状态。
 

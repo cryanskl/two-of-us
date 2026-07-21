@@ -4,15 +4,21 @@
 
 ## 打开方式
 
-这是 D 级作品，不能用 `file://` 直接运行。先在仓库根目录完成基础安装与可选模型安装：
+这是 D 级作品，不能用 `file://` 直接运行。首次使用先双击仓库根目录的 `setup.command`（Windows 使用 `setup.bat`），在可选能力提示中确认安装 `speech-whisper-base`。也可以在终端运行：
 
 ```text
 npm run setup
-node scripts/capabilities.mjs install speech-whisper-base
-npm start
 ```
 
-然后从门户进入「我听见了」，或直接双击本目录的 `start.command`（Windows 使用 `start.bat`）。单作品启动器仍复用仓库统一 Node 运行时，不会额外安装或后台下载模型。模型只安装一次；完成安装后，作品核心流程不需要公网。
+然后直接双击本目录的 `start.command`（Windows 使用 `start.bat`），或从根门户进入「我听见了」。单作品启动器会复用仓库统一 Node 运行时，不会额外安装或后台下载模型。模型只安装一次；完成安装后，作品核心流程不需要公网。
+
+如果首次 setup 时拒绝或跳过了模型，可精确补装、诊断或移除：
+
+```text
+node scripts/capabilities.mjs install speech-whisper-base
+node scripts/capabilities.mjs doctor speech-whisper-base
+node scripts/capabilities.mjs remove speech-whisper-base
+```
 
 ## 隐私与限制
 
