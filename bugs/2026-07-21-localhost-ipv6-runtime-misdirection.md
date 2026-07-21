@@ -1,7 +1,7 @@
 # `localhost` 地址族错配可能误开 IPv6 外部服务
 
 - 日期：2026-07-21
-- 状态：已修复，待最终浏览器验收
+- 状态：已修复并完成真实浏览器验收
 - 影响范围：共享 B/C/D 本地运行时的公告、重复启动探测与浏览器打开地址
 - 发现阶段：B/C/D 作品直达启动器与已有运行时复用独立审查
 
@@ -51,9 +51,9 @@
 
 - runtime reuse 纯函数与真实进程测试必须全部使用 canonical `127.0.0.1`；
 - 双地址族测试分别请求 `127.0.0.1` 与 `[::1]`，证明两个服务可区分；
-- 整仓测试、仓库校验和最终 Browser/IAB 仍需通过。
+- 整仓测试、仓库校验和最终 Browser/IAB 均已通过；完整证据见 [`docs/192-non-a-direct-launch-verification.md`](../docs/192-non-a-direct-launch-verification.md)。
 
 ## 相关提交
 
 - 原规格：`558fb1c docs: specify reusable direct launchers`
-- 修复实现：与“已有运行时复用”核心提交一同落库；该提交本身即为修复边界。
+- 修复实现：`35bb887 feat: reuse an existing local runtime`

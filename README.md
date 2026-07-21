@@ -208,6 +208,7 @@
 - [非 A 级作品直达启动 Brainstorm](./docs/189-non-a-direct-launch-brainstorm.md)
 - [可复用直达启动器规格](./docs/190-non-a-direct-launch-spec.md)
 - [可复用直达启动器实施计划](./docs/191-non-a-direct-launch-plan.md)
+- [可复用直达启动器验收记录](./docs/192-non-a-direct-launch-verification.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

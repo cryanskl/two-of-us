@@ -195,6 +195,7 @@
 | [189-non-a-direct-launch-brainstorm.md](./189-non-a-direct-launch-brainstorm.md) | B/C/D 作品直达启动与已有运行时复用的方案取舍 |
 | [190-non-a-direct-launch-spec.md](./190-non-a-direct-launch-spec.md) | 作品级薄启动器、运行时身份探测与安全复用规格 |
 | [191-non-a-direct-launch-plan.md](./191-non-a-direct-launch-plan.md) | 运行时复用、七套直达启动器、文档和浏览器验收计划 |
+| [192-non-a-direct-launch-verification.md](./192-non-a-direct-launch-verification.md) | 七套 B/C 级直达启动器、同端口复用、真实浏览器与端口释放验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
