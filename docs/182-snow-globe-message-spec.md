@@ -456,6 +456,12 @@ main 直接子级 DOM 顺序固定：
 → 完成结果 → 主动作 → 隐私说明 → live region
 ```
 
+固定公开隐私说明精确为：
+
+> 这只雪球只在本机运行，留言会在雪停后才出现。
+
+它在所有 JavaScript 阶段与无 JavaScript 降级中可见，不读取或拼接配置字段，也不得改写为“已加密”“不会留在磁盘”等超出实际边界的承诺。
+
 `progressText` 与主动作的固定阶段合同：
 
 | phase | 主状态 | 主动作 |
@@ -549,7 +555,7 @@ Promise/Animation rejection 必须 catch；Canvas context null 或 draw 抛错�
 
 最终点阵同时有可见 patternLabel；Canvas 不作为唯一信息。forced-colors 使用 Canvas/CanvasText/ButtonText/Highlight 等系统色、真实 border、方向文字、✓ 与“已收好”；不依赖渐变、透明度、box-shadow 或颜色。
 
-无 Canvas：完成时用 9×11 CSS grid 画 active cells，`aria-hidden=true`，真实 patternLabel/私信仍可读。无 JS：只显示“请开启 JavaScript 后再收集四阵风”，不显示结果或声称已经解锁。
+无 Canvas：完成时用 9×11 CSS grid 画 active cells，`aria-hidden=true`，真实 patternLabel/私信仍可读。无 JS：只显示公开 H1、固定说明、固定隐私说明、一个无语义静态雪球轮廓与 `请开启 JavaScript 后再收集四阵风`；隐藏方向按钮、进度、主动作与结果，不显示心形或声称已经解锁。
 
 ## 17. 隐私与安全
 
@@ -628,6 +634,7 @@ Promise/Animation rejection 必须 catch；Canvas context null 或 draw 抛错�
 - complete 结果 section 精确五个直接子节点、固定前缀、LF 保留；既有雪球舞台只在 complete 取得 `role=img` 并关联 patternLabel，restart 后移除 role/关联和整棵结果子树；
 - settling 前不含 target 坐标/点阵 data 属性；开局固定 72 雪点与 config active 无关；
 - Canvas null/throw 用 CSS 点阵完成；无 JS 不伪造完成；
+- 禁用 JavaScript 后只出现冻结的五项静态内容，不含方向按钮、进度、主动作、心形或结果；
 - 单一 live、焦点、aria-pressed、≥48px、forced-colors、reduced-motion；
 - 六档视口、200%/400% zoom、最大合法文案、safe-area、零横溢；
 - 零 console error/warning、零公网/失败请求、零 storage/permission。
