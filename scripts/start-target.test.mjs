@@ -3,15 +3,24 @@ import test from "node:test";
 import { parseExperienceId, resolveExperienceUrl } from "./start-target.mjs";
 
 function entry(overrides = {}) {
-  return {
+  const value = {
     id: "i-heard-you",
     title: "我听见你了",
     category: "co-op",
     level: "D",
+    players: "2 人合作",
+    devices: "单设备",
     entry: "experiences/co-op/i-heard-you/index.html",
+    readme: "experiences/co-op/i-heard-you/README.md",
+    description: "测试作品",
     installed: true,
+    networkRequired: false,
     ...overrides,
   };
+  if (!Object.hasOwn(overrides, "readme")) {
+    value.readme = value.entry.replace(/index\.html$/, "README.md");
+  }
+  return value;
 }
 
 function catalog(...experiences) {

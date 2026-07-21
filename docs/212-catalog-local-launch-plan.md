@@ -73,6 +73,7 @@ git status --short
 - 不用 JS capability token 推断联网；浏览器请求监听负责首屏动态证据；
 - CSS 循环不会无限递归；
 - 启动器 renderer 与现有八组文件逐字一致；
+- POSIX 验证 `start.command` mode，Windows 验证路径与内容，Git 索引保留 `100755`；
 - 不新增依赖或外部来源；
 - `npm test`、`npm run verify`、Chrome 证据全部完成。
 

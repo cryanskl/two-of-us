@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [本地启动合同：HTML 扫描边界与浏览器 tokenizer 漂移](./2026-07-21-local-launch-html-tokenizer-boundary.md)
+- [本地启动合同：非 A 资源错误允许控制字符污染 CLI](./2026-07-21-local-launch-cli-control-output.md)
+- [本地启动合同：启动器错误 ID 测试可空数组误绿](./2026-07-21-local-launch-vacuous-launcher-test.md)
 - [把影子，跳成我们：无 Segmenter 回退错误计算多语种字素与非 emoji ZWJ](./2026-07-21-shadow-duet-grapheme-fallback.md)
 - [把影子，跳成我们：尝试上限没有为剩余幕保留最低预算](./2026-07-21-shadow-duet-attempt-headroom.md)
 - [把影子，跳成我们：UMD 文件在根级 ESM 边界下无法真实 require](./2026-07-21-shadow-duet-commonjs-boundary.md)

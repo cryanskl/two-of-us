@@ -124,7 +124,7 @@ HTML 中任意 script 的 type 经 ASCII trim/lowercase 后为 `module` 即拒�
 
 - `start.command` 与 `start.bat` 必须为普通文件且自身不是 symlink，realpath 仍在 root 内；
 - UTF-8 内容分别等于 renderer 输出；
-- `start.command` mode 的低九位精确为 `0755`；
+- 在 POSIX 上，`start.command` mode 的低九位精确为 `0755`；Windows 不以 `stat.mode` 判断 Unix 可执行位，仍验证路径与内容，发布时由 Git 的 `100755` 记录保留权限；
 - validator 不修改文件，不自动 chmod。
 
 `shared/runtime/catalog.test.js` 的既有动态测试继续保留，但 expected 文本改用 renderer；它仍负责真实仓库 mode 断言。新 fixture 测试负责缺失、内容漂移和权限错误。
@@ -134,12 +134,12 @@ HTML 中任意 script 的 type 经 ASCII trim/lowercase 后为 `module` 即拒�
 至少覆盖：
 
 1. 合法 A：inline classic JS、外部 JS、递归 CSS、普通 img src、图片/音视频/object 全通过；
-2. 合法 B/C/D：精确两启动器与 mode；
+2. 合法 B/C/D：精确两启动器；POSIX 额外验证 mode；
 3. A 的 module、表中 deny 标签/组合、root-relative、remote、protocol-relative、非 icon data、blob 与 socket 静态资源声明逐项失败；经典 JS 内存在兼容 capability 或未执行 dynamic import 不做静态失败；首屏实际执行的 dynamic import 由浏览器证据捕获；
 4. 精确 `data:,`、五个 SHA allowlist SVG、未知/改变后的 data SVG、非 icon data、base64 SVG、srcset、HTML entity、重复/未加引号属性、HTML/CSS 缺失引用、两种 CSS import、CSS 循环、escape、畸形 token、控制字符；
 5. CSS lexer 覆盖字符串内 `/* */`、标识符中的注释空白、未闭合注释与循环 import；
 6. catalog 缺字段、错类型、错 category 映射、重复 ID/entry；entry/README 缺失、为目录或 symlink 越界、README 无声明、networkRequired true；同步更新 start-target/runtime-reuse 既有 fixture 而不改变原负例含义；
-7. 启动器缺失、漂移、错误 ID、错误 mode；
+7. 启动器缺失、漂移、错误 ID，以及 POSIX 上的错误 mode；
 8. 多错误排序、去重、冻结；
 9. root symlink 合法解析、仓库外文件/目录 symlink、sibling-prefix、percent-encoded dot/backslash；
 10. 脱敏 query/fragment/data/blob/control character；

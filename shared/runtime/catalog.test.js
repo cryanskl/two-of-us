@@ -1,7 +1,66 @@
 import assert from "node:assert/strict";
 import { access, readFile, stat } from "node:fs/promises";
 import test from "node:test";
-import { loadCatalog } from "./catalog.js";
+import { renderMacLauncher, renderWindowsLauncher } from "../../scripts/experience-contracts.mjs";
+import { loadCatalog, validateCatalog } from "./catalog.js";
+
+function catalogFixture(overrides = {}) {
+  return {
+    id: "local-test",
+    title: "本地测试",
+    category: "surprise",
+    level: "A",
+    players: "1 人",
+    devices: "单设备",
+    entry: "experiences/surprises/local-test/index.html",
+    readme: "experiences/surprises/local-test/README.md",
+    description: "用于验证目录 schema。",
+    installed: true,
+    networkRequired: false,
+    ...overrides,
+  };
+}
+
+test("catalog validator freezes required metadata and boolean fields", () => {
+  assert.doesNotThrow(() => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture()] }));
+
+  for (const field of [
+    "id", "title", "category", "level", "players", "devices", "entry", "readme", "description",
+  ]) {
+    assert.throws(
+      () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ [field]: "" })] }),
+      new RegExp(field === "readme" ? "readme|字段" : `${field}|字段`, "i"),
+    );
+  }
+  for (const field of ["installed", "networkRequired"]) {
+    assert.throws(
+      () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ [field]: "false" })] }),
+      new RegExp(field),
+    );
+  }
+});
+
+test("catalog validator aligns category, entry, readme, and uniqueness", () => {
+  assert.throws(
+    () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ category: "unknown" })] }),
+    /分类/,
+  );
+  assert.throws(
+    () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ category: "co-op" })] }),
+    /入口/,
+  );
+  assert.throws(
+    () => validateCatalog({
+      schemaVersion: 1,
+      experiences: [catalogFixture({ readme: "experiences/surprises/other/README.md" })],
+    }),
+    /README/,
+  );
+  assert.throws(
+    () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture(), catalogFixture()] }),
+    /id 或入口重复/,
+  );
+});
 
 test("portal gives every experience link a title-specific accessible name", async () => {
   const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
@@ -1870,36 +1929,10 @@ test("every installed non-A experience has exact shared-runtime launchers", asyn
       stat(commandUrl),
     ]);
 
-    const expectedCommand = `#!/bin/bash
-
-set -u
-cd "$(dirname "$0")/../../.." || exit 1
-
-node scripts/start.mjs --experience ${experience.id}
-status=$?
-
-if [ "$status" -ne 0 ]; then
-  echo
-  read -r -p "启动失败。按回车键关闭窗口……"
-fi
-
-exit "$status"
-`;
-    const expectedBatch = `@echo off
-setlocal
-cd /d "%~dp0\\..\\..\\.."
-
-node scripts\\start.mjs --experience ${experience.id}
-if errorlevel 1 (
-  echo.
-  echo 启动失败，请查看上方提示。
-  pause
-  exit /b 1
-)
-`;
-
-    assert.equal(command, expectedCommand, `${experience.id} has a divergent macOS launcher`);
-    assert.equal(batch, expectedBatch, `${experience.id} has a divergent Windows launcher`);
-    assert.equal(commandStat.mode & 0o777, 0o755, `${experience.id} macOS launcher is not executable`);
+    assert.equal(command, renderMacLauncher(experience.id), `${experience.id} has a divergent macOS launcher`);
+    assert.equal(batch, renderWindowsLauncher(experience.id), `${experience.id} has a divergent Windows launcher`);
+    if (process.platform !== "win32") {
+      assert.equal(commandStat.mode & 0o777, 0o755, `${experience.id} macOS launcher is not executable`);
+    }
   }));
 });

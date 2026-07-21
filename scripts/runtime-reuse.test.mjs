@@ -14,15 +14,24 @@ import {
 } from "./runtime-reuse.mjs";
 
 function catalogEntry(overrides = {}) {
-  return {
+  const value = {
     id: "panorama-memory",
     title: "全景回忆",
     category: "surprise",
     level: "B",
+    players: "1 人",
+    devices: "单设备",
     entry: "experiences/surprises/panorama-memory/index.html",
+    readme: "experiences/surprises/panorama-memory/README.md",
+    description: "测试作品",
     installed: true,
+    networkRequired: false,
     ...overrides,
   };
+  if (!Object.hasOwn(overrides, "readme")) {
+    value.readme = value.entry.replace(/index\.html$/, "README.md");
+  }
+  return value;
 }
 
 function catalog(...experiences) {
