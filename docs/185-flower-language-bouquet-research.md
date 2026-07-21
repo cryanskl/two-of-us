@@ -526,7 +526,9 @@ experiences/surprises/flower-language-bouquet/
 - 自动下载、自动 share、自动 clipboard、storage、账号、云端画廊、URL 分享、打印、PDF、PNG、EXIF 或定位；
 - 随机、评分、失败、付费价格、库存、购物车或商品推荐。
 
-如果未来真正复制代码/素材或引入 ImageGen 资产，必须重新审计、保留许可证/版权通知，并在 ATTRIBUTION 记录文件、prompt、模型、日期、尺寸、处理链和 SHA-256；不得沿用本页的零复制/零生成资产结论。
+2026-07-21 已引入十张仅供设计评审的 ImageGen 概念/迭代图，完整文件、prompt、工具、模型暴露状态、日期、尺寸、引用/处理链、SHA-256、第三方输入和权利边界记录在 `docs/assets/flower-language-bouquet/GENERATION.md`；它们不进入运行时，因此本研究的零第三方复制与运行时零图片结论不变，但“零生成资产”结论已失效。
+
+如果未来真正复制代码/素材，或把任一 ImageGen 图转成运行时资产，必须重新审计、保留许可证/版权通知，并更新 README、ATTRIBUTION 与生成台账；不得把 docs-only 结论沿用到生产资产。
 
 ## 18. 最小测试 Gate
 

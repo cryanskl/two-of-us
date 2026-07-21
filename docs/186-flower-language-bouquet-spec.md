@@ -889,7 +889,8 @@ README 与 `assets/ATTRIBUTION.md` 必须各自完整列出仓库 URL、固定 c
 - 不复制任何研究项目源码、API、布局表、算法、文案、测试、演示、图片或构建产物；
 - 不安装或打包这些库；
 - 状态机、120 排列、scene slot、primitive registry、组合句、SVG tree、导出和测试为本仓库独立实现；
-- 当前生成资产为无；若概念确认后使用 ImageGen，记录 prompt、工具、日期、尺寸、处理链、SHA-256 与第三方输入；
+- 当前已有十张仅供设计评审的 ImageGen 概念/迭代图，不进入运行时；README 与 `assets/ATTRIBUTION.md` 必须各自列出仓库内生成台账链接、工具、模型暴露状态、日期、十个文件/尺寸/SHA、逐图引用/处理链、第三方输入为无和 docs-only 边界；完整 prompt 与有限权利说明冻结在 `docs/assets/flower-language-bouquet/GENERATION.md`；
+- 若未来把任一生成图转成运行时资产，新增运行时文件、处理链、SHA、失败降级与权利审计，不得沿用 docs-only 结论；
 - 若未来实际复制代码/素材，重新审计并保留许可证、版权通知与修改说明。
 
 ## 23. 实现顺序与完成定义
