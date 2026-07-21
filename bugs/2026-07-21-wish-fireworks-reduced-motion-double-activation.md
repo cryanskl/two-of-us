@@ -36,7 +36,9 @@
 - Enter/Space 的 `keydown.repeat` 必须 preventDefault，held-key 在 keyup/blur 清理；
 - AT/语音产生的独立 `detail=0` activation 仍保留；
 - 去重发生在 LAUNCH 与 reduced-motion microtask 之前；
-- 动态切入 reduced-motion 时保存当前 pointerId/pointerType 为一次性墓碑，旧手势随后补发的 `detail=1` click 只清墓碑并 no-op；新 pointerdown 或独立 `detail=0` activation 仍可立即开始新操作；
+- 动态切入 reduced-motion 时把当前 pointerId 写入按 `mouse/touch/pen/other` 分桶、最多四项的墓碑表；新 pointerdown 另建 candidate、不能删除其他类型墓碑；旧手势随后补发的 `detail=1` click 只清同桶墓碑并 no-op，不同类型的新 candidate 仍可提交；
+- 同类型墓碑优先于 candidate，pointerId 不匹配时也 fail closed 并保留；元数据缺失且仍有墓碑时同样 no-op；matching pointercancel 可安全清同桶墓碑；
+- 独立 `detail=0` activation 不受墓碑阻断；
 - `window.blur`、hidden 与 pagehide 完整取消 capture、holding/awaiting、计时、fallback、held-key 和蓄力 UI；
 - 延迟结果焦点统一由 `window.focus` 与 visible 恢复冲刷，避免 blur-only 完成后永远不聚焦；
 - 规格同时覆盖主按钮、直接入口、Canvas 失败和动态切换 reduced-motion。
@@ -47,6 +49,7 @@
 - [x] 调研合同明确 Enter/Space repeat 不连开；
 - [x] AT/语音独立 activation 不被时间锁误伤；
 - [x] 动态切入 reduced 后，旧 pointer click 被一次性墓碑吞掉；
+- [x] touch→mouse 与 mouse→touch 交错时，新设备不删除旧设备墓碑；
 - [x] blur/hidden/pagehide 都按完整取消路径处理；
 - [x] blur-only 完成可由 window focus 恢复结果焦点；
 - [x] 进入规格 Gate 已包含 reduced-motion 与 Canvas 失败竞态；

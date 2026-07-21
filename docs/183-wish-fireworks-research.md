@@ -168,11 +168,11 @@ chargeBand = floor((chargeUnits - 1) / 4)  // 0..4
 ### 6.2 键盘、语音与单击
 
 - 五档使用持久原生 `<select>`；“直接点燃”是持久原生 `<button type="button">`，其 click 读取选项并一次只派一个 LAUNCH；选项被篡改或缺失时 fail closed 到 band 2 / units 12；
-- 主按钮分流优先级固定：先处理一次性 `suppressedMainPointerClick`；其匹配的旧 pointer `detail===1` click 只清墓碑并 no-op，`detail===0` 不受抑制；随后在 reduced-motion 或 Pointer Events 不可用时，`detail 0/1` 使用当前所选高度、`detail>1` no-op；正常动效且 Pointer Events 可用时，`detail===0` 使用所选高度、`detail===1` 只接受匹配 candidate、`detail>1` no-op；
+- 主按钮分流优先级固定：先检查按 `mouse/touch/pen/other` 分桶、最多四项的 `suppressedMainPointerClicks`；同 pointerType 的 `detail===1` 若 pointerId 匹配则删墓碑并 no-op，不匹配则保留墓碑并 no-op，元数据缺失且仍有任一墓碑也 fail closed；`detail===0` 不受抑制。没有本类型墓碑后，reduced-motion 且 Pointer Events 可用时只接受匹配本次 reduced pointer candidate 的 detail=1，无 Pointer Events 时 detail 0/1 使用 select；正常动效时 detail=1 只接受 matching hold candidate；所有路径的 `detail>1` no-op；
 - Pointer Events 不可用时不绑定 mouse/touch 双套事件；
 - 两个按钮都忽略 pointer `click.detail>1`；Enter/Space 只让非 repeat keydown 走原生激活，`keydown.repeat` 必须 preventDefault，held-key 集合在 keyup/blur 清除；
 - `prefers-reduced-motion` 生效时不建立计时会话、不播放蓄力条；两个按钮都用当前所选高度发射并立即完成同一 shot；
-- 运行中切入 reduced-motion：holding/awaiting-click 先记录当前 pointerId/pointerType 为一次性 `suppressedMainPointerClick`，再递增 generation、取消 capture/计时/监听并清 candidate；同一旧 pointer 随后补发的 `detail===1` click 只消费墓碑，用户须重新操作。新 pointerdown 表示新手势，可令相同 pointerId/pointerType 的旧墓碑失效；`detail===0` 的新 AT/键盘激活永不被墓碑阻断。bursting 保持原 token 并由 microtask 完成；切回 no-preference 不恢复旧会话或动画；
+- 运行中切入 reduced-motion：holding/awaiting-click 先把当前 pointerId 写入对应 pointerType 的 `suppressedMainPointerClicks` 桶，再递增 generation、取消 capture/计时/监听并清 candidate；旧 pointer 随后补发的 `detail===1` click 只消费同桶墓碑。新 pointerdown 不删除任何墓碑，而另存当前模式的短命 candidate：不同 pointerType 可继续完成新操作；同类型旧债务仍优先 no-op。`detail===0` 的新 AT/键盘激活永不被墓碑阻断；matching pointercancel 可清同桶墓碑，因为该流不会再合成 click。bursting 保持原 token 并由 microtask 完成；切回 no-preference 不恢复旧会话或动画；
 - bursting 时 reducer 先行拒绝重复动作；两个按钮保留相同 DOM 节点和 tabindex，只设 `aria-disabled=true` 并由事件 guard 阻止操作，不使用 native `disabled`、不替换节点；
 - select 在 bursting 保持原生 enabled，可预选下一束高度；当前 shot 已锁定，change 不得回写它；
 - 按住按钮的提示必须明确“无需蓄满，每一束都会成功”，不能暗示某个秘密时间窗。
@@ -398,7 +398,7 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 3. elapsed→units→band、整数坐标、rounding 和完整 fixture；
 4. START/LAUNCH/COMPLETE_BURST/RESTART 的 exact schema、revision headroom 与非法输入语义；
 5. public view 每阶段的字段遮蔽和三组独立隐私 sentinel；
-6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、动态 reduced 的旧 click 墓碑、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
+6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、动态 reduced 的分桶旧 click 墓碑、touch→mouse 与 mouse→touch 迟到序列、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
 7. 动画 token、timeout、blur/hidden/pagehide 完整取消、holding/awaiting/bursting 途中切 reduced-motion、Canvas 失败与延迟结果焦点的统一完成路径；
 8. 小数 rect/client 坐标、闪烁审计、forced-colors、六档视口全控件 56px、缩放、零网络和零 console error。
 
