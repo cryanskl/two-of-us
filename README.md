@@ -47,6 +47,7 @@
 - [Catalog 本地直达合同 Brainstorm](./docs/210-catalog-local-launch-brainstorm.md)
 - [Catalog 本地直达合同规格](./docs/211-catalog-local-launch-spec.md)
 - [Catalog 本地直达合同实施计划](./docs/212-catalog-local-launch-plan.md)
+- [Catalog 本地直达合同验收记录](./docs/213-catalog-local-launch-verification.md)
 - [C 级首款作品规格：同心解锁](./docs/06-together-lock-spec.md)
 - [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
 - [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)

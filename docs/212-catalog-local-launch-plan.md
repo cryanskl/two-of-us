@@ -3,7 +3,7 @@
 - 日期：2026-07-21
 - Brainstorm：[210-catalog-local-launch-brainstorm.md](./210-catalog-local-launch-brainstorm.md)
 - 规格：[211-catalog-local-launch-spec.md](./211-catalog-local-launch-spec.md)
-- 状态：待执行
+- 状态：已完成；验收见 [213-catalog-local-launch-verification.md](./213-catalog-local-launch-verification.md)
 
 ## 1. 分工与写入边界
 
