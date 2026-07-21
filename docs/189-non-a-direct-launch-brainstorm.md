@@ -51,7 +51,7 @@
 
 ## 3. 产品与安全边界
 
-1. 只扫描 `localhost`，不探测局域网或公网地址。
+1. 只扫描确定的 IPv4 loopback `127.0.0.1`，与共享运行时的 `0.0.0.0` IPv4 listener 对齐；不依赖 `localhost` 的 IPv4/IPv6 解析顺序，也不探测局域网或公网地址。
 2. 只扫描 `preferredPort .. preferredPort + maxPortAttempts - 1`；`preferredPort=0` 时不做复用探测。
 3. 健康探测必须短时、只读、无凭证；失败、超时、错误 header、错误状态或错误 catalog 全部视为“不可信”，继续正常启动。
 4. 不杀死、不接管、不修改已有进程，也不创建后台守护进程。

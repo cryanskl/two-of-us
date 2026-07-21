@@ -13,6 +13,10 @@ import {
 } from "./rooms.js";
 import { serveStatic } from "./static.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
+import {
+  RUNTIME_HEADER_NAME,
+  RUNTIME_HEADER_VALUE,
+} from "../../scripts/runtime-reuse.mjs";
 
 const defaultHost = "0.0.0.0";
 
@@ -52,11 +56,15 @@ export async function createRuntimeServer({
           version: 1,
           node: process.versions.node,
           ...runtimeDetails,
+        }, {
+          [RUNTIME_HEADER_NAME]: RUNTIME_HEADER_VALUE,
         });
       }
 
       if (url.pathname === "/api/catalog") {
-        return sendJson(request, response, 200, catalog);
+        return sendJson(request, response, 200, catalog, {
+          [RUNTIME_HEADER_NAME]: RUNTIME_HEADER_VALUE,
+        });
       }
 
       if (!readMethod) {
@@ -91,7 +99,7 @@ export async function createRuntimeServer({
     async start() {
       if (runtimeDetails) return runtimeDetails;
       const port = await listenOnAvailablePort(httpServer, host, preferredPort, maxPortAttempts);
-      const localUrl = `http://localhost:${port}/`;
+      const localUrl = `http://127.0.0.1:${port}/`;
       const networkUrls = getNetworkUrls(port);
       const joinUrl = networkUrls[0] ?? localUrl;
       const qrDataUrl = await QRCode.toDataURL(joinUrl, {
@@ -222,15 +230,16 @@ async function listenOnAvailablePort(server, host, preferredPort, maxAttempts) {
   if (preferredPort === 0) return listenOnce(server, host, 0);
 
   let lastError;
-  for (let offset = 0; offset < maxAttempts; offset += 1) {
+  const finalPort = Math.min(65535, preferredPort + maxAttempts - 1);
+  for (let port = preferredPort; port <= finalPort; port += 1) {
     try {
-      return await listenOnce(server, host, preferredPort + offset);
+      return await listenOnce(server, host, port);
     } catch (error) {
       if (error.code !== "EADDRINUSE") throw error;
       lastError = error;
     }
   }
-  throw new Error(`端口 ${preferredPort} 到 ${preferredPort + maxAttempts - 1} 均被占用。`, {
+  throw new Error(`端口 ${preferredPort} 到 ${finalPort} 均被占用。`, {
     cause: lastError,
   });
 }

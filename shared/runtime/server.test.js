@@ -113,34 +113,119 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   const capabilitiesResponse = await fetch(`${details.localUrl}api/capabilities`);
   const capabilities = await capabilitiesResponse.json();
   const healthHeadResponse = await fetch(`${details.localUrl}api/health`, { method: "HEAD" });
+  const catalogHeadResponse = await fetch(`${details.localUrl}api/catalog`, { method: "HEAD" });
   const rejectedPostResponse = await fetch(`${details.localUrl}api/catalog`, { method: "POST" });
   const portalResponse = await fetch(details.localUrl);
   const vendorResponse = await fetch(`${details.localUrl}vendor/pannellum/2.5.7/pannellum.js`);
+  const missingResponse = await fetch(`${details.localUrl}api/not-found`);
 
   assert.equal(healthResponse.status, 200);
+  assert.equal(healthResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.equal(health.ok, true);
   assert.equal(health.port, details.port);
   assert.match(health.qrDataUrl, /^data:image\/png;base64,/);
   assert.equal(catalog.experiences[0].id, "love-tree");
+  assert.equal(catalogResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.equal(capabilitiesResponse.status, 200);
+  assert.equal(capabilitiesResponse.headers.get("x-two-of-us-runtime"), null);
   assert.equal(capabilities.capabilities[0].id, "speech-whisper-base");
   assert.equal(capabilities.capabilities[0].state, "missing");
   assert.equal(capabilities.capabilities[0].artifacts[0].bytes, 147951465);
   assert.equal(capabilities.capabilities[0].artifacts[0].href, null);
   assert.doesNotMatch(JSON.stringify(capabilities), new RegExp(dataDir));
   assert.equal(healthHeadResponse.status, 200);
+  assert.equal(healthHeadResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.ok(Number(healthHeadResponse.headers.get("content-length")) > 0);
   assert.equal(await healthHeadResponse.text(), "");
+  assert.equal(catalogHeadResponse.status, 200);
+  assert.equal(catalogHeadResponse.headers.get("x-two-of-us-runtime"), "1");
+  assert.equal(await catalogHeadResponse.text(), "");
   assert.equal(rejectedPostResponse.status, 405);
+  assert.equal(rejectedPostResponse.headers.get("x-two-of-us-runtime"), null);
   assert.equal(rejectedPostResponse.headers.get("allow"), "GET, HEAD");
   assert.equal(portalResponse.status, 200);
+  assert.equal(portalResponse.headers.get("x-two-of-us-runtime"), null);
   assert.match(await portalResponse.text(), /Two of Us/);
   assert.equal(vendorResponse.status, 200);
+  assert.equal(vendorResponse.headers.get("x-two-of-us-runtime"), null);
   assert.match(vendorResponse.headers.get("content-type"), /^text\/javascript/);
   assert.match(await vendorResponse.text(), /pannellum/);
+  assert.equal(missingResponse.status, 404);
+  assert.equal(missingResponse.headers.get("x-two-of-us-runtime"), null);
 
   await runtime.stop();
   assert.equal(runtime.httpServer.listening, false);
+});
+
+test("runtime advertises its IPv4 listener even when the same port has an IPv6-only service", async (context) => {
+  const foreign = createServer((_request, response) => response.end("ipv6-foreign"));
+  try {
+    foreign.listen({ host: "::1", port: 0, ipv6Only: true });
+    await once(foreign, "listening");
+  } catch (error) {
+    if (error.code === "EAFNOSUPPORT" || error.code === "EADDRNOTAVAIL") {
+      context.skip(`当前环境没有可用 IPv6 loopback：${error.code}`);
+      return;
+    }
+    throw error;
+  }
+  context.after(() => new Promise((resolve) => foreign.close(resolve)));
+
+  const port = foreign.address().port;
+  const dataDir = await mkdtemp(path.join(os.tmpdir(), "two-of-us-runtime-address-family-"));
+  context.after(() => rm(dataDir, { recursive: true, force: true }));
+  const runtime = await createRuntimeServer({
+    rootDir: new URL("../../", import.meta.url),
+    host: "0.0.0.0",
+    preferredPort: port,
+    maxPortAttempts: 1,
+    dataDir,
+  });
+  context.after(() => runtime.stop());
+
+  const details = await runtime.start();
+  assert.equal(details.localUrl, `http://127.0.0.1:${port}/`);
+  const [runtimeResponse, foreignResponse] = await Promise.all([
+    fetch(`${details.localUrl}api/health`),
+    fetch(`http://[::1]:${port}/`),
+  ]);
+  assert.equal(runtimeResponse.headers.get("x-two-of-us-runtime"), "1");
+  assert.equal((await runtimeResponse.json()).service, "two-of-us");
+  assert.equal(await foreignResponse.text(), "ipv6-foreign");
+});
+
+test("runtime listener truncates its occupied window at 65535", async (context) => {
+  const blockers = [];
+  for (const port of [65534, 65535]) {
+    const blocker = createServer();
+    try {
+      blocker.listen(port, "127.0.0.1");
+      await once(blocker, "listening");
+      blockers.push(blocker);
+    } catch (error) {
+      if (error.code !== "EADDRINUSE") throw error;
+    }
+  }
+  context.after(async () => {
+    await Promise.all(blockers.map((blocker) => new Promise((resolve) => blocker.close(resolve))));
+  });
+
+  const dataDir = await mkdtemp(path.join(os.tmpdir(), "two-of-us-runtime-boundary-"));
+  context.after(() => rm(dataDir, { recursive: true, force: true }));
+  const runtime = await createRuntimeServer({
+    rootDir: new URL("../../", import.meta.url),
+    host: "127.0.0.1",
+    preferredPort: 65534,
+    maxPortAttempts: 20,
+    dataDir,
+  });
+  context.after(() => runtime.stop());
+
+  await assert.rejects(runtime.start(), (error) => {
+    assert.match(error.message, /端口 65534 到 65535 均被占用/);
+    assert.doesNotMatch(`${error.message}\n${error.cause?.message ?? ""}`, /ERR_SOCKET_BAD_PORT|65536/);
+    return true;
+  });
 });
 
 test("runtime selects the next port when the preferred one is occupied", async (context) => {

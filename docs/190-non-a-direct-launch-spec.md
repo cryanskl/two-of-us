@@ -53,7 +53,7 @@ x-two-of-us-runtime: 1
   service: "two-of-us",
   version: 1,
   port: candidatePort,
-  localUrl: `http://localhost:${candidatePort}/`
+  localUrl: `http://127.0.0.1:${candidatePort}/`
 }
 ```
 
@@ -67,7 +67,7 @@ x-two-of-us-runtime: 1
 - `preferredPort` 范围 `0..65535`；
 - `maxPortAttempts` 范围 `1..20`；
 - `preferredPort === 0` 返回 `[]`，表示操作系统随机端口不可发现；
-- 否则生成递增的 `http://localhost:<port>/`，在 65535 截止；
+- 否则生成递增的 `http://127.0.0.1:<port>/`，在 65535 截止；
 - 不回绕、不探测 IPv4/IPv6 字面地址、局域网地址或公网；
 - 返回新数组，不依赖输入对象、iterator 或排序。
 
@@ -76,6 +76,8 @@ x-two-of-us-runtime: 1
 `scripts/start.mjs` 必须把同一个 `DEFAULT_MAX_PORT_ATTEMPTS` 同时传给复用探测和 `createRuntimeServer`，保证扫描窗口与监听窗口一致。
 
 `shared/runtime/server.js` 的监听循环也必须在 65535 截止；不得把 `preferredPort + offset > 65535` 交给 `server.listen`。如果窗口内合法端口都被占用，抛出既有中文端口占用错误，不暴露 `ERR_SOCKET_BAD_PORT`。因此 `65534/20` 的探测与监听都只有 65534、65535 两项。
+
+运行时继续监听 IPv4 wildcard `0.0.0.0` 以同时服务本机与局域网，但本机公告、health `localUrl`、复用探测和浏览器本机入口必须统一使用 `127.0.0.1`。不得公告不确定解析到 `::1` 的 `localhost`；局域网入口仍由真实 IPv4 网卡地址生成。真实 socket 测试必须证明同端口即使存在 IPv6-only 外部服务，本机入口仍确定命中 Two of Us 的 IPv4 listener。
 
 ## 4. 单候选探测
 

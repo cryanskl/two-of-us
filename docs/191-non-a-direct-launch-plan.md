@@ -64,6 +64,7 @@ git diff --check
 - timeout 后 timer 与 AbortController 不残留；
 - 外部 entry 不能跨 origin；
 - 65535 不会调用非法端口；
+- IPv4 listener、`127.0.0.1` 公告和复用探测地址族一致；
 - 第二个进程退出不关闭第一个进程；
 - cleanup 后没有遗留 child process 或端口。
 
@@ -141,7 +142,7 @@ git diff --check
 2. 等待 `/api/health` ready，记录 PID、端口和 health/catalog identity header；
 3. 在首进程仍运行时执行 `node scripts/start.mjs --experience compatibility-quiz --no-open`；
 4. 核对第二进程 0 退出、输出复用文案、两个 open URL 使用同一端口、下一个候选端口未被 Two of Us 占用；
-5. Browser/IAB 优先访问 B 级目标与 C 级目标，核对地址、页面标题、启动 Gate 与 console；
+5. Browser/IAB 优先访问 `127.0.0.1` 上的 B 级目标与 C 级目标，核对地址、页面标题、启动 Gate 与 console；
 6. Browser/IAB 不可用才记录原因并使用 Playwright Chromium；
 7. SIGTERM 首进程，核对端口释放；
 8. 删除临时截图/日志，不把 QA 临时产物提交。

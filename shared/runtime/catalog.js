@@ -7,8 +7,15 @@ export async function loadCatalog(rootDir) {
   const catalogPath = path.join(rootPath, "experiences", "catalog.json");
   const source = await readFile(catalogPath, "utf8");
   const catalog = JSON.parse(source);
+  return validateCatalog(catalog);
+}
 
-  if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.experiences)) {
+const lowerKebabPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const exactEntryPattern = /^experiences\/(surprises|co-op|versus)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/index\.html$/;
+
+export function validateCatalog(catalog) {
+  if (!catalog || typeof catalog !== "object"
+    || catalog.schemaVersion !== 1 || !Array.isArray(catalog.experiences)) {
     throw new Error("experiences/catalog.json 格式无效：需要 schemaVersion 1 和 experiences 数组。");
   }
 
@@ -17,6 +24,9 @@ export async function loadCatalog(rootDir) {
 }
 
 function validateExperience(experience) {
+  if (!experience || typeof experience !== "object" || Array.isArray(experience)) {
+    throw new Error("作品目录项必须是对象。");
+  }
   const requiredStrings = ["id", "title", "category", "level", "entry"];
   for (const field of requiredStrings) {
     if (typeof experience[field] !== "string" || experience[field].trim() === "") {
@@ -28,8 +38,13 @@ function validateExperience(experience) {
     throw new Error(`作品 ${experience.id} 的启动等级无效：${experience.level}。`);
   }
 
-  if (experience.entry.startsWith("/") || experience.entry.includes("..")) {
-    throw new Error(`作品 ${experience.id} 的入口必须是仓库内相对路径。`);
+  if (!lowerKebabPattern.test(experience.id)) {
+    throw new Error(`作品目录项 id 必须是 lower-kebab：${experience.id}。`);
+  }
+
+  const entryMatch = exactEntryPattern.exec(experience.entry);
+  if (!entryMatch || entryMatch[2] !== experience.id) {
+    throw new Error(`作品 ${experience.id} 的入口必须是对应目录下的 index.html。`);
   }
 }
 
