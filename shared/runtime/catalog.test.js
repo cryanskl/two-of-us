@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, stat } from "node:fs/promises";
 import test from "node:test";
 import { loadCatalog } from "./catalog.js";
 
@@ -1850,4 +1850,56 @@ test("every installed catalog entry points to a local file", async () => {
       .filter((item) => item.installed)
       .map((item) => access(new URL(item.entry, root))),
   );
+});
+
+test("every installed non-A experience has exact shared-runtime launchers", async () => {
+  const root = new URL("../../", import.meta.url);
+  const catalog = await loadCatalog(root);
+  const experiences = catalog.experiences.filter(
+    (item) => item.installed === true && item.level !== "A",
+  );
+
+  assert.ok(experiences.length > 0);
+  await Promise.all(experiences.map(async (experience) => {
+    const directory = new URL("./", new URL(experience.entry, root));
+    const commandUrl = new URL("start.command", directory);
+    const batchUrl = new URL("start.bat", directory);
+    const [command, batch, commandStat] = await Promise.all([
+      readFile(commandUrl, "utf8"),
+      readFile(batchUrl, "utf8"),
+      stat(commandUrl),
+    ]);
+
+    const expectedCommand = `#!/bin/bash
+
+set -u
+cd "$(dirname "$0")/../../.." || exit 1
+
+node scripts/start.mjs --experience ${experience.id}
+status=$?
+
+if [ "$status" -ne 0 ]; then
+  echo
+  read -r -p "启动失败。按回车键关闭窗口……"
+fi
+
+exit "$status"
+`;
+    const expectedBatch = `@echo off
+setlocal
+cd /d "%~dp0\\..\\..\\.."
+
+node scripts\\start.mjs --experience ${experience.id}
+if errorlevel 1 (
+  echo.
+  echo 启动失败，请查看上方提示。
+  pause
+  exit /b 1
+)
+`;
+
+    assert.equal(command, expectedCommand, `${experience.id} has a divergent macOS launcher`);
+    assert.equal(batch, expectedBatch, `${experience.id} has a divergent Windows launcher`);
+    assert.equal(commandStat.mode & 0o777, 0o755, `${experience.id} macOS launcher is not executable`);
+  }));
 });
