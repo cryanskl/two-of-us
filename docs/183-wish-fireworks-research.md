@@ -146,8 +146,9 @@ app 只保留当前短命会话：
 - 随后的原生 click 是唯一提交点：正常动效且 Pointer Events 可用时，`detail===1` 且 pointerId 与同 generation accepted candidate 匹配才消费其蓄力值；canceled、缺失、不匹配或 `detail>1` 的 pointer click 精确 no-op；
 - 非 pointer 的 `detail===0` activation 永不消费旧 pointer candidate，而是先让旧 generation 失效，再快照当前选择高度并提交；
 - `pointercancel/lostpointercapture` 只取消仍处于 holding 的会话；matching pointerup 后预期发生的隐式 lost capture 只清 capture，不得删除同 generation 的 awaiting-click candidate；
-- awaiting-click candidate 只由对应 click、跨入口提交、`blur/hidden/pagehide` 或 generation 失效消费/清除；所有取消路径都幂等且不补发；
+- awaiting-click candidate 只由对应 click、跨入口提交、`window.blur`、`visibilitychange(hidden)`、`pagehide` 或 generation 失效消费/清除；所有取消路径都幂等且不补发；
 - holding 的活动 pointer 与计时资源必须早于显式 release capture 清掉；awaiting-click candidate 独立保留到规定的消费路径，迟到事件不得撞入下一束；
+- `window.blur`、`visibilitychange(hidden)` 与 `pagehide` 都是完整取消点：先递增 generation，再释放 capture，清 holding/awaiting-click、蓄力 RAF、计时器、document fallback、held-key 与蓄力 UI；任何迟到事件均不得复用旧会话；
 - 任一入口准备提交 LAUNCH 时，先快照自己的 index/revision/units，再让所有旧 charge session、candidate 与 generation 失效；直接入口不能与仍按住的旧会话并存；
 - 不读取 pressure、tilt、twist、movement、raw/coalesced/predicted events 或设备 ID；
 - 原始 pointerId、时间和轨迹不进入 reducer、public view、console、storage 或日志。
@@ -162,14 +163,16 @@ chargeBand = floor((chargeUnits - 1) / 4)  // 0..4
 
 只把 `LAUNCH { index, expectedRevision, chargeUnits }` 送入逻辑层。五档选择器的 canonical units 固定为 `[4, 8, 12, 16, 20]`，默认 band 2 / units 12；直接入口读取当前选项。若时间戳非法、倒退或会话丢失，本次取消；用户仍可选择高度后直接点燃。
 
+输入谓词不能混用：量化后的事件时间必须是非负 safe integer；冻结的 rect 与 `clientX/clientY` 只要求 `Number.isFinite`、绝对值不超过 `Number.MAX_SAFE_INTEGER`，允许小数且不截断，并验证 `left <= right`、`top <= bottom`。200%/400% zoom 必须用 fractional rect/client fixture 覆盖。
+
 ### 6.2 键盘、语音与单击
 
 - 五档使用持久原生 `<select>`；“直接点燃”是持久原生 `<button type="button">`，其 click 读取选项并一次只派一个 LAUNCH；选项被篡改或缺失时 fail closed 到 band 2 / units 12；
-- 主按钮分流优先级固定：reduced-motion 或 Pointer Events 不可用时，`detail 0/1` 使用当前所选高度、`detail>1` no-op；正常动效且 Pointer Events 可用时，`detail===0` 使用所选高度、`detail===1` 只接受匹配 candidate、`detail>1` no-op；
+- 主按钮分流优先级固定：先处理一次性 `suppressedMainPointerClick`；其匹配的旧 pointer `detail===1` click 只清墓碑并 no-op，`detail===0` 不受抑制；随后在 reduced-motion 或 Pointer Events 不可用时，`detail 0/1` 使用当前所选高度、`detail>1` no-op；正常动效且 Pointer Events 可用时，`detail===0` 使用所选高度、`detail===1` 只接受匹配 candidate、`detail>1` no-op；
 - Pointer Events 不可用时不绑定 mouse/touch 双套事件；
 - 两个按钮都忽略 pointer `click.detail>1`；Enter/Space 只让非 repeat keydown 走原生激活，`keydown.repeat` 必须 preventDefault，held-key 集合在 keyup/blur 清除；
 - `prefers-reduced-motion` 生效时不建立计时会话、不播放蓄力条；两个按钮都用当前所选高度发射并立即完成同一 shot；
-- 运行中切入 reduced-motion：holding/awaiting-click 先递增 generation、取消 capture/计时/监听并清 candidate，用户须重新 click；bursting 保持原 token 并由 microtask 完成。切回 no-preference 不恢复旧会话或动画；
+- 运行中切入 reduced-motion：holding/awaiting-click 先记录当前 pointerId/pointerType 为一次性 `suppressedMainPointerClick`，再递增 generation、取消 capture/计时/监听并清 candidate；同一旧 pointer 随后补发的 `detail===1` click 只消费墓碑，用户须重新操作。新 pointerdown 表示新手势，可令相同 pointerId/pointerType 的旧墓碑失效；`detail===0` 的新 AT/键盘激活永不被墓碑阻断。bursting 保持原 token 并由 microtask 完成；切回 no-preference 不恢复旧会话或动画；
 - bursting 时 reducer 先行拒绝重复动作；两个按钮保留相同 DOM 节点和 tabindex，只设 `aria-disabled=true` 并由事件 guard 阻止操作，不使用 native `disabled`、不替换节点；
 - select 在 bursting 保持原生 enabled，可预选下一束高度；当前 shot 已锁定，change 不得回写它；
 - 按住按钮的提示必须明确“无需蓄满，每一束都会成功”，不能暗示某个秘密时间窗。
@@ -301,10 +304,10 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 - 视觉蓄力条不连续写 live，稳定文本只说明“无需蓄满”；
 - 一个预先存在的 polite status 只在前两束落定时各播一次：`第 n 束留下：{label}`；升空进度使用普通可见文本，不逐帧播报高度或粒子；
 - 第三束完成只走结果焦点路径：创建完整三字与结语后，把焦点移到 `tabindex=-1` 且由 `aria-describedby` 关联完整三字的结果标题，不再连续覆写 live；
-- 页面 hidden/失焦时完成只记录 pendingResultFocus；恢复后仅当 activeElement 仍是 body 或原发射控件才聚焦结果，不能偷走用户已经移动的焦点；
+- 页面 hidden 或 `window.blur` 时完成只记录 pendingResultFocus；统一 `flushPendingResultFocus()` 由 `window.focus` 与 `visibilitychange(visible)` 调用，且仅在文档 visible、窗口有焦点、activeElement 仍是 body 或原发射控件时聚焦结果，不能偷走用户已经移动的焦点；控件自身 blur 不得被误当作 window blur；
 - 束一、二完成后保留焦点在原按钮；bursting 期间按钮节点不替换、不 native-disable，select 仍可操作；验收 direct/hold 两条路径的 activeElement、下一次 Tab 和重复 Enter no-op；
 - 已公开字使用真实 DOM 列表/字符节点；Canvas 和装饰粒子 `aria-hidden=true`；
-- 主目标至少 56px，使用明显 `:focus-visible` outline，状态不只靠颜色、位置或动画；
+- start、按住点燃、直接点燃与 restart 等所有原生按钮在六档视口均至少 56×56 CSS px；触控环境中的原生 select 可操作高度也至少 56px。使用明显 `:focus-visible` outline，状态不只靠颜色、位置或动画；
 - forced-colors 隐藏 Canvas 装饰并启用 CSS 9×9 grid；移除渐变、filter、mix-blend-mode、box-shadow 和背景图，使用系统色、真实 border/outline、字、束数和“已出现”文本，不使用 `forced-color-adjust:none` 强保色；
 - 无 JavaScript 时只显示静态说明，不伪造三字或私信已经解锁。
 
@@ -317,9 +320,9 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 | 1504×1046 | 公开题名、夜空、三字列、进度、五档选择、两按钮与隐私说明同屏；无横纵滚 |
 | 1280×800 | 夜空、三字列和发射入口同屏；无横向滚 |
 | 768×1024 | 单列居中，三字与按钮完整可见 |
-| 390×844 | 夜空约 280–320px；三字单行；按钮均 ≥56px |
-| 320×568 | 夜空约 220–240px；允许纵滚，零横溢，按钮不被 safe-area 遮挡 |
-| 844×390 | 夜空约 230px 左置，进度与控制右置，不锁方向 |
+| 390×844 | 夜空约 280–320px；三字单行；所有按钮与触控 select 均 ≥56px |
+| 320×568 | 夜空约 220–240px；允许纵滚，零横溢，所有按钮与触控 select 均 ≥56px 且不被 safe-area 遮挡 |
+| 844×390 | 夜空约 230px 左置，进度与控制右置，不锁方向；所有按钮与触控 select 均 ≥56px |
 
 另验 200% 文本、约 320 CSS px 的 400% zoom、最大结语换行、safe-area、无 Canvas、无 Pointer Events、reduced-motion、forced-colors、零公网请求和零 console error。
 
@@ -395,8 +398,8 @@ WCAG 2.3.1 要求任何一秒内不得出现超过三次危险 general/red flash
 3. elapsed→units→band、整数坐标、rounding 和完整 fixture；
 4. START/LAUNCH/COMPLETE_BURST/RESTART 的 exact schema、revision headroom 与非法输入语义；
 5. public view 每阶段的字段遮蔽和三组独立隐私 sentinel；
-6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
-7. 动画 token、timeout、hidden/pagehide、holding/awaiting/bursting 途中切 reduced-motion 与 Canvas 失败的统一完成路径；
-8. 闪烁审计、forced-colors、六档视口、缩放、零网络和零 console error。
+6. pointer 外松开、cancel/lost capture、candidate/click 单提交、detail 分流、跨入口旧 generation、动态 reduced 的旧 click 墓碑、五档 direct、Pointer Events 缺失、双击与键盘 repeat；
+7. 动画 token、timeout、blur/hidden/pagehide 完整取消、holding/awaiting/bursting 途中切 reduced-motion、Canvas 失败与延迟结果焦点的统一完成路径；
+8. 小数 rect/client 坐标、闪烁审计、forced-colors、六档视口全控件 56px、缩放、零网络和零 console error。
 
 生产视觉仍须等待统一 ImageGen 概念被用户接受；该 Gate 不阻塞本文件对规则、隐私、许可证与验收边界的冻结。

@@ -36,6 +36,9 @@
 - Enter/Space 的 `keydown.repeat` 必须 preventDefault，held-key 在 keyup/blur 清理；
 - AT/语音产生的独立 `detail=0` activation 仍保留；
 - 去重发生在 LAUNCH 与 reduced-motion microtask 之前；
+- 动态切入 reduced-motion 时保存当前 pointerId/pointerType 为一次性墓碑，旧手势随后补发的 `detail=1` click 只清墓碑并 no-op；新 pointerdown 或独立 `detail=0` activation 仍可立即开始新操作；
+- `window.blur`、hidden 与 pagehide 完整取消 capture、holding/awaiting、计时、fallback、held-key 和蓄力 UI；
+- 延迟结果焦点统一由 `window.focus` 与 visible 恢复冲刷，避免 blur-only 完成后永远不聚焦；
 - 规格同时覆盖主按钮、直接入口、Canvas 失败和动态切换 reduced-motion。
 
 ## 回归验证
@@ -43,6 +46,9 @@
 - [x] 调研合同明确 pointer 双击只点燃一束；
 - [x] 调研合同明确 Enter/Space repeat 不连开；
 - [x] AT/语音独立 activation 不被时间锁误伤；
+- [x] 动态切入 reduced 后，旧 pointer click 被一次性墓碑吞掉；
+- [x] blur/hidden/pagehide 都按完整取消路径处理；
+- [x] blur-only 完成可由 window focus 恢复结果焦点；
 - [x] 进入规格 Gate 已包含 reduced-motion 与 Canvas 失败竞态；
 - [x] `npm run verify` 通过：55 个作品入口、1 个能力声明，资源与借鉴声明完整。
 
