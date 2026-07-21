@@ -5,7 +5,7 @@
 ## 启动
 
 1. 首次在仓库根目录双击 `setup.command`（Windows 使用 `setup.bat`）；
-2. 以后双击 `start.command` / `start.bat`；
+2. 以后直接双击本目录的 `start.command` / `start.bat`，或从根目录统一门户进入；
 3. 两台设备通过同一 Wi-Fi 打开门户中的“同心解锁”；
 4. 一方创建房间，另一方输入五位房间码加入。
 

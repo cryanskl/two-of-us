@@ -177,6 +177,24 @@
 | [168-constellation-relay-design.md](./168-constellation-relay-design.md) | “把星光，一笔一笔交给你”的三态 ImageGen 概念、夜班接线台系统、两张原创资产、响应式、fidelity ledger 与 agency signoff |
 | [169-constellation-relay-plan.md](./169-constellation-relay-plan.md) | “把星光，一笔一笔交给你”的逻辑/前端文件所有权、独立提交、目录、浏览器、bugs/learn 与视觉闭环实施计划 |
 | [170-constellation-relay-verification.md](./170-constellation-relay-verification.md) | “把星光，一笔一笔交给你”的 41 项逻辑、1492 项全仓、55 项入口、四类失败、双输入、四档宽度、降级、来源、bugs/learn 与视觉忠实度验收 |
+| [171-shadow-duet-research.md](./171-shadow-duet-research.md) | “影子双人舞”的定向调研、许可候选与本地实现边界 |
+| [172-shadow-duet-spec.md](./172-shadow-duet-spec.md) | “影子双人舞”的可执行玩法、状态与验收规格 |
+| [176-capsule-docking-research.md](./176-capsule-docking-research.md) | “太空舱对接”的定向调研、参考边界与本地可行性 |
+| [177-capsule-docking-spec.md](./177-capsule-docking-spec.md) | “太空舱对接”的可执行玩法与验收规格 |
+| [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
+| [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
+| [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
+| [181-snow-globe-message-research.md](./181-snow-globe-message-research.md) | “雪球留言”的定向调研、许可候选与本地实现边界 |
+| [182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md) | “雪球留言”的可执行交互与验收规格 |
+| [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
+| [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
+| [185-flower-language-bouquet-research.md](./185-flower-language-bouquet-research.md) | “花语配方”的定向调研、花语来源与原创边界 |
+| [186-flower-language-bouquet-spec.md](./186-flower-language-bouquet-spec.md) | “花语配方”的配花逻辑、状态与验收规格 |
+| [187-flower-language-bouquet-design-proposal.md](./187-flower-language-bouquet-design-proposal.md) | “花语配方”的视觉方向提案与待确认 Gate |
+| [188-flower-language-bouquet-plan.md](./188-flower-language-bouquet-plan.md) | “花语配方”的分步实施、独立提交与验收计划 |
+| [189-non-a-direct-launch-brainstorm.md](./189-non-a-direct-launch-brainstorm.md) | B/C/D 作品直达启动与已有运行时复用的方案取舍 |
+| [190-non-a-direct-launch-spec.md](./190-non-a-direct-launch-spec.md) | 作品级薄启动器、运行时身份探测与安全复用规格 |
+| [191-non-a-direct-launch-plan.md](./191-non-a-direct-launch-plan.md) | 运行时复用、七套直达启动器、文档和浏览器验收计划 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。

@@ -4,13 +4,15 @@
 
 ## 立即体验
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 46 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
+双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 47 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
 
 如果要启用局域网二维码和后续 C 级双设备房间：
 
 1. 首次双击 macOS 的 `setup.command` 或 Windows 的 `setup.bat`；
 2. 以后双击 `start.command` 或 `start.bat`，门户会自动在浏览器打开；
 3. 同一 Wi-Fi 的另一台设备扫描门户二维码加入。
+
+每个已安装的 B/C/D 作品目录也有自己的 `start.command` 与 `start.bat`。完成一次根目录统一安装后，可以直接双击作品目录里的启动器直达该作品；若共享运行时已经启动，后续启动器会安全复用同一个端口和进程，不会重复常驻服务。
 
 > 浏览器通常会限制自动播放音乐。如果页面没有声音，请先点击页面中央的爱心，再检查浏览器的音频权限。
 
@@ -188,6 +190,24 @@
 - [“把星光，一笔一笔交给你”视觉设计与资产冻结](./docs/168-constellation-relay-design.md)
 - [“把星光，一笔一笔交给你”分步实施计划](./docs/169-constellation-relay-plan.md)
 - [“把星光，一笔一笔交给你”验收记录](./docs/170-constellation-relay-verification.md)
+- [影子双人舞定向调研](./docs/171-shadow-duet-research.md)
+- [影子双人舞可执行规格](./docs/172-shadow-duet-spec.md)
+- [太空舱对接定向调研](./docs/176-capsule-docking-research.md)
+- [太空舱对接可执行规格](./docs/177-capsule-docking-spec.md)
+- [夸夸老虎机定向调研](./docs/178-compliment-reels-research.md)
+- [夸夸老虎机文案审计](./docs/179-compliment-reels-copy-audit.md)
+- [夸夸老虎机可执行规格](./docs/180-compliment-reels-spec.md)
+- [雪球留言定向调研](./docs/181-snow-globe-message-research.md)
+- [雪球留言可执行规格](./docs/182-snow-globe-message-spec.md)
+- [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
+- [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
+- [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)
+- [花语配方可执行规格](./docs/186-flower-language-bouquet-spec.md)
+- [花语配方视觉提案](./docs/187-flower-language-bouquet-design-proposal.md)
+- [花语配方实施计划](./docs/188-flower-language-bouquet-plan.md)
+- [非 A 级作品直达启动 Brainstorm](./docs/189-non-a-direct-launch-brainstorm.md)
+- [可复用直达启动器规格](./docs/190-non-a-direct-launch-spec.md)
+- [可复用直达启动器实施计划](./docs/191-non-a-direct-launch-plan.md)
 - [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
 - [单人惊喜类调研](./docs/10-surprise-research.md)
 - [双人合作类调研](./docs/20-co-op-research.md)

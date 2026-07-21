@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [本地运行时复用：显式身份、确定 loopback 与薄启动器](./2026-07-21-local-runtime-reuse-and-thin-launchers.md)
 - [Euler 接力路径：整数相交、后缀可解性与原子重试](./2026-07-21-euler-relay-geometry-and-suffix-solvability.md)
 - [有限库存精确覆盖：后缀可解性、原子前缀与独立穷举 Oracle](./2026-07-21-exact-cover-prefix-commit.md)
 - [闭时间窗合作：整数 tick、事件顺序与自动化时钟](./2026-07-21-closed-window-coop-event-order.md)

@@ -9,7 +9,7 @@
 - 公网依赖：游玩时无
 - 第三方运行依赖：Pannellum 2.5.7（由根目录统一安装）
 
-首次使用时双击仓库根目录的 `setup.command`（Windows 使用 `setup.bat`），以后双击 `start.command`（Windows 使用 `start.bat`），再从统一门户打开“全景回忆”。
+首次使用时双击仓库根目录的 `setup.command`（Windows 使用 `setup.bat`）。以后可直接双击本目录的 `start.command`（Windows 使用 `start.bat`）直达“全景回忆”，也可以从根目录统一门户进入；已有共享运行时会被安全复用。
 
 直接双击本目录的 `index.html` 时，页面只展示 B 级启动说明，不开放照片选择器。这不是故障：Pannellum 受浏览器本地文件安全限制，需要仓库提供的本地服务和固定依赖映射。
 
