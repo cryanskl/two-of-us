@@ -8,6 +8,9 @@
 
 ## 已记录
 
+- [把影子，跳成我们：无 Segmenter 回退错误计算多语种字素与非 emoji ZWJ](./2026-07-21-shadow-duet-grapheme-fallback.md)
+- [把影子，跳成我们：尝试上限没有为剩余幕保留最低预算](./2026-07-21-shadow-duet-attempt-headroom.md)
+- [把影子，跳成我们：UMD 文件在根级 ESM 边界下无法真实 require](./2026-07-21-shadow-duet-commonjs-boundary.md)
 - [统一 setup：内层能力 CLI 的 stderr 绕过外层脱敏](./2026-07-21-setup-capability-stderr-leak.md)
 - [心愿烟火：降动效即时完成让重复激活跨束生效](./2026-07-21-wish-fireworks-reduced-motion-double-activation.md)
 - [星座接线员：焦点调度引入规格禁止的动画帧依赖](./2026-07-21-constellation-relay-focus-raf.md)
