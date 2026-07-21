@@ -179,6 +179,7 @@
 | [170-constellation-relay-verification.md](./170-constellation-relay-verification.md) | “把星光，一笔一笔交给你”的 41 项逻辑、1492 项全仓、55 项入口、四类失败、双输入、四档宽度、降级、来源、bugs/learn 与视觉忠实度验收 |
 | [171-shadow-duet-research.md](./171-shadow-duet-research.md) | “影子双人舞”的定向调研、许可候选与本地实现边界 |
 | [172-shadow-duet-spec.md](./172-shadow-duet-spec.md) | “影子双人舞”的可执行玩法、状态与验收规格 |
+| [203-shadow-duet-plan.md](./203-shadow-duet-plan.md) | “影子双人舞”的纯逻辑先行、视觉 Gate、输入/时钟、独立提交、bugs/learn 与浏览器闭环计划 |
 | [176-capsule-docking-research.md](./176-capsule-docking-research.md) | “太空舱对接”的定向调研、参考边界与本地可行性 |
 | [177-capsule-docking-spec.md](./177-capsule-docking-spec.md) | “太空舱对接”的可执行玩法与验收规格 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |

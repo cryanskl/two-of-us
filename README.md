@@ -40,6 +40,7 @@
 - [雪球留言 ImageGen 视觉简报](./docs/200-snow-globe-message-imagegen-brief.md)
 - [心愿烟火实现前脑暴](./docs/201-wish-fireworks-brainstorm.md)
 - [心愿烟火 ImageGen 视觉简报](./docs/202-wish-fireworks-imagegen-brief.md)
+- [影子双人舞分步实施计划](./docs/203-shadow-duet-plan.md)
 - [C 级首款作品规格：同心解锁](./docs/06-together-lock-spec.md)
 - [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
 - [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)
