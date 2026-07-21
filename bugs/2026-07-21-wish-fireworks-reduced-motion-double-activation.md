@@ -37,7 +37,8 @@
 - AT/语音产生的独立 `detail=0` activation 仍保留；
 - 去重发生在 LAUNCH 与 reduced-motion microtask 之前；
 - 动态切入 reduced-motion 时把当前 pointerId 写入按 `mouse/touch/pen/other` 分桶、最多四项的墓碑表；新 pointerdown 另建 candidate、不能删除其他类型墓碑；旧手势随后补发的 `detail=1` click 只清同桶墓碑并 no-op，不同类型的新 candidate 仍可提交；
-- 同类型墓碑优先于 candidate，pointerId 不匹配时也 fail closed 并保留；元数据缺失且仍有墓碑时同样 no-op；matching pointercancel 可安全清同桶墓碑；
+- 同类型下先匹配精确旧 pointerId：命中才消费墓碑并 no-op；若改为命中当前 normal/reduced candidate，则允许提交且保留旧墓碑；两者都不匹配才 fail closed；元数据缺失且仍有墓碑时同样 no-op；
+- matching pointercancel 原子清普通/reduced candidate 与同身份墓碑，避免 canceled reduced candidate 残留；
 - 独立 `detail=0` activation 不受墓碑阻断；
 - `window.blur`、hidden 与 pagehide 完整取消 capture、holding/awaiting、计时、fallback、held-key 和蓄力 UI；
 - 延迟结果焦点统一由 `window.focus` 与 visible 恢复冲刷，避免 blur-only 完成后永远不聚焦；
