@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [蜜径相逢：state 二次读取与终局 replay 投影可伪造](./2026-07-24-honeycomb-passage-replay-input-boundaries.md)
 - [等雪停下视觉稿：ImageGen 心形点阵不能作为离散坐标证据](./2026-07-23-imagegen-discrete-grid-fidelity-gap.md)
 - [本地启动合同：HTML 扫描边界与浏览器 tokenizer 漂移](./2026-07-21-local-launch-html-tokenizer-boundary.md)
 - [本地启动合同：非 A 资源错误允许控制字符污染 CLI](./2026-07-21-local-launch-cli-control-output.md)

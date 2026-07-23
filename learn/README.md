@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [派生终局投影：既要验证“有结果”，也要证明“不能没有结果”](./2026-07-24-derived-terminal-projection-validation.md)
 - [单次观察快照：把 hostile 输入变成内部普通数据](./2026-07-23-single-observation-snapshot-boundary.md)
 - [Catalog 驱动的本地启动合同：静态闭包、启动器与浏览器证据](./2026-07-21-catalog-driven-local-launch-contracts.md)
 - [无 Segmenter 的字素回退：Unicode Mark、Hangul 与 emoji ZWJ](./2026-07-21-grapheme-fallback-without-segmenter.md)
