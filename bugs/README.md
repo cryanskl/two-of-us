@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [等雪停下视觉稿：ImageGen 心形点阵不能作为离散坐标证据](./2026-07-23-imagegen-discrete-grid-fidelity-gap.md)
 - [本地启动合同：HTML 扫描边界与浏览器 tokenizer 漂移](./2026-07-21-local-launch-html-tokenizer-boundary.md)
 - [本地启动合同：非 A 资源错误允许控制字符污染 CLI](./2026-07-21-local-launch-cli-control-output.md)
 - [本地启动合同：启动器错误 ID 测试可空数组误绿](./2026-07-21-local-launch-vacuous-launcher-test.md)
