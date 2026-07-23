@@ -590,7 +590,7 @@ canRestart
 ```text
 experiences/versus/shadow-sword-duel/
 ├── index.html
-├── style.css
+├── styles.css
 ├── config.js
 ├── logic.js
 ├── app.js
