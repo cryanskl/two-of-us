@@ -35,6 +35,48 @@ function throwingProxy() {
   });
 }
 
+function appendAction(history, type, targetKey) {
+  const replay = logic.replayHistory(history);
+  assert.ok(replay);
+  assert.notEqual(replay.activePlayer, null);
+  const next = logic.applyAction(
+    history,
+    replay.activePlayer,
+    type,
+    logic.parseCellKey(targetKey),
+  );
+  assert.ok(next, `action ${history.length + 1} ${type} ${targetKey} should be legal`);
+  return next;
+}
+
+function playAlternating(yellowActions, purpleActions) {
+  let history = [];
+  for (let index = 0; index < yellowActions.length; index += 1) {
+    history = appendAction(history, yellowActions[index].type, yellowActions[index].targetKey);
+    if (index < purpleActions.length) {
+      history = appendAction(history, purpleActions[index].type, purpleActions[index].targetKey);
+    }
+  }
+  return history;
+}
+
+function stateFromHistory(history, config) {
+  let state = logic.reduce(logic.createInitialState(config), { type: "START" });
+  for (const event of history) {
+    state = logic.reduce(state, {
+      type: "ACT",
+      player: event.player,
+      move: event.type,
+      target: logic.parseCellKey(event.targetKey),
+    });
+  }
+  return state;
+}
+
+function moveActions(keys) {
+  return keys.map((targetKey) => ({ type: "move", targetKey }));
+}
+
 test("导出冻结常量、默认配置和稳定 UMD 全局", () => {
   assert.equal(logic.VERSION, 1);
   assert.equal(logic.PLAYER_COUNT, 2);
@@ -347,6 +389,402 @@ test("BFS 拒绝重复、起点、越界、非 canonical、稀疏、访问器、
   }
   assert.equal(logic.findShortestDistance({ q: 4, r: 0 }, logic.YELLOW, []), null);
   assert.equal(logic.findShortestDistance(start, 2, []), null);
+});
+
+test("空历史重放派生唯一初局、合法行动、距离和回合", () => {
+  const replay = logic.replayHistory([]);
+  assert.deepEqual(replay.positions, logic.STARTS);
+  assert.deepEqual(replay.sealsRemaining, [4, 4]);
+  assert.deepEqual(replay.blockedKeys, []);
+  assert.equal(replay.activePlayer, logic.YELLOW);
+  assert.equal(replay.ply, 0);
+  assert.equal(replay.round, 1);
+  assert.equal(replay.completedRounds, 0);
+  assert.deepEqual(replay.distances, [6, 6]);
+  assert.deepEqual(replay.legalMoves.map(logic.cellKey), ["-2,0", "-2,-1", "-3,1"]);
+  assert.equal(replay.legalSeals.length, 35);
+  assert.equal(replay.result, null);
+  assert.deepEqual(logic.getLegalMoves(replay), replay.legalMoves);
+  assert.deepEqual(logic.getLegalSeals(replay), replay.legalSeals);
+  assert.equal(logic.hasRouteForBoth(replay, { q: 0, r: 0 }), true);
+  assertDeepFrozen(replay);
+});
+
+test("移动与封蜡只追加规范事件并严格换手、扣当前库存", () => {
+  const moved = logic.applyAction([], logic.YELLOW, "move", { q: -2, r: 0 });
+  assert.deepEqual(moved, [
+    { ply: 1, player: 0, type: "move", targetKey: "-2,0" },
+  ]);
+  const afterMove = logic.replayHistory(moved);
+  assert.deepEqual(afterMove.positions, [{ q: -2, r: 0 }, { q: 3, r: 0 }]);
+  assert.equal(afterMove.activePlayer, logic.PURPLE);
+  assert.deepEqual(afterMove.sealsRemaining, [4, 4]);
+
+  const sealed = logic.applyAction(moved, logic.PURPLE, "seal", { q: 0, r: 0 });
+  assert.deepEqual(sealed.at(-1), {
+    ply: 2, player: 1, type: "seal", targetKey: "0,0",
+  });
+  const afterSeal = logic.replayHistory(sealed);
+  assert.deepEqual(afterSeal.blockedKeys, ["0,0"]);
+  assert.deepEqual(afterSeal.sealsRemaining, [4, 3]);
+  assert.equal(afterSeal.activePlayer, logic.YELLOW);
+  assert.equal(afterSeal.round, 2);
+  assert.equal(afterSeal.completedRounds, 1);
+  assertDeepFrozen(sealed);
+});
+
+test("非法移动、错玩家、未知行动、棋子占位和非法封蜡均返回 null", () => {
+  assert.equal(logic.applyAction([], 1, "move", { q: -2, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "move", { q: -1, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "move", { q: 3, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "seal", { q: -3, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "seal", { q: 3, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "jump", { q: -2, r: 0 }), null);
+  assert.equal(logic.applyAction([], 0, "move", { q: 4, r: 0 }), null);
+
+  let approaching = [];
+  for (const action of [
+    ["move", "-2,0"], ["move", "2,0"],
+    ["move", "-1,0"], ["move", "1,0"],
+    ["move", "0,0"],
+  ]) approaching = appendAction(approaching, action[0], action[1]);
+  const replay = logic.replayHistory(approaching);
+  assert.equal(replay.activePlayer, logic.PURPLE);
+  assert.equal(replay.legalMoves.map(logic.cellKey).includes("0,0"), false);
+  assert.equal(logic.applyAction(approaching, logic.PURPLE, "move", { q: 0, r: 0 }), null);
+  assert.equal(logic.findShortestDistance(replay.positions[1], logic.PURPLE, replay.blockedKeys), 4);
+});
+
+test("最后通道封蜡同时从候选和直接提交中拒绝", () => {
+  let history = [];
+  for (const key of ["0,-3", "0,-2", "0,-1", "0,1", "0,2", "0,3"]) {
+    history = appendAction(history, "seal", key);
+  }
+  const replay = logic.replayHistory(history);
+  assert.deepEqual(replay.sealsRemaining, [1, 1]);
+  assert.equal(replay.activePlayer, logic.YELLOW);
+  assert.equal(replay.legalSeals.map(logic.cellKey).includes("0,0"), false);
+  assert.equal(logic.getLegalSeals(replay).map(logic.cellKey).includes("0,0"), false);
+  assert.equal(logic.hasRouteForBoth(replay, { q: 0, r: 0 }), false);
+  assert.equal(logic.applyAction(history, logic.YELLOW, "seal", { q: 0, r: 0 }), null);
+});
+
+test("双方到达目标边立即获胜，终局后拒绝任何追加", () => {
+  const yellowHistory = playAlternating(
+    moveActions(["-2,0", "-1,0", "0,0", "1,0", "2,0", "3,0"]),
+    moveActions(["3,-1", "2,-1", "3,-1", "2,-1", "3,-1"]),
+  );
+  const yellowReplay = logic.replayHistory(yellowHistory);
+  assert.equal(yellowReplay.ply, 11);
+  assert.deepEqual(yellowReplay.result, {
+    reason: "reached-goal",
+    winner: logic.YELLOW,
+    distances: [0, 6],
+    sealsRemaining: [4, 4],
+  });
+  assert.equal(yellowReplay.activePlayer, null);
+  assert.deepEqual(yellowReplay.legalMoves, []);
+  assert.deepEqual(yellowReplay.legalSeals, []);
+  assert.equal(logic.applyAction(yellowHistory, logic.PURPLE, "move", { q: 1, r: -1 }), null);
+  assert.equal(logic.replayHistory([
+    ...yellowHistory,
+    { ply: 12, player: 1, type: "move", targetKey: "1,-1" },
+  ]), null);
+
+  const purpleHistory = playAlternating(
+    moveActions(["-3,1", "-2,1", "-3,1", "-2,1", "-3,1", "-2,1"]),
+    moveActions(["2,0", "1,0", "0,0", "-1,0", "-2,0", "-3,0"]),
+  );
+  assert.deepEqual(logic.replayHistory(purpleHistory).result, {
+    reason: "reached-goal",
+    winner: logic.PURPLE,
+    distances: [5, 0],
+    sealsRemaining: [4, 4],
+  });
+});
+
+test("实际可达的零库存夹具触发 immobilized，永久 BFS 仍忽略对手", () => {
+  const yellowActions = [
+    { type: "seal", targetKey: "0,3" },
+    { type: "seal", targetKey: "1,2" },
+    { type: "seal", targetKey: "2,-3" },
+    { type: "seal", targetKey: "0,-3" },
+    ...moveActions(["-2,0", "-1,0", "0,0", "1,0", "2,0"]),
+  ];
+  const purpleActions = [
+    ...moveActions(["3,-1", "3,0", "3,-1", "3,0"]),
+    { type: "seal", targetKey: "3,-1" },
+    { type: "seal", targetKey: "2,1" },
+    { type: "seal", targetKey: "-3,3" },
+    { type: "seal", targetKey: "3,-3" },
+  ];
+  const history = playAlternating(yellowActions, purpleActions);
+  const beforeTrap = logic.replayHistory(history.slice(0, -1));
+  assert.deepEqual(beforeTrap.sealsRemaining, [0, 0]);
+  assert.deepEqual(beforeTrap.legalSeals, []);
+  assert.equal(beforeTrap.result, null);
+  const replay = logic.replayHistory(history);
+  assert.equal(replay.ply, 17);
+  assert.deepEqual(replay.sealsRemaining, [0, 0]);
+  assert.deepEqual(replay.result, {
+    reason: "immobilized",
+    winner: logic.YELLOW,
+    immobilizedPlayer: logic.PURPLE,
+    distances: [1, 6],
+    sealsRemaining: [0, 0],
+  });
+  assert.equal(
+    logic.findShortestDistance(
+      replay.positions[logic.PURPLE],
+      logic.PURPLE,
+      replay.blockedKeys,
+    ),
+    6,
+  );
+});
+
+test("31 ply 不提前终局，32 ply 精确产生距离、库存和平局三种结算", () => {
+  const purpleCycle = moveActions(Array.from(
+    { length: 16 },
+    (_, index) => index % 2 === 0 ? "2,0" : "3,0",
+  ));
+  const drawYellow = moveActions(Array.from(
+    { length: 16 },
+    (_, index) => index % 2 === 0 ? "-2,0" : "-3,0",
+  ));
+  const drawHistory = playAlternating(drawYellow, purpleCycle);
+  const at31 = logic.replayHistory(drawHistory.slice(0, 31));
+  assert.equal(at31.ply, 31);
+  assert.equal(at31.result, null);
+  assert.equal(at31.activePlayer, logic.PURPLE);
+  const draw = logic.replayHistory(drawHistory);
+  assert.equal(draw.round, 16);
+  assert.equal(draw.completedRounds, 16);
+  assert.deepEqual(draw.result, {
+    reason: "round-limit",
+    winner: null,
+    tiebreak: "draw",
+    distances: [6, 6],
+    sealsRemaining: [4, 4],
+  });
+
+  const closerYellow = moveActions([
+    "-2,0", "-1,0", "-2,0", "-1,0", "-2,0", "-1,0", "-2,0", "-1,0",
+    "-2,0", "-1,0", "-2,0", "-1,0", "-2,0", "-1,0", "-2,0", "-1,0",
+  ]);
+  const distanceResult = logic.replayHistory(playAlternating(closerYellow, purpleCycle)).result;
+  assert.equal(distanceResult.winner, logic.YELLOW);
+  assert.equal(distanceResult.tiebreak, "distance");
+  assert.deepEqual(distanceResult.distances, [4, 6]);
+
+  const sealThenTriangles = [
+    { type: "seal", targetKey: "0,3" },
+    ...moveActions([
+      "-2,0", "-3,1", "-3,0", "-2,0", "-3,1", "-3,0", "-2,0", "-3,1",
+      "-3,0", "-2,0", "-3,1", "-3,0", "-2,0", "-3,1", "-3,0",
+    ]),
+  ];
+  const sealResult = logic.replayHistory(playAlternating(sealThenTriangles, purpleCycle)).result;
+  assert.equal(sealResult.winner, logic.PURPLE);
+  assert.equal(sealResult.tiebreak, "seals");
+  assert.deepEqual(sealResult.distances, [6, 6]);
+  assert.deepEqual(sealResult.sealsRemaining, [3, 4]);
+});
+
+test("reducer 只接受精确 action，revision 与 ply 分离，restart 保留配置", () => {
+  const initial = logic.createInitialState({
+    playerNames: ["朝朝", "暮暮"],
+    finalNote: "再绕一圈。",
+  });
+  assert.deepEqual(initial, {
+    version: 1,
+    phase: "intro",
+    content: {
+      playerNames: ["朝朝", "暮暮"],
+      finalNote: "再绕一圈。",
+    },
+    history: [],
+    revision: 0,
+  });
+  const started = logic.reduce(initial, { type: "START" });
+  assert.equal(started.phase, "playing");
+  assert.equal(started.revision, 1);
+  const moved = logic.reduce(started, {
+    type: "ACT", player: 0, move: "move", target: { q: -2, r: 0 },
+  });
+  assert.equal(moved.history.length, 1);
+  assert.equal(moved.revision, 2);
+  for (const action of [
+    { type: "START" },
+    { type: "ACT", player: 0, move: "move", target: { q: -3, r: 0 } },
+    { type: "ACT", player: 1, move: "move", target: { q: 2, r: 0 }, extra: true },
+    { type: "UNKNOWN" },
+    throwingProxy(),
+  ]) {
+    assert.doesNotThrow(() => logic.reduce(moved, action));
+    assert.equal(logic.reduce(moved, action), moved);
+  }
+
+  const finishedHistory = playAlternating(
+    moveActions(["-2,0", "-1,0", "0,0", "1,0", "2,0", "3,0"]),
+    moveActions(["3,-1", "2,-1", "3,-1", "2,-1", "3,-1"]),
+  );
+  const finished = stateFromHistory(finishedHistory, initial.content);
+  assert.equal(finished.phase, "result");
+  assert.deepEqual(logic.getScreenView(finished).controls, {
+    canStart: false,
+    canAct: false,
+    canRestart: true,
+  });
+  const restarted = logic.reduce(finished, { type: "RESTART" });
+  assert.equal(restarted.phase, "intro");
+  assert.deepEqual(restarted.history, []);
+  assert.deepEqual(restarted.content, initial.content);
+  assert.equal(restarted.revision, finished.revision + 1);
+  assertDeepFrozen(restarted);
+
+  const descriptorState = new Proxy(started, {
+    get() {
+      throw new Error("must not read state through ordinary get");
+    },
+  });
+  const fromDescriptorState = logic.reduce(descriptorState, {
+    type: "ACT", player: 0, move: "move", target: { q: -2, r: 0 },
+  });
+  assert.equal(fromDescriptorState.history.length, 1);
+  assert.equal(fromDescriptorState.revision, 2);
+  assert.equal(logic.getScreenView(descriptorState).phase, "playing");
+
+  const saturated = { ...initial, revision: Number.MAX_SAFE_INTEGER };
+  assert.equal(logic.reduce(saturated, { type: "START" }), saturated);
+});
+
+test("公开 view 只暴露渲染副本、精确 controls 和规范 history", () => {
+  const state = logic.reduce(
+    logic.reduce(logic.createInitialState(), { type: "START" }),
+    { type: "ACT", player: 0, move: "seal", target: { q: 0, r: 0 } },
+  );
+  const view = logic.getScreenView(state);
+  assert.equal(view.phase, "playing");
+  assert.equal(view.title, "蜜径相逢");
+  assert.equal(view.activePlayer, logic.PURPLE);
+  assert.equal(view.ply, 1);
+  assert.equal(view.round, 1);
+  assert.deepEqual(view.blockedKeys, ["0,0"]);
+  assert.deepEqual(view.history, [
+    { ply: 1, player: 0, type: "seal", targetKey: "0,0" },
+  ]);
+  assert.deepEqual(view.controls, {
+    canStart: false,
+    canAct: true,
+    canRestart: false,
+  });
+  assert.notEqual(view.history, state.history);
+  assert.notEqual(view.playerNames, state.content.playerNames);
+  assertDeepFrozen(view);
+
+  const recovered = logic.getScreenView({ malformed: true });
+  assert.equal(recovered.phase, "intro");
+  assert.deepEqual(recovered.controls, {
+    canStart: true,
+    canAct: false,
+    canRestart: false,
+  });
+});
+
+test("history、event、state、action 和 replay 的恶意输入安全拒绝", () => {
+  const eventGetter = {};
+  Object.defineProperty(eventGetter, "ply", {
+    enumerable: true,
+    get() {
+      throw new Error("must not run");
+    },
+  });
+  const badHistories = [
+    [eventGetter],
+    [throwingProxy()],
+    [{ ply: 1, player: 1, type: "move", targetKey: "-2,0" }],
+    [{ ply: 2, player: 0, type: "move", targetKey: "-2,0" }],
+    [{ ply: 1, player: 0, type: "move", targetKey: "-2,0", extra: true }],
+    new (class extends Array {})(),
+    throwingProxy(),
+  ];
+  for (const history of badHistories) {
+    assert.doesNotThrow(() => logic.replayHistory(history));
+    assert.equal(logic.replayHistory(history), null);
+    assert.doesNotThrow(() => logic.applyAction(history, 0, "move", { q: -2, r: 0 }));
+    assert.equal(logic.applyAction(history, 0, "move", { q: -2, r: 0 }), null);
+  }
+
+  const started = logic.reduce(logic.createInitialState(), { type: "START" });
+  const malformedState = { ...started, history: badHistories[0] };
+  const recovered = logic.reduce(malformedState, { type: "START" });
+  assert.deepEqual(recovered, logic.createInitialState());
+  assertDeepFrozen(recovered);
+  assert.deepEqual(logic.getLegalMoves(throwingProxy()), []);
+  assert.deepEqual(logic.getLegalSeals(throwingProxy()), []);
+  assert.equal(logic.hasRouteForBoth(throwingProxy(), { q: 0, r: 0 }), false);
+});
+
+test("玩家与坐标镜像后初始移动、封蜡和距离保持镜像", () => {
+  const yellow = logic.replayHistory([]);
+  const afterSymmetricSeal = logic.replayHistory(logic.applyAction(
+    [], logic.YELLOW, "seal", { q: 0, r: 0 },
+  ));
+  assert.equal(afterSymmetricSeal.activePlayer, logic.PURPLE);
+  assert.deepEqual(
+    yellow.legalMoves.map(mirror).map(logic.cellKey).sort(),
+    afterSymmetricSeal.legalMoves.map(logic.cellKey).sort(),
+  );
+  assert.deepEqual(
+    yellow.legalSeals
+      .filter((cell) => logic.cellKey(cell) !== "0,0")
+      .map(mirror)
+      .map(logic.cellKey)
+      .sort(),
+    afterSymmetricSeal.legalSeals.map(logic.cellKey).sort(),
+  );
+  assert.equal(yellow.distances[0], afterSymmetricSeal.distances[1]);
+});
+
+test("固定种子至少 1000 步合法随机游走持续满足不变量", () => {
+  let seed = 0x5EED1234;
+  let accepted = 0;
+  let games = 0;
+  while (accepted < 1000) {
+    let history = [];
+    games += 1;
+    while (accepted < 1000) {
+      const replay = logic.replayHistory(history);
+      assert.ok(replay);
+      if (replay.result) break;
+      const actions = [
+        ...replay.legalMoves.map((target) => ({ type: "move", target })),
+        ...replay.legalSeals.map((target) => ({ type: "seal", target })),
+      ];
+      assert.ok(actions.length > 0);
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const chosen = actions[seed % actions.length];
+      const next = logic.applyAction(history, replay.activePlayer, chosen.type, chosen.target);
+      assert.ok(next);
+      history = next;
+      const current = logic.replayHistory(history);
+      accepted += 1;
+      assert.equal(current.ply, history.length);
+      assert.notEqual(logic.cellKey(current.positions[0]), logic.cellKey(current.positions[1]));
+      assert.equal(current.blockedKeys.includes(logic.cellKey(current.positions[0])), false);
+      assert.equal(current.blockedKeys.includes(logic.cellKey(current.positions[1])), false);
+      assert.equal(current.sealsRemaining.every((count) => count >= 0 && count <= 4), true);
+      assert.equal(current.distances.every((distance) => Number.isSafeInteger(distance)), true);
+      assert.equal(history.every((event, index) => event.ply === index + 1), true);
+      if (current.result) {
+        assert.equal(logic.applyAction(history, 0, "move", { q: 0, r: 0 }), null);
+        break;
+      }
+    }
+  }
+  assert.ok(games > 1);
+  assert.equal(accepted, 1000);
 });
 
 test("生产脚本没有 DOM、网络、存储、随机或计时依赖", async () => {
