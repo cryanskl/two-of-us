@@ -323,8 +323,12 @@ winner 字段。
 - result 阶段的 roundIndex 等于最后一条历史的 roundIndex；
 - round-result 只在未终局且 roundIndex 小于 9 时成立；
 - match-result 只在体力归零或第 9 回合已揭晓时成立；
-- revision 每次合法 reducer 转换加 1，非法 action 保持原对象引用；
-- RESTART 是唯一例外：返回新的初始 state，revision 重新为 0，以满足深相等。
+- revision 小于 `Number.MAX_SAFE_INTEGER` 时，每次合法 reducer 转换加 1，非法
+  action 保持原对象引用；
+- revision 已等于 `Number.MAX_SAFE_INTEGER` 时，除终局 RESTART 外的任何 action
+  都保持原对象引用，不能产生不安全整数或部分转换；
+- RESTART 是唯一重置例外：在 match-result 仍返回新的初始 state，revision
+  重新为 0，以满足深相等。
 
 畸形 state 传入 reducer 或 getScreenView 时不得崩溃、触发 getter 或修改调用方：
 
@@ -653,6 +657,8 @@ experiences/versus/shadow-sword-duel/
 - round-result 才公开 latestRound；
 - firstSeat 九回合严格 `0,1,0,1,...`；
 - 非法 action 同引用 no-op，revision 不变；
+- revision 达到 `Number.MAX_SAFE_INTEGER` 时所有非 RESTART action 同引用 no-op，
+  match-result 的 RESTART 仍恢复初态；
 - RESTART 与 createInitialState 深相等；
 - state/view/history/config 全部冻结、断引用且 getter/Proxy fail closed。
 

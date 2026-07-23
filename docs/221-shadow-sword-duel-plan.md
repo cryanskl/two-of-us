@@ -152,6 +152,8 @@ ATTRIBUTION、assets、experience metadata 或 catalog 占位。
 - CHOOSE 改草稿、CONFIRM 封招、REVEAL 才追加历史；
 - COVER 清草稿但不封招、不换席、不揭晓，RESUME 不恢复草稿；
 - 全部非法 action 同引用 no-op 且 revision 不变；
+- `Number.MAX_SAFE_INTEGER` 饱和时所有非 RESTART action 同引用 no-op，终局
+  RESTART 仍恢复 revision 0；
 - RESTART 与默认 createInitialState 深相等；
 - 每阶段 common keys、controls 与额外字段精确；
 - 非当前阶段字段必须不存在；
