@@ -2,6 +2,9 @@
 
 调研日期：2026-07-21
 
+来源维护复核：2026-07-24；五项固定来源的公开状态、HEAD、许可证与标准校准见
+[`227-wish-fireworks-source-refresh.md`](./227-wish-fireworks-source-refresh.md)。
+
 对应创意：`docs/40-idea-backlog.md` 的 S12“心愿烟火”
 
 推荐目录：`experiences/surprises/wish-fireworks/`

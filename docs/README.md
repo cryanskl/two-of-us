@@ -212,6 +212,7 @@
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
 | [202-wish-fireworks-imagegen-brief.md](./202-wish-fireworks-imagegen-brief.md) | “心愿烟火”的十五张原生尺寸状态/响应式/降级视觉简报、阶段隐私、闪光边界、文案锁与资产台账 |
+| [227-wish-fireworks-source-refresh.md](./227-wish-fireworks-source-refresh.md) | “心愿烟火”五项固定来源的公开状态、默认分支 HEAD、许可证哈希、Pointer Events Level 3 与 WCAG 官方校准 |
 | [185-flower-language-bouquet-research.md](./185-flower-language-bouquet-research.md) | “花语配方”的定向调研、花语来源与原创边界 |
 | [186-flower-language-bouquet-spec.md](./186-flower-language-bouquet-spec.md) | “花语配方”的配花逻辑、状态与验收规格 |
 | [187-flower-language-bouquet-design-proposal.md](./187-flower-language-bouquet-design-proposal.md) | “花语配方”的视觉方向提案与待确认 Gate |
