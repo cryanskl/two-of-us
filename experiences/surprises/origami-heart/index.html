@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="沿着五道代码原生折痕，把一张本地信纸慢慢折成一颗心。">
+  <title>沿着折痕，折到你心里</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="origami-heart">
+  <main id="app" class="app-shell" data-phase="intro" aria-labelledby="page-title">
+    <a class="skip-link" href="#phase-mount">跳到折纸机关</a>
+
+    <nav class="utility-bar" aria-label="体验导航">
+      <a href="../../../index.html">← Two of Us</a>
+      <span id="step-counter">准备开始</span>
+    </nav>
+
+    <header class="app-header">
+      <h1 id="page-title">沿着折痕，慢慢折</h1>
+      <p>沿着亮起的折痕，把这一张纸慢慢收好；最后翻过来，会有一句话等你。</p>
+    </header>
+
+    <section id="phase-mount" class="phase-mount" aria-label="折纸机关"></section>
+    <ol id="fold-progress" class="fold-progress" aria-label="五道折痕进度"></ol>
+
+    <footer class="privacy-note">只在本机 · 不联网 · 刷新即清空</footer>
+    <p id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <noscript>
+      <p class="load-error">需要启用 JavaScript 才能完成五道折痕；页面不会联网或保存内容。</p>
+    </noscript>
+  </main>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

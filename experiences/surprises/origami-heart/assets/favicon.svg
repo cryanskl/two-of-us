@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="折纸心">
+  <rect width="64" height="64" rx="12" fill="#10141d"/>
+  <g fill="#84364e" transform="translate(32 34) rotate(45)">
+    <rect x="-13" y="-13" width="26" height="26"/>
+    <circle cx="0" cy="-13" r="13"/>
+    <circle cx="-13" cy="0" r="13"/>
+  </g>
+  <path d="M16 19h32M32 11v16" fill="none" stroke="#ddbd7b" stroke-width="3" stroke-linecap="round"/>
+</svg>
