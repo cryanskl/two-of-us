@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [拖拽只做预览：离散提交、等价入口与兼容 click](./2026-07-24-drag-preview-and-discrete-commit.md)
 - [逐步公开视觉必须验证“不存在”](./2026-07-24-prefix-private-visual-concepts.md)
 - [生成式 UI 概念是视觉证据，不是状态 Oracle](./2026-07-24-generated-ui-concepts-are-not-state-oracles.md)
 - [标准状态与项目 Gate：不要把更严格的自定值写成规范原文](./2026-07-24-standard-status-and-project-gates.md)
