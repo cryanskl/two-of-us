@@ -18,7 +18,7 @@ S16 可以在本仓库独立实现为零依赖、可直接双击的轻量惊喜�
 
 | 来源 | 固定 commit | 状态 | 许可证 |
 |---|---|---|---|
-| [`joumorisu/CSS-Origami`](https://github.com/joumorisu/CSS-Origami/tree/2b25ed2f7e7162eb3234fda1093617f4f7134c03) | `2b25ed2f7e7162eb3234fda1093617f4f7134c03` | 默认分支 HEAD；未归档、未禁用 | MIT；Copyright (c) 2017 Joseph |
+| [`joumorisu/CSS-Origami`](https://github.com/joumorisu/CSS-Origami/tree/2b25ed2f7e7162eb3234fda1093617f4f7134c03) | `2b25ed2f7e7162eb3234fda1093617f4f7134c03` | 默认分支 HEAD；未归档、未禁用；README 明示不再维护 | MIT；Copyright (c) 2017 Joseph |
 | [`dmotz/oriDomi`](https://github.com/dmotz/oriDomi/tree/f90830504d6843dfdf5b72d873c01cd716538485) | `f90830504d6843dfdf5b72d873c01cd716538485` | 默认分支 HEAD；未归档、未禁用 | MIT；Copyright (c) 2014 Dan Motzenbecker |
 
 许可证载体：
@@ -40,17 +40,18 @@ CSS-Origami 只用于确认：
 
 oriDomi 只用于确认：
 
-- 折叠表现需要清晰的初始化、更新、重置与销毁边界；
+- 折叠表现需要清晰的初始化、效果调用/内容修改、重置与销毁边界；
 - 一个 DOM 对象可被表现为多个折面；
-- 表现 API 不应成为业务状态本身。
+- 本项目据此推导“表现 API 不应成为业务状态本身”；这条是本仓库架构结论，不是上游主张。
 
 本作不复制、改写、翻译、链接、打包或 vendoring 两个项目的源码、CoffeeScript、CSS、API、数学、常量、示例、SVG、图片、文案或页面。生产代码不依赖它们。
 
 ### 2.3 排除来源
 
-- [`rabbit-ear/rabbit-ear`](https://github.com/rabbit-ear/rabbit-ear) 与 [`raphamorim/origami.js`](https://github.com/raphamorim/origami.js) 均为 GPL-3.0；本作不需要真实折纸几何、FOLD 数据、Canvas 引擎或相应许可义务，因此不复制、不依赖，只作为搜索排除记录；
-- `mangaslave/HeartOrigami` 未发现清晰仓库级许可证，不作为可复制来源；
-- `hannahapuan/shetech-origami-heart` 建立在 GPL 折纸库之上，不进入本作；
+- [`rabbit-ear/rabbit-ear@b717948c`](https://github.com/rabbit-ear/rabbit-ear/tree/b717948c712324dba2132450a12c0260a48e8aeb) 为 GPL-3.0，固定 `license` SHA-256 为 `2fcbc59fd6474f7451a53b73bb38648034eeb71fcd3613330b0ffd6296d94784`；
+- [`raphamorim/origami.js@b77fb0b4`](https://github.com/raphamorim/origami.js/tree/b77fb0b45188e66ea5644884279b8cff24b5bf81) 为 GPL-3.0 且仓库已归档，固定 `COPYING` SHA-256 为 `0ae0485a5bd37a63e63603596417e4eb0e653334fa6c7f932ca3a0e85d4af227`；
+- [`mangaslave/HeartOrigami@3d045f4e`](https://github.com/mangaslave/HeartOrigami/tree/3d045f4e580820039940d72c64de67bf2096fed3) 未发现清晰仓库级许可证，不作为可复制来源；
+- [`hannahapuan/shetech-origami-heart@d18dd223`](https://github.com/hannahapuan/shetech-origami-heart/tree/d18dd223a7f021318708efaaf784674280b08a9b) 没有清晰仓库级许可证，且包含来源与许可载体未完整随附的 vendored 代码和外部折纸教程步骤；不能用相关项目后来的许可证状态倒推其 2019 固定对象，因此只作排除记录，不复制代码、FOLD/SVG、折叠步骤或视觉，也不依赖；
 - CodePen、短视频、博客图解、商业折纸书与品牌贺卡只用于发现，不复制步骤图、折线图、照片、文案、版式或 trade dress；
 - 不使用系统 emoji、第三方图标库、图片心形、远程字体或音频。
 
@@ -86,8 +87,12 @@ Level 2 明确允许用户代理只支持二维子集。因此生产实现不能
 | 准则 | 等级 | 本作处理 |
 |---|---:|---|
 | 1.3.1 Info and Relationships | A | 有序列表表达五道折痕与当前步骤 |
-| 1.4.10 Reflow | AA | 320px 宽和 200% 文本缩放仍可纵向完成 |
+| 1.4.4 Resize Text | AA | 文本放大到 200% 仍不丢失内容或功能 |
+| 1.4.10 Reflow | AA | 320 CSS px 等效宽度（典型 1280px/400% zoom）不丢功能或要求非必要双向滚动 |
+| 2.1.1 Keyboard | A | 不使用 Pointer 也能完成五折、翻面与重开 |
+| 2.4.7 Focus Visible | AA | 所有键盘焦点都有至少 3px 可见轮廓 |
 | 2.3.3 Animation from Interactions | AAA | reduced-motion 直接切稳态 |
+| 2.5.2 Pointer Cancellation | A | 只在 pointerup 提交；cancel/lost 不推进 |
 | 2.5.7 Dragging Movements | AA | 原生按钮完整替代拖动 |
 | 2.5.8 Target Size (Minimum) | AA | 项目使用至少 48×48 CSS px，严于 24×24 最低值 |
 | 4.1.3 Status Messages | AA | 单一稳定 live region 播报步骤结果 |
