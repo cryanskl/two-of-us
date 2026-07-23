@@ -224,6 +224,7 @@
 - [蛋糕点烛分步实施计划](./docs/216-candle-wishes-plan.md)
 - [蛋糕点烛视觉概念提案](./docs/217-candle-wishes-design-proposal.md)
 - [影子剑术定向调研](./docs/219-shadow-sword-duel-research.md)
+- [影子剑术可执行规格](./docs/220-shadow-sword-duel-spec.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)
