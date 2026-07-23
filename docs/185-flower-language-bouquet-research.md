@@ -2,6 +2,8 @@
 
 调研日期：2026-07-21
 
+来源维护复核：[232-flower-language-bouquet-source-refresh.md](./232-flower-language-bouquet-source-refresh.md)
+
 对应创意：`docs/40-idea-backlog.md` 的 S13“花语配方”
 
 建议目录：`experiences/surprises/flower-language-bouquet/`
