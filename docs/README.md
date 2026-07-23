@@ -193,6 +193,7 @@
 | [215-candle-wishes-spec.md](./215-candle-wishes-spec.md) | “把愿望，一盏一盏点亮”的五步路线、固定展示排列、四阶段 reducer、隐私/焦点与完整验收规格 |
 | [216-candle-wishes-plan.md](./216-candle-wishes-plan.md) | “把愿望，一盏一盏点亮”的四个实现批次、视觉确认 Gate、file/localhost、来源、Chrome、bugs/learn 与验证闭环计划 |
 | [217-candle-wishes-design-proposal.md](./217-candle-wishes-design-proposal.md) | 桌面 lighting 与移动 complete 的纸艺蛋糕视觉概念、设计系统、采纳/拒绝台账与用户确认 Gate |
+| [219-shadow-sword-duel-research.md](./219-shadow-sword-duel-research.md) | 创意池 V19“影子剑术”的热座密封、体力/气/先机联合结算、A 级边界与固定来源/许可证调研 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
