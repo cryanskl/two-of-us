@@ -195,6 +195,7 @@
 | [217-candle-wishes-design-proposal.md](./217-candle-wishes-design-proposal.md) | 桌面 lighting 与移动 complete 的纸艺蛋糕视觉概念、设计系统、采纳/拒绝台账与用户确认 Gate |
 | [219-shadow-sword-duel-research.md](./219-shadow-sword-duel-research.md) | 创意池 V19“影子剑术”的热座密封、体力/气/先机联合结算、A 级边界与固定来源/许可证调研 |
 | [220-shadow-sword-duel-spec.md](./220-shadow-sword-duel-spec.md) | “影子剑术”的四动作资源规则、九回合事件重放、热座遮屏、精确 reducer/DTO 与完整验收规格 |
+| [221-shadow-sword-duel-plan.md](./221-shadow-sword-duel-plan.md) | “影子剑术”的核心/视觉 Gate/UI/集成/QA 文件所有权、独立提交、Chrome、bugs/learn 与验证闭环计划 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
