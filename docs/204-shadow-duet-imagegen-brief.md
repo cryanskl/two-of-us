@@ -1,10 +1,12 @@
 # “把影子，跳成我们”ImageGen 视觉简报
 
 - 日期：2026-07-21
-- 状态：简报已冻结，尚未生成概念；生产 UI 等待概念确认
+- 状态：简报已冻结；16 张概念已生成并逐张原尺寸复核，生产 UI 等待用户确认
 - 对应调研/Brainstorm：[171-shadow-duet-research.md](./171-shadow-duet-research.md)
 - 对应规格：[172-shadow-duet-spec.md](./172-shadow-duet-spec.md)
 - 对应计划：[203-shadow-duet-plan.md](./203-shadow-duet-plan.md)
+- 视觉提案：[205-shadow-duet-design-proposal.md](./205-shadow-duet-design-proposal.md)
+- 生成台账：[assets/shadow-duet/GENERATION.md](./assets/shadow-duet/GENERATION.md)
 - 目标目录：`experiences/co-op/shadow-duet/`
 
 ## 1. 视觉任务
@@ -311,4 +313,6 @@ live region 文案不可视，不进入概念。不要增加作品类别、等�
 
 开发前研究过的 Bemuse、osu!、PixiJS 与 MediaPipe 只提供公开时间线/判定分层、场景职责与摄像头依赖排除边界；固定 commit、许可证、版权主体、实际借鉴和未复制范围保留在 [171](./171-shadow-duet-research.md) 与 [172](./172-shadow-duet-spec.md)。它们不是运行依赖，也不是 ImageGen 图片输入。尤其 Bemuse 的 AGPL 主项目代码、osu! 的品牌/资源、PixiJS 引擎 API 与 MediaPipe 模型/WASM 全部排除。
 
-本文件尚未生成或引入任何新资产。后续每张概念与生产资产都必须建立生成台账；不能以本简报代替逐文件来源声明。
+本简报已据此生成 16 张 docs-only 概念，逐文件来源、哈希、引用链与淘汰稿见
+[生成台账](./assets/shadow-duet/GENERATION.md)。这些概念不进入运行时，也不
+替代未来生产资产的逐文件来源声明。
