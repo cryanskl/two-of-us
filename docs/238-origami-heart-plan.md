@@ -117,6 +117,7 @@ git diff --check
    - `docs/README.md`
    - `docs/40-idea-backlog.md` 的 S16
    - `shared/runtime/catalog.test.js`
+   - `scripts/experience-contracts.test.mjs` 的 installed/A/non-A 精确计数
 7. 只有入口、来源、浏览器路径和共享测试通过后才登记 installed。
 
 当前实测目录为 55 个作品入口、47 个 A 级。若本作完成，预计变为 56 / 48；创意池预计从已实现 39、惊喜 11、未实现 21，变为 40 / 12 / 20。所有数字以 `npm run verify` 和测试实测为准。
