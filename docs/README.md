@@ -189,6 +189,7 @@
 | [211-catalog-local-launch-spec.md](./211-catalog-local-launch-spec.md) | 本地直达 renderer、HTML/CSS/JS 依赖扫描、稳定错误、fixture 与 verify 集成规格 |
 | [212-catalog-local-launch-plan.md](./212-catalog-local-launch-plan.md) | 本地直达合同的子代理边界、三次独立提交、Chrome 全量 A 级与 B/C/D 抽样验收计划 |
 | [213-catalog-local-launch-verification.md](./213-catalog-local-launch-verification.md) | 47 个 A 静态 file 合同、55 个 localhost Chrome 入口、三类网络监听器与工具限制验收 |
+| [214-candle-wishes-research.md](./214-candle-wishes-research.md) | S17“蛋糕点烛”的五支线索匹配、逐句愿望、主动收下、A 级边界与固定来源/许可证调研 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
