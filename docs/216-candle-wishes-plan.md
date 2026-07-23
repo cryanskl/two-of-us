@@ -1,7 +1,9 @@
 # “把愿望，一盏一盏点亮”分步实施计划
 
 - 日期：2026-07-23
-- 状态：待执行
+- 状态：执行中；核心逻辑已于 `ea31a42` 提交，生产 UI 等待
+  [217-candle-wishes-design-proposal.md](./217-candle-wishes-design-proposal.md)
+  获得用户明确确认
 - 对应调研：[214-candle-wishes-research.md](./214-candle-wishes-research.md)
 - 对应规格：[215-candle-wishes-spec.md](./215-candle-wishes-spec.md)
 - 对应创意：S17“蛋糕点烛”
@@ -12,12 +14,16 @@
 ## 1. 执行原则
 
 本作按用户要求“每完成一个项目或者一部分，就提交一次”。调研与规格已经分别
-形成独立部分；后续实现严格拆成四个不可合并的提交批次：
+形成独立部分；后续交付保留四个不可合并的实现批次，并在批次一、二之间增加一个
+docs-only 视觉确认 Gate：
 
 1. config、纯逻辑、纯逻辑测试与目录级 package；
 2. HTML、app、CSS 与完整 UI；
 3. README、ATTRIBUTION、experience/catalog、门户与启动合同；
 4. Chrome QA、bugs、learn 与最终 verification。
+
+批次一完成后，先独立提交 docs-only 视觉概念与生成台账；只有用户明确确认后，
+才进入批次二。概念 PNG 不进入生产目录，也不改变四个实现批次的文件边界。
 
 每批都必须满足本节定义的文件边界、定向测试、全仓测试和完成证据后才提交。前一
 批未提交时不得开始修改后一批文件；发现需要回改前一批时，停止当前批，先用独立
@@ -35,7 +41,7 @@ git branch --show-current && git rev-parse --show-toplevel
 
 ## 2. 固定交付合同
 
-四批共同遵守以下不可降级合同：
+四个实现批次与视觉 Gate 共同遵守以下不可降级合同：
 
 - `index.html` 使用相对路径经典脚本，用户双击后通过 `file://` 可完成开始、一次
   错误选择、五支正确点亮、主动收下与重开；
@@ -274,12 +280,12 @@ docs: register and attribute candle wishes
 ### 6.1 允许写入文件
 
 ```text
-docs/217-candle-wishes-verification.md
+docs/218-candle-wishes-verification.md
 bugs/YYYY-MM-DD-candle-wishes-<slug>.md
 learn/<evidence-backed-topic>.md
 ```
 
-编号 217 仅在提交时仍未被占用才使用；若已占用，由主线程选择下一空闲编号并同步
+编号 218 仅在提交时仍未被占用才使用；若已占用，由主线程选择下一空闲编号并同步
 索引。只有真实复现并修复的问题才写 bugs；只有跨作品可复用且已有实现/测试证据的
 主题才写 learn，不能为凑齐目录创建空洞条目。
 
@@ -373,11 +379,12 @@ docs: verify candle wishes experience
 
 1. 主线程先修正并提交规格审阅发现，再提交本计划；
 2. 派发批次一的非共享文件实现，审阅 exact schema、headroom、隐私和 oracle；
-3. 批次一全绿并独立提交后，才派发批次二 UI；
-4. 批次二先跑逻辑/全仓 Gate，再用 Chrome localhost 冒烟，独立提交；
-5. 主线程串行完成批次三共享索引与借鉴声明，独立提交；
-6. 批次四做完整 Chrome/file QA；发现一个根因，就先完成一个 bug 修复提交；
-7. QA 全绿后写有证据的 learn 与最终 verification，独立提交；
-8. 每个提交后检查 worktree，不能把下一批的半成品带入当前提交。
+3. 批次一全绿并独立提交后，生成 docs-only 概念、原尺寸审阅并独立提交；
+4. 用户明确确认概念后才派发批次二 UI；
+5. 批次二先跑逻辑/全仓 Gate，再用 Chrome localhost 冒烟，独立提交；
+6. 主线程串行完成批次三共享索引与借鉴声明，独立提交；
+7. 批次四做完整 Chrome/file QA；发现一个根因，就先完成一个 bug 修复提交；
+8. QA 全绿后写有证据的 learn 与最终 verification，独立提交；
+9. 每个提交后检查 worktree，不能把下一批的半成品带入当前提交。
 
 本计划完成不等于作品完成，也不等于长期目标完成。
