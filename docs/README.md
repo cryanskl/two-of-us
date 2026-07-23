@@ -182,6 +182,7 @@
 | [203-shadow-duet-plan.md](./203-shadow-duet-plan.md) | “影子双人舞”的纯逻辑先行、视觉 Gate、输入/时钟、独立提交、bugs/learn 与浏览器闭环计划 |
 | [204-shadow-duet-imagegen-brief.md](./204-shadow-duet-imagegen-brief.md) | “影子双人舞”的十六张原生尺寸完整状态/响应式/降级视觉简报、双席语义、文案锁与资产边界 |
 | [205-shadow-duet-design-proposal.md](./205-shadow-duet-design-proposal.md) | “影子双人舞”的十六态纸幕概念、设计系统、响应式/降级规则、生成审计、保真台账与用户确认 Gate |
+| [231-shadow-duet-source-refresh.md](./231-shadow-duet-source-refresh.md) | “影子双人舞”的固定来源、许可冲突、资源/商标边界与现行 Web 标准维护复核 |
 | [176-capsule-docking-research.md](./176-capsule-docking-research.md) | “太空舱对接”的定向调研、参考边界与本地可行性 |
 | [177-capsule-docking-spec.md](./177-capsule-docking-spec.md) | “太空舱对接”的可执行玩法与验收规格 |
 | [207-capsule-docking-brainstorm.md](./207-capsule-docking-brainstorm.md) | “太空舱对接”的 public DTO、阶段 DOM、输入/rAF generation、六条 Gate、真实 CommonJS、无脚本与视觉确认 Gate 决策 |

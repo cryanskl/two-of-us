@@ -2,6 +2,8 @@
 
 调研日期：2026-07-21
 
+来源维护复核：[231-shadow-duet-source-refresh.md](./231-shadow-duet-source-refresh.md)
+
 对应创意：`C19 影子双人舞`
 
 建议目录：`experiences/co-op/shadow-duet/`
