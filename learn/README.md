@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [标准状态与项目 Gate：不要把更严格的自定值写成规范原文](./2026-07-24-standard-status-and-project-gates.md)
 - [派生终局投影：既要验证“有结果”，也要证明“不能没有结果”](./2026-07-24-derived-terminal-projection-validation.md)
 - [单次观察快照：把 hostile 输入变成内部普通数据](./2026-07-23-single-observation-snapshot-boundary.md)
 - [Catalog 驱动的本地启动合同：静态闭包、启动器与浏览器证据](./2026-07-21-catalog-driven-local-launch-contracts.md)

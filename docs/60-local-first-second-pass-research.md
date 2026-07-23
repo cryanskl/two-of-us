@@ -4,7 +4,9 @@
 > 研究对象：情侣惊喜、双人合作、双人对抗与共享本地运行基础设施
 > 研究方法：技术演进纵轴 × 当前 A/B/C/D 启动等级横轴
 > 证据范围：原作者仓库、仓库许可证、官方文档与开放标准；本轮不复制第三方源码
-> 2026-07-24 维护批次：[`227-wish-fireworks-source-refresh.md`](./227-wish-fireworks-source-refresh.md)
+> 2026-07-24 维护批次：
+> [`227-wish-fireworks-source-refresh.md`](./227-wish-fireworks-source-refresh.md)、
+> [`228-capsule-docking-source-refresh.md`](./228-capsule-docking-source-refresh.md)
 
 ## 0. 结论先行
 

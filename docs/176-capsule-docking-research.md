@@ -8,6 +8,9 @@
 
 建议等级：A（单设备同屏、`file://` 直开、无第三方运行依赖）
 
+来源维护复核：
+[228-capsule-docking-source-refresh.md](./228-capsule-docking-source-refresh.md)
+
 ## 1. 调研结论
 
 C20 适合实现成一座近距离对接训练台：姿态席只掌握左右姿态喷口，推进席只掌握主推与反推；两个人共同控制同一艘舱体，把它送入空间站接口，并同时压低位置误差、线速度、船头角度和角速度。
@@ -116,7 +119,10 @@ position        ← position + velocity
 
 任一条件失效，稳定计数立即归零，但只要没有碰撞/越界就可继续修正。碰到接口不是成功；错误角度、过快、仍在喷气或旋转过快都不会捕获。
 
-NASA 的 Orion 近距离对接资料把最终接近描述为同时控制接口相对位置、速度、姿态和姿态率；本作仅借用这四类公开概念来设计可读 Gate，不使用真实飞行参数、导航算法或安全结论，也不是航天训练软件。[NASA NTRS 原始资料](https://ntrs.nasa.gov/citations/20070025134)
+NASA 的 Orion RPOD 资料分别列出近距/对接中的目标相对位置与相对速度，以及
+对接中的目标相对姿态与相对姿态率；本作仅借用这四类公开状态量来设计可读
+Gate，不使用真实飞行参数、导航算法或安全结论，也不是航天训练软件。
+[NASA NTRS 原始资料](https://ntrs.nasa.gov/citations/20070025134)
 
 ## 6. 三个固定航段
 
@@ -211,8 +217,13 @@ SAT.js 源码头与根 LICENSE 的年份写法不同；正式 ATTRIBUTION 原样
 
 - 物理键使用 W3C [KeyboardEvent code values](https://www.w3.org/TR/uievents-code/)，不依赖键盘字符布局；
 - 双触点依据 W3C [Pointer Events](https://www.w3.org/TR/pointerevents3/)，处理 capture、cancel 与 lost capture；
-- rAF 只作调度，规则推进使用固定 tick；隐藏和恢复依据 W3C [Page Visibility](https://www.w3.org/TR/page-visibility-2/)；
-- 可访问性以 [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 为基线：四键至少 44×44px，主动作至少 48px，焦点清晰，200% zoom 可完成；
+- rAF 只作调度，规则推进使用固定 tick；隐藏和恢复依据
+  [WHATWG HTML Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility)；
+  W3C [Page Visibility Level 2](https://www.w3.org/TR/page-visibility-2/)
+  已于 2022-06-23 终止，只作为历史来源；
+- 可访问性以 [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 为基线：焦点清晰、
+  200% zoom 可完成；SC 2.5.8 的 AA 目标尺寸最低值是 24×24 CSS px 并带
+  例外，本项目主动提高为四键至少 44×44px、主动作至少 48px；
 - 位置误差、速度、角度、角速度和稳定计数都提供文本/仪表，不以颜色、旋转动画或 SVG 向量作为唯一信息；
 - reduced-motion 关闭星点漂移、喷焰和镜头缓动，但固定物理与对接窗口不变；
 - forced-colors 使用系统色、线型、文字和边框保留两席、危险壳体与安全 Gate。

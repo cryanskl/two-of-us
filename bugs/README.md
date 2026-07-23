@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [太空舱对接来源复核：系统缺少 `pdftotext`](./2026-07-24-capsule-nasa-pdf-toolchain.md)
 - [蜜径相逢：state 二次读取与终局 replay 投影可伪造](./2026-07-24-honeycomb-passage-replay-input-boundaries.md)
 - [等雪停下视觉稿：ImageGen 心形点阵不能作为离散坐标证据](./2026-07-23-imagegen-discrete-grid-fidelity-gap.md)
 - [本地启动合同：HTML 扫描边界与浏览器 tokenizer 漂移](./2026-07-21-local-launch-html-tokenizer-boundary.md)
