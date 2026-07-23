@@ -1,7 +1,7 @@
 # A 级“雪停以后，是你”分步实施计划
 
 - 日期：2026-07-23
-- 状态：待执行；纯逻辑可先行，生产 UI 等待按视觉简报生成的完整概念获得用户明确确认
+- 状态：执行中；纯逻辑已于 `0984da4` 提交，生产 UI 等待按视觉简报生成的完整概念获得用户明确确认
 - 对应调研：[181-snow-globe-message-research.md](./181-snow-globe-message-research.md)
 - 对应规格：[182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md)
 - 对应脑暴：[199-snow-globe-message-brainstorm.md](./199-snow-globe-message-brainstorm.md)
@@ -15,7 +15,7 @@
 
 200 已冻结十张完整状态概念的生成要求，但当前状态仍是“尚未生成概念”。因此实施分成两条有明确汇合点的路线：
 
-1. 立即实现不依赖 DOM、Canvas、视觉资产或浏览器时钟的配置、点阵、方向 helper、reducer、public view 与纯逻辑测试；
+1. 不依赖 DOM、Canvas、视觉资产或浏览器时钟的配置、点阵、方向 helper、reducer、public view 与纯逻辑测试已完成并提交为 `0984da4`；
 2. 按 200 生成并逐张审阅 G1–G10，形成设计提案；
 3. 只有用户对概念作出明确接受后，才冻结 design-system inventory，并开始生产 `index.html`、`app.js`、`styles.css` 与运行时资产；
 4. UI 完成后再写 README/ATTRIBUTION、登记 catalog、记录 bugs/learn，并完成 Chrome 与真实 `file://` 验收。
