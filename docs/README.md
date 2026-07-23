@@ -215,6 +215,7 @@
 | [233-snow-globe-message-source-refresh.md](./233-snow-globe-message-source-refresh.md) | “雪球留言”的固定来源、许可载体、标准状态、排除项与视觉 Gate 维护复核 |
 | [234-origami-heart-brainstorm.md](./234-origami-heart-brainstorm.md) | “折纸心机关”的产品边界、五道折痕、Pointer/按钮、隐私和代码原生视觉决策 |
 | [235-origami-heart-research.md](./235-origami-heart-research.md) | “折纸心机关”的定向调研、固定来源、零复制边界、平台标准与 Go 结论 |
+| [236-origami-heart-spec.md](./236-origami-heart-spec.md) | “折纸心机关”的五步 reducer、配置、Pointer、公开 DTO、隐私、视觉降级与验收规格 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
