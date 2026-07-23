@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [单次观察快照：把 hostile 输入变成内部普通数据](./2026-07-23-single-observation-snapshot-boundary.md)
 - [Catalog 驱动的本地启动合同：静态闭包、启动器与浏览器证据](./2026-07-21-catalog-driven-local-launch-contracts.md)
 - [无 Segmenter 的字素回退：Unicode Mark、Hangul 与 emoji ZWJ](./2026-07-21-grapheme-fallback-without-segmenter.md)
 - [UMD 双出口不等于真实双模块：最近 package 边界才决定 Node 解释方式](./2026-07-21-umd-and-node-module-boundaries.md)
