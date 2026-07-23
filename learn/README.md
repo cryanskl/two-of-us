@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [逐步公开视觉必须验证“不存在”](./2026-07-24-prefix-private-visual-concepts.md)
 - [生成式 UI 概念是视觉证据，不是状态 Oracle](./2026-07-24-generated-ui-concepts-are-not-state-oracles.md)
 - [标准状态与项目 Gate：不要把更严格的自定值写成规范原文](./2026-07-24-standard-status-and-project-gates.md)
 - [派生终局投影：既要验证“有结果”，也要证明“不能没有结果”](./2026-07-24-derived-terminal-projection-validation.md)

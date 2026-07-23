@@ -1,10 +1,12 @@
 # “把愿望，放到夜空里”ImageGen 视觉简报
 
 - 日期：2026-07-21
-- 状态：简报已冻结，尚未生成概念；生产 UI 等待概念确认
+- 状态：15 张概念已生成并原尺寸核验；生产 UI 等待用户确认
 - 对应调研：[183-wish-fireworks-research.md](./183-wish-fireworks-research.md)
 - 对应规格：[184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md)
 - 对应脑暴：[201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md)
+- 视觉提案：[229-wish-fireworks-design-proposal.md](./229-wish-fireworks-design-proposal.md)
+- 生成台账：[assets/wish-fireworks/GENERATION.md](./assets/wish-fireworks/GENERATION.md)
 - 目标目录：`experiences/surprises/wish-fireworks/`
 
 ## 1. 视觉任务
@@ -302,4 +304,7 @@ live region 文案不可视，不进入概念。不要增加作品名、离线�
 
 玩法开发前研究过的 Fireworks.js、canvas-text-particle、canvas-confetti 与 W3C Pointer Events/WCAG 资料只提供抽象机制、安全与输入边界；固定 commit、许可证、版权主体、实际借鉴和未复制范围保留在 [183](./183-wish-fireworks-research.md) 与 [184](./184-wish-fireworks-spec.md)。它们不是运行依赖，也不是 ImageGen 图片输入。无明确许可证或用途不匹配的演示继续作为排除项。
 
-本文件尚未生成或引入任何新资产。后续每张概念与生产资产都必须建立生成台账；不能以本简报代替逐文件来源声明。
+15 张概念已生成并逐张原尺寸核验，尺寸、SHA-256、完整有效 prompt、淘汰稿与
+运行时排除记录在
+[生成台账](./assets/wish-fireworks/GENERATION.md)。它们全部为 docs-only；
+不得以本简报或概念图代替逐文件来源声明、生产状态测试或浏览器保真验证。

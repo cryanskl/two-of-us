@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [心愿烟火：ImageGen 把阶段结构误画成槽位、轮播与持久控件](./2026-07-24-wish-fireworks-imagegen-state-contract-drift.md)
 - [把影子，跳成我们：ImageGen 把风格引用误当成状态与重复结构真值](./2026-07-24-shadow-duet-imagegen-state-contract-drift.md)
 - [太空舱对接来源复核：系统缺少 `pdftotext`](./2026-07-24-capsule-nasa-pdf-toolchain.md)
 - [蜜径相逢：state 二次读取与终局 replay 投影可伪造](./2026-07-24-honeycomb-passage-replay-input-boundaries.md)
