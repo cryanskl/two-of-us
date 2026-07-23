@@ -2,6 +2,8 @@
 
 调研日期：2026-07-21
 
+来源维护复核：[`233-snow-globe-message-source-refresh.md`](./233-snow-globe-message-source-refresh.md)
+
 对应创意：`docs/40-idea-backlog.md` 的 S11“雪球摇一摇”
 
 推荐目录：`experiences/surprises/snow-globe-message/`

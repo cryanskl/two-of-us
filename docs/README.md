@@ -212,6 +212,7 @@
 | [200-snow-globe-message-imagegen-brief.md](./200-snow-globe-message-imagegen-brief.md) | “雪球留言”的十张完整状态/响应式/降级视觉简报、文案锁、隐私 Gate 与资产边界 |
 | [209-snow-globe-message-plan.md](./209-snow-globe-message-plan.md) | “雪球留言”的分步实施、独立提交、逻辑/视觉/UI Gate 与验收计划 |
 | [210-snow-globe-message-design-proposal.md](./210-snow-globe-message-design-proposal.md) | “雪球留言”的十态视觉概念、设计令牌、响应式/降级提案与待确认 Gate |
+| [233-snow-globe-message-source-refresh.md](./233-snow-globe-message-source-refresh.md) | “雪球留言”的固定来源、许可载体、标准状态、排除项与视觉 Gate 维护复核 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
