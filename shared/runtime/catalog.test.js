@@ -510,6 +510,58 @@ test("future cookie notes keeps its file protocol, staged DOM, and attribution b
   assert.match(attribution, /零代码、零素材复制/);
 });
 
+test("catalog exposes the installed A-level origami heart surprise", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "origami-heart");
+
+  assert.equal(experience.title, "沿着折痕，折到你心里");
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /origami-heart\/index\.html$/);
+  assert.match(portal, /"id": "origami-heart"/);
+});
+
+test("origami heart keeps its file protocol, staged DOM, and attribution boundary", async () => {
+  const root = new URL("../../experiences/surprises/origami-heart/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, packageJson] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("package.json", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js"><\/script>[\s\S]*<script src="\.\/logic\.js"><\/script>[\s\S]*<script src="\.\/app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(html, /有些话想慢一点说/);
+  assert.doesNotMatch(runtimeSource, /(?:https?|wss?):\/\/|\b(?:data|blob):/i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|caches|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /Math\.random|Date\.now|(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|\beval\s*\(/);
+  assert.match(app, /if \(view\.phase === "complete"\) return buildComplete\(\)/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /\.textContent = value == null/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /不是密码学加密/);
+  assert.match(attribution, /2b25ed2f7e7162eb3234fda1093617f4f7134c03/);
+  assert.match(attribution, /f90830504d6843dfdf5b72d873c01cd716538485/);
+  assert.match(attribution, /a4dcc29992c5879066e457d3bb2540a194d5334620b1882450c332fdb9602f42/);
+  assert.match(attribution, /8588b3379ce3245f3753bd31e463bd334b9b7301a3e796450ac723ca42093e5e/);
+  assert.match(attribution, /零第三方代码、零第三方素材、零远程资源/);
+  assert.equal(packageJson, "{\"type\":\"commonjs\"}\n");
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
@@ -1055,7 +1107,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1121,7 +1173,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1194,7 +1246,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1267,7 +1319,7 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
@@ -1336,7 +1388,7 @@ test("seven day garden keeps its file protocol, rule, asset and attribution boun
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "seven-day-garden"/);
   assert.match(coOpIndex, /\.\/seven-day-garden\//);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
 });
 
@@ -1405,7 +1457,7 @@ test("constellation relay keeps its file protocol, graph, asset and attribution 
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "constellation-relay"/);
   assert.match(coOpIndex, /\.\/constellation-relay\//);
-  assert.match(backlog, /已有 39 项[\s\S]*双人合作 18 项[\s\S]*其余 21 项/);
+  assert.match(backlog, /已有 40 项[\s\S]*单人惊喜 12 项[\s\S]*双人合作 18 项[\s\S]*其余 20 项/);
   assert.match(backlog, /\[星座接线员（已实现为“把星光，一笔一笔交给你”）\]\(\.\.\/experiences\/co-op\/constellation-relay\/\)/);
 });
 
