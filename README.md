@@ -221,6 +221,7 @@
 - [雪球留言视觉概念提案](./docs/210-snow-globe-message-design-proposal.md)
 - [蛋糕点烛定向调研](./docs/214-candle-wishes-research.md)
 - [蛋糕点烛可执行规格](./docs/215-candle-wishes-spec.md)
+- [蛋糕点烛分步实施计划](./docs/216-candle-wishes-plan.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)

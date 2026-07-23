@@ -191,6 +191,7 @@
 | [213-catalog-local-launch-verification.md](./213-catalog-local-launch-verification.md) | 47 个 A 静态 file 合同、55 个 localhost Chrome 入口、三类网络监听器与工具限制验收 |
 | [214-candle-wishes-research.md](./214-candle-wishes-research.md) | S17“蛋糕点烛”的五支线索匹配、逐句愿望、主动收下、A 级边界与固定来源/许可证调研 |
 | [215-candle-wishes-spec.md](./215-candle-wishes-spec.md) | “把愿望，一盏一盏点亮”的五步路线、固定展示排列、四阶段 reducer、隐私/焦点与完整验收规格 |
+| [216-candle-wishes-plan.md](./216-candle-wishes-plan.md) | “把愿望，一盏一盏点亮”的四批独立提交、文件边界、file/localhost、来源、Chrome、bugs/learn 与验证闭环计划 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |
