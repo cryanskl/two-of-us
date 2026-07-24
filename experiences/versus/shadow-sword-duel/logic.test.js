@@ -1206,3 +1206,23 @@ test("纯逻辑静态不依赖网络、存储、随机、时钟或 DOM", () => {
     assert.doesNotMatch(sources, forbidden);
   }
 });
+
+test("生产借鉴声明固定四项来源、许可证、排除品牌与零复制边界", () => {
+  const attribution = readFileSync(new URL("./ATTRIBUTION.md", import.meta.url), "utf8");
+  for (const value of [
+    "借鉴与来源声明",
+    "112b77704631fc2ce7ad8e4581f6ca09798ce15a",
+    "Apache-2.0",
+    "65ca73beb62ef2afd980bb9f569b10dabfc60075",
+    "Copyright © 2017 The boardgame.io Authors",
+    "ea1a97a763ac78fee5b35129e2841ef31531328e",
+    "Unlicense",
+    "W3C Document License 2023",
+    "零第三方代码复制",
+    "零第三方资产复制",
+    "Prince of Persia",
+    "生成资产：无",
+  ]) {
+    assert.match(attribution, new RegExp(value));
+  }
+});
