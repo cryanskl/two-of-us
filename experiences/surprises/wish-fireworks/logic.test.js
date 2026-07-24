@@ -909,3 +909,28 @@ test("current targets follow shot band while every revealed glyph stays on band 
     assert.equal(hash(settled.revealedGlyphs[index].targets), DEFAULT_TARGET_HASHES[index]);
   }
 });
+
+test("production attribution freezes five sources, licenses, hashes, and zero-copy boundary", () => {
+  const attribution = fs.readFileSync(
+    new URL("./assets/ATTRIBUTION.md", import.meta.url),
+    "utf8",
+  );
+  for (const value of [
+    "借鉴与来源声明",
+    "8f01eeaef422c1f0880e94ce99040025a1b74d7e",
+    "238e8273305bb2e3c76f9f0bb289fb127c3dff74",
+    "9ee144a548aad85275318b30891c71dcf6e10f7b",
+    "20eebad51dde793070c373d594099a7ed8d96e22",
+    "07123b871c103268375880980fd715b2b26b2ff0",
+    "90ee54acbb98a0f58ef428b972bc5641877b6c56315bd6983396a5682db5d937",
+    "232da9c6c2b9f7e19e5d85cc7cf43760d80b7c4174406ac6404fa2c1b51d531b",
+    "2a9fec8f93f07847a22029d5c423e33e0839da09d516664e5f0608346c03a122",
+    "fd44477c30a832a1dee9ef0b6cfb34677fbe5ef58c0cf655d27c646f11bb2f7a",
+    "7a3ad7d36b8855bc301276279769da4aff648ea5d7b92f3f023c0823ee948764",
+    "生成资产：无",
+    "独立设计和实现",
+    "不属于依赖",
+  ]) {
+    assert.match(attribution, new RegExp(value));
+  }
+});
