@@ -796,3 +796,33 @@ test("all helper outputs are detached from caller arrays and recursively frozen"
   assertDeepFrozen(scene);
   assertDeepFrozen(layout);
 });
+
+test("attribution pins all research sources, licenses, and docs-only generated assets", () => {
+  const attribution = fs.readFileSync(
+    new URL("./assets/ATTRIBUTION.md", import.meta.url),
+    "utf8",
+  );
+  for (const expected of [
+    "8db7a51b4b4bfc4b9a0b05df1cf5d4dda4d923c9",
+    "d857fbe846d5899cd5cf8ea6a47d37e6030f53c0",
+    "6f58d4b2aa10e2d7ed6e38ff84caeb04b210af4e",
+    "723838fcbb9feaa87c8840082640de2ed82383da",
+    "c4ae7066d5a52e8aeaab24b3f7113e25c38183f2",
+    "cea522bc41bfadc364837293d0c4dc585a65ac46",
+    "24c5e48bf66ea61bc199ec6338c81258275ba9c6",
+    "cd1d1da9a5375af0622af4b36e76c6e6bd9d130b",
+    "8b521081b0c65490c9b80633be68871f7bf441fa",
+    "07123b871c103268375880980fd715b2b26b2ff0",
+    "c7573530343759ace8e46438a1fa2c44515b5554",
+    "不复制",
+    "不是植物学事实",
+    "不代表 `config.js` 已加密",
+    "工具调用结果未暴露",
+    "第三方图片、开源截图",
+    "十张图片只在 `docs/` 中",
+    "当前视觉提案仍等待用户确认",
+  ]) assert.equal(attribution.includes(expected), true, expected);
+
+  const generatedHashes = attribution.match(/`[a-f0-9]{64}`/g) ?? [];
+  assert.equal(generatedHashes.length >= 21, true);
+});
