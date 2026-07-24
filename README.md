@@ -231,6 +231,7 @@
 - [花园抢资源 Brainstorm](./docs/241-garden-resource-duel-brainstorm.md)
 - [花园抢资源可执行规格](./docs/242-garden-resource-duel-spec.md)
 - [花园抢资源代码原生视觉设计](./docs/243-garden-resource-duel-design.md)
+- [花园抢资源分步实施计划](./docs/244-garden-resource-duel-plan.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)

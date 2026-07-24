@@ -223,6 +223,7 @@
 | [241-garden-resource-duel-brainstorm.md](./241-garden-resource-duel-brainstorm.md) | “这一朵，我先养开”的有限手牌、共同季节、温和阻断、热座隐私与代码原生双盆花园产品决策 |
 | [242-garden-resource-duel-spec.md](./242-garden-resource-duel-spec.md) | “这一朵，我先养开”的六轮牌库、seed 季节牌堆、联合结算、热座 DTO、历史重放、穷举与 A 级验收规格 |
 | [243-garden-resource-duel-design.md](./243-garden-resource-duel-design.md) | “这一朵，我先养开”的夜晚双盆花园、阶段构图、原生卡牌、响应式、减少动态、强制颜色与 fidelity ledger |
+| [244-garden-resource-duel-plan.md](./244-garden-resource-duel-plan.md) | “这一朵，我先养开”的逻辑/UI/catalog/bug/learn/Chrome 文件所有权、子任务接力与五段独立提交计划 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
