@@ -1836,6 +1836,52 @@ test("memory bid keeps its file protocol, private sequence, and attribution boun
   assert.match(attribution, /零代码、零素材复制/);
 });
 
+test("catalog exposes the installed A-level garden resource duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const game = catalog.experiences.find((item) => item.id === "garden-resource-duel");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备轮流");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /garden-resource-duel\/index\.html$/);
+  assert.match(portal, /"id": "garden-resource-duel"/);
+});
+
+test("garden resource duel keeps its file protocol, hot-seat privacy, and attribution boundary", async () => {
+  const root = new URL("../../experiences/versus/garden-resource-duel/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(runtimeSource, /\b(?:setTimeout|setInterval|requestAnimationFrame)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /replaceChildren/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pagehide/);
+  assert.match(app, /addEventListener\("blur"/);
+  assert.match(logic, /getPublicView/);
+  assert.match(logic, /getPlayerView/);
+  assert.match(readme, /双击 `index\.html`/);
+  assert.match(readme, /第一位确认后不会提前扣减公开手牌/);
+  assert.match(attribution, /aeccb2a889eade57dec7a8ba542e1bd4307a526e/);
+  assert.match(attribution, /65ca73beb62ef2afd980bb9f569b10dabfc60075/);
+  assert.match(attribution, /零代码、零素材复制/);
+});
+
 test("catalog exposes the installed A-level soft sumo duel", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");

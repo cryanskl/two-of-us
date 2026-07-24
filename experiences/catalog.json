@@ -679,6 +679,19 @@
       "networkRequired": false
     },
     {
+      "id": "garden-resource-duel",
+      "title": "这一朵，我先养开",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/garden-resource-duel/index.html",
+      "readme": "experiences/versus/garden-resource-duel/README.md",
+      "description": "轮流遮屏藏下有限的阳光、雨露或虫害牌，共同揭晓后按当前季节长出花瓣，先让自己的花开放。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "soft-sumo",
       "title": "软软相扑",
       "category": "versus",
