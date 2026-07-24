@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [密封联合结算：公开库存延迟、私密占用与策略穷举](./2026-07-24-sealed-joint-settlement-ledgers.md)
 - [拖拽只做预览：离散提交、等价入口与兼容 click](./2026-07-24-drag-preview-and-discrete-commit.md)
 - [逐步公开视觉必须验证“不存在”](./2026-07-24-prefix-private-visual-concepts.md)
 - [生成式 UI 概念是视觉证据，不是状态 Oracle](./2026-07-24-generated-ui-concepts-are-not-state-oracles.md)
