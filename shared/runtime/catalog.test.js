@@ -1882,6 +1882,51 @@ test("garden resource duel keeps its file protocol, hot-seat privacy, and attrib
   assert.match(attribution, /零代码、零素材复制/);
 });
 
+test("catalog exposes the installed A-level heart catapult duel", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const game = catalog.experiences.find((item) => item.id === "heart-catapult");
+
+  assert.equal(game.category, "versus");
+  assert.equal(game.level, "A");
+  assert.equal(game.devices, "单设备轮流");
+  assert.equal(game.installed, true);
+  assert.equal(game.networkRequired, false);
+  assert.match(game.entry, /heart-catapult\/index\.html$/);
+  assert.match(portal, /"id": "heart-catapult"/);
+});
+
+test("heart catapult keeps its deterministic file-protocol and attribution boundaries", async () => {
+  const root = new URL("../../experiences/versus/heart-catapult/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.doesNotMatch(html, /type=["']module["']/i);
+  assert.doesNotMatch(html, /(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|FileReader|getUserMedia|DeviceMotionEvent|AudioContext)\b/);
+  assert.doesNotMatch(runtimeSource, /(?:\.\.\/)+shared\//);
+  assert.doesNotMatch(runtimeSource, /Math\.random/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /visibilitychange/);
+  assert.match(app, /pagehide/);
+  assert.match(logic, /getPublicView/);
+  assert.match(logic, /simulateShot/);
+  assert.match(readme, /双击 `index\.html`/);
+  assert.match(readme, /本轮比分只在\s*两颗都完成后一起更新/);
+  assert.match(attribution, /c96b802232d87d58408ed653dcbe43c0a68611f6/);
+  assert.match(attribution, /acb99b6f8784c809b940f1d2cf745427e088e088/);
+  assert.match(attribution, /零代码、零素材复制/);
+});
+
 test("catalog exposes the installed A-level soft sumo duel", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
