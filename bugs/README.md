@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [爱心投石器：Canvas 或动画帧异常会卡住揭晓流程](./2026-07-24-heart-catapult-canvas-animation-failure-boundary.md)
 - [爱心投石器：aiming 初始焦点出现两套互斥合同](./2026-07-24-heart-catapult-aiming-focus-contract.md)
 - [爱心投石器：计划中的裸文档编号未随路径一起迁移](./2026-07-24-heart-catapult-plan-document-number-drift.md)
 - [爱心投石器：ties-to-even 的负半值产生非 canonical `-0`](./2026-07-24-heart-catapult-negative-zero-rounding.md)
