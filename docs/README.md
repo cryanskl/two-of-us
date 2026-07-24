@@ -225,6 +225,8 @@
 | [243-garden-resource-duel-design.md](./243-garden-resource-duel-design.md) | “这一朵，我先养开”的夜晚双盆花园、阶段构图、原生卡牌、响应式、减少动态、强制颜色与 fidelity ledger |
 | [244-garden-resource-duel-plan.md](./244-garden-resource-duel-plan.md) | “这一朵，我先养开”的逻辑/UI/catalog/bug/learn/Chrome 文件所有权、子任务接力与五段独立提交计划 |
 | [245-garden-resource-duel-verification.md](./245-garden-resource-duel-verification.md) | “这一朵，我先养开”的 22 项逻辑、162000 夹具、1794 项全仓、57/49/8 目录、完整热座终局、秘密 DOM、响应式、来源、bug 与 learn 验收 |
+| [247-heart-catapult-research.md](./247-heart-catapult-research.md) | 创意池 V08“爱心投石器”的秘密瞄准、完整轮公平、单次反弹、确定性物理、五个固定 MIT 来源与 A 级边界调研 |
+| [248-heart-catapult-brainstorm.md](./248-heart-catapult-brainstorm.md) | “这一颗，绕回来找你”的镜像城堡、秘密双份参数、联合计分、热座隐私与代码原生纸雕场地产品决策 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
