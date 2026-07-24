@@ -154,7 +154,7 @@ experiences/versus/heart-catapult/assets/favicon.svg
 
 职责：
 
-- 忠实实现 251；
+- 忠实实现 252；
 - 响应式、缩放、触控尺寸；
 - reduced-motion 与 forced-colors；
 - 零远程资源。
@@ -304,7 +304,7 @@ git diff --check
 
 ## 7. 批次四：CSS、favicon 与视觉闭环
 
-- 实现 251 冻结的纸雕城堡和软垫舞台；
+- 实现 252 冻结的纸雕城堡和软垫舞台；
 - 使用 CSS/Canvas 基本几何与本地 SVG favicon；
 - 动画不参与规则，不使用无限闪烁、抖动或全屏闪白；
 - 所有 hover、active、score、hit/miss 同时有非颜色提示；
