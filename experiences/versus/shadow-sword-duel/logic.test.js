@@ -184,6 +184,48 @@ function swapSeats(value) {
   return [value[1], value[0]];
 }
 
+function resolveRoundOracle(players, actions) {
+  if (actions.some((move, seat) => move === "attack" && players[seat].energy === 0)) {
+    return null;
+  }
+  const hit = players.map((_, seat) => {
+    const opponent = 1 - seat;
+    if (actions[opponent] !== "attack") return false;
+    if (actions[seat] === "dodge") return false;
+    if (actions[seat] === "guard" && !players[opponent].initiative) return false;
+    return true;
+  });
+  const spentEnergy = actions.map((move) => (move === "attack" ? 1 : 0));
+  const spentInitiative = actions.map(
+    (move, seat) => move === "attack" && players[seat].initiative,
+  );
+  const gainedInitiative = actions.map((move, seat) => (
+    move === "guard"
+    && actions[1 - seat] === "attack"
+    && !players[1 - seat].initiative
+  ));
+  const gainedEnergy = actions.map(
+    (move, seat) => move === "charge" && !hit[seat] && players[seat].energy < 2,
+  );
+  const playersAfter = players.map((before, seat) => ({
+    health: Math.max(0, before.health - (hit[seat] ? 1 : 0)),
+    energy: before.energy - spentEnergy[seat] + (gainedEnergy[seat] ? 1 : 0),
+    initiative: actions[seat] === "attack"
+      ? false
+      : gainedInitiative[seat] || before.initiative,
+  }));
+  return {
+    playersBefore: clone(players),
+    actions: actions.slice(),
+    hit,
+    spentEnergy,
+    spentInitiative,
+    gainedEnergy,
+    gainedInitiative,
+    playersAfter,
+  };
+}
+
 function buildReachableStates() {
   const intro = logic.createInitialState();
   const choosing = logic.reduce(intro, { type: "START" });
@@ -452,7 +494,7 @@ test("联合结算对两席完全对称", () => {
   }
 });
 
-test("5,184 组存活资源快照与动作对穷举合法性、对称性和资源边界", () => {
+test("5,184 组存活资源快照与动作对逐项匹配独立规则 oracle", () => {
   const snapshots = [];
   for (let health = 1; health <= 3; health += 1) {
     for (let energy = 0; energy <= 2; energy += 1) {
@@ -469,10 +511,8 @@ test("5,184 组存活资源快照与动作对穷举合法性、对称性和资�
         for (const rightMove of logic.ACTIONS) {
           const players = [left, right];
           const actions = [leftMove, rightMove];
-          const expectedLegal = !(
-            (leftMove === "attack" && left.energy === 0)
-            || (rightMove === "attack" && right.energy === 0)
-          );
+          const expected = resolveRoundOracle(players, actions);
+          const expectedLegal = expected !== null;
           const result = logic.resolveRound(players, actions);
           const mirrored = logic.resolveRound(
             [right, left],
@@ -483,6 +523,7 @@ test("5,184 组存活资源快照与动作对穷举合法性、对称性和资�
           checked += 1;
           if (!expectedLegal) continue;
           legal += 1;
+          assert.deepEqual(result, expected);
 
           for (const after of result.playersAfter) {
             assert.equal(Number.isInteger(after.health), true);
@@ -509,6 +550,47 @@ test("5,184 组存活资源快照与动作对穷举合法性、对称性和资�
   }
   assert.equal(checked, 18 * 18 * 16);
   assert.equal(legal, 18 * 18 * 16 - 18 * 6 * 4 - 6 * 18 * 4 + 6 * 6);
+});
+
+test("reducer action 与冻结 state 各属性 descriptor 只观察一次且不触发 get", () => {
+  const choosing = logic.reduce(logic.createInitialState(), { type: "START" });
+  let actionDescriptorReads = 0;
+  const shiftingAction = new Proxy({}, {
+    ownKeys() {
+      return ["type"];
+    },
+    getOwnPropertyDescriptor(_target, key) {
+      actionDescriptorReads += 1;
+      return {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: actionDescriptorReads === 1 ? "UNKNOWN" : "START",
+      };
+    },
+  });
+  assert.strictEqual(logic.reduce(choosing, shiftingAction), choosing);
+  assert.equal(actionDescriptorReads, 1);
+
+  const initial = logic.createInitialState();
+  const stateDescriptorReads = new Map();
+  let stateGetReads = 0;
+  const stateProxy = new Proxy(initial, {
+    get() {
+      stateGetReads += 1;
+      throw new Error("state property get must not run");
+    },
+    getOwnPropertyDescriptor(target, key) {
+      stateDescriptorReads.set(key, (stateDescriptorReads.get(key) || 0) + 1);
+      return Object.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  assert.deepEqual(logic.getScreenView(stateProxy), logic.getScreenView(initial));
+  assert.equal(stateGetReads, 0);
+  assert.deepEqual(
+    [...stateDescriptorReads.values()],
+    Array(STATE_KEYS.length).fill(1),
+  );
 });
 
 test("联合结算拒绝非法资源、动作与 hostile 容器且不部分结算", () => {
