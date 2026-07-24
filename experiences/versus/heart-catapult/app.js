@@ -504,6 +504,7 @@
         changeTo(Number(input.value) - 1);
         input.focus();
       },
+      { "aria-label": `${options.label}减一档` },
     );
     const increase = makeButton(
       `${options.label}加一档`,
@@ -512,6 +513,7 @@
         changeTo(Number(input.value) + 1);
         input.focus();
       },
+      { "aria-label": `${options.label}加一档` },
     );
 
     function changeTo(rawIndex) {
