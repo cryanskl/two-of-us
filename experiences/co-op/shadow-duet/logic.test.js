@@ -724,3 +724,27 @@ test("production logic has no runtime side-effect APIs", () => {
     /AudioContext|getUserMedia|MediaRecorder|WebSocket|Worker/,
   ]) assert.doesNotMatch(source, forbidden);
 });
+
+test("attribution pins license conflicts, brand boundaries, and docs-only concepts", () => {
+  const attribution = readFileSync(path.join(__dirname, "ATTRIBUTION.md"), "utf8");
+  for (const expected of [
+    "5688164b1904c0cc129b832c91160704b96b3cf3",
+    "06b332e1fa559c005a0fc8099741d88beb63d2433548c23931d2c396ca41aa72",
+    "65a9c6d2af53797cd389ac4ec9838f8409a15e85b658912d63f07c1d0cd7323a",
+    "b11b274d1cb5c22eabe9dba5df14fa1e4ecc4e6d",
+    "2e73c7c4295cc3da18697ac982f64a4ec449e0781e8f4c59318216e13998864a",
+    "1d90a20c62433ba68dff78466e06ee372a5a5232",
+    "0ad5a71bcdff3d756dc5b07f93765aaeb4152538",
+    "不替上游解释该冲突",
+    "品牌受商标法保护",
+    "不是运行依赖",
+    "不读取相机",
+    "工具结果未暴露",
+    "全部为 docs-only",
+    "仍等待用户确认",
+    "不能从完整概念截图裁切",
+  ]) assert.equal(attribution.includes(expected), true, expected);
+
+  const hashes = attribution.match(/`[a-f0-9]{64}`/g) ?? [];
+  assert.equal(hashes.length >= 23, true);
+});
