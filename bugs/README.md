@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [爱心投石器：步进符号被拼进按钮可访问名称](./2026-07-24-heart-catapult-generated-step-name.md)
 - [爱心投石器：角度与力度滑块缺少可访问名称](./2026-07-24-heart-catapult-range-accessible-name.md)
 - [爱心投石器：完整历史会在联合结果前泄露下一段秘密](./2026-07-24-heart-catapult-phase-history-visibility.md)
 - [爱心投石器：隐私遮罩只盖住画面但没有闭合焦点边界](./2026-07-24-heart-catapult-privacy-cover-focus-boundary.md)
