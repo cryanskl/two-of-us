@@ -541,11 +541,11 @@
   }
 
   function parseState(candidate) {
-    const state = observeRecord(candidate, STATE_KEYS, false);
+    const state = observeRecord(candidate, STATE_KEYS, false, true);
     if (!state) return null;
-    const content = parseContent(state.content);
-    const sealedActions = parseSealedArray(state.sealedActions);
-    const history = parseHistory(state.history);
+    const content = parseContent(state.content, true);
+    const sealedActions = parseSealedArray(state.sealedActions, true);
+    const history = parseHistory(state.history, true);
     if (
       state.version !== VERSION
       || !PHASES.includes(state.phase)
@@ -667,10 +667,10 @@
     return state.phase === "match-result" && replay.result !== null;
   }
 
-  function parseContent(candidate) {
-    const content = observeRecord(candidate, CONTENT_KEYS, false);
+  function parseContent(candidate, requireFrozen = false) {
+    const content = observeRecord(candidate, CONTENT_KEYS, false, requireFrozen);
     if (!content) return null;
-    const names = observeArray(content.playerNames, 2);
+    const names = observeArray(content.playerNames, 2, requireFrozen);
     if (!names) return null;
     const left = cleanText(names[0], 1, 12);
     const right = cleanText(names[1], 1, 12);
@@ -708,16 +708,16 @@
     };
   }
 
-  function parseHistory(candidate) {
-    const rows = observeVariableArray(candidate, MAX_ROUNDS);
+  function parseHistory(candidate, requireFrozen = false) {
+    const rows = observeVariableArray(candidate, MAX_ROUNDS, requireFrozen);
     if (!rows) return null;
-    const events = rows.map(parseEvent);
+    const events = rows.map((event) => parseEvent(event, requireFrozen));
     return events.every(Boolean) ? events : null;
   }
 
-  function parseEvent(candidate) {
-    const event = observeRecord(candidate, EVENT_KEYS, false);
-    const actions = event ? parseMoveArray(event.actions) : null;
+  function parseEvent(candidate, requireFrozen = false) {
+    const event = observeRecord(candidate, EVENT_KEYS, false, requireFrozen);
+    const actions = event ? parseMoveArray(event.actions, requireFrozen) : null;
     if (
       !event
       || !Number.isInteger(event.roundIndex)
@@ -733,13 +733,13 @@
     };
   }
 
-  function parseMoveArray(candidate) {
-    const moves = observeArray(candidate, PLAYER_COUNT);
+  function parseMoveArray(candidate, requireFrozen = false) {
+    const moves = observeArray(candidate, PLAYER_COUNT, requireFrozen);
     return moves && moves.every((move) => ACTIONS.includes(move)) ? moves : null;
   }
 
-  function parseSealedArray(candidate) {
-    const moves = observeArray(candidate, PLAYER_COUNT);
+  function parseSealedArray(candidate, requireFrozen = false) {
+    const moves = observeArray(candidate, PLAYER_COUNT, requireFrozen);
     return moves && moves.every((move) => move === null || ACTIONS.includes(move)) ? moves : null;
   }
 
@@ -762,8 +762,8 @@
     return action;
   }
 
-  function observeRecord(candidate, allowedKeys, allowMissing) {
-    const observed = observeAnyRecord(candidate);
+  function observeRecord(candidate, allowedKeys, allowMissing, requireFrozen = false) {
+    const observed = observeAnyRecord(candidate, requireFrozen);
     if (!observed) return null;
     const validKeys = allowMissing
       ? observed.keys.every((key) => allowedKeys.includes(key))
@@ -774,17 +774,19 @@
     return result;
   }
 
-  function observeAnyRecord(candidate) {
+  function observeAnyRecord(candidate, requireFrozen = false) {
     try {
       if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return null;
       const prototype = Object.getPrototypeOf(candidate);
       if (!(prototype === Object.prototype || prototype === null)) return null;
       const keys = Reflect.ownKeys(candidate);
       if (keys.some((key) => typeof key !== "string")) return null;
+      if (requireFrozen && Object.isExtensible(candidate)) return null;
       const values = Object.create(null);
       for (const key of keys) {
         const descriptor = Object.getOwnPropertyDescriptor(candidate, key);
         if (!descriptor || !Object.prototype.hasOwnProperty.call(descriptor, "value")) return null;
+        if (requireFrozen && (descriptor.configurable || descriptor.writable)) return null;
         values[key] = descriptor.value;
       }
       return { keys, values };
@@ -793,14 +795,15 @@
     }
   }
 
-  function observeArray(candidate, length) {
-    const values = observeVariableArray(candidate, length);
+  function observeArray(candidate, length, requireFrozen = false) {
+    const values = observeVariableArray(candidate, length, requireFrozen);
     return values && values.length === length ? values : null;
   }
 
-  function observeVariableArray(candidate, maxLength) {
+  function observeVariableArray(candidate, maxLength, requireFrozen = false) {
     try {
       if (!Array.isArray(candidate) || Object.getPrototypeOf(candidate) !== Array.prototype) return null;
+      if (requireFrozen && Object.isExtensible(candidate)) return null;
       const lengthDescriptor = Object.getOwnPropertyDescriptor(candidate, "length");
       if (
         !lengthDescriptor
@@ -808,6 +811,7 @@
         || !Number.isInteger(lengthDescriptor.value)
         || lengthDescriptor.value < 0
         || lengthDescriptor.value > maxLength
+        || (requireFrozen && (lengthDescriptor.configurable || lengthDescriptor.writable))
       ) return null;
       const length = lengthDescriptor.value;
       const expectedKeys = Array.from({ length }, (_, index) => String(index)).concat("length");
@@ -817,6 +821,7 @@
       for (let index = 0; index < length; index += 1) {
         const descriptor = Object.getOwnPropertyDescriptor(candidate, String(index));
         if (!descriptor || !Object.prototype.hasOwnProperty.call(descriptor, "value")) return null;
+        if (requireFrozen && (descriptor.configurable || descriptor.writable)) return null;
         values.push(descriptor.value);
       }
       return values;

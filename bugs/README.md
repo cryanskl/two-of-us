@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [影子剑术：可变 state clone 在非法 action 路径泄出](./2026-07-24-shadow-sword-mutable-state-noop.md)
 - [目录接入：新增 A 级作品后真实目录计数 Gate 未同步](./2026-07-24-catalog-count-gate-after-new-experience.md)
 - [这一朵，我先养开：动态 Proxy、revision 与 CommonJS 合同失真](./2026-07-24-garden-resource-duel-hostile-contracts.md)
 - [心愿烟火：ImageGen 把阶段结构误画成槽位、轮播与持久控件](./2026-07-24-wish-fireworks-imagegen-state-contract-drift.md)

@@ -97,6 +97,17 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function freezeFixture(value) {
+  if (!value || typeof value !== "object" || Object.isFrozen(value)) return value;
+  for (const key of Reflect.ownKeys(value)) {
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    if (descriptor && Object.prototype.hasOwnProperty.call(descriptor, "value")) {
+      freezeFixture(descriptor.value);
+    }
+  }
+  return Object.freeze(value);
+}
+
 function assertDeepFrozen(value, seen = new Set()) {
   if ((!value || typeof value !== "object") && typeof value !== "function") return;
   if (seen.has(value)) return;
@@ -991,6 +1002,22 @@ test("畸形 state 回到全新默认初态，畸形 action 原对象不动且�
   assert.notStrictEqual(recovered, initial);
   assert.deepEqual(logic.getScreenView(malformed), logic.getScreenView(logic.createInitialState()));
 
+  const mutableClone = clone(initial);
+  const recoveredClone = logic.reduce(mutableClone, { type: "UNKNOWN" });
+  assert.deepEqual(recoveredClone, logic.createInitialState());
+  assert.notStrictEqual(recoveredClone, mutableClone);
+  assertDeepFrozen(recoveredClone);
+  assert.deepEqual(
+    logic.getScreenView(mutableClone),
+    logic.getScreenView(logic.createInitialState()),
+  );
+
+  const shallowFrozenClone = Object.freeze(clone(initial));
+  assert.deepEqual(
+    logic.reduce(shallowFrozenClone, { type: "UNKNOWN" }),
+    logic.createInitialState(),
+  );
+
   const accessorState = clone(initial);
   Object.defineProperty(accessorState, "phase", {
     enumerable: true,
@@ -1047,19 +1074,19 @@ test("RESTART 只在 match-result 生效并与同配置首次加载深相等", (
 
 test("revision 到 MAX_SAFE_INTEGER 后普通转换饱和，终局 RESTART 仍归零", () => {
   const states = buildReachableStates();
-  const saturatedChoosing = {
+  const saturatedChoosing = freezeFixture({
     ...clone(states.choosing),
     revision: Number.MAX_SAFE_INTEGER,
-  };
+  });
   assert.strictEqual(
     logic.reduce(saturatedChoosing, { type: "CHOOSE", seat: 0, move: "guard" }),
     saturatedChoosing,
   );
 
-  const saturatedMatch = {
+  const saturatedMatch = freezeFixture({
     ...clone(states.matchResult),
     revision: Number.MAX_SAFE_INTEGER,
-  };
+  });
   const restarted = logic.reduce(saturatedMatch, { type: "RESTART" });
   assert.deepEqual(restarted, logic.createInitialState(states.matchResult.content));
   assert.equal(restarted.revision, 0);
