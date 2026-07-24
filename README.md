@@ -228,6 +228,7 @@
 - [影子剑术分步实施计划](./docs/221-shadow-sword-duel-plan.md)
 - [影子剑术视觉概念提案](./docs/222-shadow-sword-duel-design-proposal.md)
 - [花园抢资源定向调研](./docs/240-garden-resource-duel-research.md)
+- [花园抢资源 Brainstorm](./docs/241-garden-resource-duel-brainstorm.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)
