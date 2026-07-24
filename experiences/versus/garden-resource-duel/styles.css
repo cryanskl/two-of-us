@@ -1,0 +1,1057 @@
+:root {
+  --ink: #f4f0df;
+  --muted: #b9c6b5;
+  --night-0: #07130f;
+  --night-1: #10251c;
+  --panel: rgba(20, 43, 32, 0.88);
+  --panel-solid: #142b20;
+  --line: rgba(230, 237, 213, 0.2);
+  --sun: #f2c45e;
+  --water: #79bcd0;
+  --pest: #d67868;
+  --leaf: #66a56e;
+  --pot-a: #bd765a;
+  --pot-b: #7f78b5;
+  --focus: #fff1a8;
+  --danger: #ffb4a8;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
+  color-scheme: dark;
+  font-family:
+    ui-rounded, "SF Pro Rounded", "PingFang SC", "Microsoft YaHei",
+    system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--night-0);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% -15%, rgba(121, 188, 208, 0.16), transparent 38rem),
+    radial-gradient(circle at 8% 82%, rgba(102, 165, 110, 0.13), transparent 28rem),
+    linear-gradient(155deg, var(--night-1), var(--night-0) 66%);
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+}
+
+body::before {
+  inset: 9vh 6vw auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+body::after {
+  inset: auto 0 0;
+  height: 22vh;
+  border-top: 1px solid rgba(230, 237, 213, 0.08);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px) 0 0 / 48px 48px,
+    rgba(6, 15, 11, 0.52);
+  transform: perspective(340px) rotateX(58deg);
+  transform-origin: bottom;
+}
+
+button,
+progress {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.app-shell {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+}
+
+.app-content {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.experience {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 1.25fr) minmax(0, 1fr);
+  grid-template-areas:
+    "header header header"
+    "season season season"
+    "garden-a panel garden-b"
+    "ledger ledger ledger"
+    "history history history";
+  gap: 20px;
+  align-items: stretch;
+}
+
+.quiet-header {
+  grid-area: header;
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 4px 2px;
+}
+
+.work-title,
+.phase-status,
+.quiet-header p {
+  margin: 0;
+}
+
+.work-title {
+  font-size: clamp(1.35rem, 1.15rem + 1vw, 2rem);
+  font-weight: 760;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.phase-status {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.season-card {
+  grid-area: season;
+  display: grid;
+  grid-template-columns: 0.8fr 1.5fr 0.8fr;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+  padding: 16px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(8, 24, 17, 0.72);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  animation: season-arrive 160ms ease-out both;
+}
+
+.season-card.season-sun {
+  border-color: rgba(242, 196, 94, 0.7);
+}
+
+.season-card.season-water {
+  border: 3px double rgba(121, 188, 208, 0.72);
+}
+
+.season-card p {
+  margin: 0;
+}
+
+.season-round,
+.season-value {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.season-value {
+  text-align: right;
+}
+
+.season-need {
+  min-width: 0;
+  text-align: center;
+  font-size: clamp(1.12rem, 0.98rem + 0.7vw, 1.55rem);
+  font-weight: 760;
+}
+
+.phase-panel {
+  grid-area: panel;
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 34px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.phase-handoff {
+  border-color: rgba(244, 240, 223, 0.28);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(244, 240, 223, 0.035) 0 18px,
+      transparent 18px 36px
+    ),
+    var(--panel-solid);
+}
+
+.phase-title {
+  margin: 0;
+  font-size: clamp(1.45rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.24;
+  text-wrap: balance;
+}
+
+.phase-copy,
+.intro-copy,
+.intro-subtitle,
+.result-copy,
+.result-note,
+.final-score,
+.seed-note,
+.history-summary {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.intro-subtitle {
+  color: var(--ink);
+  font-size: 1.12rem;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 52px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 760;
+  line-height: 1.25;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease;
+}
+
+.primary-button {
+  width: 100%;
+  margin-top: 22px;
+  border: 1px solid rgba(255, 241, 168, 0.48);
+  color: #152118;
+  background: var(--focus);
+}
+
+.secondary-button {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+}
+
+.primary-button:not(:disabled):hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.phase-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.phase-actions .primary-button {
+  margin-top: 0;
+}
+
+.rule-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding-left: 1.3em;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
+.public-ledger {
+  grid-area: ledger;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(20, 43, 32, 0.62);
+}
+
+.score-line {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.score-item,
+.hand-line {
+  margin: 0;
+}
+
+.score-item {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  min-width: 0;
+  font-size: 1rem;
+}
+
+.score-name {
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-number {
+  flex: none;
+  font-size: 1.18rem;
+}
+
+.hand-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.hand-line {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.player-garden {
+  display: grid;
+  grid-template-rows: auto minmax(190px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  min-width: 0;
+  min-height: 270px;
+  margin: 0;
+  padding: 18px 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(121, 188, 208, 0.045), transparent 58%),
+    rgba(7, 19, 15, 0.42);
+}
+
+.player-1 {
+  grid-area: garden-a;
+}
+
+.player-2 {
+  grid-area: garden-b;
+}
+
+.garden-caption {
+  min-width: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.garden-progress {
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  accent-color: var(--leaf);
+  background: rgba(244, 240, 223, 0.12);
+}
+
+.garden-progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: rgba(244, 240, 223, 0.12);
+}
+
+.garden-progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: var(--leaf);
+}
+
+.flower {
+  position: relative;
+  width: 160px;
+  height: 190px;
+  margin: 0 auto;
+}
+
+.blossom {
+  position: absolute;
+  z-index: 3;
+  top: 7px;
+  left: 50%;
+  width: 94px;
+  height: 94px;
+  transform: translateX(-50%);
+}
+
+.petal {
+  position: absolute;
+  top: 29px;
+  left: 34px;
+  width: 28px;
+  height: 47px;
+  border: 1px solid rgba(255, 241, 168, 0.4);
+  border-radius: 70% 70% 55% 55%;
+  background: linear-gradient(180deg, #fff2b5, #e7a866);
+  opacity: 0.18;
+  transform-origin: 50% 76%;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.petal-1 {
+  transform: rotate(0deg) translateY(-18px) scale(0.32);
+}
+
+.petal-2 {
+  transform: rotate(72deg) translateY(-18px) scale(0.32);
+}
+
+.petal-3 {
+  transform: rotate(144deg) translateY(-18px) scale(0.32);
+}
+
+.petal-4 {
+  transform: rotate(216deg) translateY(-18px) scale(0.32);
+}
+
+.petal-5 {
+  transform: rotate(288deg) translateY(-18px) scale(0.32);
+}
+
+.petal.is-grown {
+  opacity: 1;
+}
+
+.petal-1.is-grown {
+  transform: rotate(0deg) translateY(-27px) scale(1);
+}
+
+.petal-2.is-grown {
+  transform: rotate(72deg) translateY(-27px) scale(1);
+}
+
+.petal-3.is-grown {
+  transform: rotate(144deg) translateY(-27px) scale(1);
+}
+
+.petal-4.is-grown {
+  transform: rotate(216deg) translateY(-27px) scale(1);
+}
+
+.petal-5.is-grown {
+  transform: rotate(288deg) translateY(-27px) scale(1);
+}
+
+.flower-heart {
+  position: absolute;
+  z-index: 4;
+  top: 37px;
+  left: 37px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 241, 168, 0.36);
+  border-radius: 50%;
+  background: #855c39;
+}
+
+.flower.is-blooming .flower-heart,
+.flower.is-glowing .flower-heart {
+  background: var(--sun);
+  animation: bloom-glow 420ms ease-out both;
+}
+
+.stem {
+  position: absolute;
+  z-index: 1;
+  top: 78px;
+  bottom: 35px;
+  left: calc(50% - 4px);
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #447e4c, var(--leaf), #3b6c42);
+}
+
+.leaf {
+  position: absolute;
+  z-index: 2;
+  top: 114px;
+  width: 42px;
+  height: 22px;
+  border: 1px solid rgba(244, 240, 223, 0.18);
+  background: var(--leaf);
+}
+
+.leaf-left {
+  left: 39px;
+  border-radius: 80% 12% 80% 12%;
+  transform: rotate(17deg);
+}
+
+.leaf-right {
+  right: 38px;
+  border-radius: 12% 80% 12% 80%;
+  transform: rotate(-17deg);
+}
+
+.flower-pot {
+  position: absolute;
+  z-index: 4;
+  right: 30px;
+  bottom: 4px;
+  left: 30px;
+  height: 47px;
+  border: 1px solid rgba(244, 240, 223, 0.25);
+  border-radius: 8px 8px 28px 28px;
+  background: var(--pot-a);
+  box-shadow: inset 0 8px rgba(255, 255, 255, 0.08);
+}
+
+.player-2 .flower-pot {
+  background: var(--pot-b);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.card-choice {
+  position: relative;
+  min-width: 0;
+  min-height: 148px;
+  padding: 18px 14px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  background-color: rgba(7, 19, 15, 0.7);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 760;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.card-choice::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.18;
+}
+
+.card-sun {
+  border-color: rgba(242, 196, 94, 0.62);
+}
+
+.card-sun::before {
+  background:
+    repeating-conic-gradient(
+      from 0deg at 86% 20%,
+      var(--sun) 0deg 3deg,
+      transparent 3deg 18deg
+    );
+}
+
+.card-water {
+  border-style: double;
+  border-color: rgba(121, 188, 208, 0.72);
+}
+
+.card-water::before {
+  background:
+    repeating-radial-gradient(
+      ellipse at 90% 18%,
+      transparent 0 8px,
+      var(--water) 9px 10px,
+      transparent 11px 18px
+    );
+}
+
+.card-pest {
+  border-color: rgba(214, 120, 104, 0.68);
+}
+
+.card-pest::before {
+  background:
+    radial-gradient(circle, var(--pest) 0 2px, transparent 2.5px) 0 0 / 14px 14px;
+  transform: rotate(-18deg) scale(1.25);
+}
+
+.card-choice[aria-pressed="true"] {
+  border-color: var(--focus);
+  background-color: rgba(255, 241, 168, 0.12);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.card-detail {
+  position: relative;
+  display: block;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 520;
+  line-height: 1.5;
+}
+
+.card-backs,
+.revealed-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.card-back {
+  display: block;
+  min-height: 126px;
+  border: 2px solid rgba(244, 240, 223, 0.28);
+  border-radius: var(--radius-md);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(244, 240, 223, 0.07) 0 8px,
+      transparent 8px 16px
+    ),
+    #0b1d15;
+}
+
+.revealed-card {
+  min-width: 0;
+  padding: 16px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(7, 19, 15, 0.68);
+  animation: card-reveal 220ms ease-out both;
+}
+
+.revealed-card:nth-child(2) {
+  --reveal-offset: 18px;
+}
+
+.revealed-owner,
+.revealed-earned {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.revealed-name {
+  display: block;
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.final-score {
+  color: var(--ink);
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
+  font-weight: 760;
+}
+
+.seed-note code {
+  color: var(--ink);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.public-history {
+  grid-area: history;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.history-title {
+  margin: 0 0 12px;
+  font-size: 1.18rem;
+}
+
+.history-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-entry {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(7, 19, 15, 0.48);
+}
+
+.history-round,
+.history-detail,
+.history-blocked {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.history-round {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.history-detail {
+  margin-top: 7px;
+  color: var(--muted);
+}
+
+.history-blocked {
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px dashed var(--pest);
+  color: var(--danger);
+}
+
+.experience-intro {
+  grid-template-areas:
+    "header header header"
+    "garden-a panel garden-b";
+  min-height: calc(100vh - 60px);
+  min-height: calc(100svh - 60px);
+  align-content: center;
+}
+
+.intro-stage {
+  display: contents;
+}
+
+.experience-intro .player-garden {
+  align-self: center;
+}
+
+.noscript-card,
+.boot-error {
+  width: min(100%, 620px);
+  margin: 18vh auto 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel-solid);
+}
+
+.noscript-card h1,
+.noscript-card p,
+.boot-error {
+  line-height: 1.6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes season-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(var(--reveal-offset, -18px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bloom-glow {
+  0% {
+    box-shadow: 0 0 0 rgba(242, 196, 94, 0);
+  }
+
+  70% {
+    box-shadow: 0 0 30px rgba(242, 196, 94, 0.62);
+  }
+
+  100% {
+    box-shadow: 0 0 16px rgba(242, 196, 94, 0.36);
+  }
+}
+
+@media (max-width: 959px) {
+  .experience {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "header header"
+      "season season"
+      "garden-a garden-b"
+      "panel panel"
+      "ledger ledger"
+      "history history";
+  }
+
+  .experience-intro {
+    grid-template-areas:
+      "header header"
+      "garden-a garden-b"
+      "panel panel";
+  }
+
+  .phase-panel {
+    width: min(100%, 720px);
+    justify-self: center;
+  }
+
+  .history-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
+  .app-shell {
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+
+  .experience,
+  .experience-intro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "header header"
+      "season season"
+      "ledger ledger"
+      "panel panel"
+      "garden-a garden-b"
+      "history history";
+    gap: 12px;
+  }
+
+  .experience-intro {
+    grid-template-areas:
+      "header header"
+      "panel panel"
+      "garden-a garden-b";
+    min-height: auto;
+    align-content: start;
+  }
+
+  .quiet-header {
+    gap: 10px;
+  }
+
+  .phase-status {
+    font-size: 0.82rem;
+  }
+
+  .season-card {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .season-value {
+    text-align: center;
+  }
+
+  .phase-panel {
+    align-self: stretch;
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .player-garden {
+    grid-template-rows: auto 128px auto;
+    min-height: 202px;
+    padding: 12px 8px;
+    border-radius: var(--radius-md);
+  }
+
+  .flower {
+    width: 116px;
+    height: 132px;
+    transform: scale(0.72);
+    transform-origin: center bottom;
+  }
+
+  .garden-caption {
+    font-size: 0.82rem;
+  }
+
+  .public-ledger {
+    padding: 13px;
+  }
+
+  .hand-summary,
+  .history-list {
+    grid-template-columns: 1fr;
+  }
+
+  .score-item {
+    display: grid;
+    gap: 3px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-choice {
+    min-height: 112px;
+  }
+
+  .phase-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .secondary-button {
+    width: 100%;
+  }
+}
+
+@media (max-height: 540px) and (orientation: landscape) {
+  .app-shell {
+    padding-top: 10px;
+  }
+
+  .experience {
+    gap: 10px;
+  }
+
+  .quiet-header {
+    padding: 0;
+  }
+
+  .player-garden {
+    min-height: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html,
+  body {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .season-card,
+  .phase-panel,
+  .player-garden,
+  .public-ledger,
+  .history-entry,
+  .card-choice,
+  .card-back,
+  .revealed-card,
+  .noscript-card,
+  .boot-error {
+    border: 2px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
+  .card-choice::before {
+    display: none;
+  }
+
+  .card-choice[aria-pressed="true"] {
+    outline: 4px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    border: 2px solid ButtonText;
+    color: ButtonText;
+    background: ButtonFace;
+  }
+
+  .petal,
+  .flower-heart,
+  .stem,
+  .leaf,
+  .flower-pot {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+
+  .garden-progress {
+    forced-color-adjust: auto;
+  }
+}

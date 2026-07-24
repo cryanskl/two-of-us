@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07130f" />
+    <meta
+      name="description"
+      content="两个人在同一台设备上轮流藏牌，跟随共同季节照料花朵，或用虫害挡住对方这一轮。"
+    />
+    <title>这一朵，我先养开 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="app" class="app-shell" data-phase="intro">
+      <div id="app-content" class="app-content"></div>
+      <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+      <noscript>
+        <section class="noscript-card">
+          <h1>这一朵，我先养开</h1>
+          <p>需要启用 JavaScript 才能生成季节、秘密藏牌并结算花瓣。</p>
+        </section>
+      </noscript>
+    </main>
+  </body>
+</html>
