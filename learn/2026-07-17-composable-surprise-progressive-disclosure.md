@@ -18,6 +18,26 @@
 
 这种策略适合礼物页、邀请函和故事页，因为内容之间通常有语气和人物一致性。它不一定适合普通设置面板；设置面板更常希望保留其他合法字段。
 
+## 回退真值不能来自同一份可编辑候选
+
+“整份回退”还需要一个独立的信任根。心愿烟火的首轮逻辑候选曾在模块加载时用
+可编辑 `config.js` 生成 `DEFAULT_CONFIG`；当准备者把配置改成非法结构时，
+`DEFAULT_CONFIG` 也同时变成 `null`，所谓回退便不存在。若全局配置是抛错 getter，
+普通属性读取甚至会让逻辑模块无法加载。
+
+更稳妥的所有权是：
+
+1. 逻辑层保留一份私有 canonical literal；
+2. canonical literal 也必须通过与用户候选相同的 validator，再生成冻结默认值；
+3. 可编辑配置只在主动开始时作为 raw candidate 传入；
+4. 合法候选断引用后采用，非法、缺失或 hostile 候选整份回 canonical；
+5. 模块初始化不读取可编辑配置 getter，也不依赖配置模块成功加载。
+
+测试不能只验证“默认仓库配置合法”。还要在隔离 realm 中分别注入非法 global、
+throwing getter 和缺失配置，证明模块仍能加载、默认 hash 不变、开始 action 非空。
+对应真实缺陷与修复证据见
+[`2026-07-24-wish-fireworks-canonical-config-fallback.md`](../bugs/2026-07-24-wish-fireworks-canonical-config-fallback.md)。
+
 ## 源码可见与页面不提前揭晓是两种承诺
 
 A 级静态 HTML 无法对拥有本地文件的人保守密码学秘密，候选必然存在于 `config.js`。可以可靠做到的是：
