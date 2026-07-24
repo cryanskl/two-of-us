@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [爱心投石器：镜像输入让同分延长轮永久不终止](./2026-07-24-heart-catapult-unbounded-tie-extension.md)
 - [爱心投石器：反弹使用旧竖直速度导致冻结矩阵漂移](./2026-07-24-heart-catapult-bounce-velocity-source.md)
 - [爱心投石器：检测顺序把较晚城堡接触判在较早触地之前](./2026-07-24-heart-catapult-collision-event-order.md)
 - [心愿烟火：非法可编辑配置破坏 canonical 默认回退](./2026-07-24-wish-fireworks-canonical-config-fallback.md)
