@@ -219,6 +219,7 @@
 | [237-origami-heart-design.md](./237-origami-heart-design.md) | “折纸心机关”的代码原生纸张几何、2D/3D 层级、响应式、焦点、隐私与 fidelity ledger |
 | [238-origami-heart-plan.md](./238-origami-heart-plan.md) | “折纸心机关”的逻辑/UI/catalog、浏览器、bug/learn、独立提交与完成计划 |
 | [239-origami-heart-verification.md](./239-origami-heart-verification.md) | “沿着折痕，折到你心里”的 22 项逻辑、1770 项全仓、56/48/8 目录、阶段 DOM、拖拽、响应式、来源与 bug/learn 验收 |
+| [240-garden-resource-duel-research.md](./240-garden-resource-duel-research.md) | 创意池 V12“花园抢资源”的公共季节需求、有限密封手牌、162000 组公平性穷举、固定来源与许可证边界调研 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
