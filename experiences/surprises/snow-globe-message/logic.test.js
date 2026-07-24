@@ -491,3 +491,27 @@ test("production logic contains no forbidden browser/runtime dependency or unsaf
     /\binsertAdjacentHTML\b/,
   ]) assert.equal(pattern.test(source), false, String(pattern));
 });
+
+test("attribution pins licensed references and preserves the zero-copy boundary", () => {
+  const attribution = fs.readFileSync(
+    new URL("./assets/ATTRIBUTION.md", import.meta.url),
+    "utf8",
+  );
+  for (const expected of [
+    "627b3fc7d1a0d0fe524e2fea5f89fa7589b18d59",
+    "c5c18dbc27f490f2ef90e0b574b8c40f534e495d2cb8a6f1c4bb1183a9c381a4",
+    "9ee144a548aad85275318b30891c71dcf6e10f7b",
+    "2a9fec8f93f07847a22029d5c423e33e0839da09d516664e5f0608346c03a122",
+    "20eebad51dde793070c373d594099a7ed8d96e22",
+    "fd44477c30a832a1dee9ef0b6cfb34677fbe5ef58c0cf655d27c646f11bb2f7a",
+    "70d42d5484db7fd1646e48cc17caa5ff1c9d92cb",
+    "cd28c5af6bf84d8612db3094498d59f66e59468dc645b9e8e70e9d1b377bdf3a",
+    "d232eee7a5f31e9fd37aa79aa83f1f206035ccc9",
+    "NOASSERTION",
+    "没有复制",
+    "不使用传感器",
+    "生成资产",
+    "无。",
+    "仅供文档讨论",
+  ]) assert.equal(attribution.includes(expected), true, expected);
+});
