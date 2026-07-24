@@ -875,3 +875,22 @@ test("production logic has no browser, clock, randomness, persistence, network, 
   `, context);
   assert.doesNotThrow(() => vm.runInContext(source, context));
 });
+
+test("attribution pins source roles, licenses, and the independent implementation boundary", () => {
+  const attribution = fs.readFileSync(path.join(__dirname, "ATTRIBUTION.md"), "utf8");
+  for (const expected of [
+    "d51cd5c73c3171d6b769b5da1b9072beca691ce6",
+    "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+    "3d364f985b2d96057f30d3fc67c5ee71ec37556f",
+    "0f294f61515a3d1116feca7a014c6b9e1e4bbe4e0044425157cdca51e166f38b",
+    "bf6ec8cae8c756203e059940d42089504ae43ec8",
+    "5e9a87b81ca59f8f1e350c673ba55cc59cca9264582c7cca763cdaba3d159f1c",
+    "零第三方运行依赖",
+    "没有复制、修改、链接或 vendoring",
+    "明确排除",
+    "不访问麦克风",
+    "本地打开不等于配置内容经过加密",
+    "无运行时生成资产",
+    "仅用于视觉讨论",
+  ]) assert.equal(attribution.includes(expected), true, expected);
+});
