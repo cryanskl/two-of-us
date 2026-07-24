@@ -227,6 +227,7 @@
 | [245-garden-resource-duel-verification.md](./245-garden-resource-duel-verification.md) | “这一朵，我先养开”的 22 项逻辑、162000 夹具、1794 项全仓、57/49/8 目录、完整热座终局、秘密 DOM、响应式、来源、bug 与 learn 验收 |
 | [247-heart-catapult-research.md](./247-heart-catapult-research.md) | 创意池 V08“爱心投石器”的秘密瞄准、完整轮公平、单次反弹、确定性物理、五个固定 MIT 来源与 A 级边界调研 |
 | [248-heart-catapult-brainstorm.md](./248-heart-catapult-brainstorm.md) | “这一颗，绕回来找你”的镜像城堡、秘密双份参数、联合计分、热座隐私与代码原生纸雕场地产品决策 |
+| [249-heart-catapult-spec.md](./249-heart-catapult-spec.md) | “这一颗，绕回来找你”的 Q12 抛体、99 组合矩阵、单次反弹、完整轮 reducer、12 轮终止、热座 DTO 与 A 级验收规格 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |
