@@ -36,3 +36,19 @@ npm run verify
 ```
 
 以后每次新增、删除或调整作品等级时，目录接入清单都必须包含这条精确计数 Gate。
+
+## 同日复发：爱心投石器
+
+接入 `heart-catapult` 后，目录专测再次先通过，但完整测试准确拦住旧计数：
+
+```text
+real catalog satisfies all 49 A and 8 non-A contracts
+Expected values to be strictly equal:
+58 !== 57
+```
+
+本次把权威计数从 `57 / 49 / 8` 更新为 `58 / 50 / 8`，随后 1851/1851 项全仓测试
+与仓库验收通过。复发进一步确认：新增作品的实现计划和提交清单都必须显式列出
+`scripts/experience-contracts.test.mjs`，不能只依赖 catalog 专测。
+
+相关提交：`58189cc feat: catalog heart catapult`。
