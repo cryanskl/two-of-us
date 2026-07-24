@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="两个人在同一设备上秘密选择角度和力度，让爱心直接或反弹送进对方的纸雕城堡。">
+  <meta name="color-scheme" content="light dark">
+  <title>这一颗，绕回来找你 · 双人爱心投射</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#game-root">跳到当前回合</a>
+
+  <header class="site-header">
+    <p class="site-header__eyebrow">双人热座对抗</p>
+    <h1 id="product-title" tabindex="-1">这一颗，绕回来找你</h1>
+    <p class="site-header__summary">秘密调好两份角度，完整一轮后一起结算。</p>
+  </header>
+
+  <main id="main-content">
+    <section class="game-shell" aria-label="爱心投射游戏">
+      <div id="game-root"></div>
+    </section>
+
+    <noscript>
+      <section class="no-script" aria-label="需要 JavaScript">
+        <p><strong>需要启用本地 JavaScript</strong></p>
+        <p>
+          这个小游戏需要浏览器运行本地 JavaScript，才能计算两颗爱心的固定轨迹。
+          它不会联网，也不需要安装服务。
+        </p>
+      </section>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <p>本作使用代码原生纸雕几何，不加载远程素材。</p>
+    <a href="./ATTRIBUTION.md">借鉴与来源声明</a>
+  </footer>
+
+  <p id="public-live" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+
+  <section
+    id="privacy-cover"
+    class="privacy-cover"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="privacy-cover-title"
+    hidden
+  >
+    <div class="privacy-cover__paper">
+      <h2 id="privacy-cover-title" class="privacy-cover__title" tabindex="-1">屏幕已遮住</h2>
+      <p>已遮住本轮操作。确认可以继续后重新接管。</p>
+      <button id="privacy-resume" type="button">重新接管</button>
+    </div>
+  </section>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
