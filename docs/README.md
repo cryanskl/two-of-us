@@ -229,6 +229,7 @@
 | [248-heart-catapult-brainstorm.md](./248-heart-catapult-brainstorm.md) | “这一颗，绕回来找你”的镜像城堡、秘密双份参数、联合计分、热座隐私与代码原生纸雕场地产品决策 |
 | [249-heart-catapult-spec.md](./249-heart-catapult-spec.md) | “这一颗，绕回来找你”的 Q12 抛体、99 组合矩阵、单次反弹、完整轮 reducer、12 轮终止、热座 DTO 与 A 级验收规格 |
 | [250-heart-catapult-plan.md](./250-heart-catapult-plan.md) | “这一颗，绕回来找你”的逻辑、code-native 设计、热座 UI、视觉、目录、来源、bugs/learn 与浏览器验收独立提交计划 |
+| [251-local-first-second-pass-candidate-refresh.md](./251-local-first-second-pass-candidate-refresh.md) | 第二轮调研的 21 个新增 A/B/C/D 候选、固定提交与许可证哈希、直接整合/机制重写/排除边界及实施优先级 |
 | [183-wish-fireworks-research.md](./183-wish-fireworks-research.md) | “心愿烟火”的定向调研、许可候选与本地实现边界 |
 | [184-wish-fireworks-spec.md](./184-wish-fireworks-spec.md) | “心愿烟火”的可执行交互与验收规格 |
 | [201-wish-fireworks-brainstorm.md](./201-wish-fireworks-brainstorm.md) | “心愿烟火”的唯一进度文案、开始重试、结果 DOM、后台焦点、无 JS 与来源复核决策 |

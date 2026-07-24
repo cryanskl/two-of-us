@@ -6,13 +6,14 @@
 > 证据范围：原作者仓库、仓库许可证、官方文档与开放标准；本轮不复制第三方源码
 > 2026-07-24 维护批次：
 > [`227-wish-fireworks-source-refresh.md`](./227-wish-fireworks-source-refresh.md)、
-> [`228-capsule-docking-source-refresh.md`](./228-capsule-docking-source-refresh.md)
+> [`228-capsule-docking-source-refresh.md`](./228-capsule-docking-source-refresh.md)、
+> [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md)
 
 ## 0. 结论先行
 
 上一轮把“双击 HTML”当作最重要的筛选条件，找到了很多轻巧作品，也天然漏掉了三类很有价值的体验：需要 `localhost` 才能安全调用浏览器能力的作品、需要局域网房间的双设备玩法，以及依靠本地模型或 GPU 的重型互动。
 
-第二轮把目标改成“安装可以统一，游玩必须直接打开”。调研共整理 **76 个互不重复的开源候选**：惊喜 20 个、合作 15 个、对抗 15 个、共享基础设施 26 个。它们不是 76 个都要照搬的待办清单，而是一张能力地图。
+第二轮把目标改成“安装可以统一，游玩必须直接打开”。初始基线共整理 **76 个互不重复的开源候选**：惊喜 20 个、合作 15 个、对抗 15 个、共享基础设施 26 个。2026-07-24 的[候选维护增量](./251-local-first-second-pass-candidate-refresh.md)另复核 21 个新候选，保持基线统计不被后续批次覆盖。它们不是都要照搬的待办清单，而是一张持续维护的能力地图。
 
 核心判断有五条：
 
