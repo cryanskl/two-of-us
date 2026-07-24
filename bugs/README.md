@@ -8,6 +8,10 @@
 
 ## 已记录
 
+- [爱心投石器：强制色模式让标题和页脚变成白底白字](./2026-07-24-heart-catapult-forced-colors-header-invisible.md)
+- [爱心投石器：完整步进文案把窄按钮挤成四行](./2026-07-24-heart-catapult-step-button-text-wrap.md)
+- [爱心投石器：`ch` 宽度让桌面中文标题提前换行](./2026-07-24-heart-catapult-cjk-title-ch-width.md)
+- [爱心投石器：390px 开场主动作落在首屏下方](./2026-07-24-heart-catapult-mobile-intro-action-below-fold.md)
 - [爱心投石器：步进符号被拼进按钮可访问名称](./2026-07-24-heart-catapult-generated-step-name.md)
 - [爱心投石器：角度与力度滑块缺少可访问名称](./2026-07-24-heart-catapult-range-accessible-name.md)
 - [爱心投石器：完整历史会在联合结果前泄露下一段秘密](./2026-07-24-heart-catapult-phase-history-visibility.md)
