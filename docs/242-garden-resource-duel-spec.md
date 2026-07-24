@@ -477,7 +477,8 @@ terminalResultOrNull
 
 ## 13. 视觉规格
 
-视觉系统将在独立设计文档中进一步冻结；逻辑规格要求：
+视觉系统由 [`243-garden-resource-duel-design.md`](./243-garden-resource-duel-design.md)
+进一步冻结；逻辑规格要求：
 
 - 左右两盆花的公开花瓣数与 scores 一致；
 - 当前需求同时有文字和符号；
