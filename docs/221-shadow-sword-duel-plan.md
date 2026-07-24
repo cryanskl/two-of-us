@@ -1,7 +1,7 @@
 # “影子剑术”分步实施计划
 
 - 日期：2026-07-23
-- 状态：待执行
+- 状态：核心已完成；视觉方案待用户确认，生产 UI 尚未开始
 - 调研：[`219-shadow-sword-duel-research.md`](./219-shadow-sword-duel-research.md)
 - 规格：[`220-shadow-sword-duel-spec.md`](./220-shadow-sword-duel-spec.md)
 - 工作 ID：`shadow-sword-duel`
@@ -17,9 +17,10 @@
 04986a9  docs: research shadow sword duel
 1e3ffc4  docs: specify shadow sword duel
 fb12a2e  docs: align shadow sword stylesheet contract
-下一提交  docs: plan shadow sword duel implementation
-批次一    feat: add shadow sword duel core logic
-视觉 Gate docs: propose shadow sword duel visual system
+0906853  docs: plan shadow sword duel implementation
+44fc7ce  docs: define shadow sword revision saturation
+30bf117  feat: add shadow sword duel core logic
+545a209  docs: propose shadow sword duel visual system
 用户确认
 批次二    feat: build shadow sword duel local UI
 批次三    docs: register and attribute shadow sword duel
@@ -39,6 +40,11 @@ git branch --show-current && git rev-parse --show-toplevel
 
 前一批未提交前不开始修改后一批文件。若后一批发现前一批合同缺陷，先停止当前
 批次，用独立修复提交恢复前一批 Gate，再继续。
+
+截至 2026-07-24，批次一已由 `30bf117` 完成并复核：27 项定向测试、5,184 组
+资源/动作候选枚举、全仓 1,794 项测试及 57 个入口校验均通过。当前不得重复实现
+核心；下一步仍是等待用户确认 `222-shadow-sword-duel-design-proposal.md` 的视觉
+方向，确认前不得开始批次二。
 
 ## 2. 视觉确认前后的权限边界
 
