@@ -237,6 +237,8 @@
 - [爱心投石器 Brainstorm](./docs/248-heart-catapult-brainstorm.md)
 - [爱心投石器可执行规格](./docs/249-heart-catapult-spec.md)
 - [爱心投石器分步实施计划](./docs/250-heart-catapult-plan.md)
+- [爱心投石器代码原生视觉设计](./docs/252-heart-catapult-design.md)
+- [爱心投石器验收记录](./docs/253-heart-catapult-verification.md)
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [心愿烟火分批实施计划](./docs/246-wish-fireworks-plan.md)
