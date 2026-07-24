@@ -33,12 +33,15 @@ experiences/versus/garden-resource-duel/
 ├── index.html
 ├── logic.js
 ├── logic.test.js
+├── package.json
 ├── app.js
 └── styles.css
 ```
 
-首版不增加 assets、音频、字体、图片、package、module、service worker、storage、
-网络请求或专用启动器。
+`package.json` 只允许包含 `{"type":"commonjs"}`，用于在仓库根级 ESM 边界内让
+`require("./logic.js")` 与 `require("./config.js")` 成为真实 CommonJS 合同；不
+增加依赖、scripts、构建、module 浏览器脚本、assets、音频、字体、图片、service
+worker、storage、网络请求或专用启动器。
 
 脚本以经典脚本顺序加载：
 
@@ -48,7 +51,8 @@ experiences/versus/garden-resource-duel/
 <script src="./app.js"></script>
 ```
 
-三者都必须在 `file://` 下工作；`logic.js` 同时支持 CommonJS 测试导入。
+三者都必须在 `file://` 下以经典脚本工作；`config.js` 与 `logic.js` 同时必须被
+Node 直接 `require()`，测试还需在隔离浏览器全局中证明两个出口同构、递归冻结。
 
 ## 3. 常量
 

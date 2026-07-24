@@ -28,6 +28,7 @@ experiences/versus/garden-resource-duel/config.js
 experiences/versus/garden-resource-duel/logic.js
 experiences/versus/garden-resource-duel/logic.test.js
 experiences/versus/garden-resource-duel/ATTRIBUTION.md
+experiences/versus/garden-resource-duel/package.json
 ```
 
 职责：
@@ -39,9 +40,12 @@ experiences/versus/garden-resource-duel/ATTRIBUTION.md
 - public/player view；
 - history 重放；
 - 162,000 组穷举；
+- 根级 ESM 仓库中的真实 CommonJS `require()` 与浏览器经典脚本同构合同；
 - 固定来源与零复制借鉴声明。
 
-逻辑子任务不创建 HTML/CSS/app，不修改 catalog、README、bugs、learn 或 docs。
+逻辑子任务不创建 HTML/CSS/app，不修改 catalog、作品 README 或 learn。初次实现
+后的独立审查若复现逻辑合同缺陷，应按第 3 节同步最小 `bugs/` 记录、bugs 索引与
+本规格/计划的真实模块边界。
 
 ### 2.2 UI 子任务
 
@@ -148,6 +152,8 @@ git branch --show-current && git rev-parse --show-toplevel
 - `replayHistory`。
 
 内部 state 可以保存完整 deck 与 sealed cards，但任何 UI 都只能消费 view API。
+动作与 state 必须各自先建立一次 descriptor 快照；reducer 和 view 不得在验证后
+再次读取调用方 Proxy。revision 无法安全递增时保持原 state 引用，不生成越界状态。
 
 ### 4.3 logic tests
 
@@ -160,7 +166,9 @@ git branch --show-current && git rev-parse --show-toplevel
 5. 终局和重开；
 6. history replay；
 7. hostile object 与冻结；
-8. 90 手牌排列 × 20 deck × 90 对手排列。
+8. 动态 descriptor Proxy、state 验证后 get 与最大 revision fail-closed；
+9. 真实 `require(config/logic)` 与隔离浏览器全局同构；
+10. 90 手牌排列 × 20 deck × 90 对手排列。
 
 穷举统计必须与调研一致：
 
