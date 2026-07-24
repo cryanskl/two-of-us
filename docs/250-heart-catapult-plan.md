@@ -108,7 +108,7 @@ experiences/versus/heart-catapult/ATTRIBUTION.md
 在逻辑提交后唯一写入：
 
 ```text
-docs/251-heart-catapult-design.md
+docs/252-heart-catapult-design.md
 ```
 
 职责：
@@ -175,7 +175,7 @@ docs/README.md
 docs/40-idea-backlog.md
 shared/runtime/catalog.test.js
 scripts/experience-contracts.test.mjs
-docs/252-heart-catapult-verification.md
+docs/253-heart-catapult-verification.md
 bugs/...
 learn/...
 ```
@@ -243,7 +243,7 @@ git diff --check
 
 ## 5. 批次二：code-native 视觉设计
 
-`251-heart-catapult-design.md` 必须冻结：
+`252-heart-catapult-design.md` 必须冻结：
 
 - 温暖纸张、莓红、蜜金、深靛与鼠尾草色令牌；
 - 桌面双侧操控台、中部纸雕战场、顶部比分/轮次的视觉层级；
@@ -386,7 +386,7 @@ forced-colors 和 reduced-motion。只在真实视觉 Gate 全绿后提交样式
 - 固定顶层 DTO 如何与结构性秘密缺失共存；
 - 确定性对称游戏如何证明有限终止。
 
-最后创建 `docs/252-heart-catapult-verification.md`，记录命令、测试数量、浏览器矩阵、
+最后创建 `docs/253-heart-catapult-verification.md`，记录命令、测试数量、浏览器矩阵、
 截图、来源、A 级证据、已知限制，以及 verification 提交前被验收的
 实现/catalog HEAD；单独提交 `docs: verify heart catapult`。该 verification
 commit 自身的 SHA 只在提交成功后的交付结果中报告，不回写文档，也不使用 amend
