@@ -196,6 +196,7 @@
 | [215-candle-wishes-spec.md](./215-candle-wishes-spec.md) | “把愿望，一盏一盏点亮”的五步路线、固定展示排列、四阶段 reducer、隐私/焦点与完整验收规格 |
 | [216-candle-wishes-plan.md](./216-candle-wishes-plan.md) | “把愿望，一盏一盏点亮”的四个实现批次、视觉确认 Gate、file/localhost、来源、Chrome、bugs/learn 与验证闭环计划 |
 | [217-candle-wishes-design-proposal.md](./217-candle-wishes-design-proposal.md) | 桌面 lighting 与移动 complete 的纸艺蛋糕视觉概念、设计系统、采纳/拒绝台账与用户确认 Gate |
+| [379-candle-wishes-final-verification.md](./379-candle-wishes-final-verification.md) | “今晚，点亮五支蜡烛”的 28 项定向测试、六视口/完整路线/错误选择/键盘/触屏/降级浏览器矩阵、无 JS 修复与来源终验 |
 | [219-shadow-sword-duel-research.md](./219-shadow-sword-duel-research.md) | 创意池 V19“影子剑术”的热座密封、体力/气/先机联合结算、A 级边界与固定来源/许可证调研 |
 | [220-shadow-sword-duel-spec.md](./220-shadow-sword-duel-spec.md) | “影子剑术”的四动作资源规则、九回合事件重放、热座遮屏、精确 reducer/DTO 与完整验收规格 |
 | [221-shadow-sword-duel-plan.md](./221-shadow-sword-duel-plan.md) | “影子剑术”的核心/视觉 Gate/UI/集成/QA 文件所有权、独立提交、Chrome、bugs/learn 与验证闭环计划 |

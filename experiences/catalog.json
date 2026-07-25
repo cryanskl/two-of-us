@@ -275,6 +275,19 @@
       "networkRequired": false
     },
     {
+      "id": "candle-wishes",
+      "title": "今晚，点亮五支蜡烛",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/candle-wishes/index.html",
+      "readme": "experiences/surprises/candle-wishes/README.md",
+      "description": "根据五条回忆线索按正确顺序点亮蜡烛；每盏只在命中后留下一个愿望，五盏齐亮并主动收下后才展开最后的话。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",
