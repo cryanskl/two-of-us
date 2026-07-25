@@ -278,21 +278,34 @@
     return deepFreeze({ correctCount: correct, foulCount: foul, skipCount: skip, score: correct - foul });
   }
 
-  function parseConfirmedTurns(candidate) {
+  function parseConfirmedTurns(candidate, config) {
     var turns = snapshotArray(candidate, CONSTANTS.TURN_COUNT);
-    if (!turns) return null;
+    if (!turns || !config) return null;
     var parsed = [];
+    var usedCardIds = new Set();
     for (var index = 0; index < turns.length; index += 1) {
       var turn = snapshotRecord(turns[index], TURN_KEYS);
       var results = turn && parseResults(turn.results, CONSTANTS.CARDS_PER_TURN);
       if (!turn || turn.turnIndex !== index || turn.describerSeat !== index % 2 || !results || (turn.finishReason !== "cards-complete" && turn.finishReason !== "time-expired")) return null;
+      if (turn.finishReason === "cards-complete" && results.length !== CONSTANTS.CARDS_PER_TURN) return null;
+      if (turn.finishReason === "time-expired" && results.length >= CONSTANTS.CARDS_PER_TURN) return null;
+      if (results.some(function (result) { return usedCardIds.has(result.cardId); })) return null;
+      results.forEach(function (result) { usedCardIds.add(result.cardId); });
       parsed.push({ turnIndex: index, describerSeat: index % 2, results: results, finishReason: turn.finishReason });
     }
-    return parsed;
+    var scheduleMatches = config.schedules.some(function (variant) {
+      return parsed.every(function (turn) {
+        return turn.results.every(function (result, resultIndex) {
+          return variant[turn.turnIndex][resultIndex] === result.cardId;
+        });
+      });
+    });
+    return scheduleMatches ? parsed : null;
   }
 
-  function deriveMatchResult(candidate) {
-    var turns = parseConfirmedTurns(candidate);
+  function deriveMatchResult(candidate, candidateConfig) {
+    var config = candidateConfig === undefined ? DEFAULT_CONFIG : parseConfig(candidateConfig);
+    var turns = parseConfirmedTurns(candidate, config);
     if (!turns) return null;
     var scores = [0, 0];
     turns.forEach(function (turn) { scores[turn.describerSeat] += scoreTurn(turn.results).score; });
@@ -461,7 +474,7 @@
       if (state.phase !== "turn-review") return state;
       var confirmed = state.confirmedTurns.concat([{ turnIndex: state.turnIndex, describerSeat: state.draftTurn.describerSeat, results: state.draftTurn.results.map(function (item) { return { cardId: item.cardId, outcome: item.outcome }; }), finishReason: state.draftTurn.finishReason }]);
       if (state.turnIndex === CONSTANTS.TURN_COUNT - 1) {
-        return nextState(state, { phase: "match-result", draftTurn: null, confirmedTurns: confirmed, result: deriveMatchResult(confirmed) });
+        return nextState(state, { phase: "match-result", draftTurn: null, confirmedTurns: confirmed, result: deriveMatchResult(confirmed, state.config) });
       }
       if (!tokenHeadroom(state)) return state;
       var nextTurnIndex = state.turnIndex + 1;
@@ -482,6 +495,7 @@
     if (!state || typeof state !== "object" || !INTERNAL_STATES.has(state)) return null;
     var describer = state.draftTurn ? state.draftTurn.describerSeat : null;
     var guesser = state.draftTurn ? state.draftTurn.guesserSeat : null;
+    var showsCardProgress = state.phase === "card-ready" || state.phase === "describing";
     var primary = null;
     var status = "";
     var data = null;
@@ -522,7 +536,12 @@
       turnIndex: state.phase === "intro" || state.phase === "setup" ? null : state.turnIndex,
       describerSeat: describer,
       guesserSeat: guesser,
-      progress: state.draftTurn ? { turn: state.turnIndex + 1, turns: 4, card: state.activeCardIndex + 1, cards: 6 } : null,
+      progress: showsCardProgress ? {
+        turn: state.turnIndex + 1,
+        turns: CONSTANTS.TURN_COUNT,
+        card: state.activeCardIndex + 1,
+        cards: CONSTANTS.CARDS_PER_TURN
+      } : null,
       scoreboard: state.phase === "intro" || state.phase === "setup" ? null : scoreBoard(state),
       primaryAction: primary,
       statusText: status,

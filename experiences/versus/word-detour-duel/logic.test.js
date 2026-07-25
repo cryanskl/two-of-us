@@ -95,10 +95,70 @@ test("scoreTurn and deriveMatchResult support positive, negative, and ties", () 
   assert.deepEqual(scoreTurn([{ cardId: "a", outcome: "correct" }, { cardId: "b", outcome: "foul" }, { cardId: "c", outcome: "skip" }]), { correctCount: 1, foulCount: 1, skipCount: 1, score: 0 });
   assert.equal(scoreTurn([{ cardId: "a", outcome: "foul" }]).score, -1);
   assert.equal(scoreTurn([{ cardId: "a", outcome: "bad" }]), null);
-  const turns = [0, 1, 2, 3].map(turnIndex => ({ turnIndex, describerSeat: turnIndex % 2, results: [{ cardId: "x" + turnIndex, outcome: "correct" }], finishReason: "cards-complete" }));
+  const turns = [0, 1, 2, 3].map(turnIndex => ({
+    turnIndex,
+    describerSeat: turnIndex % 2,
+    results: DEFAULT_CONFIG.schedules[0][turnIndex].map((cardId, cardIndex) => ({
+      cardId,
+      outcome: cardIndex === 0 ? "correct" : "skip"
+    })),
+    finishReason: "cards-complete"
+  }));
   assert.deepEqual(deriveMatchResult(turns), { kind: "tie", winnerSeat: null, playerScores: [2, 2] });
-  turns[0].results.push({ cardId: "bonus", outcome: "correct" });
+  turns[0].results[1].outcome = "correct";
   assert.deepEqual(deriveMatchResult(turns), { kind: "seat-win", winnerSeat: 0, playerScores: [3, 2] });
+});
+
+test("deriveMatchResult rejects impossible finish counts and cross-turn card reuse", () => {
+  const completeTurns = [0, 1, 2, 3].map(turnIndex => ({
+    turnIndex,
+    describerSeat: turnIndex % 2,
+    results: DEFAULT_CONFIG.schedules[0][turnIndex].map(cardId => ({
+      cardId,
+      outcome: "skip"
+    })),
+    finishReason: "cards-complete"
+  }));
+  const incomplete = structuredClone(completeTurns);
+  incomplete[0].results.pop();
+  assert.equal(deriveMatchResult(incomplete), null);
+
+  const expiredAfterSix = structuredClone(completeTurns);
+  expiredAfterSix[0].finishReason = "time-expired";
+  assert.equal(deriveMatchResult(expiredAfterSix), null);
+
+  const reused = structuredClone(completeTurns);
+  reused[1].results[0].cardId = reused[0].results[0].cardId;
+  assert.equal(deriveMatchResult(reused), null);
+
+  const unknown = structuredClone(completeTurns);
+  unknown[0].results[0].cardId = "unknown-card";
+  assert.equal(deriveMatchResult(unknown), null);
+
+  const customConfig = {
+    ...config,
+    playerLabels: [...config.playerLabels],
+    deckLabels: [...config.deckLabels],
+    cards: config.cards.map(card => ({
+      ...card,
+      id: card.id === completeTurns[0].results[0].cardId ? "custom-card" : card.id,
+      forbidden: [...card.forbidden]
+    })),
+    schedules: config.schedules.map(variant =>
+      variant.map(hand =>
+        hand.map(cardId =>
+          cardId === completeTurns[0].results[0].cardId ? "custom-card" : cardId
+        )
+      )
+    )
+  };
+  const customTurns = structuredClone(completeTurns);
+  customTurns[0].results[0].cardId = "custom-card";
+  assert.equal(deriveMatchResult(customTurns), null);
+  assert.deepEqual(
+    deriveMatchResult(customTurns, customConfig),
+    { kind: "tie", winnerSeat: null, playerScores: [0, 0] }
+  );
 });
 
 test("setup freezes variant and timer into the first handoff", () => {
@@ -161,6 +221,53 @@ test("four untimed turns alternate describers and finish in a tie", () => {
   const restarted = reduce(state, act(state, ACTIONS.RESTART));
   assert.deepEqual(restarted, createInitialState(DEFAULT_CONFIG));
   assert.notEqual(restarted, state);
+});
+
+test("card progress exists only while the current secret card is open", () => {
+  let state = startUntimed();
+  assert.equal(getView(state).progress, null);
+  state = reduce(state, act(state, ACTIONS.REVEAL_CARD));
+  state = reduce(state, act(state, ACTIONS.START_CLOCK, { nowMs: null }));
+  for (let index = 0; index < 5; index += 1) {
+    state = reduce(
+      state,
+      act(state, ACTIONS.RECORD_OUTCOME, {
+        outcome: "skip",
+        nowMs: null,
+        token: null
+      })
+    );
+  }
+  assert.equal(state.phase, "describing");
+  assert.deepEqual(getView(state).progress, {
+    turn: 1,
+    turns: 4,
+    card: 6,
+    cards: 6
+  });
+  state = reduce(
+    state,
+    act(state, ACTIONS.INTERRUPT, {
+      reason: "manual",
+      nowMs: null,
+      token: null
+    })
+  );
+  assert.equal(getView(state).progress, null);
+  state = reduce(state, act(state, ACTIONS.PREPARE_RESUME));
+  state = reduce(state, act(state, ACTIONS.START_CLOCK, { nowMs: null }));
+  state = reduce(
+    state,
+    act(state, ACTIONS.RECORD_OUTCOME, {
+      outcome: "skip",
+      nowMs: null,
+      token: null
+    })
+  );
+  assert.equal(state.phase, "turn-ended");
+  assert.equal(getView(state).progress, null);
+  state = reduce(state, act(state, ACTIONS.SHOW_REVIEW));
+  assert.equal(getView(state).progress, null);
 });
 
 test("review can only reclassify the current used card", () => {

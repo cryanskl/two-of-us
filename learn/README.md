@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [内部游标哨兵不能直接显示为公共序号](./2026-07-25-cursor-sentinel-public-ordinal.md)
 - [阶段公开投影、展示幂等与热座隐私生命周期](./2026-07-24-public-view-animation-and-privacy-lifecycle.md)
 - [可移植仓库审计脚本：避开 zsh 特殊变量与 Node 模块歧义](./2026-07-24-portable-repository-audit-scripts.md)
 - [密封联合结算：公开库存延迟、私密占用与策略穷举](./2026-07-24-sealed-joint-settlement-ledgers.md)
