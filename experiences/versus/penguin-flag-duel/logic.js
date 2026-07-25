@@ -105,6 +105,8 @@
   const PLAYER_KEYS = deepFreeze(["seat", "x", "y", "vx", "vy", "lastNormalIndex"]);
   const FLAG_KEYS = deepFreeze(["x", "y", "carrierSeat", "pickupLockTicks", "looseTicks"]);
   const RESULT_KEYS = deepFreeze(["winnerSeat", "reason"]);
+  const REPLAY_KEYS = deepFreeze(["version", "config", "actions"]);
+  const CONFIG_KEYS = deepFreeze(["playerNames", "copy"]);
   const ACTION_KEYS = deepFreeze({
     START: ["type", "expectedRevision"],
     STEP: ["type", "expectedRevision", "intents"],
@@ -229,31 +231,126 @@
   function simulatePlayingTick(state, intents) {
     const pair = parseIntentPair(intents);
     if (!pair) throw new TypeError("intents must contain two integers in 0..8");
+    const startingCarrier = state.flag.carrierSeat;
     const moved = state.players.map((player, seat) => resolvePlayerMotion(
       player,
       pair[seat],
-      state.flag.carrierSeat === seat,
+      startingCarrier === seat,
     ));
-    const collision = resolvePlayerCollision(moved, state.flag.carrierSeat);
+    const collision = resolvePlayerCollision(moved, startingCarrier);
+    let flag = startingCarrier === null
+      ? { ...state.flag }
+      : {
+        ...state.flag,
+        x: collision.players[startingCarrier].x,
+        y: collision.players[startingCarrier].y,
+      };
+    let droppedThisTick = false;
+    if (collision.contacted && startingCarrier !== null) {
+      flag = dropFlag(collision.players);
+      droppedThisTick = true;
+    } else if (flag.carrierSeat === null && flag.pickupLockTicks === 0) {
+      flag = resolveFlagPickup(flag, collision.players);
+    }
+
+    let scores = [...state.scores];
+    let capturedSeat = null;
+    if (!droppedThisTick && flag.carrierSeat !== null && isInsideOwnBase(collision.players[flag.carrierSeat])) {
+      capturedSeat = flag.carrierSeat;
+      scores[capturedSeat] += 1;
+    }
+    if (capturedSeat === null) flag = ageLooseFlag(flag, droppedThisTick);
+
     const liveTicksRemaining = state.liveTicksRemaining - 1;
-    const terminal = liveTicksRemaining === 0
-      ? { winnerSeat: null, reason: "draw" }
-      : null;
+    const terminal = resolveTerminal(scores, liveTicksRemaining);
+    const phase = terminal ? "match-result" : capturedSeat === null ? "playing" : "capture-reset";
+    const players = capturedSeat === null ? collision.players : deriveSpawn();
     return transition(state, {
-      phase: terminal ? "match-result" : "playing",
-      players: collision.players,
-      flag: state.flag.carrierSeat === null
-        ? state.flag
-        : {
-          ...state.flag,
-          x: collision.players[state.flag.carrierSeat].x,
-          y: collision.players[state.flag.carrierSeat].y,
-        },
+      phase,
+      players,
+      flag: capturedSeat === null ? flag : createHomeFlag(),
+      scores,
       liveTicksRemaining,
       result: terminal,
-      countdownTicks: 0,
+      countdownTicks: phase === "capture-reset" ? CAPTURE_RESET_TICKS : 0,
       pauseReason: null,
+      lastCaptureSeat: capturedSeat,
     });
+  }
+
+  function dropFlag(players) {
+    const midpoint = {
+      x: roundTowardZero(players[0].x + players[1].x, 2),
+      y: roundTowardZero(players[0].y + players[1].y, 2),
+    };
+    const point = legalizeFlagPoint(midpoint);
+    return {
+      x: point.x,
+      y: point.y,
+      carrierSeat: null,
+      pickupLockTicks: FLAG_PICKUP_LOCK_TICKS,
+      looseTicks: 0,
+    };
+  }
+
+  function resolveFlagPickup(flag, players) {
+    const thresholdSquared = (PLAYER_RADIUS + FLAG_RADIUS) ** 2;
+    const distances = players.map((player) => (
+      (player.x - flag.x) ** 2 + (player.y - flag.y) ** 2
+    ));
+    const candidates = distances.map((distance) => distance <= thresholdSquared);
+    let carrierSeat = null;
+    if (candidates[0] && candidates[1]) {
+      if (distances[0] !== distances[1]) carrierSeat = distances[0] < distances[1] ? 0 : 1;
+    } else if (candidates[0] || candidates[1]) {
+      carrierSeat = candidates[0] ? 0 : 1;
+    }
+    if (carrierSeat === null) return flag;
+    return {
+      x: players[carrierSeat].x,
+      y: players[carrierSeat].y,
+      carrierSeat,
+      pickupLockTicks: 0,
+      looseTicks: 0,
+    };
+  }
+
+  function ageLooseFlag(flag, droppedThisTick) {
+    if (flag.carrierSeat !== null || droppedThisTick) return flag;
+    if (flag.pickupLockTicks > 0) {
+      return { ...flag, pickupLockTicks: flag.pickupLockTicks - 1, looseTicks: 0 };
+    }
+    if (flag.x === FLAG_HOME.x && flag.y === FLAG_HOME.y && flag.looseTicks === 0) return flag;
+    const looseTicks = flag.looseTicks + 1;
+    return looseTicks >= FLAG_RESET_TICKS ? createHomeFlag() : { ...flag, looseTicks };
+  }
+
+  function legalizeFlagPoint(rawPoint) {
+    let point = {
+      seat: 0,
+      x: clamp(rawPoint.x, FLAG_RADIUS, WORLD_WIDTH - FLAG_RADIUS),
+      y: clamp(rawPoint.y, FLAG_RADIUS, WORLD_HEIGHT - FLAG_RADIUS),
+      vx: 0,
+      vy: 0,
+      lastNormalIndex: 0,
+    };
+    for (let pass = 0; pass < 2; pass += 1) {
+      for (const obstacle of OBSTACLES) point = resolveCircleAabb(point, obstacle, FLAG_RADIUS);
+    }
+    return deepFreeze({ x: point.x, y: point.y });
+  }
+
+  function isInsideOwnBase(player) {
+    return player.seat === 0 ? player.x <= BASE_DEPTH : player.x >= WORLD_WIDTH - BASE_DEPTH;
+  }
+
+  function resolveTerminal(scores, liveTicksRemaining) {
+    if (scores[0] >= TARGET_SCORE || scores[1] >= TARGET_SCORE) {
+      return { winnerSeat: scores[0] >= TARGET_SCORE ? 0 : 1, reason: "target-score" };
+    }
+    if (liveTicksRemaining > 0) return null;
+    if (scores[0] === scores[1]) return { winnerSeat: null, reason: "draw" };
+    return { winnerSeat: scores[0] > scores[1] ? 0 : 1, reason: "time" };
   }
 
   function resolvePlayerMotion(rawPlayer, intent, isCarrier) {
@@ -364,6 +461,8 @@
       first.y -= cy;
       second.x += cx;
       second.y += cy;
+      first = resolveStaticPlacement(first);
+      second = resolveStaticPlacement(second);
     }
 
     if (contacted) {
@@ -391,8 +490,6 @@
       const secondLimit = carrierSeat === 1 ? CARRIER_MAX_SPEED : MAX_SPEED;
       Object.assign(first, limitVelocity(first.vx, first.vy, firstLimit));
       Object.assign(second, limitVelocity(second.vx, second.vy, secondLimit));
-      first = resolveStaticPlacement(first);
-      second = resolveStaticPlacement(second);
     }
     return deepFreeze({ players: [first, second], contacted });
   }
@@ -474,6 +571,24 @@
     });
   }
 
+  function replaySession(log) {
+    const source = readExactRecord(log, REPLAY_KEYS);
+    if (!source || source.version !== VERSION || !Array.isArray(source.actions)
+      || hasUnexpectedArrayKeys(source.actions, source.actions.length)) {
+      throw new TypeError("invalid replay session");
+    }
+    const config = parseConfigStrict(source.config);
+    let state = createInitialState(config);
+    for (const action of source.actions) {
+      const parsed = parseAction(action, state.revision);
+      if (!parsed) throw new TypeError("invalid replay action");
+      const next = reducePenguinFlagDuel(state, action);
+      if (next === state) throw new TypeError("replay action is illegal in the current phase");
+      state = next;
+    }
+    return state;
+  }
+
   function assertState(candidate) {
     if (trustedStates.has(candidate)) return candidate;
     const source = readExactRecord(candidate, STATE_KEYS);
@@ -494,7 +609,7 @@
     const revision = requireInteger(source.revision, 0, Number.MAX_SAFE_INTEGER, "revision");
     validatePhaseCrossFields({
       phase: source.phase, countdownTicks, pauseReason, lastCaptureSeat, result,
-      liveTicksRemaining, scores,
+      liveTicksRemaining, scores, players, flag,
     });
     return makeState({
       version: VERSION,
@@ -514,10 +629,16 @@
   }
 
   function validatePhaseCrossFields(fields) {
-    const { phase, countdownTicks, pauseReason, result, liveTicksRemaining, scores } = fields;
+    const {
+      phase, countdownTicks, pauseReason, result, liveTicksRemaining, scores, players, flag,
+    } = fields;
+    if (phase !== "match-result" && Math.max(...scores) >= TARGET_SCORE) {
+      throw new TypeError("non-terminal state reached target score");
+    }
     if (phase === "intro") {
       if (countdownTicks !== 0 || pauseReason !== null || result !== null
-        || liveTicksRemaining !== MATCH_LIVE_TICKS || scores[0] !== 0 || scores[1] !== 0) {
+        || liveTicksRemaining !== MATCH_LIVE_TICKS || scores[0] !== 0 || scores[1] !== 0
+        || !playersAtSpawn(players) || !flagAtHome(flag) || fields.lastCaptureSeat !== null) {
         throw new TypeError("invalid intro state");
       }
       return;
@@ -528,13 +649,15 @@
     }
     if (phase === "capture-reset") {
       if (countdownTicks < 1 || countdownTicks > CAPTURE_RESET_TICKS
-        || pauseReason !== null || result !== null || fields.lastCaptureSeat === null) {
+        || pauseReason !== null || result !== null || fields.lastCaptureSeat === null
+        || !playersAtSpawn(players) || !flagAtHome(flag)) {
         throw new TypeError("invalid capture reset");
       }
       return;
     }
     if (phase === "playing") {
-      if (countdownTicks !== 0 || pauseReason !== null || result !== null || liveTicksRemaining < 1) {
+      if (countdownTicks !== 0 || pauseReason !== null || result !== null
+        || liveTicksRemaining < 1 || fields.lastCaptureSeat !== null) {
         throw new TypeError("invalid playing state");
       }
       return;
@@ -548,23 +671,43 @@
     if (countdownTicks !== 0 || pauseReason !== null || result === null) {
       throw new TypeError("invalid match result");
     }
+    const highest = Math.max(...scores);
+    if (result.reason === "target-score") {
+      const loserSeat = result.winnerSeat === 0 ? 1 : 0;
+      if (scores[result.winnerSeat] !== TARGET_SCORE || scores[loserSeat] >= TARGET_SCORE) {
+        throw new TypeError("target result without unique target score");
+      }
+    } else {
+      if (liveTicksRemaining !== 0 || highest >= TARGET_SCORE) throw new TypeError("timed result invariant failed");
+      if (result.reason === "draw" && scores[0] !== scores[1]) throw new TypeError("draw scores differ");
+      if (result.reason === "time") {
+        const expectedWinner = scores[0] > scores[1] ? 0 : 1;
+        if (scores[0] === scores[1] || result.winnerSeat !== expectedWinner) {
+          throw new TypeError("time winner mismatch");
+        }
+      }
+    }
   }
 
   function parseAction(action, expectedRevision) {
-    const type = safeActionType(action);
-    if (!type) return null;
-    const source = readExactRecord(action, ACTION_KEYS[type]);
-    if (!source || source.expectedRevision !== expectedRevision) return null;
-    if (!Number.isSafeInteger(source.expectedRevision) || source.expectedRevision < 0) return null;
-    if (type === "STEP") {
-      const intents = parseIntentPair(source.intents);
-      return intents ? deepFreeze({ type, expectedRevision, intents }) : null;
+    try {
+      const type = safeActionType(action);
+      if (!type) return null;
+      const source = readExactRecord(action, ACTION_KEYS[type]);
+      if (!source || source.expectedRevision !== expectedRevision) return null;
+      if (!Number.isSafeInteger(source.expectedRevision) || source.expectedRevision < 0) return null;
+      if (type === "STEP") {
+        const intents = parseIntentPair(source.intents);
+        return intents ? deepFreeze({ type, expectedRevision, intents }) : null;
+      }
+      if (type === "PAUSE") {
+        return PAUSE_REASONS.includes(source.reason)
+          ? deepFreeze({ type, expectedRevision, reason: source.reason }) : null;
+      }
+      return deepFreeze({ type, expectedRevision });
+    } catch {
+      return null;
     }
-    if (type === "PAUSE") {
-      return PAUSE_REASONS.includes(source.reason)
-        ? deepFreeze({ type, expectedRevision, reason: source.reason }) : null;
-    }
-    return deepFreeze({ type, expectedRevision });
   }
 
   function safeActionType(action) {
@@ -630,6 +773,16 @@
     };
   }
 
+  function playersAtSpawn(players) {
+    const expected = deriveSpawn();
+    return players.every((player, seat) => PLAYER_KEYS.every((key) => player[key] === expected[seat][key]));
+  }
+
+  function flagAtHome(flag) {
+    const expected = createHomeFlag();
+    return FLAG_KEYS.every((key) => flag[key] === expected[key]);
+  }
+
   function parsePlayer(value, expectedSeat) {
     const source = readExactRecord(value, PLAYER_KEYS);
     if (!source) return null;
@@ -665,8 +818,6 @@
         || x !== players[carrierSeat].x || y !== players[carrierSeat].y) {
         throw new TypeError("carried flag invariant failed");
       }
-      const speedSquared = players[carrierSeat].vx ** 2 + players[carrierSeat].vy ** 2;
-      if (speedSquared > CARRIER_MAX_SPEED ** 2) throw new TypeError("carrier exceeds speed limit");
     } else if (pickupLockTicks > 0 && looseTicks !== 0) {
       throw new TypeError("locked flag cannot age");
     }
@@ -719,6 +870,15 @@
       copy[key] = cleaned;
     }
     return copy;
+  }
+
+  function parseConfigStrict(value) {
+    const source = readExactRecord(value, CONFIG_KEYS);
+    if (!source) throw new TypeError("invalid replay config");
+    return deepFreeze({
+      playerNames: parseNamesStrict(source.playerNames),
+      copy: parseCopyStrict(source.copy),
+    });
   }
 
   function statusFor(state) {
@@ -900,7 +1060,8 @@
     resolvePlayerCollision,
     simulatePlayingTick,
     integerSqrt,
-    replaySession: null,
+    roundDiv,
+    replaySession,
     deepFreeze,
   });
 });

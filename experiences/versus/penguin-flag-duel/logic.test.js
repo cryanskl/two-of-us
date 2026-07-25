@@ -38,6 +38,20 @@ function player(seat, fields = {}) {
   return { ...logic.deriveSpawn()[seat], ...fields, seat };
 }
 
+function legalState(fields = {}) {
+  const state = clone(startPlaying());
+  Object.assign(state, fields);
+  return logic.assertState(state);
+}
+
+function recordDispatch(session, state, type, fields = {}) {
+  const action = { type, expectedRevision: state.revision, ...fields };
+  const next = logic.reducePenguinFlagDuel(state, action);
+  assert.notEqual(next, state, `${type} should be accepted`);
+  session.actions.push(clone(action));
+  return next;
+}
+
 test("公共 API、规则表和配置递归冻结", () => {
   assert.equal(logic.VERSION, 1);
   assert.equal(logic.TICK_RATE, 60);
@@ -131,6 +145,17 @@ test("严格 action keys、revision 和阶段转换 fail closed", () => {
   assert.equal(state.phase, "playing");
   assert.equal(state.liveTicksRemaining, ticks);
   assert.deepEqual(state.players, logic.deriveSpawn(), "resume countdown clears abstract input");
+
+  const hostileIntents = [];
+  Object.defineProperty(hostileIntents, "0", { enumerable: true, get() { throw new Error("getter"); } });
+  hostileIntents[1] = 0;
+  hostileIntents.length = 2;
+  const noThrow = logic.reducePenguinFlagDuel(state, {
+    type: "STEP",
+    expectedRevision: state.revision,
+    intents: hostileIntents,
+  });
+  assert.equal(noThrow, state);
 });
 
 test("九种输入使用定点加速度，斜向与直向模长接近", () => {
@@ -219,6 +244,263 @@ test("玩家碰撞对称、同心 fallback 固定且速度不增能", () => {
   assert.equal(same.players[1].lastNormalIndex, 0);
 });
 
+test("靠墙和靠冰岛夹碰时每个 pass 都保持静态合法并继续消解重叠", () => {
+  const radius = logic.RULES.PLAYER_RADIUS;
+  const requiredGap = radius * 2;
+  const wallPlayers = [
+    player(0, { x: radius, y: 320 * 256 }),
+    player(1, { x: radius + 50 * 256, y: 320 * 256 }),
+  ];
+  const wall = logic.resolvePlayerCollision(wallPlayers);
+  assert.equal(wall.players[0].x, radius);
+  assert.ok(wall.players[1].x - wall.players[0].x > 50 * 256);
+  assert.ok(requiredGap - (wall.players[1].x - wall.players[0].x) <= 128);
+
+  const box = logic.OBSTACLES[0];
+  const obstaclePlayers = [
+    player(0, { x: box.minX - radius, y: (box.minY + box.maxY) / 2 }),
+    player(1, { x: box.minX - radius - 50 * 256, y: (box.minY + box.maxY) / 2 }),
+  ];
+  const obstacle = logic.resolvePlayerCollision(obstaclePlayers);
+  assert.equal(obstacle.players[0].x, box.minX - radius);
+  assert.ok(obstacle.players[0].x - obstacle.players[1].x > 50 * 256);
+  assert.ok(requiredGap - (obstacle.players[0].x - obstacle.players[1].x) <= 128);
+});
+
+test("单人拾旗、双人近者拾旗与严格等距无人拾旗", () => {
+  const center = logic.RULES.FLAG_HOME;
+  let state = legalState({
+    players: [
+      player(0, { x: center.x - 20 * 256, y: center.y }),
+      player(1, { x: center.x + 40 * 256, y: center.y }),
+    ],
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.flag.carrierSeat, 0);
+  assert.equal(state.flag.x, state.players[0].x);
+
+  state = legalState({
+    players: [
+      player(0, { x: center.x - 30 * 256, y: center.y }),
+      player(1, { x: center.x + 30 * 256, y: center.y }),
+    ],
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.flag.carrierSeat, null);
+
+  state = legalState({
+    players: [
+      player(0, { x: center.x, y: center.y }),
+      player(1, { x: 800 * 256, y: center.y }),
+    ],
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.flag.carrierSeat, 0);
+});
+
+test("持旗碰撞先掉旗、当 tick 不重拾也不在基地得分", () => {
+  const x = logic.RULES.BASE_DEPTH - 2 * 256;
+  const players = [
+    player(0, { x, y: 320 * 256 }),
+    player(1, { x: x + logic.RULES.PLAYER_RADIUS * 2 - 100, y: 320 * 256 }),
+  ];
+  let state = legalState({
+    players,
+    flag: {
+      x: players[0].x,
+      y: players[0].y,
+      carrierSeat: 0,
+      pickupLockTicks: 0,
+      looseTicks: 0,
+    },
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.flag.carrierSeat, null);
+  assert.equal(state.flag.pickupLockTicks, 15);
+  assert.deepEqual(state.scores, [0, 0]);
+  assert.equal(state.phase, "playing");
+});
+
+test("掉旗锁定完整保持 15 tick，离地 480 tick 后回中央", () => {
+  let state = legalState({
+    flag: {
+      x: 300 * 256,
+      y: 320 * 256,
+      carrierSeat: null,
+      pickupLockTicks: 15,
+      looseTicks: 0,
+    },
+  });
+  for (let remaining = 14; remaining >= 0; remaining -= 1) {
+    state = dispatch(state, "STEP", { intents: neutral });
+    assert.equal(state.flag.pickupLockTicks, remaining);
+  }
+  assert.equal(state.flag.looseTicks, 0);
+
+  state = legalState({
+    flag: {
+      x: 300 * 256,
+      y: 320 * 256,
+      carrierSeat: null,
+      pickupLockTicks: 0,
+      looseTicks: 479,
+    },
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.deepEqual(
+    { x: state.flag.x, y: state.flag.y, looseTicks: state.flag.looseTicks },
+    { x: logic.RULES.FLAG_HOME.x, y: logic.RULES.FLAG_HOME.y, looseTicks: 0 },
+  );
+});
+
+test("同 tick 拾旗进入基地可得分，普通得分进入 90 tick 对称重置", () => {
+  const basePlayer = player(0, { x: logic.RULES.BASE_DEPTH - 256, y: 320 * 256 });
+  let state = legalState({
+    players: [basePlayer, player(1)],
+    flag: {
+      x: basePlayer.x,
+      y: basePlayer.y,
+      carrierSeat: null,
+      pickupLockTicks: 0,
+      looseTicks: 20,
+    },
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.phase, "capture-reset");
+  assert.equal(state.countdownTicks, 90);
+  assert.deepEqual(state.scores, [1, 0]);
+  assert.deepEqual(state.players, logic.deriveSpawn());
+  assert.equal(state.flag.carrierSeat, null);
+  assert.deepEqual({ x: state.flag.x, y: state.flag.y }, logic.RULES.FLAG_HOME);
+  assert.equal(state.lastCaptureSeat, 0);
+});
+
+test("目标分、时间胜负、同分和平局压哨顺序严格", () => {
+  const basePlayer = player(0, { x: logic.RULES.BASE_DEPTH - 256, y: 320 * 256 });
+  const carried = {
+    x: basePlayer.x,
+    y: basePlayer.y,
+    carrierSeat: 0,
+    pickupLockTicks: 0,
+    looseTicks: 0,
+  };
+  let state = legalState({
+    players: [basePlayer, player(1)],
+    flag: carried,
+    scores: [2, 1],
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.equal(state.phase, "match-result");
+  assert.deepEqual(state.scores, [3, 1]);
+  assert.deepEqual(state.result, { winnerSeat: 0, reason: "target-score" });
+
+  state = legalState({ scores: [1, 0], liveTicksRemaining: 1 });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.deepEqual(state.result, { winnerSeat: 0, reason: "time" });
+
+  state = legalState({ scores: [1, 1], liveTicksRemaining: 1 });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.deepEqual(state.result, { winnerSeat: null, reason: "draw" });
+
+  state = legalState({
+    players: [basePlayer, player(1)],
+    flag: carried,
+    scores: [0, 1],
+    liveTicksRemaining: 1,
+  });
+  state = dispatch(state, "STEP", { intents: neutral });
+  assert.deepEqual(state.scores, [1, 1]);
+  assert.deepEqual(state.result, { winnerSeat: null, reason: "draw" });
+});
+
+test("暂停冻结物理和计时，恢复倒计时不补后台步", () => {
+  let state = startPlaying();
+  state = dispatch(state, "STEP", { intents: [3, 7] });
+  const beforePause = state;
+  state = dispatch(state, "PAUSE", { reason: "stalled" });
+  const paused = state;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const noOp = dispatch(state, "STEP", { intents: [3, 7] });
+    assert.equal(noOp, state);
+  }
+  assert.deepEqual(state.players, paused.players);
+  assert.equal(state.liveTicksRemaining, paused.liveTicksRemaining);
+  state = dispatch(state, "RESUME");
+  for (let tick = 0; tick < 90; tick += 1) state = dispatch(state, "STEP", { intents: [3, 7] });
+  assert.deepEqual(state.players, beforePause.players);
+  assert.equal(state.liveTicksRemaining, beforePause.liveTicksRemaining);
+});
+
+test("完整三分比赛动作日志 JSON 重放严格等于权威末态", () => {
+  const config = logic.sanitizeConfig({ playerNames: ["雪团", "冰糖"] });
+  const session = { version: 1, config: clone(config), actions: [] };
+  let state = logic.createInitialState(config);
+  state = recordDispatch(session, state, "START");
+  while (state.phase === "countdown") state = recordDispatch(session, state, "STEP", { intents: neutral });
+
+  let guard = 0;
+  while (state.phase !== "match-result" && guard < 12000) {
+    let intents = neutral;
+    if (state.phase === "playing") {
+      intents = state.flag.carrierSeat === 0 ? [7, 0] : [3, 0];
+    }
+    state = recordDispatch(session, state, "STEP", { intents });
+    guard += 1;
+  }
+  assert.equal(state.phase, "match-result");
+  assert.deepEqual(state.scores, [3, 0]);
+  assert.ok(guard < 12000);
+  const replayed = logic.replaySession(JSON.parse(JSON.stringify(session)));
+  assert.deepEqual(replayed, state);
+  assertDeepFrozen(replayed);
+});
+
+test("重放拒绝额外字段、错误 revision、非法阶段和畸形配置", () => {
+  const config = clone(logic.sanitizeConfig());
+  assert.throws(() => logic.replaySession({ version: 1, config, actions: [], extra: true }), TypeError);
+  assert.throws(() => logic.replaySession({
+    version: 1,
+    config,
+    actions: [{ type: "START", expectedRevision: 9 }],
+  }), TypeError);
+  assert.throws(() => logic.replaySession({
+    version: 1,
+    config,
+    actions: [{ type: "RESUME", expectedRevision: 0 }],
+  }), TypeError);
+  assert.throws(() => logic.replaySession({
+    version: 1,
+    config: { playerNames: ["同", "同"], copy: config.copy },
+    actions: [],
+  }), TypeError);
+});
+
+test("动作按不同批次切分不改变最终逻辑状态", () => {
+  const actions = [];
+  let source = startPlaying();
+  for (let tick = 0; tick < 240; tick += 1) {
+    const action = {
+      type: "STEP",
+      expectedRevision: source.revision,
+      intents: [tick % 80 < 40 ? 3 : 7, tick % 60 < 30 ? 1 : 5],
+    };
+    actions.push(action);
+    source = logic.reducePenguinFlagDuel(source, action);
+  }
+  function applyChunks(chunkSize) {
+    let state = startPlaying();
+    for (let offset = 0; offset < actions.length; offset += chunkSize) {
+      for (const action of actions.slice(offset, offset + chunkSize)) {
+        state = logic.reducePenguinFlagDuel(state, action);
+      }
+    }
+    return state;
+  }
+  assert.deepEqual(applyChunks(1), source);
+  assert.deepEqual(applyChunks(2), source);
+  assert.deepEqual(applyChunks(5), source);
+});
+
 test("横向镜像点、出生点、基地和障碍保持对称", () => {
   const point = { x: 177 * 256, y: 299 * 256 };
   const mirror = logic.mirrorPointHorizontally(point);
@@ -247,6 +529,12 @@ test("hostile state 额外字段、getter、NaN、Infinity 和 symbol 均 fail c
   const getter = clone(initial);
   Object.defineProperty(getter, "phase", { get() { throw new Error("getter"); }, enumerable: true });
   assert.throws(() => logic.assertState(getter), TypeError);
+  const targetWhilePlaying = clone(startPlaying());
+  targetWhilePlaying.scores = [3, 0];
+  assert.throws(() => logic.assertState(targetWhilePlaying), TypeError);
+  const movedIntro = clone(initial);
+  movedIntro.players[0].x += 1;
+  assert.throws(() => logic.assertState(movedIntro), TypeError);
 
   const recovered = logic.reducePenguinFlagDuel(extra, { type: "START", expectedRevision: 0 });
   assert.deepEqual(recovered, initial);
