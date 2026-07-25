@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `a6ca6891e5f2` |
+| 当前 HEAD | `4172fc9` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 否；派发前已重跑 repository verify |
-| 工作树提示 | 主工作树仅有用户原有未跟踪文件 `docs/goal.md`；3 个执行工作树均固定于 `a6ca689` |
+| 本次是否重跑全仓测试 | 是：`1895 / 1895` 通过 |
+| 工作树提示 | 首轮 3 个执行分支已回包；第二轮 3 个独立工作树已建立并按根 lockfile 安装依赖 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `compliment-reels` | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels` | `codex/exp-compliment-reels` | `a6ca689` | 仅实施 plan 与非视觉 core，不越过待确认的 UI Gate |
-| Worker 2 | 已分配 | `capsule-docking` | `/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking` | `codex/exp-capsule-docking` | `a6ca689` | 仅实施 plan 与非视觉 core，不越过待确认的 UI Gate |
-| Worker 3 | 已分配 | `kaleidoscope-names` | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names` | `codex/exp-kaleidoscope-names` | `a6ca689` | 完成 research、brainstorm、spec、plan，先做可行性与来源边界 |
+| Worker 1 | 已分配 | `kaleidoscope-names` core | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-core` | `codex/exp-kaleidoscope-names-core` | `8f63e08` | 仅实现纯逻辑、配置、测试和来源边界，不创建生产 UI |
+| Worker 2 | 已分配 | `taboo-description-duel` | `/Users/zenith/Desktop/two-of-us-worktrees/taboo-description-duel` | `codex/exp-taboo-description-duel` | `8f63e08` | research、brainstorm、spec、plan；先核对商标、题库与机制重复 |
+| Worker 3 | 已分配 | `vinyl-secret` | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret` | `codex/exp-vinyl-secret` | `4172fc9` | research、brainstorm、spec、plan；先证明 A 级与音频/素材来源边界 |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -81,9 +81,11 @@
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
-| `compliment-reels` | `254–255` | Worker 1 | 已分配 |
-| `capsule-docking` | `256–258` | Worker 2 | 已分配 |
-| `kaleidoscope-names` | `259–262` | Worker 3 | 已分配 |
+| `compliment-reels` | `254–255` | 首轮 Worker 1 | plan/core 已集成；`255` 保留后续验证 |
+| `capsule-docking` | `256–258` | 首轮 Worker 2 / 总控 | plan/core 已集成；`258` 保留视觉提案 |
+| `kaleidoscope-names` | `259–262` | 首轮 Worker 3 | 四阶段前置文档已集成 |
+| `taboo-description-duel` | `263–266` | Worker 2 | 已分配 |
+| `vinyl-secret` | `267–270` | Worker 3 | 已分配 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -98,11 +100,17 @@
 | `shadow-duet` | 生产 UI 尚未获确认 | `docs/205-shadow-duet-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `shadow-sword-duel` | 生产 UI 尚未获确认 | `docs/222-shadow-sword-duel-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
+| `compliment-reels` | 生产 UI 尚未获确认 | `docs/198-compliment-reels-design-proposal.md` | 用户 | 确认整体方向、320px 标签与终局标题后再派发 UI |
+| `capsule-docking` | 生产 UI 等待视觉方向选择 | `docs/208-capsule-docking-imagegen-brief.md` | 用户 | 从总控生成的三个视觉方向中选择或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `capsule-docking` core | `5f2c7ef`、`cb4395a` | `11cbf83`、`4172fc9` | 定向 `21 / 21`；全仓 `1895 / 1895` | 无 UI，不计 installed |
+| `kaleidoscope-names` 前置 | `5604e12`、`7e547a4`、`5785ed0`、`2293b59` | `a433193`、`973b2b3`、`1e41f73`、`22c1b80` | verify 通过；A 级可行性成立 | 无入口，不计 installed |
+| `compliment-reels` core | `c9cf9bf`、`dc271fb` | `8dce492`、`b08be37` | 定向 `23 / 23`；全仓 `1895 / 1895` | 无 UI，不计 installed |
+| shared static worktree test | — | `8f63e08` | 主工作树与全仓回归通过 | 移除 checkout 目录名硬编码 |
 | `heart-catapult` | 见 Git 历史 | `8cd34eb` 为当前文档验证提交 | 已在既有文档中记录 | 本看板未重跑其测试 |
 
 ## 每次更新清单
