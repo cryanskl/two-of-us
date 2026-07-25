@@ -45,13 +45,9 @@ test("HTML freezes the semantic reading order and exact visible copy", () => {
     '<header class="page-heading">',
     '<p class="round-guarantee">',
     '<section class="reel-frame"',
-    '<output class="current-praise"',
     '<p class="stage-copy"',
-    '<ol class="history-strip"',
-    '<section class="jackpot-letter"',
     '<button class="pull-handle"',
-    '<p class="fallback-copy"',
-    '<p class="live-region"',
+    '<p class="live-region sr-only"',
   ]);
   assertInOrder(html, [
     '<script src="./config.js"></script>',
@@ -72,6 +68,7 @@ test("HTML freezes the semantic reading order and exact visible copy", () => {
   }
 
   assert.equal((html.match(/<button\b/gu) || []).length, 1);
+  assert.equal(/class="(?:current-praise|history-strip|jackpot-letter|fallback-copy)"/u.test(html), false);
   assert.equal(/type=["']module["']/u.test(html), false);
   assert.equal(/https?:\/\//u.test(html), false);
   assert.equal(/m_(?:listen|remember|finish|slow|notice|care)/u.test(html), false);
@@ -85,6 +82,9 @@ test("controller uses public views, precommitted entropy and tokenized settling"
     "crypto.getRandomValues",
     "new Uint32Array(logic.ENTROPY_LENGTH)",
     "logic.FALLBACK_ENTROPY",
+    'document.createElement("output")',
+    'document.createElement("ol")',
+    'document.createElement("section")',
     '{ type: "PULL" }',
     '{ type: "SUSPEND" }',
     'type: "SETTLE"',
@@ -98,6 +98,8 @@ test("controller uses public views, precommitted entropy and tokenized settling"
     'addEventListener("blur"',
     "prefers-reduced-motion: reduce",
     "queueMicrotask",
+    "setTimeout",
+    "clearTimeout",
   ]) {
     assert.ok(app.includes(required), required);
   }
@@ -133,15 +135,19 @@ test("styles preserve the accepted materials and accessibility fallbacks", () =>
     "--ink-950: #17243c",
     "--brass-600: #b48a4a",
     ".pull-handle:focus-visible",
-    "min-height: 48px",
     "@media (max-width: 359px)",
     "@media (prefers-reduced-motion: reduce)",
     "@media (forced-colors: active)",
   ]) {
     assert.ok(css.includes(required), required);
   }
+  const handleRule = css.match(/\.pull-handle\s*\{([\s\S]*?)\}/u);
+  assert.ok(handleRule);
+  const targetHeight = handleRule[1].match(/min-height:\s*(\d+)px/u);
+  assert.ok(targetHeight);
+  assert.ok(Number(targetHeight[1]) >= 48);
   assert.equal(/url\s*\(/u.test(css), false);
-  assert.equal(/desktop-|mobile-|narrow-|tablet-|\.png/iu.test(css), false);
+  assert.equal(/(?:desktop|mobile|narrow|tablet)-[a-z-]*concept|\.png/iu.test(css), false);
 });
 
 test("README independently records all fixed open-source study boundaries", () => {

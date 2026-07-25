@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="一台本地直开的私人夸夸印刷机：最多六次，遇见一组特别同频。">
+  <title>每一格，都是喜欢你的理由</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="compliment-reels" data-phase="intro" aria-labelledby="page-title">
+    <header class="page-heading">
+      <h1 id="page-title">每一格，都是喜欢你的理由</h1>
+    </header>
+
+    <p class="round-guarantee">这一轮最多六次，会遇到一组特别同频；顺序在开始时已经排好。每一次，都只是认真夸你。</p>
+
+    <section class="reel-frame" aria-labelledby="reel-title">
+      <h2 id="reel-title" class="sr-only">三段夸奖印刷机</h2>
+      <div class="machine-crown" aria-hidden="true">
+        <span class="rivet rivet-left"></span>
+        <span class="blank-nameplate"></span>
+        <span class="rivet rivet-right"></span>
+      </div>
+      <ol class="reels">
+        <li class="reel" data-column="moment">
+          <span class="reel-label">
+            <span class="wide-label">我看见的你</span>
+            <span class="narrow-label">第一段 · 我看见的你</span>
+          </span>
+          <span class="reel-window">
+            <span class="paper-mark" aria-hidden="true"></span>
+            <span class="reel-text"></span>
+          </span>
+        </li>
+        <li class="reel" data-column="shine">
+          <span class="reel-label">
+            <span class="wide-label">发亮的样子</span>
+            <span class="narrow-label">第二段 · 发亮的样子</span>
+          </span>
+          <span class="reel-window">
+            <span class="paper-mark" aria-hidden="true"></span>
+            <span class="reel-text"></span>
+          </span>
+        </li>
+        <li class="reel" data-column="echo">
+          <span class="reel-label">
+            <span class="wide-label">留给我的感觉</span>
+            <span class="narrow-label">第三段 · 留给我的感觉</span>
+          </span>
+          <span class="reel-window">
+            <span class="paper-mark" aria-hidden="true"></span>
+            <span class="reel-text"></span>
+          </span>
+        </li>
+      </ol>
+      <span class="machine-foot" aria-hidden="true"></span>
+    </section>
+
+    <p class="stage-copy">正在把这一轮排好。</p>
+
+    <button class="pull-handle" type="button">重试准备</button>
+
+    <p class="live-region sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+  </main>
+
+  <noscript>
+    <p class="no-script">需要启用 JavaScript 才能拉动印刷机；页面不会联网或保存内容。</p>
+  </noscript>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
