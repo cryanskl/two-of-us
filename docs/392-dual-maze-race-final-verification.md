@@ -316,3 +316,48 @@ npm run verify：
 4. `f661242` `fix: keep dual maze controls within active viewport`
 
 本文件随后以独立验证文档提交。未 push。
+
+## 13. `main` 集成复验
+
+项目在 2026-07-26 合入 `main` 后再次完成独立复验。这里的数据覆盖前文第 10 节
+记录的分支阶段快照：
+
+```text
+项目级：tests 32，pass 32，fail 0
+项目 + 共享目录 + 仓库合同：tests 229，pass 229，fail 0
+完整仓库：tests 2469，pass 2469，fail 0
+npm run verify：
+仓库验收通过：75 个作品入口（67 个 A 级直开、8 个非 A 启动器）、
+1 个能力声明、资源与借鉴声明完整。
+创意池：52 / 60，惊喜 18、合作 18、对抗 16，剩余 8。
+```
+
+共享集成提交：
+
+```text
+e600c76 feat: catalog dual maze race
+```
+
+受控 Chrome 从拥有 75 张卡片、75 个体验链接且链接不重复的根门户真实点击进入。
+输入检查的八个方向按钮全部由真实点击点亮；浏览器无法证明实体键盘同时按键能力时，
+页面诚实展示风险说明，并要求显式确认后才允许开始。随后倒数进入第一局 COUP，
+左右两块棋盘各渲染 81 个格子且无横向溢出。
+
+自动化控制停顿触发了“页面停顿过久”的公平暂停，证明长帧保护在生产运行中生效，
+且不会补算停顿时间。页面控制台 error / warning 均为 0。最后通过页面可见的
+“返回作品集”链接真实返回根门户，并再次确认 75 个体验链接、75 个唯一目标以及
+唯一的 `dual-maze-race` 入口。
+
+集成复验还闭合了两个文档与导航缺口：
+
+- `ATTRIBUTION.md` 原先残留核心阶段的“尚无生产 UI”说明，已改为生产阶段真值；
+- 体验页原先缺少返回门户路径，已增加对 `../../../index.html` 的可见相对链接。
+
+对应记录：
+
+- `bugs/2026-07-26-dual-maze-race-stale-attribution-phase.md`
+- `bugs/2026-07-26-dual-maze-race-missing-portal-return.md`
+- `learn/2026-07-26-attribution-docs-must-advance-with-ui.md`
+- `learn/2026-07-26-local-experience-navigation-loop.md`
+
+最终结论：**PASS，已安装、已编目、可从门户进入并返回。**
