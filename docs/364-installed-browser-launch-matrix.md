@@ -147,7 +147,39 @@
 
 ## 6. 端口释放与最终仓库验收
 
-待完成。
+### 运行时退出
+
+- 向拥有运行时的 launcher 发送 `SIGINT`。
+- `lsof -nP -iTCP:4173 -sTCP:LISTEN` 没有发现 listener。
+- 随后请求 `http://127.0.0.1:4173/api/health` 立即得到
+  `curl: (7) Failed to connect`，证明 4173 已释放，而不是只关闭了浏览器页面。
+
+### 最终检查
+
+| 命令 | 结果 |
+| --- | --- |
+| `npm test` | 2298 tests，2298 pass，0 fail，0 skipped |
+| `npm run verify` | 通过：58 个入口、50 个 A 级直开、8 个非 A 启动器、1 个能力声明，资源与借鉴声明完整 |
+| `git diff --check a38c90d..HEAD` | 通过 |
+
+### Chrome 证据方法
+
+- 通过 Chrome 扩展浏览器会话控制真实 Google Chrome，没有使用独立 Playwright 浏览器替代。
+- DOM/标题与交互：`domSnapshot`、精确 locator、`readyState` 和有限 DOM 投影。
+- console：每页读取 `warn` / `error` 日志。
+- 网络：Chrome DevTools Protocol `Network.requestWillBeSent`、
+  `Network.responseReceived`、`Network.loadingFailed`；所有公网 URL、4xx/5xx 和失败请求均单独筛选。
+- C 级：两个真实 Chrome 标签连接同一 Socket.IO 房间。
+- 响应式：CDP 设备指标设为 390 × 844，检查后调用
+  `Emulation.clearDeviceMetricsOverride` 并恢复默认视口。
+
+### 最终结论与异常清单
+
+- 58/58 真实 Chrome localhost 首载通过；50 个 A 级直开合同由 `verify` 通过。
+- 发现的仓库运行 bug：0；因此没有创建 `bugs/` 记录。
+- console warning/error、HTTP 4xx/5xx、资源加载失败、意外公网请求：均为 0。
+- 非仓库阻断只有两个：Chrome 扩展未开启文件 URL 访问，阻断自动选择本地照片；麦克风权限不在本任务授权范围内。两者都已明确限制相应深测结论，没有绕过、没有伪报。
+- 本轮没有产生足以独立沉淀的新实现知识，因此没有创建 `learn/` 记录。
 
 ## 借鉴与来源声明
 
