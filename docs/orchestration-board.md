@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `0f778fe` |
+| 当前 HEAD | `74a04a2` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -28,7 +28,7 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `memory-merge-board` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board` | `codex/exp-memory-merge-board` | `d5e780c` | 实时来源、许可证与重复机制审计后，依次提交 research、brainstorm、spec、plan；不写生产代码 |
+| Worker 1 | 已分配 | `memory-merge-board` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board` | `codex/exp-memory-merge-board` | `d5e780c` | `322` research 已集成；继续独立提交 brainstorm、spec、plan，不写生产代码 |
 | Worker 2 | 已分配 | `tangram-heart-duet` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/tangram-heart-duet` | `codex/exp-tangram-heart-duet` | `d5e780c` | 实时来源、许可证、几何合同与重复机制审计后，依次提交 research、brainstorm、spec、plan；不写生产代码 |
 | Worker 3 | 已分配 | `our-place-guess` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess` | `codex/exp-our-place-guess` | `0f778fe` | 核验 Posio、离线地图权利与现有 C 级房间复用边界，依次提交 research、brainstorm、spec、plan |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
@@ -104,7 +104,7 @@
 | `word-detour-duel` | `316–317` | Worker 2 / 总控 | `316` 视觉提案已集成并等待用户确认，`317` 最终验证保留 |
 | `four-symbol-film-duel` | `318–319` | Worker 1 / 总控 | `318` 视觉提案已集成并等待用户确认，`319` 最终验证保留 |
 | `vinyl-secret` | `320–321` | Worker 3 / 总控 | `320` 视觉提案已集成并等待用户确认，`321` 最终验证保留 |
-| `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 依次推进 |
+| `memory-merge-board` | `322–325` | Worker 1 | `322` research 已集成；`323–325` 继续推进 |
 | `tangram-heart-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 依次推进 |
 | `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 依次推进 |
 
@@ -137,6 +137,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `memory-merge-board` research | `d74e11a` | `74a04a2` | 固定 2048 commit/MIT/版权人；逐项去重；`npm ci` 后 verify、diff-check | Conditional Go；只借鉴抽象整盘滑动与合并规则，不复制源码、名称、数字皮肤、布局或资产 |
 | `vinyl-secret` 视觉提案 | `093f6c0` | `0f778fe` | 定向 `37 / 37`；原图检查、SHA-256、range diff-check、verify | 私人压片工作台；默认无音频、秘密字段按 phase 不存在、运行界面 code-native，等待用户确认，不计 installed |
 | `word-detour-duel` 视觉提案 | `947f40a` | `d5e780c` | 定向 `16 / 16`；原图检查、SHA-256、range diff-check、verify | 纸面路线改道指挥台；秘密子树卸载与交接遮挡合同已冻结，等待用户确认，不计 installed |
 | `four-symbol-film-duel` 视觉提案 | `a8d6592` | `c032f31` | 定向 `25 / 25`；原图检查、SHA-256、range diff-check、verify | 复古影院票根台；厂商 Emoji 仅作概念，生产使用代码原生 Unicode 与中文等价标签，等待用户确认，不计 installed |
