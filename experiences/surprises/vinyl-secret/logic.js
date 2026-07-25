@@ -265,7 +265,7 @@
     let audioSrc = null;
     if (track.audioSrc !== null) {
       audioSrc = cleanText(track.audioSrc, 1, 120);
-      if (!audioSrc || !AUDIO_PATH.test(audioSrc)) return null;
+      if (!audioSrc || audioSrc.includes("..") || !AUDIO_PATH.test(audioSrc)) return null;
     }
     return {
       id,
