@@ -43,6 +43,7 @@
 - 规范仓库：https://github.com/w3c/deviceorientation
 - 固定版本：`70d42d5484db7fd1646e48cc17caa5ff1c9d92cb`
 - 许可证：W3C Software and Document License 2023
+- 版权所有：Copyright © 2023 World Wide Web Consortium
 - `LICENSE.md` SHA-256：`cd28c5af6bf84d8612db3094498d59f66e59468dc645b9e8e70e9d1b377bdf3a`
 - 借鉴范围：核对传感器权限和隐私边界，并据此决定完全不使用传感器。
 - 未使用：规范示例、文字和代码。
