@@ -10,7 +10,7 @@
 
 ### ololx/birthday-cake
 
-- 仓库：https://github.com/ololx/birthday-cake
+- 固定来源：https://github.com/ololx/birthday-cake/tree/d51cd5c73c3171d6b769b5da1b9072beca691ce6
 - 固定版本：`d51cd5c73c3171d6b769b5da1b9072beca691ce6`
 - 许可证：Unlicense；许可证文本将软件奉献至公有领域
 - 初始作者：Alexander A. Kropotin
@@ -20,7 +20,7 @@
 
 ### VIDAKHOSHPEY22/Birthday-Cake-Blow-Candle
 
-- 仓库：https://github.com/VIDAKHOSHPEY22/Birthday-Cake-Blow-Candle
+- 固定来源：https://github.com/VIDAKHOSHPEY22/Birthday-Cake-Blow-Candle/tree/3d364f985b2d96057f30d3fc67c5ee71ec37556f
 - 固定版本：`3d364f985b2d96057f30d3fc67c5ee71ec37556f`
 - 许可证：MIT
 - 版权所有：Copyright (c) 2025 Vida Khoshpey
@@ -30,7 +30,7 @@
 
 ### elixpo/wish.elixpo
 
-- 仓库：https://github.com/elixpo/wish.elixpo
+- 固定来源：https://github.com/elixpo/wish.elixpo/tree/bf6ec8cae8c756203e059940d42089504ae43ec8
 - 旧路径：`Circuit-Overtime/Birthday`
 - 固定版本：`bf6ec8cae8c756203e059940d42089504ae43ec8`
 - 许可证：MIT
