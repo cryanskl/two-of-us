@@ -29,6 +29,8 @@
 - [Library of Congress: The Gramophone](https://www.loc.gov/collections/emile-berliner/articles-and-essays/gramophone/)：只用于唱针、沟槽与唱片标签的历史事实；
 - [WHATWG HTML: Media elements](https://html.spec.whatwg.org/multipage/media.html)：只用于后续 UI 阶段的媒体播放行为边界；本阶段未实现媒体调用；
 - [W3C WAI-ARIA APG: Slider Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/)：只用于后续 range 控件的输入语义；本阶段没有 DOM；
+- [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/)：只用于后续 UI 阶段的键盘、拖动替代、目标尺寸和状态消息验收边界；
+- [WebKit: Auto-Play Policy Changes for macOS](https://webkit.org/blog/7734/auto-play-policy-changes-for-macos/) 与 [Chrome for Developers: Autoplay policy](https://developer.chrome.com/blog/autoplay)：只用于后续可选本地音频的用户激活与播放失败边界；本阶段没有音频元素或播放调用；
 - [U.S. Copyright Office: Circular 56](https://www.copyright.gov/circs/circ56.pdf)：只用于区分底层音乐作品与具体录音的权利边界。
 
 没有从这些资料复制代码、界面、文案、图形、音频或其他素材。

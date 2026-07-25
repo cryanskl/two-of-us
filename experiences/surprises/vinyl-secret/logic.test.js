@@ -175,6 +175,23 @@ test("default config freezes three ordered tracks and ships without audio", () =
   assert.equal(new Set(config.tracks.map((track) => track.note)).size, 3);
 });
 
+test("ATTRIBUTION covers the frozen primary sources and zero-copy boundary", () => {
+  const attribution = fs.readFileSync(require.resolve("./ATTRIBUTION.md"), "utf8");
+  for (const source of [
+    "https://www.loc.gov/collections/emile-berliner/articles-and-essays/gramophone/",
+    "https://html.spec.whatwg.org/multipage/media.html",
+    "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+    "https://www.w3.org/TR/WCAG22/",
+    "https://webkit.org/blog/7734/auto-play-policy-changes-for-macos/",
+    "https://developer.chrome.com/blog/autoplay",
+    "https://www.copyright.gov/circs/circ56.pdf",
+  ]) {
+    assert.match(attribution, new RegExp(source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(attribution, /没有查看、选择、下载、vendoring 或复制任何第三方开源项目实现/);
+  assert.match(attribution, /默认三个 `audioSrc` 均为 `null`/);
+});
+
 test("sanitizeConfig clones, trims and deeply freezes exact valid input", () => {
   const candidate = customPrivateConfig();
   candidate.recipientName = "  收件人哨兵  ";
