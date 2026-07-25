@@ -146,8 +146,15 @@ test("严格 action keys、revision 和阶段转换 fail closed", () => {
   assert.equal(state.liveTicksRemaining, ticks);
   assert.deepEqual(state.players, logic.deriveSpawn(), "resume countdown clears abstract input");
 
+  let getterReads = 0;
   const hostileIntents = [];
-  Object.defineProperty(hostileIntents, "0", { enumerable: true, get() { throw new Error("getter"); } });
+  Object.defineProperty(hostileIntents, "0", {
+    enumerable: true,
+    get() {
+      getterReads += 1;
+      return 0;
+    },
+  });
   hostileIntents[1] = 0;
   hostileIntents.length = 2;
   const noThrow = logic.reducePenguinFlagDuel(state, {
@@ -156,6 +163,7 @@ test("严格 action keys、revision 和阶段转换 fail closed", () => {
     intents: hostileIntents,
   });
   assert.equal(noThrow, state);
+  assert.equal(getterReads, 0, "nested intent accessors must be rejected without execution");
 });
 
 test("九种输入使用定点加速度，斜向与直向模长接近", () => {
@@ -473,6 +481,59 @@ test("重放拒绝额外字段、错误 revision、非法阶段和畸形配置",
     config: { playerNames: ["同", "同"], copy: config.copy },
     actions: [],
   }), TypeError);
+});
+
+test("嵌套数组通过 descriptor 快照解析，不执行 accessor 或 Proxy get trap", () => {
+  let stateReads = 0;
+  const forgedState = clone(logic.createInitialState());
+  const firstPlayer = forgedState.players[0];
+  const secondPlayer = forgedState.players[1];
+  const hostilePlayers = [];
+  Object.defineProperty(hostilePlayers, "0", {
+    enumerable: true,
+    get() {
+      stateReads += 1;
+      return firstPlayer;
+    },
+  });
+  hostilePlayers[1] = secondPlayer;
+  hostilePlayers.length = 2;
+  forgedState.players = hostilePlayers;
+  assert.throws(() => logic.assertState(forgedState), TypeError);
+  assert.equal(stateReads, 0);
+
+  let actionReads = 0;
+  const intents = new Proxy([0, 0], {
+    get(target, key, receiver) {
+      actionReads += 1;
+      return Reflect.get(target, key, receiver);
+    },
+  });
+  const playing = startPlaying();
+  const unchanged = logic.reducePenguinFlagDuel(playing, {
+    type: "STEP",
+    expectedRevision: playing.revision,
+    intents,
+  });
+  assert.notEqual(unchanged, playing);
+  assert.equal(actionReads, 0);
+
+  let replayReads = 0;
+  const actions = [];
+  Object.defineProperty(actions, "0", {
+    enumerable: true,
+    get() {
+      replayReads += 1;
+      return { type: "START", expectedRevision: 0 };
+    },
+  });
+  actions.length = 1;
+  assert.throws(() => logic.replaySession({
+    version: 1,
+    config: clone(logic.DEFAULT_CONFIG),
+    actions,
+  }), TypeError);
+  assert.equal(replayReads, 0);
 });
 
 test("动作按不同批次切分不改变最终逻辑状态", () => {
