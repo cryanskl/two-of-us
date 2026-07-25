@@ -4,6 +4,9 @@
 > 严格基线：`5e76c23d01f9f2d1ee807addf210284e27309d73`  
 > 范围：`experiences/catalog.json` 的 58 个 installed 入口，以及尚未进入 catalog
 > 的当前非视觉候选。本文只盘点和提出修复顺序，不修改作品、声明、依赖或运行时。
+>
+> 活动分支补充：审计期间 `main` 继续前进。本文会明确标注已在 `main` 修复、但尚未
+> 存在于严格基线的项目，避免把历史基线缺口误报为当前缺口。
 
 ## 1. 审计口径
 
@@ -197,7 +200,7 @@
 | 12 | `shadow-duet` | Bemuse、osu!、PixiJS、MediaPipe 只有首页+裸 SHA+许可名/哈希；缺固定版本与许可证 URL，MediaPipe 版权未转入；标准只概述 | 独立节奏/姿势状态机；零源码、模型、WASM、谱面和素材 | **中缺口：许可字段** |
 | 13 | `twin-orbit` | 当前核心无外部开源来源；W3C/WHATWG 权利边界完整；内部 `orbit-star-race` 机制边界清楚 | 独立整数双星核心；零外部依赖/资产；Apple/Playgama 同名记录只用于名称避让 | 中缺口：名称检索证据未回链 |
 | 14 | `dual-maze-race` | 三篇算法论文与 12 项浏览器/硬件一手资料已全量进入声明 | DFS/xorshift/BFS 独立实现；零论文伪码/代码/图表复制；地图运行时原创生成 | 通过 |
-| 15 | `four-symbol-film-duel` | 8 项 Unicode/版权/WCAG 来源已列；research 另有 Author Help、Circular 45、USPTO 单一作品标题、Emoji FAQ、WAI-ARIA；TR51 仍使用浮动入口而非研究中的固定 `tr51-29.html` | 原创 32 张虚构片名题包；只存 Unicode 字符，不带厂商 Emoji、字体、海报、剧照或真实电影题库 | 中缺口：research 覆盖/浮动标准 |
+| 15 | `four-symbol-film-duel` | 严格基线曾缺 Author Help、Circular 45、USPTO 单一作品标题、Emoji FAQ、WAI-ARIA，且 TR51 使用浮动入口；当前 `main` 已由 `3ec3615` 全部补入并固定为 TR51 Revision 29 | 原创 32 张虚构片名题包；只存 Unicode 字符，不带厂商 Emoji、字体、海报、剧照或真实电影题库 | **当前 main 通过** |
 | 16 | `honeycomb-passage` | 两个 GitHub 源已固定，W3C 标准已列；两个 MIT LICENSE URL 和 W3C Document License URL 未转入声明，版权资料两项未回链 | 独立六角格/BFS；零源码、公式排版、地图、素材复制 | **中缺口：许可 URL** |
 | 17 | `penguin-flag-duel` | Box2D v3.1.0 固定 commit、MIT URL、版权齐；其余键盘、ghosting、Pointer、RAF/Visibility/WCAG 未转入声明 | 只借鉴固定步、阻尼/摩擦与穿透测试；零引擎/API/地图/素材 | 中缺口：research 覆盖 |
 | 18 | `photo-slider-race` | 当前列 ImageBitmap、File API、High Resolution Time、Visibility；research 另列 File Upload、image-orientation、Canvas、USCO、WCAG、ARIA Grid | 独立 3×3 规则和状态机；默认图计划原创生成；用户照片仅本地处理 | 中缺口：research 覆盖 |
@@ -212,9 +215,9 @@
 2. **补固定许可载体**：`candle-wishes`、`snow-globe-message`、
    `wish-fireworks`、`shadow-duet`、`honeycomb-passage`、`shadow-sword-duel`。
 3. **明确 research 缩减规则**：`compliment-reels`、`capsule-docking`、
-   `twin-orbit`、`four-symbol-film-duel`、`penguin-flag-duel`、
-   `photo-slider-race`、`ricochet-tank-duel`。若某来源只参与早期筛选，应在最终
-   ATTRIBUTION 或复验文档明确“已淘汰、未参与实现”，而不是靠 URL 集合静默变化。
+   `twin-orbit`、`penguin-flag-duel`、`photo-slider-race`、
+   `ricochet-tank-duel`。若某来源只参与早期筛选，应在最终 ATTRIBUTION 或复验
+   文档明确“已淘汰、未参与实现”，而不是靠 URL 集合静默变化。
 4. **安装前 README**：为其余 19 个候选创建 README，引用项目 ATTRIBUTION，
    并按最终生产文件重新核对实际依赖、资产、字体、音频、地图和题库。
 
@@ -234,14 +237,17 @@
   `1a5ffd32c0a5069039d8610e8ca817dd0a92e1542c54a43f3548fb6ae7a7941d`；
 - 未闭合许可的历史 RAR 副本。
 
-README 的风险提示是诚实的，但风险披露不构成许可证。总控串行修复应在下列方案
-中选择：
+README 的风险提示是诚实的，但风险披露不构成许可证。因此当前严格基线仍是
+**公开分发阻断**。用户已明确授权舍弃或重构该项目，总控已选择 clean-room 重构；
+本阻断应在新实现完成来源/资产/测试复验后关闭，而不是把“删除项目”当作唯一方案。
+重构实施可在下列边界内完成：
 
 1. clean-room 重写无许可业务代码，仅保留不受保护的高层“爱心—树生长—情书”
    概念；对保留的 jQuery/Jscex 逐文件固定来源并随包保留许可；
 2. 换成原创、明确许可或用户自行放入且不入库的音乐；
 3. 获得上游代码/素材和录音的书面授权；
-4. 在授权闭合前从 installed/公开分发集合移出，并隔离历史压缩包。
+4. 在 clean-room 交付完成前，不继续公开分发旧实现；隔离历史压缩包，避免把旧文件
+   混入新实现。
 
 ### 5.2 现有验证器产生“完整”的假阳性
 
