@@ -113,3 +113,16 @@ test("production runtime remains local-only and does not load concept images", (
   assert.doesNotMatch(source, /\b(?:localStorage|sessionStorage|indexedDB|serviceWorker)\b/u);
   assert.doesNotMatch(source, /https?:\/\//u);
 });
+
+test("production attribution describes the finished UI instead of the former core-only phase", () => {
+  const attribution = readProjectFile("ATTRIBUTION.md");
+
+  assert.doesNotMatch(
+    attribution,
+    /未来 UI Gate|当前纯逻辑核心|当前没有 Pointer UI|当前没有生产 CSS|当前没有生产控件|当前没有 DOM 或焦点管理|仍需浏览器和目标设备证据/u
+  );
+  assert.match(attribution, /真实双触控/u);
+  assert.match(attribution, /六个视口/u);
+  assert.match(attribution, /生产 CSS/u);
+  assert.match(attribution, /焦点管理/u);
+});
