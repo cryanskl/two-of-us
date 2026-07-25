@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `75e4a5b` |
+| 当前 HEAD | `ab8665d` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2154 / 2154` 通过 |
-| 工作树提示 | 企鹅夺旗、双星同轨、弹射坦克视觉提案已集成并等待用户确认；万花筒名字、禁词绕行、四符号影视三个视觉提案在独立槽位推进 |
+| 工作树提示 | 万花筒名字视觉提案已集成并等待用户确认；禁词绕行、四符号影视、黑胶隐语三个视觉提案在独立槽位推进 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `four-symbol-film-duel` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-ui` | `codex/exp-four-symbol-film-duel-ui` | `75e4a5b` | 内容审计与非视觉核心已集成；只制作概念与设计合同，用户确认前不写生产 UI |
 | Worker 2 | 已分配 | `word-detour-duel` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-ui` | `codex/exp-word-detour-duel-ui` | `9b4ad63` | 内容审计与非视觉核心已集成；只制作概念与设计合同，用户确认前不写生产 UI |
-| Worker 3 | 已分配 | `kaleidoscope-names` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-ui` | `codex/exp-kaleidoscope-names-ui` | `c277db9` | 非视觉核心已集成；只制作概念与设计合同，用户确认前不写生产 UI |
+| Worker 3 | 已分配 | `vinyl-secret` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret-ui` | `codex/exp-vinyl-secret-ui` | `ab8665d` | 非视觉核心已集成；只制作概念与设计合同，用户确认前不写生产 UI |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用到 `312`；下列编号区间已互斥预留：
+当前已使用到 `314`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -100,9 +100,10 @@
 | `twin-orbit` | `305–308` | 滚动补位 Worker 2 | 四阶段前置与两次来源校正已集成；core 进行中 |
 | `twin-orbit` | `309–311` | Worker 2 / 总控 | `309` 核心验收、`310` 视觉提案已集成并等待用户确认；`311` 最终验证保留 |
 | `ricochet-tank-duel` | `312–313` | Worker 1 / 总控 | `312` 视觉提案已集成并等待用户确认；`313` 最终验证保留 |
-| `kaleidoscope-names` | `314–315` | Worker 3 / 总控 | `314` 视觉提案进行中，`315` 最终验证保留 |
+| `kaleidoscope-names` | `314–315` | Worker 3 / 总控 | `314` 视觉提案已集成并等待用户确认，`315` 最终验证保留 |
 | `word-detour-duel` | `316–317` | Worker 2 / 总控 | `316` 视觉提案进行中，`317` 最终验证保留 |
 | `four-symbol-film-duel` | `318–319` | Worker 1 / 总控 | `318` 视觉提案进行中，`319` 最终验证保留 |
+| `vinyl-secret` | `320–321` | Worker 3 / 总控 | `320` 视觉提案进行中，`321` 最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -124,11 +125,13 @@
 | `penguin-flag-duel` | 生产 UI 等待视觉方向确认 | `docs/303-penguin-flag-duel-design-proposal.md` | 用户 | 确认极夜冰场、点阵/条纹基地与原创几何企鹅方向或提出修改 |
 | `twin-orbit` | 生产 UI 等待视觉方向确认 | `docs/310-twin-orbit-design-proposal.md` | 用户 | 确认午夜双环刻度盘、琥珀星/雾蓝菱形方向或提出修改 |
 | `ricochet-tank-duel` | 生产 UI 等待视觉方向确认 | `docs/312-ricochet-tank-duel-design-proposal.md` | 用户 | 确认深靛棱镜折射台、珊瑚/湖蓝双席方向或提出修改 |
+| `kaleidoscope-names` | 生产 UI 等待视觉方向确认 | `docs/314-kaleidoscope-names-design-proposal.md` | 用户 | 确认深紫光学调校台、单人异步揭晓方向或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `kaleidoscope-names` 视觉提案 | `5312a5c` | `ab8665d` | 定向 `24 / 24`；原图检查、SHA-256、range diff-check、verify | 调校/完成双 phase；已修正为准备者离线配置、体验者单人揭晓，等待用户确认，不计 installed |
 | `ricochet-tank-duel` 视觉提案 | `576c244` | `75e4a5b` | 定向 `44 / 44`；原图检查、SHA-256、range diff-check、verify | 棱镜折射台与双席控制语言；漏键/错误墙体已列生成幻觉，等待用户确认，不计 installed |
 | `twin-orbit` 视觉提案 | `5a0217f` | `9b4ad63` | 定向 `36 / 36`；原图检查、SHA-256、range diff-check、verify | 午夜双环刻度盘；示例角度/tick 已列生成幻觉，等待用户确认，不计 installed |
 | `penguin-flag-duel` 视觉提案 | `9fc0691` | `c277db9` | 定向 `23 / 23`；原图检查、SHA-256、range diff-check、verify | 极夜冰场；移动冰场比例偏高已列生成幻觉，等待用户确认，不计 installed |
