@@ -178,6 +178,7 @@
     const session = {
       pointerId: event.pointerId,
       button,
+      startedAt: event.timeStamp,
       sourceKey: `pointer:${event.pointerId}`,
       fallback: null,
     };
@@ -206,7 +207,8 @@
 
   function handlePointerEnd(event) {
     const session = pointerSessions.get(event.pointerId);
-    if (!session) return;
+    if (!session || event.timeStamp < session.startedAt) return;
+    if (event.type === "lostpointercapture" && event.target !== session.button) return;
     if (
       event.type === "lostpointercapture"
       && typeof session.button.hasPointerCapture === "function"

@@ -108,6 +108,9 @@ test("app 只投影 public view，并具备输入 epoch、固定步 generation �
   assert.match(source, /setPointerCapture/);
   assert.match(source, /lostpointercapture/);
   assert.match(source, /pointercancel/);
+  assert.match(source, /startedAt:\s*event\.timeStamp/);
+  assert.match(source, /event\.timeStamp < session\.startedAt/);
+  assert.match(source, /event\.type === "lostpointercapture"[\s\S]*event\.target !== session\.button/);
   assert.match(source, /visibilitychange/);
   assert.match(source, /pagehide/);
   assert.match(source, /pageshow/);
