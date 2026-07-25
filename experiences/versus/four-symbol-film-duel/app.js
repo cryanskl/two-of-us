@@ -241,6 +241,7 @@
       view.currentPlayer.name + "，这部片叫什么？"
     );
     heading.id = "question-heading";
+    heading.tabIndex = -1;
     var meta = element(
       "p",
       "question-meta",
@@ -295,10 +296,13 @@
       spotlightLabel,
       "secondary-button",
       function useSpotlight() {
-        dispatch({
-          type: logic.ACTIONS.USE_SPOTLIGHT,
-          revision: state.revision
-        });
+        dispatch(
+          {
+            type: logic.ACTIONS.USE_SPOTLIGHT,
+            revision: state.revision
+          },
+          "question-heading"
+        );
       }
     );
     var current = view.players.find(function findCurrent(player) {

@@ -59,6 +59,8 @@ test("keyboard, visibility and interaction-cancellation contracts are present", 
   assert.match(app, /addEventListener\("visibilitychange"/);
   assert.match(app, /addEventListener\("blur"/);
   assert.match(app, /addEventListener\("pointercancel"/);
+  assert.match(app, /heading\.tabIndex\s*=\s*-1/);
+  assert.match(app, /"question-heading"/);
 });
 
 test("runtime is local-only and does not add persistence, media or timers", () => {
