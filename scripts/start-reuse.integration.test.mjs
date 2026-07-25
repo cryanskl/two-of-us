@@ -74,7 +74,7 @@ test("a same-protocol runtime with different content stays alive while launcher 
   await closeServers(reservation.servers);
 
   const mismatched = createMismatchedRuntime(port);
-  mismatched.listen(port, "127.0.0.1");
+  mismatched.listen(port, "0.0.0.0");
   await once(mismatched, "listening");
   context.after(() => new Promise((resolve) => mismatched.close(resolve)));
 

@@ -1,4 +1,5 @@
 import { validateCatalog } from "../shared/runtime/catalog.js";
+import { isContentIdentity } from "../shared/runtime/content-identity.js";
 import { resolveExperienceUrl } from "./start-target.mjs";
 
 export const RUNTIME_HEADER_NAME = "x-two-of-us-runtime";
@@ -25,7 +26,13 @@ export function buildRuntimeCandidateUrls(preferredPort, maxPortAttempts) {
   return urls;
 }
 
-export async function probeRuntimeCandidate(localUrl, experienceId, dependencies = {}) {
+export async function probeRuntimeCandidate(
+  localUrl,
+  experienceId,
+  expectedContentIdentity,
+  dependencies = {},
+) {
+  if (!isContentIdentity(expectedContentIdentity)) return null;
   const match = /^http:\/\/127\.0\.0\.1:(\d{1,5})\/$/.exec(localUrl);
   if (!match) return null;
   const candidatePort = Number(match[1]);
@@ -36,7 +43,9 @@ export async function probeRuntimeCandidate(localUrl, experienceId, dependencies
     const health = await request(`${localUrl}api/health`);
     if (!health || health.ok !== true || health.service !== "two-of-us"
       || health.version !== RUNTIME_PROTOCOL_VERSION || health.port !== candidatePort
-      || health.localUrl !== localUrl) return null;
+      || health.localUrl !== localUrl
+      || !isContentIdentity(health.contentIdentity)
+      || health.contentIdentity !== expectedContentIdentity) return null;
 
     const catalog = validateCatalog(await request(`${localUrl}api/catalog`));
     const openUrl = resolveExperienceUrl(catalog, localUrl, experienceId);
@@ -50,10 +59,16 @@ export async function findReusableRuntime({
   preferredPort,
   maxPortAttempts = DEFAULT_MAX_PORT_ATTEMPTS,
   experienceId = null,
+  expectedContentIdentity,
 } = {}, dependencies = {}) {
   const candidates = buildRuntimeCandidateUrls(preferredPort, maxPortAttempts);
   for (const localUrl of candidates) {
-    const result = await probeRuntimeCandidate(localUrl, experienceId, dependencies);
+    const result = await probeRuntimeCandidate(
+      localUrl,
+      experienceId,
+      expectedContentIdentity,
+      dependencies,
+    );
     if (result) return result;
   }
   return null;

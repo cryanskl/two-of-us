@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import process from "node:process";
+import { computeContentIdentity } from "../shared/runtime/content-identity.js";
 import { parseExperienceId, resolveExperienceUrl } from "./start-target.mjs";
 import {
   DEFAULT_MAX_PORT_ATTEMPTS,
@@ -20,10 +21,12 @@ let experienceId;
 
 try {
   experienceId = parseExperienceId(process.argv.slice(2));
+  const expectedContentIdentity = await computeContentIdentity(rootDir);
   const reusable = await findReusableRuntime({
     preferredPort,
     maxPortAttempts: DEFAULT_MAX_PORT_ATTEMPTS,
     experienceId,
+    expectedContentIdentity,
   });
   if (reusable) {
     console.log("\nTwo of Us 已经在运行，正在复用");
@@ -36,6 +39,7 @@ try {
       rootDir,
       preferredPort,
       maxPortAttempts: DEFAULT_MAX_PORT_ATTEMPTS,
+      contentIdentity: expectedContentIdentity,
     });
     const details = await runtime.start();
     const openUrl = resolveExperienceUrl(runtime.catalog, details.localUrl, experienceId);

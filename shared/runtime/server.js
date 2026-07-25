@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import { Server as SocketServer } from "socket.io";
 import { createCapabilitiesRuntime } from "./capabilities.js";
 import { loadCatalog } from "./catalog.js";
+import { computeContentIdentity, isContentIdentity } from "./content-identity.js";
 import { getNetworkUrls } from "./network.js";
 import {
   prepareDirectMessage,
@@ -26,7 +27,13 @@ export async function createRuntimeServer({
   preferredPort = 4173,
   maxPortAttempts = 20,
   dataDir,
+  contentIdentity,
 } = {}) {
+  const resolvedContentIdentity = contentIdentity
+    ?? await computeContentIdentity(rootDir);
+  if (!isContentIdentity(resolvedContentIdentity)) {
+    throw new Error("运行时内容身份格式无效。");
+  }
   const catalog = await loadCatalog(rootDir);
   const capabilities = createCapabilitiesRuntime({
     rootDir,
@@ -55,6 +62,7 @@ export async function createRuntimeServer({
           service: "two-of-us",
           version: 1,
           node: process.versions.node,
+          contentIdentity: resolvedContentIdentity,
           ...runtimeDetails,
         }, {
           [RUNTIME_HEADER_NAME]: RUNTIME_HEADER_VALUE,

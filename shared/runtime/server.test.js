@@ -10,6 +10,8 @@ import { RoomError, RoomRegistry } from "./rooms.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
 import { createRuntimeServer, registerRoomProtocol } from "./server.js";
 
+const testContentIdentity = `sha256:${"a".repeat(64)}`;
+
 class FakeIo {
   constructor() {
     this.emissions = [];
@@ -103,6 +105,7 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
     host: "127.0.0.1",
     preferredPort: 0,
     dataDir,
+    contentIdentity: testContentIdentity,
   });
   context.after(() => runtime.stop());
 
@@ -188,6 +191,7 @@ test("runtime advertises its IPv4 listener even when the same port has an IPv6-o
     preferredPort: port,
     maxPortAttempts: 1,
     dataDir,
+    contentIdentity: testContentIdentity,
   });
   context.after(() => runtime.stop());
 
@@ -226,6 +230,7 @@ test("runtime listener truncates its occupied window at 65535", async (context) 
     preferredPort: 65534,
     maxPortAttempts: 20,
     dataDir,
+    contentIdentity: testContentIdentity,
   });
   context.after(() => runtime.stop());
 
@@ -246,6 +251,7 @@ test("runtime selects the next port when the preferred one is occupied", async (
     host: "127.0.0.1",
     preferredPort: occupiedPort,
     maxPortAttempts,
+    contentIdentity: testContentIdentity,
   });
   context.after(() => runtime.stop());
 
@@ -259,6 +265,7 @@ test("runtime room registry rejects a third member with ROOM_FULL", async (conte
     rootDir: new URL("../../", import.meta.url),
     host: "127.0.0.1",
     preferredPort: 0,
+    contentIdentity: testContentIdentity,
   });
   context.after(() => runtime.stop());
 
