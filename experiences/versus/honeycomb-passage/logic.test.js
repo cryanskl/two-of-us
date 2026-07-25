@@ -767,7 +767,19 @@ test("公开 replay 拒绝超出 ply 行动预算的库存与位置", () => {
   impossiblePositions.round = 1;
   impossiblePositions.completedRounds = 0;
 
-  for (const forged of [impossibleInventory, impossiblePositions]) {
+  const initialReplay = logic.replayHistory([]);
+  const impossibleOneMoveReturn = structuredClone(logic.replayHistory(
+    logic.applyAction([], logic.YELLOW, "move", { q: -2, r: 0 }),
+  ));
+  impossibleOneMoveReturn.positions[logic.YELLOW] = { ...logic.STARTS[logic.YELLOW] };
+  impossibleOneMoveReturn.distances[logic.YELLOW] = initialReplay.distances[logic.YELLOW];
+  impossibleOneMoveReturn.legalSeals = structuredClone(initialReplay.legalSeals);
+
+  for (const forged of [
+    impossibleInventory,
+    impossiblePositions,
+    impossibleOneMoveReturn,
+  ]) {
     assert.deepEqual(logic.getLegalMoves(forged), []);
     assert.deepEqual(logic.getLegalSeals(forged), []);
     assert.equal(logic.hasRouteForBoth(forged, { q: 0, r: 0 }), false);

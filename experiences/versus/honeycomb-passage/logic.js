@@ -268,6 +268,18 @@
     return Math.max(Math.abs(deltaQ), Math.abs(deltaR), Math.abs(deltaS));
   }
 
+  function canReachInExactly(start, target, steps) {
+    let frontier = new Map([[cellKey(start), { q: start.q, r: start.r }]]);
+    for (let step = 0; step < steps; step += 1) {
+      const next = new Map();
+      for (const cell of frontier.values()) {
+        for (const neighbor of getNeighbors(cell)) next.set(cellKey(neighbor), neighbor);
+      }
+      frontier = next;
+    }
+    return frontier.has(cellKey(target));
+  }
+
   function copyCell(value) {
     const cell = readCell(value);
     return cell && isWithinRadius(cell, BOARD_RADIUS) ? { q: cell.q, r: cell.r } : null;
@@ -565,7 +577,8 @@
       for (let player = 0; player < PLAYER_COUNT; player += 1) {
         const sealsUsed = STARTING_SEALS - sealsRemaining[player];
         const moveBudget = turnsTaken[player] - sealsUsed;
-        if (moveBudget < 0 || cellDistance(STARTS[player], positions[player]) > moveBudget) return null;
+        if (moveBudget < 0 || cellDistance(STARTS[player], positions[player]) > moveBudget
+          || !canReachInExactly(STARTS[player], positions[player], moveBudget)) return null;
       }
 
       const raw = {
