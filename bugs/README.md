@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [这一弹，拐弯见你：规范状态接受任意弹速并在下一 tick 溢出](./2026-07-25-ricochet-canonical-bullet-velocity.md)
+- [这一弹，拐弯见你：结果字段与弹体可泄入矛盾 phase](./2026-07-25-ricochet-cross-phase-state-invariants.md)
 - [Twin Orbit 空闲或极值 SUSPEND 泄出校验快照](./2026-07-25-twin-orbit-suspend-noop-snapshot.md)
 - [Twin Orbit canonical 内容校验二次触发 Proxy get trap](./2026-07-25-twin-orbit-proxy-content-read.md)
 - [Twin Orbit 批量 TICK 在 revision 溢出时泄出未冻结快照](./2026-07-25-twin-orbit-tick-revision-overflow.md)

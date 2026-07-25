@@ -465,3 +465,76 @@ test("输入数组顺序变化会按稳定 ID 规范化，不改变原子计分�
     simulation.simulatePlayingTick(reversed, input),
   );
 });
+
+test("规范 state 只接受 32 档冻结弹速，校验通过后必能安全推进", () => {
+  const velocityKeys = new Set(constants.DIRECTION_VECTORS.map((direction) => {
+    const vxFp = fixed.mulQ10(constants.RULES.BULLET_SPEED_FP, direction.x);
+    const vyFp = fixed.mulQ10(constants.RULES.BULLET_SPEED_FP, direction.y);
+    return `${vxFp},${vyFp}`;
+  }));
+  for (const direction of constants.DIRECTION_VECTORS) {
+    const vxFp = fixed.mulQ10(constants.RULES.BULLET_SPEED_FP, direction.x);
+    const vyFp = fixed.mulQ10(constants.RULES.BULLET_SPEED_FP, direction.y);
+    assert.equal(velocityKeys.has(`${-vxFp},${vyFp}`), true);
+    assert.equal(velocityKeys.has(`${vxFp},${-vyFp}`), true);
+    const raw = clone(playing());
+    raw.bullets = [bullet({
+      vxFp,
+      vyFp,
+    })];
+    raw.nextBulletId = 2;
+    const accepted = simulation.validateState(raw);
+    assert.doesNotThrow(() => simulation.simulatePlayingTick(
+      accepted,
+      { leftMask: 0, rightMask: 0 },
+    ));
+  }
+
+  const hostile = clone(playing());
+  hostile.bullets = [bullet({
+    vxFp: Number.MAX_SAFE_INTEGER,
+    vyFp: 1,
+  })];
+  hostile.nextBulletId = 2;
+  assert.throws(() => simulation.validateState(hostile), /bullet.*velocity/i);
+});
+
+test("结果字段、弹体集合与 phase 必须满足交叉不变量", () => {
+  const pendingOutsideRound = clone(playing());
+  pendingOutsideRound.pendingMatchResult = "left";
+  assert.throws(
+    () => simulation.validateState(pendingOutsideRound),
+    /pending.*round-result/i,
+  );
+
+  const matchOutsideTerminal = clone(playing());
+  matchOutsideTerminal.matchResult = "left";
+  assert.throws(
+    () => simulation.validateState(matchOutsideTerminal),
+    /match result.*match-result/i,
+  );
+
+  const round = clone(playing());
+  Object.assign(round, {
+    phase: "round-result",
+    phaseTicksRemaining: 90,
+    lastRoundResult: "left-hit",
+  });
+  assert.doesNotThrow(() => simulation.validateState(round));
+  round.lastRoundResult = null;
+  assert.throws(() => simulation.validateState(round), /round-result.*last/i);
+  round.lastRoundResult = "left-hit";
+  round.bullets = [bullet()];
+  round.nextBulletId = 2;
+  assert.throws(() => simulation.validateState(round), /round-result.*bullets/i);
+
+  const terminal = clone(playing());
+  Object.assign(terminal, {
+    phase: "match-result",
+    matchResult: "left",
+  });
+  assert.doesNotThrow(() => simulation.validateState(terminal));
+  terminal.bullets = [bullet()];
+  terminal.nextBulletId = 2;
+  assert.throws(() => simulation.validateState(terminal), /match-result.*bullets/i);
+});

@@ -153,6 +153,10 @@
 
   const TANK_WALLS = deepFreeze(WALLS.map((wall) => expandedWall(wall, RULES.TANK_RADIUS)));
   const BULLET_WALLS = deepFreeze(WALLS.map((wall) => expandedWall(wall, RULES.BULLET_RADIUS)));
+  const LEGAL_BULLET_VELOCITIES = deepFreeze(DIRECTION_VECTORS.map((direction) => ({
+    vxFp: mulQ10(RULES.BULLET_SPEED_FP, direction.x),
+    vyFp: mulQ10(RULES.BULLET_SPEED_FP, direction.y),
+  })));
 
   function pointStrictlyInside(point, box) {
     return point.xFp > box.minX && point.xFp < box.maxX
@@ -209,7 +213,9 @@
         `bullet ${index} reflectionCount`,
       ),
     };
-    if (bullet.vxFp === 0 && bullet.vyFp === 0) throw new Error(`bullet ${index} velocity invalid`);
+    if (!LEGAL_BULLET_VELOCITIES.some((velocity) => (
+      velocity.vxFp === bullet.vxFp && velocity.vyFp === bullet.vyFp
+    ))) throw new Error(`bullet ${index} velocity is not a canonical direction`);
     if (BULLET_WALLS.some((wall) => pointStrictlyInside(bullet, wall))) {
       throw new Error(`bullet ${index} overlaps wall`);
     }
@@ -243,8 +249,23 @@
     if (state.matchResult !== null && !MATCH_RESULTS.has(state.matchResult)) {
       throw new Error("match result invalid");
     }
+    if (state.phase !== "round-result" && state.pendingMatchResult !== null) {
+      throw new Error("pending match result requires round-result phase");
+    }
+    if (state.phase !== "match-result" && state.matchResult !== null) {
+      throw new Error("match result requires match-result phase");
+    }
+    if (state.phase === "round-result" && state.lastRoundResult === null) {
+      throw new Error("round-result requires last round result");
+    }
+    if (state.phase === "round-result" && state.bullets.length !== 0) {
+      throw new Error("round-result must clear bullets");
+    }
     if (state.phase === "match-result" && state.matchResult === null) {
       throw new Error("match-result requires result");
+    }
+    if (state.phase === "match-result" && state.bullets.length !== 0) {
+      throw new Error("match-result must clear bullets");
     }
   }
 
