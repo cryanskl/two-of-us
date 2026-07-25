@@ -693,6 +693,20 @@ test("hostile state 额外字段、getter、NaN、Infinity 和 symbol 均 fail c
   elapsedPaused.pauseReason = "manual";
   elapsedPaused.liveTicksRemaining = 0;
   assert.throws(() => logic.assertState(elapsedPaused), TypeError);
+  const excessiveVector = clone(startPlaying());
+  excessiveVector.players[0].vx = logic.RULES.MAX_SPEED;
+  excessiveVector.players[0].vy = logic.RULES.MAX_SPEED;
+  assert.throws(() => logic.assertState(excessiveVector), TypeError);
+  const excessiveCarrier = clone(startPlaying());
+  excessiveCarrier.players[0].vx = logic.RULES.CARRIER_MAX_SPEED + 1;
+  excessiveCarrier.flag = {
+    x: excessiveCarrier.players[0].x,
+    y: excessiveCarrier.players[0].y,
+    carrierSeat: 0,
+    pickupLockTicks: 0,
+    looseTicks: 0,
+  };
+  assert.throws(() => logic.assertState(excessiveCarrier), TypeError);
   const movedIntro = clone(initial);
   movedIntro.players[0].x += 1;
   assert.throws(() => logic.assertState(movedIntro), TypeError);
