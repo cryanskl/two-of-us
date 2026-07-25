@@ -342,6 +342,24 @@ test("batching 1..5 ticks changes neither integer movement nor revision count", 
   assert.deepEqual(batched, singles);
 });
 
+test("TICK overflow preserves the last frozen authoritative reference", () => {
+  const playing = startGate();
+  const saturated = replaceState(playing, {
+    revision: Number.MAX_SAFE_INTEGER
+  });
+  assert.equal(tick(saturated, 2), saturated);
+
+  const oneStepLeft = replaceState(playing, {
+    revision: Number.MAX_SAFE_INTEGER - 1
+  });
+  const expected = tick(oneStepLeft);
+  const batched = tick(oneStepLeft, 2);
+  assert.deepEqual(batched, expected);
+  assert.equal(Object.isFrozen(batched), true);
+  assert.equal(batched.tick, 1);
+  assert.equal(batched.revision, Number.MAX_SAFE_INTEGER);
+});
+
 test("gate success is an atomic same-tick decision", () => {
   let state = startGate();
   state = replaceState(state, {

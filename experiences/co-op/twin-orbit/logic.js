@@ -752,7 +752,7 @@
   function stepPlaying(state) {
     var revision = nextRevision(state.revision);
     if (revision === null) {
-      return state;
+      return null;
     }
 
     var gate = GATES[state.gateIndex];
@@ -945,7 +945,11 @@
       }
       var stepped = stateCandidate;
       for (var tickIndex = 0; tickIndex < action.count; tickIndex += 1) {
-        stepped = stepPlaying(snapshotState(stepped));
+        var nextStep = stepPlaying(snapshotState(stepped));
+        if (nextStep === null) {
+          return stepped;
+        }
+        stepped = nextStep;
         if (stepped.phase !== "playing") {
           break;
         }

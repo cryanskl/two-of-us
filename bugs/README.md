@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [Twin Orbit 批量 TICK 在 revision 溢出时泄出未冻结快照](./2026-07-25-twin-orbit-tick-revision-overflow.md)
 - [成功关卡暂停后 public view 静默回到 intro](./2026-07-25-twin-orbit-success-suspend-fallback.md)
 - [Twin Orbit 配置接受孤立 surrogate](./2026-07-25-twin-orbit-lone-surrogate-config.md)
 - [Playgama 隐藏条目被写成当前在架名称证据](./2026-07-25-twin-orbit-playgama-source-status.md)
