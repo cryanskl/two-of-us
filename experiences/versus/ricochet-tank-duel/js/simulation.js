@@ -213,6 +213,9 @@
         `bullet ${index} reflectionCount`,
       ),
     };
+    if ((bullet.id - 1) % 2 !== bullet.ownerId) {
+      throw new Error(`bullet ${index} id does not match owner seat`);
+    }
     if (!LEGAL_BULLET_VELOCITIES.some((velocity) => (
       velocity.vxFp === bullet.vxFp && velocity.vyFp === bullet.vyFp
     ))) throw new Error(`bullet ${index} velocity is not a canonical direction`);
@@ -355,7 +358,12 @@
       scores: scores.map((score, index) => integerIn(score, 0, RULES.TARGET_SCORE, `score ${index}`)),
       tanks: normalizedTanks,
       bullets,
-      nextBulletId: integerIn(raw.nextBulletId, 1, Number.MAX_SAFE_INTEGER, "nextBulletId"),
+      nextBulletId: integerIn(
+        raw.nextBulletId,
+        1,
+        Number.MAX_SAFE_INTEGER - 2,
+        "nextBulletId",
+      ),
       roundIndex: integerIn(raw.roundIndex, 1, Number.MAX_SAFE_INTEGER, "roundIndex"),
       lastRoundResult: raw.lastRoundResult,
       pendingMatchResult: raw.pendingMatchResult,
@@ -367,6 +375,9 @@
     };
     if (bullets.some((item) => item.id >= state.nextBulletId)) {
       throw new Error("nextBulletId must exceed all bullet ids");
+    }
+    if (state.nextBulletId % 2 !== 1) {
+      throw new Error("nextBulletId must be an odd pair base");
     }
     validatePhaseFields(state);
     return deepFreeze(state);
@@ -488,11 +499,12 @@
     if (state.bullets.filter((item) => item.ownerId === ownerId).length >= RULES.MAX_BULLETS_PER_PLAYER) {
       return null;
     }
+    if (state.nextBulletId > Number.MAX_SAFE_INTEGER - 4) return null;
     const point = spawnPoint(tank);
     if (!validBulletSpawn(point, state.tanks[1 - ownerId])) return null;
     const direction = DIRECTION_VECTORS[tank.heading];
     return deepFreeze({
-      id: state.nextBulletId,
+      id: state.nextBulletId + ownerId,
       ownerId,
       xFp: point.xFp,
       yFp: point.yFp,
@@ -725,13 +737,14 @@
     const events = [];
     const bullets = state.bullets.map((item) => ({ ...item })).sort((a, b) => a.id - b.id);
     let nextBulletId = state.nextBulletId;
+    let createdInPair = false;
     for (let ownerId = 0; ownerId < 2; ownerId += 1) {
       if ((masks[ownerId] & INPUT_BITS.FIRE_EDGE) === 0) continue;
       const provisionalState = { ...state, tanks, bullets, nextBulletId };
       const created = tryCreateBullet(provisionalState, tanks[ownerId], ownerId);
       if (created) {
-        bullets.push({ ...created, id: nextBulletId });
-        nextBulletId += 1;
+        bullets.push({ ...created });
+        createdInPair = true;
         tanks[ownerId].cooldownTicks = RULES.FIRE_COOLDOWN_TICKS;
         events.push({ type: "bullet-created", bulletId: created.id, ownerId });
       } else if (
@@ -741,6 +754,7 @@
         events.push({ type: "fire-blocked", ownerId });
       }
     }
+    if (createdInPair) nextBulletId += 2;
 
     const hitSet = new Set();
     const survivors = [];
@@ -1019,6 +1033,9 @@
     for (const key of ["ownerId", "targetId", "playerId"]) {
       if (mirrored[key] === 0 || mirrored[key] === 1) mirrored[key] = 1 - mirrored[key];
     }
+    if (Number.isSafeInteger(mirrored.bulletId) && mirrored.bulletId > 0) {
+      mirrored.bulletId += mirrored.bulletId % 2 === 1 ? 1 : -1;
+    }
     return mirrored;
   }
 
@@ -1032,6 +1049,7 @@
     }));
     const bullets = state.bullets.map((item) => ({
       ...item,
+      id: item.id + (item.id % 2 === 1 ? 1 : -1),
       ownerId: 1 - item.ownerId,
       xFp: mirrorX(item.xFp),
       vxFp: -item.vxFp,

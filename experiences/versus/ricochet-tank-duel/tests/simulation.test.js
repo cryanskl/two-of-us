@@ -25,15 +25,19 @@ function playing(fields = {}) {
 function withBullet(state, bullet, fields = {}) {
   const raw = clone(state);
   raw.bullets = [bullet];
-  raw.nextBulletId = Math.max(raw.nextBulletId, bullet.id + 1);
+  raw.nextBulletId = Math.max(
+    raw.nextBulletId,
+    bullet.id + (bullet.id % 2 === 1 ? 2 : 1),
+  );
   Object.assign(raw, fields);
   return simulation.validateState(raw);
 }
 
 function bullet(fields = {}) {
+  const ownerId = fields.ownerId === undefined ? 0 : fields.ownerId;
   return {
-    id: 1,
-    ownerId: 0,
+    id: fields.id === undefined ? ownerId + 1 : fields.id,
+    ownerId,
     xFp: fp(500),
     yFp: fp(300),
     vxFp: fp(9),
@@ -158,6 +162,26 @@ test("双方同 tick 发射，创建弹参与当前 tick、年龄为 1、冷却�
   assert.equal(state.bullets[1].xFp, fp(774));
 });
 
+test("单方发射仍按席位占用成对 ID，下一批始终从奇数基址开始", () => {
+  const left = simulation.simulatePlayingTick(playing(), {
+    leftMask: bit.FIRE_EDGE,
+    rightMask: 0,
+  });
+  assert.deepEqual(left.bullets.map(({ id, ownerId }) => ({ id, ownerId })), [
+    { id: 1, ownerId: 0 },
+  ]);
+  assert.equal(left.nextBulletId, 3);
+
+  const right = simulation.simulatePlayingTick(playing(), {
+    leftMask: 0,
+    rightMask: bit.FIRE_EDGE,
+  });
+  assert.deepEqual(right.bullets.map(({ id, ownerId }) => ({ id, ownerId })), [
+    { id: 2, ownerId: 1 },
+  ]);
+  assert.equal(right.nextBulletId, 3);
+});
+
 test("发射只吃 FIRE_EDGE，冷却与每方两枚上限不受 held 或顺序影响", () => {
   let state = simulation.simulatePlayingTick(playing(), {
     leftMask: bit.FIRE_HELD,
@@ -180,9 +204,9 @@ test("发射只吃 FIRE_EDGE，冷却与每方两枚上限不受 held 或顺序�
   const raw = clone(playing());
   raw.bullets = [
     bullet({ id: 7, xFp: fp(400) }),
-    bullet({ id: 8, xFp: fp(420) }),
+    bullet({ id: 9, xFp: fp(420) }),
   ];
-  raw.nextBulletId = 9;
+  raw.nextBulletId = 11;
   state = simulation.simulatePlayingTick(simulation.validateState(raw), {
     leftMask: bit.FIRE_EDGE,
     rightMask: 0,
@@ -228,7 +252,7 @@ test("弹体不自伤、互相穿过，多枚在途弹各自推进", () => {
     bullet({ id: 2, ownerId: 1, xFp: fp(500), vxFp: fp(-9) }),
     bullet({ id: 3, ownerId: 0, xFp: fp(500), vxFp: fp(9) }),
   ];
-  raw.nextBulletId = 4;
+  raw.nextBulletId = 5;
   const state = simulation.simulatePlayingTick(simulation.validateState(raw), {
     leftMask: 0,
     rightMask: 0,
@@ -307,7 +331,7 @@ test("第 360 个活跃 tick 才寿命销毁，暂停与倒计时不增加年龄
   countdown.phase = "countdown";
   countdown.phaseTicksRemaining = 10;
   countdown.bullets = [bullet({ ageTicks: 20 })];
-  countdown.nextBulletId = 2;
+  countdown.nextBulletId = 3;
   const frozen = simulation.step(simulation.validateState(countdown), {
     leftMask: 0,
     rightMask: 0,
@@ -319,10 +343,10 @@ test("双方命中先全部收集再原子计分，同目标多弹只计一分",
   const raw = clone(playing());
   raw.bullets = [
     bullet({ id: 1, ownerId: 0, xFp: fp(780), vxFp: fp(9) }),
-    bullet({ id: 2, ownerId: 0, xFp: fp(779), vxFp: fp(9) }),
-    bullet({ id: 3, ownerId: 1, xFp: fp(180), vxFp: fp(-9) }),
+    bullet({ id: 3, ownerId: 0, xFp: fp(779), vxFp: fp(9) }),
+    bullet({ id: 2, ownerId: 1, xFp: fp(180), vxFp: fp(-9) }),
   ];
-  raw.nextBulletId = 4;
+  raw.nextBulletId = 5;
   const state = simulation.simulatePlayingTick(simulation.validateState(raw), {
     leftMask: 0,
     rightMask: 0,
@@ -360,7 +384,7 @@ test("双方同 tick 到三分是平局，90 tick 后才进入 match-result", ()
 test("第 5400 个 playing tick 无条件计时，先结算命中再判时间结果", () => {
   const raw = clone(playing({ activeMatchTicks: 5399, scores: [1, 2] }));
   raw.bullets = [bullet({ ownerId: 0, xFp: fp(780), vxFp: fp(9) })];
-  raw.nextBulletId = 2;
+  raw.nextBulletId = 3;
   const state = simulation.simulatePlayingTick(simulation.validateState(raw), {
     leftMask: 0,
     rightMask: 0,
@@ -374,7 +398,7 @@ test("第 5400 个 playing tick 无条件计时，先结算命中再判时间结
 test("单方到三分按赢家结算，90 秒无命中覆盖领先和平局", () => {
   let raw = clone(playing({ scores: [2, 1] }));
   raw.bullets = [bullet({ ownerId: 0, xFp: fp(780), vxFp: fp(9) })];
-  raw.nextBulletId = 2;
+  raw.nextBulletId = 3;
   let state = simulation.simulatePlayingTick(simulation.validateState(raw), {
     leftMask: 0,
     rightMask: 0,
@@ -433,26 +457,43 @@ test("state 严拒绝额外键、非法 heading、重复 ID 和每席超过两�
     bullet({ id: 1, xFp: fp(400) }),
     bullet({ id: 1, xFp: fp(420) }),
   ];
-  duplicate.nextBulletId = 2;
+  duplicate.nextBulletId = 3;
   assert.throws(() => simulation.validateState(duplicate), /duplicate|bullet/i);
 
   const excess = clone(playing());
   excess.bullets = [
     bullet({ id: 1, xFp: fp(400) }),
-    bullet({ id: 2, xFp: fp(420) }),
-    bullet({ id: 3, xFp: fp(440) }),
+    bullet({ id: 3, xFp: fp(420) }),
+    bullet({ id: 5, xFp: fp(440) }),
   ];
-  excess.nextBulletId = 4;
+  excess.nextBulletId = 7;
   assert.throws(() => simulation.validateState(excess), /bullet|owner|limit/i);
+
+  const wrongSeatId = clone(playing());
+  wrongSeatId.bullets = [bullet({ id: 2, ownerId: 0 })];
+  wrongSeatId.nextBulletId = 3;
+  assert.throws(() => simulation.validateState(wrongSeatId), /id.*owner|owner.*id/i);
+
+  const evenPairBase = clone(playing());
+  evenPairBase.nextBulletId = 2;
+  assert.throws(() => simulation.validateState(evenPairBase), /nextBulletId.*odd|pair base/i);
+
+  const exhaustedIds = clone(playing());
+  exhaustedIds.nextBulletId = Number.MAX_SAFE_INTEGER - 2;
+  const exhaustedState = simulation.validateState(exhaustedIds);
+  assert.doesNotThrow(() => simulation.simulatePlayingTick(exhaustedState, {
+    leftMask: bit.FIRE_EDGE,
+    rightMask: bit.FIRE_EDGE,
+  }));
 });
 
 test("输入数组顺序变化会按稳定 ID 规范化，不改变原子计分与哈希", () => {
   const raw = clone(playing());
   raw.bullets = [
-    bullet({ id: 9, ownerId: 1, xFp: fp(180), vxFp: fp(-9) }),
+    bullet({ id: 8, ownerId: 1, xFp: fp(180), vxFp: fp(-9) }),
     bullet({ id: 3, ownerId: 0, xFp: fp(780), vxFp: fp(9) }),
   ];
-  raw.nextBulletId = 10;
+  raw.nextBulletId = 9;
   const canonical = simulation.validateState(raw);
   const reversedRaw = clone(raw);
   reversedRaw.bullets.reverse();
@@ -482,7 +523,7 @@ test("规范 state 只接受 32 档冻结弹速，校验通过后必能安全推
       vxFp,
       vyFp,
     })];
-    raw.nextBulletId = 2;
+    raw.nextBulletId = 3;
     const accepted = simulation.validateState(raw);
     assert.doesNotThrow(() => simulation.simulatePlayingTick(
       accepted,
@@ -495,7 +536,7 @@ test("规范 state 只接受 32 档冻结弹速，校验通过后必能安全推
     vxFp: Number.MAX_SAFE_INTEGER,
     vyFp: 1,
   })];
-  hostile.nextBulletId = 2;
+  hostile.nextBulletId = 3;
   assert.throws(() => simulation.validateState(hostile), /bullet.*velocity/i);
 });
 
@@ -525,7 +566,7 @@ test("结果字段、弹体集合与 phase 必须满足交叉不变量", () => {
   assert.throws(() => simulation.validateState(round), /round-result.*last/i);
   round.lastRoundResult = "left-hit";
   round.bullets = [bullet()];
-  round.nextBulletId = 2;
+  round.nextBulletId = 3;
   assert.throws(() => simulation.validateState(round), /round-result.*bullets/i);
 
   const terminal = clone(playing());
@@ -536,7 +577,7 @@ test("结果字段、弹体集合与 phase 必须满足交叉不变量", () => {
   });
   assert.doesNotThrow(() => simulation.validateState(terminal));
   terminal.bullets = [bullet()];
-  terminal.nextBulletId = 2;
+  terminal.nextBulletId = 3;
   assert.throws(() => simulation.validateState(terminal), /match-result.*bullets/i);
 });
 
