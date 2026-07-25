@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [成功关卡暂停后 public view 静默回到 intro](./2026-07-25-twin-orbit-success-suspend-fallback.md)
+- [Twin Orbit 配置接受孤立 surrogate](./2026-07-25-twin-orbit-lone-surrogate-config.md)
 - [Playgama 隐藏条目被写成当前在架名称证据](./2026-07-25-twin-orbit-playgama-source-status.md)
 - [双星同轨调研引用了已 discontinued 的 Page Visibility 草案](./2026-07-25-twin-orbit-page-visibility-source-status.md)
 - [爱心投石器：强制色模式让标题和页脚变成白底白字](./2026-07-24-heart-catapult-forced-colors-header-invisible.md)
