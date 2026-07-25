@@ -209,6 +209,14 @@
 | [314-kaleidoscope-names-design-proposal.md](./314-kaleidoscope-names-design-proposal.md) | 深紫光学调校台的桌面调校、移动揭晓、code-native 视觉和响应式边界 |
 | [350-kaleidoscope-names-core-verification.md](./350-kaleidoscope-names-core-verification.md) | 万花筒名字的 frozen 内容规范化、标准来源维护与 25 项核心复验 |
 | [387-kaleidoscope-names-final-verification.md](./387-kaleidoscope-names-final-verification.md) | “把名字折成同一束光”的 35 项定向测试、隐私 DOM、六视口、输入和降级终验 |
+| [263-taboo-description-duel-research.md](./263-taboo-description-duel-research.md) | 禁词描述赛的本地优先可行性、商业表达边界、计时与热座隐私调研 |
+| [264-taboo-description-duel-brainstorm.md](./264-taboo-description-duel-brainstorm.md) | 绕词对决的四回合、对称题表、共同复核和可选计时产品决策 |
+| [265-taboo-description-duel-spec.md](./265-taboo-description-duel-spec.md) | 绕词对决的 72 卡、+1 / -1 / 0 计分、状态机、秘密投影与验收规格 |
+| [266-taboo-description-duel-plan.md](./266-taboo-description-duel-plan.md) | 绕词对决的题库、核心、生产 UI、catalog、Chrome 与独立提交实施计划 |
+| [275-word-detour-duel-content-audit.md](./275-word-detour-duel-content-audit.md) | 绕词对决 72 张原创卡的长度、碰撞、题表对称和商业内容边界审计 |
+| [316-word-detour-duel-design-proposal.md](./316-word-detour-duel-design-proposal.md) | 纸面路线改道指挥台的桌面描述、移动交接和 code-native 视觉方案 |
+| [351-word-detour-duel-core-verification.md](./351-word-detour-duel-core-verification.md) | 绕词对决的计时边界、秘密公开投影、19 项核心测试与来源复验 |
+| [389-word-detour-duel-final-verification.md](./389-word-detour-duel-final-verification.md) | 绕词对决的 27 项定向测试、四回合、秘密 DOM、六视口和生命周期终验 |
 | [271-emoji-movie-duel-research.md](./271-emoji-movie-duel-research.md) | 表情电影擂台的本地优先可行性、影视表达、Unicode 与厂商字形权利边界调研 |
 | [272-emoji-movie-duel-brainstorm.md](./272-emoji-movie-duel-brainstorm.md) | 四符片名擂台的原创虚构题包、聚光灯经济、八题轮换和热座交接决策 |
 | [273-emoji-movie-duel-spec.md](./273-emoji-movie-duel-spec.md) | 四符片名擂台的 32 卡内容、2 / 1 / 0 计分、八阶段状态机、隐私与验收规格 |

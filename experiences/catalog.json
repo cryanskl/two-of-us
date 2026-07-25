@@ -731,6 +731,19 @@
       "networkRequired": false
     },
     {
+      "id": "word-detour-duel",
+      "title": "绕词对决",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备轮流",
+      "entry": "experiences/versus/word-detour-duel/index.html",
+      "readme": "experiences/versus/word-detour-duel/README.md",
+      "description": "两人轮流绕开四个禁词口述目标；可选 30 / 60 / 90 秒或不计时，四回合共同复核后比较净分。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "balloon-dare",
       "title": "气球胆量局",
       "category": "versus",
