@@ -27,6 +27,8 @@
     /[\u0000-\u001f\u007f-\u009f\u061c\u200e\u200f\u2028\u2029\u202a-\u202e\u2066-\u2069]/u;
   var FORBIDDEN_GLYPH =
     /\u200d|[\u{1f3fb}-\u{1f3ff}]|[\u{1f1e6}-\u{1f1ff}]|[\u{e0020}-\u{e007f}]|[\ue000-\uf8ff]|[\u{f0000}-\u{ffffd}]|[\u{100000}-\u{10fffd}]/u;
+  var PICTOGRAPHIC_GLYPH =
+    /^(?:\p{Emoji_Presentation}|\p{Extended_Pictographic}\ufe0f)$/u;
 
   function deepFreeze(value, seen) {
     if (value === null || (typeof value !== "object" && typeof value !== "function")) {
@@ -201,12 +203,8 @@
     return true;
   }
 
-  function isSingleGlyphScalar(value) {
-    var scalars = Array.from(value);
-    return (
-      scalars.length === 1 ||
-      (scalars.length === 2 && scalars[1] === "\ufe0f")
-    );
+  function isSinglePictographicGlyph(value) {
+    return PICTOGRAPHIC_GLYPH.test(value);
   }
 
   function cleanText(value, minimum, maximum, noWhitespace) {
@@ -265,7 +263,7 @@
       }
       if (
         !glyph ||
-        !isSingleGlyphScalar(glyph) ||
+        !isSinglePictographicGlyph(glyph) ||
         FORBIDDEN_GLYPH.test(glyph) ||
         glyphs.has(glyph)
       ) {
