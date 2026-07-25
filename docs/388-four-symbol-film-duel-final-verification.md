@@ -25,8 +25,8 @@ Unicode 运行。没有运行时第三方依赖、远程资源、图片、字体
 - 八题终局显示胜负、双方分数、聚光灯使用数与逐题结果；
 - 终局可回到干净开场。
 
-项目级 Gate 全部通过。全仓 Gate 仍被本分支基线中两个共享依赖问题阻塞，详见
-第 8 节；失败不来自本项目代码，也不在本执行 Session 的授权修改范围。
+项目级 Gate 与总控接入 Gate 均已通过。原生产分支基线缺少的共享浏览器依赖已由
+主线补齐；本项目接入主线后，全仓测试与 71 个作品入口验收全部通过。
 
 ## 2. 交付文件
 
@@ -186,6 +186,20 @@ continueDisabled = true
 - `bugs/four-symbol-film-duel-spotlight-focus-loss.md`
 - `learn/four-symbol-film-duel-focus-after-destructive-choice.md`
 
+总控接入复验还发现并修复了两个契约偏差：
+
+1. README 的来源声明标题原为“原创与来源声明”，与仓库要求的固定标题
+   “借鉴与来源声明”不一致。现已统一标题，并由项目测试锁定；
+2. 390 × 844 开场页的“开始放映”原本落在首屏下方。现以窄屏双列题包、紧凑
+   规则区和收敛间距解决；按钮实测 `y = 777.6`、`bottom = 828.1`，完整落在
+   844px 首屏内。320 × 568 与 844 × 390 仍无横向溢出，全部设置和主操作均可
+   纵向到达。
+
+追加记录：
+
+- `bugs/2026-07-26-four-symbol-film-duel-attribution-heading-contract.md`
+- `bugs/2026-07-26-four-symbol-film-duel-mobile-setup-primary-below-fold.md`
+
 ## 8. 自动化测试
 
 ### 8.1 项目级
@@ -203,27 +217,19 @@ git diff --check                            通过
 `npm test`：
 
 ```text
-tests 2389
-pass  2385
-fail  4
+tests 2431
+pass  2431
+fail  0
 ```
-
-失败均为共享基线依赖：
-
-- 3 个 `scripts/start-reuse.integration.test.mjs` 场景因
-  `node_modules/pannellum/build/pannellum.css` 缺失而启动超时；
-- `shared/runtime/server.test.js` 因共享 runtime 无法 import `qrcode` 失败。
 
 `npm run verify`：
 
 ```text
-panorama-memory 引用的浏览器依赖不存在：
-/vendor/pannellum/2.5.7/pannellum.css
-/vendor/pannellum/2.5.7/pannellum.js
+仓库验收通过：71 个作品入口（63 个 A 级直开、8 个非 A 启动器）、
+1 个能力声明、资源与借鉴声明完整。
 ```
 
-这些文件、根依赖和共享 runtime 均不属于本项目授权范围；本 Session 没有修改或
-安装它们。
+共享定向回归包含本项目、目录合同、入口合同与 favicon 合同，全部通过。
 
 ## 9. 借鉴与许可证
 
@@ -244,5 +250,7 @@ panorama-memory 引用的浏览器依赖不存在：
 - `74505af` `feat(four-symbol-film-duel): build ticket booth production ui`
 - `d6fe11a` `docs(four-symbol-film-duel): document local play and attribution`
 - `08b7aeb` `fix(four-symbol-film-duel): preserve focus after spotlight`
+- `e446eca` `fix(four-symbol-film-duel): align attribution heading`
+- `e734cc5` `fix(four-symbol-film-duel): keep mobile start in view`
 
-本文件将在第五个独立提交中交付。未 push。
+原分支提交已逐项接入主线；本文件随后以独立文档提交补齐总控接入复验。未 push。
