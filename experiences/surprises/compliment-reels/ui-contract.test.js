@@ -137,6 +137,8 @@ test("styles preserve the accepted materials and accessibility fallbacks", () =>
     "--brass-600: #b48a4a",
     ".pull-handle:focus-visible",
     "padding: 44px 8px 8px",
+    "@media (min-width: 901px) and (max-height: 1100px)",
+    "padding-block: 24px 12px",
     "@media (max-width: 359px)",
     "@media (prefers-reduced-motion: reduce)",
     "@media (forced-colors: active)",
