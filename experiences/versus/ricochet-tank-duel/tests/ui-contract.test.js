@@ -142,8 +142,12 @@ test("样式实现深靛棱镜双席、六档视口基础、44px 目标与无障
   assert.match(css, /aspect-ratio:\s*16\s*\/\s*10/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.doesNotMatch(css, /@media \(max-width: 480px\)[\s\S]*?\.player-status\s*\{\s*display:\s*none/);
-  assert.doesNotMatch(
-    css,
-    /@media \(max-width: 480px\)[\s\S]*?\.header-actions button\s*\{[\s\S]*?min-height:\s*(?:[0-3]\d|4[0-3])px/,
-  );
+  const mobileStart = css.indexOf("@media (max-width: 480px)");
+  const mobileEnd = css.indexOf("@media", mobileStart + 1);
+  assert.notEqual(mobileStart, -1);
+  assert.notEqual(mobileEnd, -1);
+  const mobileRules = css.slice(mobileStart, mobileEnd);
+  const headerActions = mobileRules.match(/\.header-actions button\s*\{([^}]*)\}/);
+  assert.ok(headerActions);
+  assert.match(headerActions[1], /min-height:\s*44px/);
 });
