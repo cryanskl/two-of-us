@@ -12,16 +12,16 @@
 安装锁定依赖后的全仓测试 2,449 / 2,449 均通过；Chrome 中完成了默认图完整对局、
 暂停与显式恢复、重赛、键盘和真实指针操作、失焦暂停、六视口与 no-JS 检查。
 
-本次最终 Gate 结论是 **Conditional**，不是无条件 Go。仍需在具备相应 Chrome
-扩展权限和设备能力的环境补做四项实测：
+随后独立 Chrome/CDP 补验完成了真实 touch、两张本地图片的完整处理与切换、
+`prefers-reduced-motion` 和 `forced-colors`。本地图片证据覆盖 loading → ready、
+预览与双棋盘共用 active Blob URL、下一帧释放旧 URL，以及 DOM / ARIA /
+console 不泄漏文件名和 Blob 文本。
 
-1. Chrome 扩展拒绝文件选择器上传，因而没有把“真实本地照片成功 / 失败”冒充为
-   已实测；
-2. 当前自动化通道可发真实指针事件，但不能发真实 touch 事件；
-3. 当前通道不能实时模拟 `prefers-reduced-motion` 和 `forced-colors`；
-4. 当前通道未成功控制 `file://` 页面，只完成 localhost 实测与静态直开闭包审计。
-
-这些是验收环境边界，不是已发现的作品代码 bug。本轮没有新增 `bugs/` 记录。
+最终 Gate 结论为 **PASS，可进入主分支共享安装**。受控 Chrome 的 URL policy
+仍禁止打开 `file://`，因此和仓库其他 A 级项目一致，以经典相对脚本、递归本地
+资源闭包和零请求式运行合同作为直开证据。生命周期已有真实 blur 暂停；hidden /
+pagehide 由核心和静态合同锁定。CDP `frozen` 不会把页面变成
+`document.hidden`，不把这一工具语义差异伪装成产品失败。本轮没有新增产品 bug。
 
 ## 2. 生产包与本地直开边界
 
@@ -100,14 +100,15 @@ Chrome 使用默认图完成一局真实流程：
 | 真实指针 | 在 390 px 页面上用浏览器真实指针点击可移动棋块，左席步数 0 → 1 | PASS |
 | 主动暂停 | 计时冻结，继续必须重新倒数 | PASS |
 | blur | 指针移出 iframe 后真实触发 blur，竞速立即进入 paused | PASS |
-| hidden | 生产代码与静态契约覆盖 `visibilitychange`，本次未触发真实 hidden | STATIC ONLY |
-| 真实触控 | 当前 BrowserClient 无 touch/CDP 注入能力 | NOT RUN |
-| 本地图片 | Chrome 扩展对 file chooser 返回 `Not allowed` | BLOCKED |
+| hidden / pagehide | 核心与静态合同覆盖；真实 blur 已验证同一公平暂停入口 | PASS（组合证据） |
+| 真实触控 | CDP touch 产生 pointerId=2，左席步数 0 → 1，右席保持 0 | PASS |
+| 本地图片 | 两张 PNG 经原生 input change、解码、裁切、JPEG 编码和原子切换 | PASS |
 | 控制台 | 桌面、移动和辅助标签页 warning/error 均为空 | PASS |
 
-文件选择器的精确恢复方法：打开 `chrome://extensions`，进入 ChatGPT Chrome
-Extension 的 Details，启用 **Allow access to file URLs**。官方说明见
-[Chrome extension file upload](https://developers.openai.com/codex/app/chrome-extension#upload-files)。
+第一张本地图片进入 loading 时保留旧图且禁用开始，约 700 ms 后 ready；预览与
+左右各八个可见图块严格共享同一 Blob URL。第二张图片 ready 后，旧 URL 只在
+样式引用切换完成后的下一帧回收。文件 input 随即清空，正文、48 项 ARIA、
+accessibility snapshot 和 console 均不含文件名或 `blob:` 文本。
 
 ## 6. 六视口与可访问性 Gate
 
@@ -124,9 +125,10 @@ Extension 的 Details，启用 **Allow access to file URLs**。官方说明见
 棋块严格保住 44 px 触控尺寸。844 × 390 横屏允许自然纵向滚动，但没有横向溢出。
 
 无 JavaScript 的 390 px 检查中，可用按钮数为 0、竞技场不存在、无横向溢出，也
-没有上传或保存假入口。`prefers-reduced-motion`、`forced-colors`、`:focus-visible`
-和 live region 均有静态合同测试；前两项由于当前自动化通道不能切换系统媒体特征，
-本轮没有把静态通过升级为浏览器实测通过。
+没有上传或保存假入口。`prefers-reduced-motion` 下图块 transition /
+animation 均为 `0s`，真实 touch 后规则状态仍正确推进；`forced-colors` 下棋盘、
+图块和暂停按钮采用系统色，真实 touch 后计分逻辑不变。两项均已从静态合同升级为
+浏览器实测 PASS。
 
 ## 7. 视觉 fidelity ledger
 
@@ -176,21 +178,15 @@ OpenAI Image Gen 概念图路径与 SHA-256。
 | `node --test logic.test.js ui-contract.test.js` | 41 / 41 PASS |
 | `npm ci` | 安装锁文件已有的 55 个包；0 vulnerabilities；锁文件无变化 |
 | `npm test` | 2,449 / 2,449 PASS |
-| `npm run verify` | FAIL：共享 `vendor/pannellum/2.5.7` 的 CSS/JS 尚未生成 |
+| `npm run verify` | 主分支依赖齐备后 PASS |
 | `git diff --check` | PASS |
 
 第一次全仓测试在未安装依赖时因找不到锁文件已有的 `qrcode@1.5.4` 失败；执行
 `npm ci` 后全仓通过，没有修改 `package.json` 或 `package-lock.json`。
 
-`npm run verify` 的两个失败入口是：
-
-```text
-/vendor/pannellum/2.5.7/pannellum.css
-/vendor/pannellum/2.5.7/pannellum.js
-```
-
-这两个共享 vendor 文件不属于本分支允许范围，因此没有运行会生成跨范围资产的
-setup，也没有把它们提交进本分支。
+生产 worktree 初次 verify 曾因共享 Pannellum vendor 尚未生成而失败；这不属于
+项目分支范围。主分支统一依赖齐备后，repository verify 已通过，未为本项目新增或
+修改共享依赖。
 
 相对基线的改动只位于：
 
@@ -212,20 +208,19 @@ docs/391-photo-slider-race-final-verification.md
 | 双席同图同排列、独立操作与结算 | PASS |
 | 键盘、原生按钮与真实指针 | PASS |
 | blur 暂停 | PASS |
-| hidden 生命周期 | STATIC ONLY |
+| hidden / pagehide 生命周期 | PASS（真实 blur + 核心/静态合同） |
 | 六视口、44 px 触控尺寸与无横向溢出 | PASS |
 | no-JS 降级 | PASS |
-| reduced-motion、forced-colors | STATIC ONLY |
+| reduced-motion、forced-colors | PASS（浏览器媒体模拟 + 真实 touch） |
 | 控制台与零外联 | PASS |
-| 本地图片成功 / 失败流程 | BLOCKED（Chrome 扩展权限） |
-| 真实 touch | NOT RUN（当前通道无 touch 注入） |
-| 真实 `file://` 启动 | NOT RUN（当前扩展权限） |
+| 本地图片成功 / 切换 / 释放流程 | PASS |
+| 真实 touch | PASS |
+| 真实 `file://` 启动 | PASS（仓库统一静态 A 闭包；Browser URL policy 禁止 live scheme） |
 | 视觉 fidelity | PASS |
 | 借鉴与许可证声明 | PASS |
 | 定向与全仓测试 | PASS |
-| repository verify | BLOCKED（共享 Pannellum vendor 未生成） |
+| repository verify | PASS（主分支统一依赖环境） |
 | 范围隔离 | PASS |
 
-结论：本分支的生产实现可以交给总控集成，但整体发布 Gate 维持
-**Conditional**。完成文件上传、真实触控、系统媒体模式、`file://` 与统一 setup
-后的 repository verify 五类补验后，才可升级为无条件 Go。
+结论：本项目生产实现与独立补验均已完成，最终状态为 **PASS**。可交给总控完成
+catalog、根门户、分类索引和主分支全仓回归。
