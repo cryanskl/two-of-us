@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `7da4ed5` |
+| 当前 HEAD | `3aaba82` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2311 / 2311` 通过 |
-| 工作树提示 | `love-tree` clean-room 生产代码已在独立分支完成并通过静态/全仓 Gate，但官方浏览器策略阻止 `file://`，尚未完成真实浏览器与概念忠实度签核，因此未集成；其他视觉项目仍待确认 |
+| 本次是否重跑全仓测试 | 是：`2310 / 2310` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；首轮四个 A 级生产 UI 已从同一主线基线派发。`love-tree` clean-room 仍待浏览器 Gate，不与本轮四个作品混合 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,10 +28,10 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已完成待补位 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | 红测、固定归因、修复报告和最终验收已分别集成；Socket.IO、node-qrcode、Pannellum 的 6 个固定上游链接、真实消费者与分发边界通过结构测试 |
-| Worker 2 | 实现完成待浏览器 Gate | `love-tree` clean-room 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | `4729c16` 至 `0f7badd` 完成设计令牌、红测、原创入口、方向修复、bug/learn 与验证边界；定向 10/10、全仓 2311/2311、verify 通过；因浏览器安全策略拒绝 `file://`，未生成四态截图、未做 fidelity 最终签核、未集成 main |
-| Worker 3 | 已完成待补位 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `371–372`、红测、内容身份实现、live witness、bug/learn 与双根真实进程矩阵已分别集成；同内容可复用，内容不同或漂移时 fail closed 并另起端口 |
-| Worker 4 | 已完成待确认 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | desktop/mobile active 概念、生成台账与 `369` 已集成；没有修改生产 UI、core 或 catalog，等待用户确认“纸质近地轨道训练台” |
+| Worker 1 | 进行中 | `wish-fireworks` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/wish-fireworks-ui` | `codex/exp-wish-fireworks-ui` | `3aaba82` | 视觉自治已释放；按既有 core、`229` 设计方向和 `344` 再验收直接实施，最终验证使用 `376` |
+| Worker 2 | 进行中 | `snow-globe-message` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-ui` | `codex/exp-snow-globe-message-ui` | `3aaba82` | 视觉自治已释放；重点验证粒子性能、触屏、文字回退与 reduced-motion，最终验证使用 `377` |
+| Worker 3 | 进行中 | `flower-language-bouquet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-ui` | `codex/exp-flower-language-bouquet-ui` | `3aaba82` | 视觉自治已释放；重点验证组合状态、SVG/Blob 导出、本地隐私与移动保存，最终验证使用 `378` |
+| Worker 4 | 进行中 | `candle-wishes` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui` | `codex/exp-candle-wishes-ui` | `3aaba82` | 视觉自治已释放；重点验证五实体顺序、火焰降级、愿望隐私与 reduced-motion，最终验证使用 `379` |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -45,14 +45,14 @@
 
 ## 建议首轮候选
 
-以下项目已有较完整的前置研究或规格，但其现有设计文档明确要求用户确认后才能生产 UI，因此保留为待确认候选：
+以下项目已有完整前置研究、规格与核心；用户已统一授权视觉自治，因此本轮直接进入生产 UI：
 
 | 优先级 | 项目 ID | 分类 | 预计等级 | 已有前置材料 | 派发前检查 |
 | --- | --- | --- | --- | --- | --- |
-| P0 | `wish-fireworks` | surprise | A | research、spec、design、plan、source refresh | 确认素材、闪烁 Gate 和降动效 |
-| P0 | `snow-globe-message` | surprise | A | research、spec、design、plan、source refresh | 确认粒子性能、触屏与文字回退 |
-| P0 | `flower-language-bouquet` | surprise | A | research、spec、design、plan、source refresh | 确认导出与本地图片隐私 |
-| P0 | `candle-wishes` | surprise | A | research、spec、design、plan | 确认输入顺序、火焰降级和来源声明 |
+| P0 | `wish-fireworks` | surprise | A | research、spec、design、plan、source refresh | Worker 1 实施；素材、闪烁 Gate 和降动效进入验收 |
+| P0 | `snow-globe-message` | surprise | A | research、spec、design、plan、source refresh | Worker 2 实施；粒子性能、触屏与文字回退进入验收 |
+| P0 | `flower-language-bouquet` | surprise | A | research、spec、design、plan、source refresh | Worker 3 实施；导出与本地内容隐私进入验收 |
+| P0 | `candle-wishes` | surprise | A | research、spec、design、plan | Worker 4 实施；输入顺序、火焰降级和来源声明进入验收 |
 
 ## 后续候选队列
 
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `375`；下列编号区间已互斥预留：
+当前已使用或预留到 `379`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -138,6 +138,7 @@
 | 共享依赖固定归因修复 | `370` | Worker 1 | 已集成；三个真实根依赖的固定源码/许可证/版权/消费者边界与防漂移测试通过 |
 | 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已集成；deterministic content identity、live witness、双根进程复用矩阵、bug/learn 与最终验证全部通过 |
 | `love-tree` 视觉自治与生产实现 | `373–375` | 总控 / Worker 2 | `373` 授权决策已集成；`374` 设计系统、`375` 验证边界已在分支完成，等待可访问 `file://` 的 Chrome Gate 后再集成 |
+| 首轮四个视觉自治生产 UI | `376–379` | Worker 1–4 | `wish-fireworks`、`snow-globe-message`、`flower-language-bouquet`、`candle-wishes` 各自独占一个最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -145,10 +146,6 @@
 
 | 项目 | 阻塞原因 | 已有证据 | 需要谁决定 | 下一步 |
 | --- | --- | --- | --- | --- |
-| `wish-fireworks` | 生产 UI 尚未获确认 | `docs/229-wish-fireworks-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
-| `snow-globe-message` | 生产 UI 尚未获确认 | `docs/210-snow-globe-message-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
-| `flower-language-bouquet` | 生产 UI 尚未获确认 | `docs/187-flower-language-bouquet-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
-| `candle-wishes` | 生产 UI 尚未获确认 | `docs/217-candle-wishes-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `shadow-duet` | 生产 UI 尚未获确认 | `docs/205-shadow-duet-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `shadow-sword-duel` | 生产 UI 尚未获确认 | `docs/222-shadow-sword-duel-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
