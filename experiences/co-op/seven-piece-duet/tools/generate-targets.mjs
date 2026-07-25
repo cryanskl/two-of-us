@@ -2,6 +2,10 @@
 
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
+import {
+  findExactCover,
+  verifyTargetExactCover
+} from "./exact-cover.mjs";
 
 const require = createRequire(import.meta.url);
 const geometry = require("../geometry.js");
@@ -316,7 +320,32 @@ function chooseTargets(candidates) {
 }
 
 function generateTargets() {
-  return chooseTargets(enumerateCandidates());
+  const selected = chooseTargets(enumerateCandidates());
+  for (const target of selected) {
+    const points = target.cells.flatMap(vertices);
+    const withBoard = {
+      ...target,
+      board: {
+        minX: Math.min(...points.map(({ x }) => x)) - 1,
+        minY: Math.min(...points.map(({ y }) => y)) - 1,
+        maxX: Math.max(...points.map(({ x }) => x)) + 1,
+        maxY: Math.max(...points.map(({ y }) => y)) + 1
+      }
+    };
+    const verification = verifyTargetExactCover(withBoard);
+    if (!verification.valid) {
+      throw new Error(`${target.id} failed deterministic exact-cover Gate`);
+    }
+    if (
+      target.id === "echo"
+      && findExactCover(withBoard, {
+        allowParallelogramFlip: false
+      }) !== null
+    ) {
+      throw new Error("echo remains solvable without parallelogram flip");
+    }
+  }
+  return selected;
 }
 
 function stablePayload(targets) {

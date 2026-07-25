@@ -12,6 +12,7 @@ const geometryPath = require.resolve("./geometry.js");
 const targetsPath = require.resolve("./targets.js");
 const targets = require(targetsPath);
 const generatorPath = join(__dirname, "tools", "generate-targets.mjs");
+const exactCoverPath = join(__dirname, "tools", "exact-cover.mjs");
 
 function assertDeepFrozen(value, seen = new Set()) {
   if (
@@ -117,6 +118,26 @@ test("target reads are fresh and the four-round seat schedule is frozen", () => 
   assertDeepFrozen(schedule);
 });
 
+test("deterministic exact cover includes every frozen solution and makes echo flip-required", async () => {
+  const {
+    findExactCover,
+    verifyTargetExactCover
+  } = await import(exactCoverPath);
+  for (const target of targets.getTargets()) {
+    const verification = verifyTargetExactCover(target);
+    assert.equal(verification.valid, true);
+    assert.equal(verification.frozenSolutionPresent, true);
+    assert.ok(verification.rowCount > 0);
+    assert.equal(verification.solution.length, geometry.PIECE_IDS.length);
+  }
+  assert.equal(
+    findExactCover(targets.getTargetById("echo"), {
+      allowParallelogramFlip: false
+    }),
+    null
+  );
+});
+
 test("generator output is byte-identical and matches the frozen target module", () => {
   const run = (mode) => execFileSync(
     process.execPath,
@@ -134,7 +155,7 @@ test("generator output is byte-identical and matches the frozen target module", 
 });
 
 test("target production files have no network, random or copied asset inputs", () => {
-  for (const path of [targetsPath, generatorPath]) {
+  for (const path of [targetsPath, generatorPath, exactCoverPath]) {
     const source = readFileSync(path, "utf8");
     for (const forbidden of [
       /\bfetch\b/u,

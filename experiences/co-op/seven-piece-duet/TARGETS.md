@@ -30,6 +30,12 @@ node experiences/co-op/seven-piece-duet/tools/generate-targets.mjs --check
   fine/bold 跨组接边和唯一 D4 外轮廓指纹；
 - 收集前 3000 个合格且不同轮廓的候选；用固定整数排序规则选择紧凑、横向、
   翻面和高边界复杂度四类，不做人工坐标回填。
+- `tools/exact-cover.mjs` 为每个目标枚举全部合法 placement row；列由 7 个
+  piece-ID 和 32 个四分之一格 coverage cell 组成，按“可选 row 最少、固定列序、
+  固定 pose 序”执行确定性 Algorithm X；
+- 四形都必须至少有一个 exact cover，冻结标准解的七个 pose 必须逐一存在于 row
+  集并覆盖全部 target；`echo` 删除所有 `parallelogram.flipped === true` row
+  后必须为 UNSAT。
 
 当前 `--emit` 字节流的 SHA-256 为：
 
@@ -52,7 +58,8 @@ c41d1e8e73a1caf3d994d9b9b8b81e0287d4838d8d2986caad7e3ed21766506a
 表中 hash 是完整 outline fingerprint 的短展示凭据；权威字符串和 16 个原子
 triangle keys 由 `targets.js` 公开。四个标准解都恰好使用七片、覆盖 16 个原子
 三角形、无正面积重叠、不是简单正方形，且 fine/bold 两组存在完整边接触。
-`echo` 的标准解明确使用平行四边形翻面；首版没有声称所有不翻面的解均不存在。
+`echo` 不只是标准解使用平行四边形翻面：确定性 exact-cover 验证器在移除所有
+翻面 row 后返回 UNSAT，因此“要求翻面”是当前离散半格规则下的可执行合同。
 
 ## 人工内容审计
 
