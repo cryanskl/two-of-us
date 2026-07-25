@@ -111,5 +111,10 @@ prototype + ownKeys + descriptors
 - 雪球实现与回归：
   `experiences/surprises/snow-globe-message/logic.js`、
   `experiences/surprises/snow-globe-message/logic.test.js`
+- 双星同轨核心：descriptor snapshot 禁止二次 Proxy `get`，内部 helper 用
+  `null` 表达未提交，再由 reducer 保留调用者原引用。对应
+  `bugs/2026-07-25-twin-orbit-proxy-content-read.md`、
+  `bugs/2026-07-25-twin-orbit-tick-revision-overflow.md` 和
+  `bugs/2026-07-25-twin-orbit-suspend-noop-snapshot.md`。
 
 本文只沉淀仓库内实现与回归证据，没有新增第三方代码、素材或运行依赖。
