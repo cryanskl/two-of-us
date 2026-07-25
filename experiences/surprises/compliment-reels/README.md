@@ -64,7 +64,7 @@ node --test experiences/surprises/compliment-reels/logic.test.js \
   experiences/surprises/compliment-reels/ui-contract.test.js
 ```
 
-## 借鉴声明
+## 借鉴与来源声明
 
 本体验的规则、状态机、文案、HTML、CSS、JavaScript、图标和测试均在本仓库独立
 实现。开发前研究了下列开源项目的抽象机制；它们不是 dependency、vendored

@@ -206,6 +206,7 @@
 | [197-compliment-reels-imagegen-brief.md](./197-compliment-reels-imagegen-brief.md) | “夸夸印刷机”的八张多状态/响应式视觉简报、精确文案锁、禁用赌场符号与资产台账边界 |
 | [198-compliment-reels-design-proposal.md](./198-compliment-reels-design-proposal.md) | “夸夸印刷机”的八态 ImageGen 提案、响应式/无障碍边界、生成台账、借鉴声明与待确认 Gate |
 | [230-compliment-reels-source-refresh.md](./230-compliment-reels-source-refresh.md) | “夸夸印刷机”四个固定仓库 HEAD、许可证载体哈希、GPL/MIT 冲突排除与 W3C 文档状态复核 |
+| [380-compliment-reels-final-verification.md](./380-compliment-reels-final-verification.md) | “每一格，都是喜欢你的理由”的 29 项定向测试、六档视口/键盘/触屏/降级浏览器矩阵、三项 UI 回归修复与来源终验 |
 | [181-snow-globe-message-research.md](./181-snow-globe-message-research.md) | “雪球留言”的定向调研、许可候选与本地实现边界 |
 | [182-snow-globe-message-spec.md](./182-snow-globe-message-spec.md) | “雪球留言”的可执行交互与验收规格 |
 | [199-snow-globe-message-brainstorm.md](./199-snow-globe-message-brainstorm.md) | “雪球留言”的公开/私密标题、进度文案、Pointer、焦点、准备失败与来源分层决策 |

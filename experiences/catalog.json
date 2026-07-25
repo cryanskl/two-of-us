@@ -249,6 +249,19 @@
       "networkRequired": false
     },
     {
+      "id": "compliment-reels",
+      "title": "每一格，都是喜欢你的理由",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/compliment-reels/index.html",
+      "readme": "experiences/surprises/compliment-reels/README.md",
+      "description": "拉动三列夸夸纸卷，每次印出一句完整赞美；本轮第 3–6 次之间必有一次特别同频，落定后才展开私人结语。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",
