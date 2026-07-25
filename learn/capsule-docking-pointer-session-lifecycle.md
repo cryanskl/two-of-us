@@ -1,6 +1,6 @@
 # Pointer 会话不能只靠 `pointerId`
 
-日期：2026-07-25  
+日期：2026-07-25
 来源：`capsule-docking` 浏览器验收
 
 ## 现象
