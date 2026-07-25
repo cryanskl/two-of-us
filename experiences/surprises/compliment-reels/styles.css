@@ -404,6 +404,27 @@ output {
   text-align: center;
 }
 
+@media (min-width: 901px) and (max-height: 1100px) {
+  .compliment-reels[data-phase="jackpot"] {
+    gap: 8px 22px;
+    padding-block: 24px 12px;
+  }
+
+  .compliment-reels[data-phase="jackpot"] .page-heading h1 {
+    font-size: clamp(42px, 4.5vw, 64px);
+  }
+
+  .compliment-reels[data-phase="jackpot"] .round-guarantee {
+    margin-bottom: 0;
+    line-height: 1.55;
+  }
+
+  .compliment-reels[data-phase="jackpot"] .history-strip li {
+    padding-block: 7px;
+    line-height: 1.5;
+  }
+}
+
 @media (max-width: 900px) {
   .compliment-reels {
     display: flex;
