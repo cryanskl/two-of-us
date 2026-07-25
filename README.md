@@ -22,7 +22,7 @@
 
 | 分类 | 目录 | 用途 | 当前状态 |
 | --- | --- | --- | --- |
-| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上写给你、把夜晚照成我们、三枚以后都是我们、沿着折痕折到你心里 |
+| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上写给你、把夜晚照成我们、三枚以后都是我们、沿着折痕折到你心里、今晚点三束光 |
 | 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、月面，保持有光、雾里，跟着你走、这一场雨，我们一起接、把两边，拉成我们、把七天，养成一朵花、把星光，一笔一笔交给你、我听见了、同心解锁、隔屏画猜、和你一样 |
 | 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串我还记得、这一朵我先养开、软软相扑、心跳冲刺、连心四子棋、密封猜拳 |
 
@@ -242,6 +242,7 @@
 - [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
 - [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
 - [心愿烟火分批实施计划](./docs/246-wish-fireworks-plan.md)
+- [心愿烟火最终验收](./docs/376-wish-fireworks-final-verification.md)
 - [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)
 - [花语配方可执行规格](./docs/186-flower-language-bouquet-spec.md)
 - [花语配方视觉提案](./docs/187-flower-language-bouquet-design-proposal.md)

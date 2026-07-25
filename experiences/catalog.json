@@ -223,6 +223,19 @@
       "networkRequired": false
     },
     {
+      "id": "wish-fireworks",
+      "title": "今晚，点三束光",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/wish-fireworks/index.html",
+      "readme": "experiences/surprises/wish-fireworks/README.md",
+      "description": "选择高度并按住蓄光，让三束烟火依次留下一个字；第三束落定后才展开本地定制的短笺。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

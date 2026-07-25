@@ -68,11 +68,11 @@ test("shared resource redactor removes secrets and escapes CLI control character
   assert.equal(redactResourceReference("data:text/plain,PRIVATE"), "<data-url>");
 });
 
-test("real catalog satisfies all 50 A and 8 non-A contracts", async () => {
+test("real catalog satisfies all 51 A and 8 non-A contracts", async () => {
   const realCatalog = await loadCatalog(sourceRoot);
   const installed = realCatalog.experiences.filter((item) => item.installed === true);
-  assert.equal(installed.length, 58);
-  assert.equal(installed.filter(({ level }) => level === "A").length, 50);
+  assert.equal(installed.length, 59);
+  assert.equal(installed.filter(({ level }) => level === "A").length, 51);
   assert.equal(installed.filter(({ level }) => level !== "A").length, 8);
   assert.deepEqual(await validateExperienceContracts({ rootDir: sourceRoot, catalog: realCatalog }), []);
 });

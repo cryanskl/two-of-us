@@ -239,6 +239,7 @@
 | [227-wish-fireworks-source-refresh.md](./227-wish-fireworks-source-refresh.md) | “心愿烟火”五项固定来源的公开状态、默认分支 HEAD、许可证哈希、Pointer Events Level 3 与 WCAG 官方校准 |
 | [229-wish-fireworks-design-proposal.md](./229-wish-fireworks-design-proposal.md) | “心愿烟火”的十五态视觉概念、设计令牌、响应式/降级提案、生成台账、借鉴声明与待确认 Gate |
 | [246-wish-fireworks-plan.md](./246-wish-fireworks-plan.md) | “心愿烟火”的逻辑/交互/视觉/目录四批文件所有权、独立提交、Pointer/token/隐私、来源、bugs/learn 与最终验收计划 |
+| [376-wish-fireworks-final-verification.md](./376-wish-fireworks-final-verification.md) | “今晚，点三束光”的 35 项定向测试、桌面/手机/横屏/键盘/触屏/降级浏览器矩阵、离线边界与来源终验 |
 | [185-flower-language-bouquet-research.md](./185-flower-language-bouquet-research.md) | “花语配方”的定向调研、花语来源与原创边界 |
 | [186-flower-language-bouquet-spec.md](./186-flower-language-bouquet-spec.md) | “花语配方”的配花逻辑、状态与验收规格 |
 | [187-flower-language-bouquet-design-proposal.md](./187-flower-language-bouquet-design-proposal.md) | “花语配方”的视觉方向提案与待确认 Gate |
