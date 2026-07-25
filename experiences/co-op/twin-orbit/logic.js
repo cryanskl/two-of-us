@@ -541,6 +541,14 @@
     );
   }
 
+  function isReachableAtTick(player, startAngle, tick) {
+    var distance = forwardDistance(startAngle, player.angle);
+    return (
+      distance >= tick * CONSTANTS.OUTER_SPEED
+      && distance <= tick * CONSTANTS.INNER_SPEED
+    );
+  }
+
   function hasExactWindow(value, expected) {
     var snapshot = snapshotRecord(value, WINDOW_KEYS);
     return Boolean(
@@ -589,7 +597,12 @@
     }
     var left = snapshotPlayer(playersRecord.left);
     var right = snapshotPlayer(playersRecord.right);
-    if (!left || !right) {
+    if (
+      !left
+      || !right
+      || !isReachableAtTick(left, gate.startAngles.left, state.tick)
+      || !isReachableAtTick(right, gate.startAngles.right, state.tick)
+    ) {
       return null;
     }
 

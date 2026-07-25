@@ -441,17 +441,17 @@ test("failure priority separates wrong lane, one-sided crossing and early crossi
   assert.equal(tick(state).retryReason, "not-together");
 
   state = replaceState(state, {
-    tick: 20,
+    tick: 46,
     players: {
       left: {
-        angle: 178,
-        lane: "outer",
-        held: false,
+        angle: 177,
+        lane: "inner",
+        held: true,
         crossed: false,
         crossingTick: null
       },
       right: {
-        angle: 400,
+        angle: 412,
         lane: "outer",
         held: false,
         crossed: false,
@@ -579,17 +579,17 @@ test("SUSPEND clears terminal input without erasing a confirmed gate result", ()
 test("retry resets current gate while public view hides internal evidence", () => {
   let state = startGate();
   state = replaceState(state, {
-    tick: 20,
+    tick: 46,
     players: {
       left: {
-        angle: 178,
-        lane: "outer",
-        held: false,
+        angle: 177,
+        lane: "inner",
+        held: true,
         crossed: false,
         crossingTick: null
       },
       right: {
-        angle: 400,
+        angle: 412,
         lane: "outer",
         held: false,
         crossed: false,
@@ -639,6 +639,35 @@ test("gate-retry accepts only the failure reason produced by its crossing snapsh
   assert.equal(getPublicView(forgedClosed).phase, "intro");
   assert.deepEqual(
     reduce(forgedClosed, { type: ACTIONS.RETRY_GATE }),
+    createInitialState()
+  );
+});
+
+test("external player angles must be reachable from the gate start at that tick", () => {
+  const playing = startGate();
+  const teleported = replaceState(playing, {
+    tick: 1,
+    players: {
+      left: {
+        angle: 500,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      },
+      right: {
+        angle: 322,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      }
+    }
+  });
+
+  assert.equal(getPublicView(teleported).phase, "intro");
+  assert.deepEqual(
+    reduce(teleported, { type: ACTIONS.TICK, count: 1 }),
     createInitialState()
   );
 });
