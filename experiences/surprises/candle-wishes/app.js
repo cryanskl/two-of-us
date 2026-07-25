@@ -133,8 +133,10 @@
     heading.textContent = view.publicTitle;
     instructions.textContent = view.instructions;
     progress.textContent = view.progressText;
+    progress.hidden = false;
     privacy.textContent = view.privacyText;
     privacy.hidden = false;
+    liveRegion.hidden = false;
     renderStage(newlyLitId);
     renderWishes();
     renderFinalLetter();
@@ -156,11 +158,13 @@
     stage.replaceChildren();
     stage.hidden = true;
     progress.textContent = PREPARATION_MESSAGE;
+    progress.hidden = false;
     primary.hidden = false;
     primary.disabled = false;
     primary.textContent = "重新准备";
     primary.dataset.action = "PREPARE";
     privacy.hidden = true;
+    liveRegion.hidden = false;
     liveRegion.textContent = PREPARATION_MESSAGE;
   }
 

@@ -30,6 +30,18 @@ test("index is a self-contained classic-script file entry with a safe no-script 
   assert.match(html, /请开启 JavaScript 后再点亮这五支蜡烛。/u);
   assert.match(html, /role="status"/u);
   assert.match(html, /aria-live="polite"/u);
+  for (const hiddenClass of [
+    "candle-stage",
+    "progress-status",
+    "primary-action",
+    "live-region",
+  ]) {
+    assert.match(
+      html,
+      new RegExp(`<[^>]+class="${hiddenClass}"[^>]+hidden`, "u"),
+      `${hiddenClass} must stay hidden until JavaScript prepares the experience`,
+    );
+  }
 
   for (const privateText of [
     config.finalTitle,
