@@ -538,6 +538,16 @@ legend {
   gap: 12px;
 }
 
+[data-phase="act-result"] .status-strip,
+[data-phase="complete"] .status-strip {
+  display: none;
+}
+
+[data-phase="act-result"] .controls,
+[data-phase="complete"] .controls {
+  display: none;
+}
+
 .primary-action {
   min-width: min(100%, 230px);
   min-height: 48px;

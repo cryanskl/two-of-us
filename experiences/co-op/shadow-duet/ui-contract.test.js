@@ -113,6 +113,14 @@ test("visual system preserves the paper theatre and all accessibility fallbacks"
   assert.doesNotMatch(css, /url\s*\(/i);
 });
 
+test("terminal phases keep the six-photo ending and primary action in the desktop first screen", () => {
+  const css = source("styles.css");
+  for (const phase of ["act-result", "complete"]) {
+    assert.match(css, new RegExp(`\\[data-phase="${phase}"\\] \\.status-strip[\\s\\S]{0,120}display:\\s*none`));
+    assert.match(css, new RegExp(`\\[data-phase="${phase}"\\] \\.controls[\\s\\S]{0,120}display:\\s*none`));
+  }
+});
+
 test("phase privacy, local-only boundaries, and attribution are statically enforceable", () => {
   const html = source("index.html");
   const app = source("app.js");
