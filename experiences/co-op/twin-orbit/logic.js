@@ -325,12 +325,7 @@
     return normalized;
   }
 
-  function normalizeConfigCandidate(candidate) {
-    var snapshot = snapshotRecord(candidate, CONFIG_KEYS);
-    if (!snapshot) {
-      return null;
-    }
-
+  function normalizeConfigSnapshot(snapshot) {
     var normalized = {
       leftName: normalizeText(snapshot.leftName, 1, 20),
       rightName: normalizeText(snapshot.rightName, 1, 20),
@@ -349,6 +344,11 @@
     return normalized;
   }
 
+  function normalizeConfigCandidate(candidate) {
+    var snapshot = snapshotRecord(candidate, CONFIG_KEYS);
+    return snapshot ? normalizeConfigSnapshot(snapshot) : null;
+  }
+
   function sanitizeConfig(candidate) {
     var normalized = normalizeConfigCandidate(candidate);
     if (!normalized) {
@@ -357,14 +357,18 @@
     return deepFreeze(normalized);
   }
 
-  function isCanonicalContent(value) {
-    var normalized = normalizeConfigCandidate(value);
+  function snapshotCanonicalContent(value) {
+    var snapshot = snapshotRecord(value, CONFIG_KEYS);
+    if (!snapshot) {
+      return null;
+    }
+    var normalized = normalizeConfigSnapshot(snapshot);
     if (!normalized) {
-      return false;
+      return null;
     }
     return CONFIG_KEYS.every(function isSame(key) {
-      return normalized[key] === value[key];
-    });
+      return normalized[key] === snapshot[key];
+    }) ? normalized : null;
   }
 
   function normalizeAngle(value) {
@@ -491,11 +495,12 @@
 
   function snapshotState(value) {
     var state = snapshotRecord(value, STATE_KEYS);
+    var content = state ? snapshotCanonicalContent(state.content) : null;
     if (
       !state
       || state.version !== CONSTANTS.VERSION
       || CONSTANTS.PHASES.indexOf(state.phase) === -1
-      || !isCanonicalContent(state.content)
+      || !content
       || !Number.isSafeInteger(state.gateIndex)
       || state.gateIndex < 0
       || state.gateIndex >= GATES.length
@@ -628,7 +633,7 @@
     return {
       version: state.version,
       phase: state.phase,
-      content: state.content,
+      content: content,
       gateIndex: state.gateIndex,
       tick: state.tick,
       openWindow: {

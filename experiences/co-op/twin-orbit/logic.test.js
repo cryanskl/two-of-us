@@ -624,6 +624,69 @@ test("malformed external state falls back safely while malformed action is ident
   assert.equal(reduce(initial, { type: "UNKNOWN" }), initial);
 });
 
+test("hostile descriptors and proxies cannot execute value access or escape snapshots", () => {
+  const initial = createInitialState();
+  const playing = startGate();
+  let getterReads = 0;
+  const accessorConfig = validConfig();
+  Object.defineProperty(accessorConfig, "signature", {
+    enumerable: true,
+    get() {
+      getterReads += 1;
+      return DEFAULT_CONFIG.signature;
+    }
+  });
+  assert.equal(sanitizeConfig(accessorConfig), DEFAULT_CONFIG);
+  assert.equal(getterReads, 0);
+
+  let proxyGets = 0;
+  const proxiedContent = new Proxy(
+    { ...playing.content },
+    {
+      get(target, key, receiver) {
+        proxyGets += 1;
+        return Reflect.get(target, key, receiver);
+      }
+    }
+  );
+  const external = replaceState(playing, { content: proxiedContent });
+  const advanced = tick(external);
+  assert.equal(advanced.phase, "playing");
+  assert.equal(advanced.tick, 1);
+  assert.equal(proxyGets, 0);
+  assert.notEqual(advanced.content, proxiedContent);
+  assertDeepFrozen(advanced);
+
+  const throwingState = new Proxy(
+    {},
+    {
+      ownKeys() {
+        throw new Error("state trap must stay contained");
+      }
+    }
+  );
+  const throwingAction = new Proxy(
+    {},
+    {
+      ownKeys() {
+        throw new Error("action trap must stay contained");
+      }
+    }
+  );
+  assert.deepEqual(reduce(throwingState, { type: ACTIONS.START }), initial);
+  assert.equal(reduce(initial, throwingAction), initial);
+  assert.deepEqual(getPublicView(throwingState), getPublicView(initial));
+
+  class ForgedCompleted extends Array {}
+  const forgedArrayState = replaceState(initial, {
+    completedGateIds: new ForgedCompleted()
+  });
+  assert.deepEqual(
+    reduce(forgedArrayState, { type: ACTIONS.START }),
+    initial
+  );
+});
+
 test("public intro and complete content contain no score, winner or private solver data", () => {
   const intro = getPublicView(createInitialState());
   assert.equal(intro.phase, "intro");
