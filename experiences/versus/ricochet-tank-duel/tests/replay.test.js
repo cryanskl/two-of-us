@@ -65,6 +65,25 @@ test("状态镜像交换玩家、弹体所有者和 x/vx，二次镜像严格恢
   assert.deepEqual(simulation.mirrorState(mirrored), state);
 });
 
+test("双方同 tick 发射的原日志与镜像日志得到镜像等价状态和哈希", () => {
+  const log = [{ type: "START" }];
+  for (let tick = 0; tick < 180; tick += 1) {
+    log.push({ type: "STEP", leftMask: 0, rightMask: 0 });
+  }
+  log.push({
+    type: "STEP",
+    leftMask: bit.FIRE_EDGE,
+    rightMask: bit.FIRE_EDGE,
+  });
+
+  const original = simulation.replay(log);
+  const mirroredReplay = simulation.replay(log.map(simulation.mirrorAction));
+  const restored = simulation.mirrorState(mirroredReplay);
+
+  assert.deepEqual(simulation.normalizeState(restored), simulation.normalizeState(original));
+  assert.equal(simulation.hashState(restored), simulation.hashState(original));
+});
+
 test("RESTART 从终局清空比分、时间、弹体、ID、结果并进入完整倒计时", () => {
   const raw = JSON.parse(JSON.stringify(simulation.createInitialState()));
   Object.assign(raw, {
