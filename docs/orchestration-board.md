@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2310 / 2310` 通过 |
-| 工作树提示 | 共享依赖固定归因、runtime 内容身份和两项视觉前置均已集成；用户已取消 `love-tree` 视觉确认门，可直接进入 clean-room 生产实现，其他视觉项目仍待确认 |
+| 本次是否重跑全仓测试 | 是：`2311 / 2311` 通过 |
+| 工作树提示 | `love-tree` clean-room 生产代码已在独立分支完成并通过静态/全仓 Gate，但官方浏览器策略阻止 `file://`，尚未完成真实浏览器与概念忠实度签核，因此未集成；其他视觉项目仍待确认 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,7 +29,7 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已完成待补位 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | 红测、固定归因、修复报告和最终验收已分别集成；Socket.IO、node-qrcode、Pannellum 的 6 个固定上游链接、真实消费者与分发边界通过结构测试 |
-| Worker 2 | 待补位实现 | `love-tree` clean-room 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 用户已通过 `373` 取消视觉确认门；下一阶段可直接实现原创入口、交互、响应式与浏览器验收，旧商业音频和源包不进入新依赖链 |
+| Worker 2 | 实现完成待浏览器 Gate | `love-tree` clean-room 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | `4729c16` 至 `0f7badd` 完成设计令牌、红测、原创入口、方向修复、bug/learn 与验证边界；定向 10/10、全仓 2311/2311、verify 通过；因浏览器安全策略拒绝 `file://`，未生成四态截图、未做 fidelity 最终签核、未集成 main |
 | Worker 3 | 已完成待补位 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `371–372`、红测、内容身份实现、live witness、bug/learn 与双根真实进程矩阵已分别集成；同内容可复用，内容不同或漂移时 fail closed 并另起端口 |
 | Worker 4 | 已完成待确认 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | desktop/mobile active 概念、生成台账与 `369` 已集成；没有修改生产 UI、core 或 catalog，等待用户确认“纸质近地轨道训练台” |
 
@@ -137,7 +137,7 @@
 | `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已集成；desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句齐备，生产 UI 等待用户确认 |
 | 共享依赖固定归因修复 | `370` | Worker 1 | 已集成；三个真实根依赖的固定源码/许可证/版权/消费者边界与防漂移测试通过 |
 | 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已集成；deterministic content identity、live witness、双根进程复用矩阵、bug/learn 与最终验证全部通过 |
-| `love-tree` 视觉自治与生产实现 | `373–375` | 总控 / Worker 2 | `373` 授权决策已记录；`374` 实现记录、`375` 最终验证预留 |
+| `love-tree` 视觉自治与生产实现 | `373–375` | 总控 / Worker 2 | `373` 授权决策已集成；`374` 设计系统、`375` 验证边界已在分支完成，等待可访问 `file://` 的 Chrome Gate 后再集成 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
