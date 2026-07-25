@@ -967,7 +967,7 @@
   }
 
   function step(state, inputFrame) {
-    if (!exactKeys(inputFrame, ["leftMask", "rightMask"])) return state;
+    if (!exactKeys(inputFrame, ["leftMask", "rightMask"])) return applyCommand(state, null);
     return applyCommand(state, { type: "STEP", ...inputFrame });
   }
 
