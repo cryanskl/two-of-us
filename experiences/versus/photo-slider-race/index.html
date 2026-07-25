@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta
+      name="description"
+      content="两个人在同一台设备上，用同一张图和同一个乱序同时拼回 3×3 滑块拼图。"
+    >
+    <title>同一张，谁先拼回</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="sky-field" aria-hidden="true"></div>
+    <main id="experience" class="experience-shell">
+      <header class="game-header">
+        <a class="back-link" href="../../../index.html">返回作品集</a>
+        <h1>同一张，谁先拼回</h1>
+        <p class="subtitle">同一张回忆，同一个乱序。三、二、一——开拼。</p>
+      </header>
+
+      <noscript>
+        <section class="no-script">
+          <h2>请启用 JavaScript</h2>
+          <p>启用后重新打开本页即可开始。照片只在当前页面处理，不上传，也不保存。</p>
+        </section>
+      </noscript>
+
+      <p
+        id="status-message"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+    </main>
+
+    <template id="app-template">
+      <section id="source-panel" class="source-panel" aria-labelledby="source-title">
+        <div
+          id="source-preview"
+          class="source-preview"
+          role="img"
+          aria-label="当前比赛图片预览"
+        >
+          <span id="source-kind" class="source-kind">原创内置图</span>
+        </div>
+        <div class="source-copy">
+          <h2 id="source-title">准备同一张图</h2>
+          <p>两块棋盘会拿到完全相同、保证可解的乱序。</p>
+          <div class="setup-actions">
+            <button id="start-button" class="button button--primary" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5.8v12.4L18 12 8 5.8Z"></path>
+              </svg>
+              <span>开始比赛</span>
+            </button>
+            <input
+              id="photo-input"
+              class="file-input"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+            >
+            <label class="button button--photo" for="photo-input">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="4" width="17" height="16" rx="2.5"></rect>
+                <circle cx="8.5" cy="9" r="1.5"></circle>
+                <path d="m5.5 17 4.2-4.5 3.2 3 2.4-2.2 3.2 3.7"></path>
+              </svg>
+              <span>换成我们的照片</span>
+            </label>
+            <button id="restore-button" class="button button--quiet" type="button" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.5 8.5A8 8 0 1 1 4.7 15"></path>
+                <path d="M5.5 4.5v4h4"></path>
+                <path d="m12 8 .8 2.2L15 11l-2.2.8L12 14l-.8-2.2L9 11l2.2-.8L12 8Z"></path>
+              </svg>
+              <span>恢复内置图</span>
+            </button>
+          </div>
+          <p id="source-status" class="source-status">原创内置图正在准备。</p>
+          <div class="trust-copy">
+            <p>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3.5 19 6v5.5c0 4.4-2.8 7.4-7 9-4.2-1.6-7-4.6-7-9V6l7-2.5Z"></path>
+                <path d="m8.8 12 2 2 4.5-4.5"></path>
+              </svg>
+              照片只在当前页面处理，不上传，也不保存。
+            </p>
+            <p>请选择你自己拍摄、已获授权或有权使用的照片。</p>
+            <p>JPEG / PNG / WebP，最大 20 MiB。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="arena" class="arena" aria-label="双人拼图比赛" hidden>
+        <section class="player player--left" aria-labelledby="left-player-name">
+          <div class="player-identity">
+            <svg class="player-mark" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="m16 2 14 14-14 14L2 16 16 2Z"></path>
+              <path d="m16 9 1.7 5.3L23 16l-5.3 1.7L16 23l-1.7-5.3L9 16l5.3-1.7L16 9Z"></path>
+            </svg>
+            <h2 id="left-player-name">左边的你</h2>
+            <p class="key-hint">W / A / S / D</p>
+          </div>
+          <div
+            id="left-board"
+            class="puzzle-board"
+            role="group"
+            aria-label="左边的你，3 乘 3 滑块拼图"
+          ></div>
+          <p id="left-board-status" class="board-status">等待开始</p>
+        </section>
+
+        <section class="shared-hud" aria-label="比赛计时与步数">
+          <div class="hud-heading">用时</div>
+          <div class="hud-pair">
+            <strong id="left-time" class="metric metric--left">0.0 秒</strong>
+            <span aria-hidden="true"></span>
+            <strong id="right-time" class="metric metric--right">0.0 秒</strong>
+          </div>
+          <div class="hud-divider" aria-hidden="true"></div>
+          <div class="hud-heading">步数</div>
+          <div class="hud-pair">
+            <strong id="left-moves" class="moves moves--left">0</strong>
+            <span aria-hidden="true"></span>
+            <strong id="right-moves" class="moves moves--right">0</strong>
+          </div>
+          <button id="pause-button" class="icon-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 6v12M16 6v12"></path>
+            </svg>
+            <span>暂停比赛</span>
+          </button>
+        </section>
+
+        <section class="player player--right" aria-labelledby="right-player-name">
+          <div class="player-identity">
+            <svg class="player-mark" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="14"></circle>
+              <path d="m16 9 7 13H9l7-13Z"></path>
+            </svg>
+            <h2 id="right-player-name">右边的你</h2>
+            <p class="key-hint">方向键</p>
+          </div>
+          <div
+            id="right-board"
+            class="puzzle-board"
+            role="group"
+            aria-label="右边的你，3 乘 3 滑块拼图"
+          ></div>
+          <p id="right-board-status" class="board-status">等待开始</p>
+        </section>
+
+        <div id="countdown-panel" class="state-panel countdown-panel" hidden>
+          <p id="countdown-label">准备</p>
+          <strong id="countdown-number">3</strong>
+        </div>
+
+        <section id="pause-panel" class="state-panel pause-panel" aria-labelledby="pause-title" hidden>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14"></circle>
+            <path d="M12 10v12M20 10v12"></path>
+          </svg>
+          <h2 id="pause-title" tabindex="-1">比赛已暂停</h2>
+          <p>回到页面后，点击继续并重新倒数 3、2、1。</p>
+          <button id="resume-button" class="button button--primary" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5.8v12.4L18 12 8 5.8Z"></path>
+            </svg>
+            <span>继续比赛</span>
+          </button>
+        </section>
+
+        <section id="result-panel" class="state-panel result-panel" aria-labelledby="result-title" hidden>
+          <svg class="result-mark" viewBox="0 0 36 36" aria-hidden="true">
+            <path d="m18 3 2.5 9.5L30 15l-9.5 2.5L18 27l-2.5-9.5L6 15l9.5-2.5L18 3Z"></path>
+            <path d="m28 22 1.2 4.8L34 28l-4.8 1.2L28 34l-1.2-4.8L22 28l4.8-1.2L28 22Z"></path>
+          </svg>
+          <h2 id="result-title" tabindex="-1">比赛结束</h2>
+          <div class="result-metrics">
+            <p><span>左边的你</span><strong id="result-left">—</strong></p>
+            <p><span>右边的你</span><strong id="result-right">—</strong></p>
+          </div>
+          <div class="result-actions">
+            <button id="rematch-button" class="button button--primary" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.5 8.5A8 8 0 1 1 4.7 15"></path>
+                <path d="M5.5 4.5v4h4"></path>
+              </svg>
+              <span>同图再来一场</span>
+            </button>
+            <button id="change-button" class="button button--quiet" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="4" width="17" height="16" rx="2.5"></rect>
+                <circle cx="8.5" cy="9" r="1.5"></circle>
+                <path d="m5.5 17 4.2-4.5 3.2 3 2.4-2.2 3.2 3.7"></path>
+              </svg>
+              <span>换一张照片</span>
+            </button>
+          </div>
+          <p class="result-rights">请选择你自己拍摄、已获授权或有权使用的照片。</p>
+        </section>
+      </section>
+
+      <section id="utility-dock" class="utility-dock" hidden>
+        <p id="move-feedback" class="move-feedback">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 10v6M12 7h.01"></path>
+          </svg>
+          <span>方向键表示空格移动方向。</span>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5 19 6v5.5c0 4.4-2.8 7.4-7 9-4.2-1.6-7-4.6-7-9V6l7-2.5Z"></path>
+            <path d="m8.8 12 2 2 4.5-4.5"></path>
+          </svg>
+          <span>照片只在当前页面处理，不上传，也不保存。</span>
+        </p>
+      </section>
+    </template>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

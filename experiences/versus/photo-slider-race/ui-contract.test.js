@@ -108,7 +108,8 @@ test("键盘、点击、失焦和隐藏生命周期均有明确入口", () => {
   const app = source("app.js");
   assert.match(app, /keydown/);
   assert.match(app, /logic\.classifyKeyInput/);
-  assert.match(app, /event\.target[\s\S]*button/i);
+  assert.match(app, /isControlTarget\(event\.target\)/);
+  assert.match(app, /closest\("input, button, select, textarea/);
   assert.match(app, /visibilitychange/);
   assert.match(app, /\bblur\b/);
   assert.match(app, /document\.visibilityState\s*===\s*"hidden"/);
