@@ -543,6 +543,41 @@ test("重放拒绝额外字段、错误 revision、非法阶段和畸形配置",
   }), TypeError);
 });
 
+test("重放只采用 action Proxy 的首次合法快照", () => {
+  const prefix = [{ type: "START", expectedRevision: 0 }];
+  for (let revision = 1; revision <= logic.RULES.INITIAL_COUNTDOWN_TICKS; revision += 1) {
+    prefix.push({ type: "STEP", expectedRevision: revision, intents: neutral });
+  }
+  const finalRevision = logic.RULES.INITIAL_COUNTDOWN_TICKS + 1;
+  const expected = logic.replaySession({
+    version: 1,
+    config: clone(logic.DEFAULT_CONFIG),
+    actions: [...prefix, { type: "STEP", expectedRevision: finalRevision, intents: neutral }],
+  });
+
+  let intentDescriptorReads = 0;
+  const changingAction = new Proxy(
+    { type: "STEP", expectedRevision: finalRevision, intents: neutral },
+    {
+      getOwnPropertyDescriptor(target, key) {
+        const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+        if (key !== "intents") return descriptor;
+        intentDescriptorReads += 1;
+        return {
+          ...descriptor,
+          value: intentDescriptorReads <= 3 ? neutral : [3, 0],
+        };
+      },
+    },
+  );
+  const replayed = logic.replaySession({
+    version: 1,
+    config: clone(logic.DEFAULT_CONFIG),
+    actions: [...prefix, changingAction],
+  });
+  assert.deepEqual(replayed, expected);
+});
+
 test("嵌套数组通过 descriptor 快照解析，不执行 accessor 或 Proxy get trap", () => {
   let stateReads = 0;
   const forgedState = clone(logic.createInitialState());
