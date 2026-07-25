@@ -135,6 +135,7 @@ test("styles preserve the accepted materials and accessibility fallbacks", () =>
     "--ink-950: #17243c",
     "--brass-600: #b48a4a",
     ".pull-handle:focus-visible",
+    "padding: 44px 8px 8px",
     "@media (max-width: 359px)",
     "@media (prefers-reduced-motion: reduce)",
     "@media (forced-colors: active)",
