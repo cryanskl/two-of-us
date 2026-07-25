@@ -612,6 +612,37 @@ test("retry resets current gate while public view hides internal evidence", () =
   assert.deepEqual(intro.completedGateIds, []);
 });
 
+test("gate-retry accepts only the failure reason produced by its crossing snapshot", () => {
+  const playing = startGate();
+  const forgedClosed = replaceState(playing, {
+    phase: "gate-retry",
+    tick: 1,
+    players: {
+      left: {
+        angle: 42,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      },
+      right: {
+        angle: 322,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      }
+    },
+    retryReason: "window-closed"
+  });
+
+  assert.equal(getPublicView(forgedClosed).phase, "intro");
+  assert.deepEqual(
+    reduce(forgedClosed, { type: ACTIONS.RETRY_GATE }),
+    createInitialState()
+  );
+});
+
 test("malformed external state falls back safely while malformed action is identity no-op", () => {
   const initial = createInitialState();
   assert.deepEqual(reduce(null, { type: ACTIONS.START }), initial);

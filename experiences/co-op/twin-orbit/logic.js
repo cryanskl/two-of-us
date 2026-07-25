@@ -474,29 +474,70 @@
     return player;
   }
 
-  function hasConfirmedCrossing(state, left, right, gate) {
-    function playerReachedTarget(player, target) {
-      var speed = (
-        player.lane === "inner"
-          ? CONSTANTS.INNER_SPEED
-          : CONSTANTS.OUTER_SPEED
-      );
-      var previousAngle = normalizeAngle(player.angle - speed);
-      return (
-        player.crossed
-        && player.crossingTick === state.tick
-        && player.lane === target.lane
-        && (!player.held || player.lane === "inner")
-        && crossedTarget(previousAngle, target.angle, speed)
-      );
-    }
+  function crossingProjectionMatches(state, player, target) {
+    var speed = (
+      player.lane === "inner"
+        ? CONSTANTS.INNER_SPEED
+        : CONSTANTS.OUTER_SPEED
+    );
+    var previousAngle = normalizeAngle(player.angle - speed);
+    var crossed = crossedTarget(previousAngle, target.angle, speed);
+    return (
+      player.crossed === crossed
+      && player.crossingTick === (crossed ? state.tick : null)
+      && (!player.held || player.lane === "inner")
+    );
+  }
 
+  function hasConfirmedCrossing(state, left, right, gate) {
     return (
       state.tick >= state.openWindow.start
       && state.tick <= state.openWindow.end
       && left.crossingTick === right.crossingTick
-      && playerReachedTarget(left, gate.targets.left)
-      && playerReachedTarget(right, gate.targets.right)
+      && left.crossed
+      && right.crossed
+      && left.lane === gate.targets.left.lane
+      && right.lane === gate.targets.right.lane
+      && crossingProjectionMatches(state, left, gate.targets.left)
+      && crossingProjectionMatches(state, right, gate.targets.right)
+    );
+  }
+
+  function hasValidRetrySnapshot(state, left, right, gate) {
+    if (
+      state.tick < 1
+      || state.tick > state.openWindow.end
+      || !crossingProjectionMatches(state, left, gate.targets.left)
+      || !crossingProjectionMatches(state, right, gate.targets.right)
+    ) {
+      return false;
+    }
+
+    var inWindow = (
+      state.tick >= state.openWindow.start
+      && state.tick <= state.openWindow.end
+    );
+    var bothCrossed = left.crossed && right.crossed;
+    var exactlyOneCrossed = left.crossed !== right.crossed;
+    var lanesMatch = (
+      left.lane === gate.targets.left.lane
+      && right.lane === gate.targets.right.lane
+    );
+
+    if (state.retryReason === "wrong-lane") {
+      return inWindow && bothCrossed && !lanesMatch;
+    }
+    if (state.retryReason === "not-together") {
+      return inWindow && exactlyOneCrossed;
+    }
+    if (state.retryReason === "too-early") {
+      return state.tick < state.openWindow.start && (left.crossed || right.crossed);
+    }
+    return (
+      state.retryReason === "window-closed"
+      && state.tick === state.openWindow.end
+      && !left.crossed
+      && !right.crossed
     );
   }
 
@@ -604,7 +645,10 @@
         return null;
       }
       if (state.phase === "gate-retry") {
-        if (state.retryReason === null || state.tick < 1) {
+        if (
+          state.retryReason === null
+          || !hasValidRetrySnapshot(state, left, right, gate)
+        ) {
           return null;
         }
       } else if (state.retryReason !== null) {
