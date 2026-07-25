@@ -89,6 +89,20 @@ test("corpus rejects duplicates, bad matrices, and target-forbidden collisions",
   const wrongDifficulty = config.cards.map(card => ({ ...card, forbidden: [...card.forbidden] }));
   wrongDifficulty[0].difficulty = 2;
   assert.equal(validateCorpus(wrongDifficulty), false);
+  const containedTarget = config.cards.map(card => ({ ...card, forbidden: [...card.forbidden] }));
+  containedTarget[3].forbidden[3] = "钥匙圈";
+  assert.equal(validateCorpus(containedTarget), false);
+});
+
+test("schedule rejects repeated forbidden prompts within one hand", () => {
+  const cards = config.cards.map(card => ({
+    ...card,
+    forbidden: [...card.forbidden]
+  }));
+  const actionFold = cards.find(card => card.id === "action-09");
+  actionFold.forbidden[1] = "纸张";
+  assert.equal(validateCorpus(cards), true);
+  assert.equal(validateSchedules(config.schedules, cards), false);
 });
 
 test("scoreTurn and deriveMatchResult support positive, negative, and ties", () => {

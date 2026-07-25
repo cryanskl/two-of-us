@@ -10,17 +10,30 @@
 
 ## 商业品牌与表达边界
 
-前置研究仅查看以下官方或政府来源，以界定抽象玩法、商标和版权表达边界：
+前置研究查看以下一手商业、政府或标准来源，以界定抽象玩法、商标、版权、
+无障碍与页面生命周期边界：
 
 - [Hasbro 官方产品页](https://consumercare.hasbro.com/en-in/product/taboo-game/304C0329-5056-9047-F5D1-8C8A886E0D35)
+- [Hasbro 官方成人版产品页](https://consumercare.hasbro.com/fr-fr/product/taboo-uncensored-party-game-for-adults-only-hilarious-adult-party-board-games-ages-18-plus/05AD73E2-B79E-412F-BEC2-6532441240FC)
 - [Hasbro Virtual Rules PDF](https://www.hasbro.com/common/assets/Image/Printables/DAD261421C4311DDBD0B0800200C9A66/78216DB2356F4525A29F578AD0A56925/97751D1FE8714FF98F9807128516E74A.pdf?title=Taboo+-+Virtual+Rules)
 - [USPTO：What is a trademark?](https://www.uspto.gov/trademarks/basics/what-trademark)
 - [U.S. Copyright Office：Games](https://www.copyright.gov/register/tx-games.html)
 - [U.S. Copyright Office Circular 33](https://www.copyright.gov/circs/circ33.pdf)
+- [Web Speech API](https://webaudio.github.io/web-speech-api/)
+- [W3C WCAG 2.2：Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html)
+- [W3C WCAG 2.2：Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html)
+- [W3C WCAG 2.2：Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
+- [W3C WCAG 2.2：Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)
+- [W3C Technique C39：prefers-reduced-motion](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)
+- [WHATWG HTML：Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility)
 
 实际只研究了“目标词 + 一组禁用提示 + 口头描述 + 猜词”这一抽象机制。本作
 没有复制或改写商业品牌、规则文字、示例、题卡、卡面布局、蜂鸣器、视觉、音效、
 包装、源码或素材，也不把自己描述为任何商业产品的网页版或双人版。
+
+这些网页与标准不进入运行时；本作没有复制其中示例代码、文案、卡片或视觉。
+当前没有第三方开源代码、素材或运行依赖，因此没有需要固定 commit/tag 的第三方
+软件许可证。页面 URL 会随发布方维护，2026-07-25 复核时均可访问。
 
 ## 后续来源规则
 

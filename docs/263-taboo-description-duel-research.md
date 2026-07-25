@@ -269,7 +269,8 @@ A 级最终证据仍需三层：
 30 秒 / 60 秒（默认）/ 90 秒 / 不计时
 ```
 
-不计时模式每个描述回合固定最多 8 张卡；计时模式同样最多 8 张，避免极快操作让
+研究阶段最初建议每回合最多 8 张；后续 brainstorm、可执行规格与固定 schedule
+把首版收敛为 **每回合最多 6 张**。计时与不计时使用同一上限，避免极快操作让
 一方拿到更多题量。这样两位玩家始终有相同最大机会数。
 
 [WCAG 2.2 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html)

@@ -196,6 +196,8 @@ forbidden
 - `forbidden` 是 dense 原生 Array，长度精确 4；
 - 每个 forbidden 为 1–8 code point，不含任何空白；
 - target 与同卡四个 forbidden 规范化后不得相同；
+- target 与同卡 forbidden 规范化后不得互为完整子串，避免“钥匙/钥匙圈”这类
+  实际没有增加独立限制的提示；
 - 同卡四个 forbidden 规范化后两两不同；
 - 全库 target 规范化后唯一；
 - 任一 target 不得与全库任一 forbidden 规范化后完全相同，避免直接泄露未来答案；
@@ -249,8 +251,9 @@ schedules[variantIndex][turnIndex][cardIndex]
 4. 单个 variant 内没有重复；
 5. 每个 hand 六个 theme 恰好各出现一次；
 6. 每个 hand 的 difficulty 计数精确为 `{1:2, 2:2, 3:2}`；
-7. 玩家 1 使用 turn 0/2，玩家 2 使用 turn 1/3；
-8. 两位玩家每人合计 12 张、每档难度各 4 张、每个主题各 2 张。
+7. 每个 hand 的 24 个 forbidden 规范化后两两不同；
+8. 玩家 1 使用 turn 0/2，玩家 2 使用 turn 1/3；
+9. 两位玩家每人合计 12 张、每档难度各 4 张、每个主题各 2 张。
 
 Schedule 顺序属于规则数据，不在运行时洗牌。玩家只看到 `deckLabels`，不能在 setup
 看到 card ID、target、forbidden、theme 或 difficulty。
@@ -976,8 +979,10 @@ commit/tag 的开源依赖。
 - 72 卡、ID、主题、难度、target/forbidden schema；
 - 6×3×4 分布；
 - target 全局唯一、target 不等于任一 forbidden；
+- target 与同卡 forbidden 不互为完整子串；
 - schedules 三套、四 hand、六卡、全库恰用一次；
 - 每 hand 六主题各一、难度 2/2/2；
+- 每 hand 的 24 个 forbidden 无 exact 重复；
 - 每位玩家每 variant 主题和难度累计相同；
 - DEFAULT_CONFIG 自身通过公开验证并递归冻结。
 

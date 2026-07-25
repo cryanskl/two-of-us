@@ -162,7 +162,7 @@
       for (var f = 0; f < forbidden.length; f += 1) {
         var word = cleanText(forbidden[f], 1, 8, true);
         var key = normalizeLexeme(word);
-        if (!word || !key || local.has(key)) return null;
+        if (!word || !key || local.has(key) || key.indexOf(targetKey) >= 0 || targetKey.indexOf(key) >= 0) return null;
         local.add(key);
         allForbidden.add(key);
         cleanForbidden.push(word);
@@ -198,12 +198,18 @@
         if (!hand) return null;
         var themeCounts = {};
         var difficultyCounts = { 1: 0, 2: 0, 3: 0 };
+        var handForbidden = new Set();
         for (var h = 0; h < hand.length; h += 1) {
           if (typeof hand[h] !== "string" || !byId.has(hand[h]) || used.has(hand[h])) return null;
           used.add(hand[h]);
           var card = byId.get(hand[h]);
           themeCounts[card.theme] = (themeCounts[card.theme] || 0) + 1;
           difficultyCounts[card.difficulty] += 1;
+          for (var f = 0; f < card.forbidden.length; f += 1) {
+            var forbiddenKey = normalizeLexeme(card.forbidden[f]);
+            if (handForbidden.has(forbiddenKey)) return null;
+            handForbidden.add(forbiddenKey);
+          }
         }
         if (CONSTANTS.THEMES.some(function (theme) { return themeCounts[theme] !== 1; })) return null;
         if (difficultyCounts[1] !== 2 || difficultyCounts[2] !== 2 || difficultyCounts[3] !== 2) return null;
