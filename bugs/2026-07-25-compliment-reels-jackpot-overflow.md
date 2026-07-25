@@ -28,4 +28,3 @@ jackpot 继续使用 ready 的 48px 顶部留白、14px 行间距和较宽历史
 
 移动端媒体查询和纵向滚动不受影响。最终用真实随机跑到第六次 jackpot，
 1504×1046 实测 `scrollHeight=clientHeight=1046`、`scrollWidth=clientWidth=1504`。
-

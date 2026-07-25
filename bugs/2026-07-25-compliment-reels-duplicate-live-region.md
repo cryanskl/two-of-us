@@ -28,4 +28,3 @@ region”合同，也可能让读屏软件把完整句重复播报。
 
 修复后从首次 result 到第六次 jackpot，Chrome 每阶段
 `document.querySelectorAll('[role="status"]').length` 均为 1。
-
