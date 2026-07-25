@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `f38f463` |
+| 当前 HEAD | `22d7b09` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2051 / 2051` 通过 |
-| 工作树提示 | 照片滑块、双迷宫 core 与企鹅逻辑基础已集成；三个滚动槽位继续从各自已验收 main 基线运行并统一使用根 lockfile |
+| 本次是否重跑全仓测试 | 是：`2074 / 2074` 通过 |
+| 工作树提示 | 企鹅完整非视觉核心、弹射坦克与双星同轨前置、照片滑块视觉提案已集成；三个滚动槽位继续从各自已验收 main 基线运行并统一使用根 lockfile |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `penguin-flag-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel-core` | `codex/exp-penguin-flag-duel-core` | `10349e6` | 配置与归属基础已集成；继续修正夹墙重叠边界并实现夺旗闭环与确定性重放 |
-| Worker 2 | 已分配 | `twin-orbit` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit` | `codex/exp-twin-orbit` | `5900cbe` | research、brainstorm、spec、plan；先证明双人相位协作相对现有轨道项目的机制增量 |
-| Worker 3 | 已分配 | `ricochet-tank-duel` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel` | `codex/exp-ricochet-tank-duel` | `224eaf3` | research、brainstorm、spec、plan；先证明反弹碰撞相对现有对抗项目的机制增量 |
+| Worker 1 | 已分配 | `ricochet-tank-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-core` | `codex/exp-ricochet-tank-duel-core` | `0f7a9ba` | foundation、几何合同、TOI 规格校正、连续碰撞实现与 learn 已提交；先修正 diff-check 空白，再继续 simulation |
+| Worker 2 | 已分配 | `twin-orbit` core | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-core` | `codex/exp-twin-orbit-core` | `0d99757` | 实现纯逻辑、fixture 与独立 solver；先证明五关可达、两席均不可挂机和同 tick 原子裁决 |
+| Worker 3 | 已分配 | `dual-maze-race` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-ui` | `codex/exp-dual-maze-race-ui` | `22d7b09` | 只制作桌面/移动概念与设计合同；用户确认前不写生产 UI |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -93,11 +93,12 @@
 | `dual-maze-race` | `283–286` | 第四轮 Worker 2 | 四阶段前置文档已集成 |
 | `photo-slider-race` | `287–290` | 第四轮 Worker 3 | 四阶段前置文档已集成 |
 | `penguin-flag-duel` | `291–294` | 滚动补位 Worker 1 | 四阶段前置文档已集成 |
-| `photo-slider-race` | `295–296` | 总控 | 视觉提案与最终验证保留 |
-| `dual-maze-race` | `297–298` | 总控 | 视觉提案与最终验证保留 |
-| `ricochet-tank-duel` | `299–302` | 滚动补位 Worker 3 | 已分配 |
-| `penguin-flag-duel` | `303–304` | 总控 | 视觉提案与最终验证保留 |
-| `twin-orbit` | `305–308` | 滚动补位 Worker 2 | 已分配 |
+| `photo-slider-race` | `295–296` | 总控 | `295` 视觉提案已集成；`296` 最终验证保留 |
+| `dual-maze-race` | `297–298` | Worker 3 / 总控 | `297` 视觉提案已分配；`298` 最终验证保留 |
+| `ricochet-tank-duel` | `299–302` | 滚动补位 Worker 1 | 四阶段前置已集成；core 进行中 |
+| `penguin-flag-duel` | `303–304` | 总控 | 非视觉核心已集成；视觉提案与最终验证保留 |
+| `twin-orbit` | `305–308` | 滚动补位 Worker 2 | 四阶段前置与两次来源校正已集成；core 进行中 |
+| `twin-orbit` | `309–310` | Worker 2 / 总控 | 视觉提案与最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -114,11 +115,16 @@
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `compliment-reels` | 生产 UI 尚未获确认 | `docs/198-compliment-reels-design-proposal.md` | 用户 | 确认整体方向、320px 标签与终局标题后再派发 UI |
 | `capsule-docking` | 生产 UI 等待视觉方向选择 | `docs/208-capsule-docking-imagegen-brief.md` | 用户 | 从总控生成的三个视觉方向中选择或提出修改 |
+| `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `photo-slider-race` 视觉提案 | `b3e8b96` | `22d7b09` | 原图检查、SHA-256、`git diff --check`、verify | 仅概念与 code-native 设计合同；等待用户确认，不计 installed |
+| `twin-orbit` 前置与来源校正 | `cac38fc`、`92f7a85`、`1f08050`、`9b2d43d`、`87b82a4`、`6a4782e` | `3f2c257`、`64dd66c`、`b24a401`、`48233bc`、`2e50821`、`0d99757` | verify；全仓 `2074 / 2074`；Apple 当前官方条目与 Playgama hidden 状态复核 | Conditional Go；无入口，不计 installed |
+| `ricochet-tank-duel` 前置 | `acccb9d`、`7b75266`、`41d5bf9`、`32cc77a`、`c636edc`、`35516a7` | `732b0a2`、`4ca09b3`、`482e072`、`b4bd13b`、`60e0e78`、`0f7a9ba` | verify 与来源复核 | Conditional Go；无入口，不计 installed |
+| `penguin-flag-duel` 完整非视觉核心 | `4ea7dee`、`62de5c6` | `861ce7f`、`e556d3d` | 定向 `23 / 23`；全仓 `2074 / 2074`；verify | 60Hz 冰面物理、夺旗闭环与重放完成；无 UI，不计 installed |
 | `penguin-flag-duel` 逻辑基础 | `6bd7988` | `f38f463` | `node --check`、冻结配置探针、verify 与全仓 `2051 / 2051` 通过 | 配置合同与 Box2D 概念借鉴边界已冻结；无 UI，不计 installed |
 | `dual-maze-race` core | `36b7f79`、`4fc259b`、`5d01d13`、`6f0390a` | `cbe8b2b`、`cb5b174`、`09de214`、`8af7fd1`、`5900cbe` | 定向 `23 / 23`；全仓 `2051 / 2051`；坐标转置文档已修正 | 无 UI；键盘、触屏、响应式与 `file://` 未验收，不计 installed |
 | `penguin-flag-duel` 前置 | `02f03e1`、`fe26dca`、`e87ff2a`、`3ceb27b` | `e591647`、`821738f`、`3d17125`、`10349e6` | verify 通过；Box2D 固定来源与夺旗闭环边界复核 | Conditional Go；无入口，不计 installed |
