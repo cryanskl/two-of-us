@@ -381,3 +381,50 @@ test("batched and one-tick fixture replays produce identical authoritative state
     assert.deepEqual(batched, singles);
   }
 });
+
+test("JSON replay, terminal no-ops and full restart preserve the campaign contract", () => {
+  let direct = createInitialState();
+  let serialized = JSON.parse(JSON.stringify(direct));
+
+  for (let index = 0; index < GATES.length; index += 1) {
+    const expanded = expandFixture(GATES[index].id);
+    direct = replayFixture(direct, expanded, true);
+    serialized = replayFixture(serialized, expanded, true);
+    assert.deepEqual(serialized, direct);
+
+    direct = reduce(direct, { type: ACTIONS.NEXT_GATE });
+    serialized = reduce(
+      JSON.parse(JSON.stringify(serialized)),
+      { type: ACTIONS.NEXT_GATE }
+    );
+    assert.deepEqual(serialized, direct);
+  }
+
+  assert.equal(direct.phase, "complete");
+  for (const action of [
+    { type: ACTIONS.START },
+    { type: ACTIONS.BEGIN_GATE },
+    {
+      type: ACTIONS.SET_HELD,
+      playerId: "left",
+      held: true,
+      inputEpoch: direct.inputEpoch
+    },
+    { type: ACTIONS.TICK, count: 1 },
+    { type: ACTIONS.RETRY_GATE },
+    { type: ACTIONS.NEXT_GATE },
+    { type: ACTIONS.CONTINUE }
+  ]) {
+    assert.equal(reduce(direct, action), direct);
+  }
+
+  const restarted = reduce(direct, { type: ACTIONS.RESTART });
+  assert.equal(restarted.phase, "intro");
+  assert.equal(restarted.gateIndex, 0);
+  assert.equal(restarted.tick, 0);
+  assert.deepEqual(restarted.completedGateIds, []);
+  assert.equal(restarted.inputEpoch, direct.inputEpoch + 1);
+  assert.equal(restarted.revision, direct.revision + 1);
+  assert.deepEqual(restarted.content, direct.content);
+  assertDeepFrozen(restarted);
+});

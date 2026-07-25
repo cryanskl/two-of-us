@@ -846,7 +846,7 @@
     var nextEpoch = nextRevision(state.inputEpoch);
     var revision = nextRevision(state.revision);
     if (nextEpoch === null || revision === null) {
-      return state;
+      return null;
     }
 
     if (state.phase === "playing" || state.phase === "gate-retry") {
@@ -874,7 +874,7 @@
         revision: revision
       });
     }
-    return state;
+    return null;
   }
 
   function reduce(stateCandidate, actionCandidate) {
@@ -1010,7 +1010,8 @@
       action.type === ACTIONS.SUSPEND
       && SUSPEND_REASONS.indexOf(action.reason) !== -1
     ) {
-      return suspendState(state);
+      var suspended = suspendState(state);
+      return suspended === null ? stateCandidate : suspended;
     }
 
     return stateCandidate;

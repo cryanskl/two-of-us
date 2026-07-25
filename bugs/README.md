@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [Twin Orbit 空闲或极值 SUSPEND 泄出校验快照](./2026-07-25-twin-orbit-suspend-noop-snapshot.md)
 - [Twin Orbit canonical 内容校验二次触发 Proxy get trap](./2026-07-25-twin-orbit-proxy-content-read.md)
 - [Twin Orbit 批量 TICK 在 revision 溢出时泄出未冻结快照](./2026-07-25-twin-orbit-tick-revision-overflow.md)
 - [成功关卡暂停后 public view 静默回到 intro](./2026-07-25-twin-orbit-success-suspend-fallback.md)

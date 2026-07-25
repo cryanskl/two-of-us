@@ -687,6 +687,67 @@ test("hostile descriptors and proxies cannot execute value access or escape snap
   );
 });
 
+test("config, JSON state and public view keep independent frozen ownership", () => {
+  const config = validConfig({ leftName: "小左", rightName: "小右" });
+  const initial = createInitialState(config);
+  config.leftName = "后来改名";
+  assert.equal(initial.content.leftName, "小左");
+  assert.notEqual(initial.content, config);
+
+  const external = JSON.parse(JSON.stringify(startGate(initial)));
+  const advanced = tick(external);
+  external.content.leftName = "外部污染";
+  external.players.left.angle = 0;
+  assert.equal(advanced.content.leftName, "小左");
+  assert.equal(advanced.players.left.angle, 42);
+  assertDeepFrozen(advanced);
+
+  const firstView = getPublicView(advanced);
+  const secondView = getPublicView(advanced);
+  assert.notEqual(firstView, secondView);
+  assert.notEqual(firstView.players, secondView.players);
+  assertDeepFrozen(firstView);
+});
+
+test("terminal phases, stale epochs and safe-integer extremes stay phase-exact", () => {
+  const playing = startGate();
+  const staleHeld = {
+    type: ACTIONS.SET_HELD,
+    playerId: "left",
+    held: true,
+    inputEpoch: playing.inputEpoch + 1
+  };
+  assert.equal(reduce(playing, staleHeld), playing);
+  assert.equal(reduce(playing, { type: ACTIONS.TICK, count: 0 }), playing);
+  assert.equal(
+    reduce(playing, {
+      type: ACTIONS.TICK,
+      count: Number.MAX_SAFE_INTEGER
+    }),
+    playing
+  );
+  assert.equal(reduce(playing, { type: ACTIONS.CONTINUE }), playing);
+
+  const saturatedEpoch = replaceState(playing, {
+    inputEpoch: Number.MAX_SAFE_INTEGER
+  });
+  assert.equal(
+    reduce(saturatedEpoch, {
+      type: ACTIONS.SUSPEND,
+      reason: "long-frame"
+    }),
+    saturatedEpoch
+  );
+
+  const intro = createInitialState();
+  assert.equal(
+    reduce(intro, { type: ACTIONS.SUSPEND, reason: "hidden" }),
+    intro
+  );
+  assert.equal(reduce(intro, { type: ACTIONS.RESTART }), intro);
+  assert.equal(reduce(intro, { type: ACTIONS.NEXT_GATE }), intro);
+});
+
 test("public intro and complete content contain no score, winner or private solver data", () => {
   const intro = getPublicView(createInitialState());
   assert.equal(intro.phase, "intro");
