@@ -16,16 +16,19 @@
   用于确认 Canvas 2D 与 fallback 的平台边界。
 - [WHATWG HTML Standard：Range state](https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range))
   用于确认未来原生离散 range 的数值合同。
-- [W3C Pointer Events](https://www.w3.org/TR/pointerevents/)
-  用于确认触控与 Pointer 的输入边界；首版不实现自绘 Pointer 旋钮。
+- [W3C Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/)
+  （W3C Recommendation，2026-06-30）用于确认触控与 Pointer 的输入边界；
+  首版不实现自绘 Pointer 旋钮。
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 及 WAI 的 Keyboard、Status
   Messages、Target Size、Animation from Interactions、Three Flashes
   说明文档，用于校准键盘、状态消息、目标尺寸、动效和闪烁要求。
 - [Media Queries Level 5：prefers-reduced-motion](https://www.w3.org/TR/mediaqueries-5/#prefers-reduced-motion)
-  用于确认未来降动效的平台语义。
+  （W3C Working Draft，2026-02-19）用于确认未来降动效的平台语义。
 
 这些标准文档不是运行依赖、视觉来源或可复制的图案素材；本实现没有复制其中的
-示例代码。
+文本、示例代码或资产，也不再分发标准正文。W3C 文档保留其原始版权与
+[W3C Software and Document License](https://www.w3.org/copyright/software-license/)
+规则；这里只提供一手来源链接和独立实现的用途说明。
 
 ## 后续变更规则
 

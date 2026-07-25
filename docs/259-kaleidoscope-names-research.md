@@ -222,7 +222,7 @@ A 级最终证据必须分三层：
 
 ### 6.2 Pointer、触屏与键盘
 
-[W3C Pointer Events](https://www.w3.org/TR/pointerevents/) 说明
+[W3C Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/) 说明
 `touch-action` 用于声明直接操控区域是否交给浏览器平移/缩放，并说明 pointer
 capture 可在自定义滑块拖出元素边界后继续接收事件。
 
@@ -350,9 +350,9 @@ RESTART
 | --- | --- | --- |
 | [WHATWG HTML Standard：Canvas](https://html.spec.whatwg.org/multipage/canvas.html)（Living Standard，2026-07-25 复核） | 确认 2D transform、Canvas fallback 与可访问交互边界 | 不复制示例，不作为视觉来源 |
 | [WHATWG HTML Standard：Range state](https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range))（Living Standard，2026-07-25 复核） | 确认离散 range 的 min/max/step 数值模型 | 不复制控件皮肤或代码 |
-| [W3C Pointer Events](https://www.w3.org/TR/pointerevents/)（Recommendation，2026-06-30） | 确认 touch-action、pointer capture 与直接操控边界 | 首版不实现自定义 pointer dial |
+| [W3C Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/)（Recommendation，2026-06-30） | 确认 touch-action、pointer capture 与直接操控边界 | 首版不实现自定义 pointer dial |
 | [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 与 WAI Understanding pages（2026-07-25 复核） | 校准键盘、状态消息、目标尺寸、动效与闪烁 Gate | 不是运行依赖或素材许可证 |
-| [Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/)（2026-02-10 Working Draft） | 校准 reduced-motion 的平台偏好语义 | 不复制样式或示例 |
+| [Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/)（2026-02-19 Working Draft） | 校准 reduced-motion 的平台偏好语义 | 不复制样式或示例 |
 
 后续正式作品必须在 `ATTRIBUTION.md` 和 README 复述：
 
