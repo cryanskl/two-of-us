@@ -160,6 +160,7 @@
     var statusList = document.createElement("ul");
     var foldStatus = createStatusItem(view.foldControl.label);
     var phaseStatus = createStatusItem(view.phaseControl.label);
+    var combinedSummary = document.createElement("p");
     var liveRegion = document.createElement("div");
     var patternFigure = createPatternFigure(view.summary);
 
@@ -240,12 +241,22 @@
     statusList.setAttribute("aria-label", "当前校准状态");
     statusList.append(foldStatus.item, phaseStatus.item);
 
+    combinedSummary.className = "combined-summary";
+    combinedSummary.textContent = view.summary;
+
     liveRegion.className = "live-region sr-only";
     liveRegion.setAttribute("role", "status");
     liveRegion.setAttribute("aria-live", "polite");
     liveRegion.setAttribute("aria-atomic", "true");
 
-    controls.append(foldGroup, phaseGroup, statusList, liveRegion);
+    patternFigure.caption.classList.add("sr-only");
+    controls.append(
+      foldGroup,
+      phaseGroup,
+      statusList,
+      combinedSummary,
+      liveRegion
+    );
     workspace.append(controls, patternFigure.figure);
     section.setAttribute("aria-labelledby", heading.id);
     section.append(heading, workspace);
@@ -259,6 +270,7 @@
       output: output,
       foldStatus: foldStatus,
       phaseStatus: phaseStatus,
+      combinedSummary: combinedSummary,
       liveRegion: liveRegion,
       patternFigure: patternFigure
     };
@@ -453,6 +465,7 @@
       view.phaseControl.status,
       view.phaseControl.statusText
     );
+    activeElements.combinedSummary.textContent = view.summary;
 
     if (shouldAnnounce) {
       announce(view.summary);
@@ -498,14 +511,19 @@
     cancelPatternFrame();
 
     if (reducedMotion.matches || document.hidden) {
-      drawPattern(model, patternFigure);
+      if (patternFigure.canvas.isConnected) {
+        drawPattern(model, patternFigure);
+      }
       return;
     }
 
     animationFrame = globalThis.requestAnimationFrame(
       function drawScheduledPattern() {
         animationFrame = 0;
-        if (generation !== renderGeneration) {
+        if (
+          generation !== renderGeneration ||
+          !patternFigure.canvas.isConnected
+        ) {
           return;
         }
         drawPattern(model, patternFigure);
@@ -533,52 +551,57 @@
 
     try {
       context = canvas.getContext("2d");
-    } catch (_error) {
-      context = null;
-    }
-
-    if (!context) {
-      patternFigure.shell.classList.add("is-canvas-fallback");
-      return;
-    }
-
-    patternFigure.shell.classList.remove("is-canvas-fallback");
-
-    var bounds = patternFigure.shell.getBoundingClientRect();
-    var cssSize = Math.max(180, Math.floor(Math.min(bounds.width, bounds.height)));
-    var pixelRatio = Math.max(
-      1,
-      Math.min(2, Number(globalThis.devicePixelRatio) || 1)
-    );
-    var bitmapSize = Math.max(1, Math.round(cssSize * pixelRatio));
-
-    if (canvas.width !== bitmapSize || canvas.height !== bitmapSize) {
-      canvas.width = bitmapSize;
-      canvas.height = bitmapSize;
-    }
-    canvas.style.width = cssSize + "px";
-    canvas.style.height = cssSize + "px";
-
-    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    context.clearRect(0, 0, cssSize, cssSize);
-    context.save();
-    context.translate(cssSize / 2, cssSize / 2);
-
-    var radius = cssSize * 0.46;
-    drawRings(context, radius, model);
-    model.wedges.forEach(function drawWedge(wedge) {
-      context.save();
-      context.rotate(
-        wedge.rotationUnits / model.turnUnits * Math.PI * 2
-      );
-      if (wedge.mirrored) {
-        context.scale(1, -1);
+      if (!context) {
+        disableCanvas(patternFigure);
+        return;
       }
-      drawMotifs(context, radius, wedge.index);
-      context.restore();
-    });
 
-    context.restore();
+      var bounds = patternFigure.shell.getBoundingClientRect();
+      var cssSize = Math.max(
+        180,
+        Math.floor(Math.min(bounds.width, bounds.height))
+      );
+      var pixelRatio = Math.max(
+        1,
+        Math.min(2, Number(globalThis.devicePixelRatio) || 1)
+      );
+      var bitmapSize = Math.max(1, Math.round(cssSize * pixelRatio));
+
+      if (canvas.width !== bitmapSize || canvas.height !== bitmapSize) {
+        canvas.width = bitmapSize;
+        canvas.height = bitmapSize;
+      }
+      canvas.style.width = cssSize + "px";
+      canvas.style.height = cssSize + "px";
+
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      context.clearRect(0, 0, cssSize, cssSize);
+      context.save();
+      context.translate(cssSize / 2, cssSize / 2);
+
+      var radius = cssSize * 0.46;
+      drawRings(context, radius, model);
+      model.wedges.forEach(function drawWedge(wedge) {
+        context.save();
+        context.rotate(
+          wedge.rotationUnits / model.turnUnits * Math.PI * 2
+        );
+        if (wedge.mirrored) {
+          context.scale(1, -1);
+        }
+        drawMotifs(context, radius, wedge.index);
+        context.restore();
+      });
+
+      context.restore();
+      patternFigure.shell.classList.remove("is-canvas-fallback");
+    } catch (_error) {
+      disableCanvas(patternFigure);
+    }
+  }
+
+  function disableCanvas(patternFigure) {
+    patternFigure.shell.classList.add("is-canvas-fallback");
   }
 
   function drawRings(context, radius, model) {

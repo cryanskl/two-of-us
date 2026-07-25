@@ -198,6 +198,8 @@ test("canvas is a cancellable public-pattern projection with a CSS fallback", ()
     'addEventListener("pageshow"',
     "prefers-reduced-motion: reduce",
     "rotationUnits / model.turnUnits * Math.PI * 2",
+    "!patternFigure.canvas.isConnected",
+    "disableCanvas(patternFigure)",
   ]) {
     assert.ok(app.includes(required), required);
   }
@@ -228,6 +230,8 @@ test("focus and live status follow phase transitions without hidden future nodes
     "lastAnnouncedSummary",
     "document.hidden",
     "document.hasFocus()",
+    'combinedSummary.className = "combined-summary"',
+    "combinedSummary.textContent = view.summary",
   ]) {
     assert.ok(app.includes(required), required);
   }
@@ -248,6 +252,10 @@ test("styles lock the approved optical bench and accessibility fallbacks", () =>
     "--amber-400: #f2c96d",
     "--lavender-400: #9b8cff",
     ":focus-visible",
+    ".phase > h1:focus",
+    "white-space: nowrap",
+    "white-space: normal",
+    ".combined-summary",
     "min-height: 48px",
     "@media (max-width: 767px)",
     "@media (max-width: 359px)",
