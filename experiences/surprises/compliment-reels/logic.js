@@ -17,9 +17,14 @@
   const numberIsSafeInteger = Number.isSafeInteger;
   const stringTrim = String.prototype.trim;
   const stringCharCodeAt = String.prototype.charCodeAt;
+  const stringCodePointAt = String.prototype.codePointAt;
+  const stringFromCodePoint = String.fromCodePoint;
   const stringConstructor = String;
+  const regexpTest = RegExp.prototype.test;
   const objectPrototype = Object.prototype;
   const arrayPrototype = Array.prototype;
+  const unicodeMarkPattern = /\p{M}/u;
+  const extendedPictographicPattern = /\p{Extended_Pictographic}/u;
   const intlSegmenter = typeof Intl === "object" && typeof Intl.Segmenter === "function"
     ? new Intl.Segmenter("zh", { granularity: "grapheme" })
     : null;
@@ -282,12 +287,83 @@
       return count;
     }
     let count = 0;
-    for (let index = 0; index < value.length; index += 1) {
-      const unit = call(stringCharCodeAt, value, [index]);
-      if (unit >= 0xd800 && unit <= 0xdbff) index += 1;
+    let index = 0;
+    while (index < value.length) {
+      const first = call(stringCodePointAt, value, [index]);
+      index += first > 0xffff ? 2 : 1;
       count += 1;
+      if (first === 0x0d && index < value.length
+        && call(stringCodePointAt, value, [index]) === 0x0a) {
+        index += 1;
+        continue;
+      }
+      if (isRegionalIndicator(first) && index < value.length) {
+        const regional = call(stringCodePointAt, value, [index]);
+        if (isRegionalIndicator(regional)) index += regional > 0xffff ? 2 : 1;
+      }
+      let hangulClass = getHangulClass(first);
+      while (hangulClass !== 0 && index < value.length) {
+        const next = call(stringCodePointAt, value, [index]);
+        const nextClass = getHangulClass(next);
+        if (!hangulJoins(hangulClass, nextClass)) break;
+        index += next > 0xffff ? 2 : 1;
+        hangulClass = nextClass;
+      }
+      index = consumeGraphemeExtenders(value, index);
+      const pictographicSequence = isExtendedPictographic(first);
+      while (index < value.length && call(stringCodePointAt, value, [index]) === 0x200d) {
+        index += 1;
+        if (!pictographicSequence || index >= value.length) break;
+        const joined = call(stringCodePointAt, value, [index]);
+        if (!isExtendedPictographic(joined)) break;
+        index += joined > 0xffff ? 2 : 1;
+        index = consumeGraphemeExtenders(value, index);
+      }
     }
     return count;
+  }
+
+  function isRegionalIndicator(codePoint) {
+    return codePoint >= 0x1f1e6 && codePoint <= 0x1f1ff;
+  }
+
+  function isExtendedPictographic(codePoint) {
+    return call(regexpTest, extendedPictographicPattern, [stringFromCodePoint(codePoint)]);
+  }
+
+  function getHangulClass(codePoint) {
+    if ((codePoint >= 0x1100 && codePoint <= 0x115f)
+      || (codePoint >= 0xa960 && codePoint <= 0xa97c)) return 1;
+    if ((codePoint >= 0x1160 && codePoint <= 0x11a7)
+      || (codePoint >= 0xd7b0 && codePoint <= 0xd7c6)) return 2;
+    if ((codePoint >= 0x11a8 && codePoint <= 0x11ff)
+      || (codePoint >= 0xd7cb && codePoint <= 0xd7fb)) return 3;
+    if (codePoint >= 0xac00 && codePoint <= 0xd7a3) {
+      return (codePoint - 0xac00) % 28 === 0 ? 4 : 5;
+    }
+    return 0;
+  }
+
+  function hangulJoins(leftClass, rightClass) {
+    return (leftClass === 1
+      && (rightClass === 1 || rightClass === 2 || rightClass === 4 || rightClass === 5))
+      || ((leftClass === 2 || leftClass === 4) && (rightClass === 2 || rightClass === 3))
+      || ((leftClass === 3 || leftClass === 5) && rightClass === 3);
+  }
+
+  function isGraphemeExtender(codePoint) {
+    return call(regexpTest, unicodeMarkPattern, [stringFromCodePoint(codePoint)])
+      || (codePoint >= 0x1f3fb && codePoint <= 0x1f3ff);
+  }
+
+  function consumeGraphemeExtenders(value, index) {
+    let cursor = index;
+    while (cursor < value.length) {
+      const codePoint = call(stringCodePointAt, value, [cursor]);
+      if (!isGraphemeExtender(codePoint)) break;
+      cursor += codePoint > 0xffff ? 2 : 1;
+    }
+    return cursor;
   }
 
   function cleanText(value, minimum, maximum, forbidComposerPunctuation) {
