@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [Candle Wishes：localhost 自动请求 favicon 返回 404](./2026-07-25-candle-wishes-localhost-favicon-404.md)
 - [Zsh 中 `status` 是只读特殊参数](./2026-07-25-zsh-status-readonly-variable.md)
 - [Zsh 中 `path` 变量覆盖命令搜索路径](./2026-07-25-zsh-path-variable-command-resolution.md)
 - [Attribution Gate 只检查标题导致完整性假阳性](./2026-07-25-attribution-gate-heading-only-false-positive.md)

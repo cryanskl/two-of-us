@@ -20,6 +20,10 @@ test("index is a self-contained classic-script file entry with a safe no-script 
   assert.deepEqual(scriptSources, ["config.js", "logic.js", "app.js"]);
   assert.match(html, /<html\s+lang="zh-CN">/u);
   assert.match(html, /name="viewport"/u);
+  assert.match(
+    html,
+    /<link\s+rel="icon"\s+href="favicon\.svg"\s+type="image\/svg\+xml">/u,
+  );
   assert.match(html, new RegExp(logic.PUBLIC_TITLE, "u"));
   assert.match(html, new RegExp(logic.INSTRUCTIONS, "u"));
   assert.match(html, new RegExp(logic.PRIVACY_TEXT, "u"));
@@ -48,6 +52,18 @@ test("index is a self-contained classic-script file entry with a safe no-script 
     /\b(?:integrity|crossorigin)\s*=/iu,
   ]) {
     assert.doesNotMatch(html, pattern);
+  }
+
+  const faviconPath = path.join(__dirname, "favicon.svg");
+  assert.equal(fs.statSync(faviconPath).isFile(), true);
+  const favicon = fs.readFileSync(faviconPath, "utf8");
+  assert.match(favicon, /^<svg\s/u);
+  for (const pattern of [
+    /<(?:script|foreignObject|iframe|image|use|style)\b/iu,
+    /\b(?:href|src)=/iu,
+    /url\s*\(/iu,
+  ]) {
+    assert.doesNotMatch(favicon, pattern);
   }
 });
 

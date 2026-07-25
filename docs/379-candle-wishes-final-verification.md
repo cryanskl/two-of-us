@@ -1,22 +1,27 @@
 # Candle Wishes 最终验收记录
 
-日期：2026-07-25  
-项目：`candle-wishes`  
-工作树：`/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui`  
-分支：`codex/exp-candle-wishes-ui`  
+日期：2026-07-25
+项目：`candle-wishes`
+工作树：`/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui`
+分支：`codex/exp-candle-wishes-ui`
 基线：`main@3aaba821ecbb3a5db06c4cb9139d4e15a96116e3`
 
 ## 结论
 
-生产实现、定向测试、全仓测试、仓库校验、README 和固定版本借鉴声明已完成。A 级本地直开静态合同通过：入口仅使用相对本地 CSS 和 `config.js → logic.js → app.js` 经典脚本，不需要构建、服务端、网络、存储、权限或第三方运行依赖。
+生产实现、定向测试、全仓测试、仓库校验、README 和固定版本借鉴声明已完成。A 级本地直开静态合同通过：入口仅使用相对本地图标、CSS 和 `config.js → logic.js → app.js` 经典脚本，不需要构建、服务端、网络、存储、权限或第三方运行依赖。
 
 受控 Chrome 明确按浏览器 URL 安全策略拒绝访问 `file://`。按工具策略停止绕行后，无法把移动端、触摸、减少动态、强制颜色、完整五步流程和真实文件协议标记为 Chrome 已验收。因此本记录不把静态合同或此前的 localhost 初检冒充真实 `file://` 运行证据，浏览器全 Gate 状态为“工具边界导致未闭合”，不是产品测试通过。
+
+localhost 初检还发现入口未声明 favicon，导致 Chromium 自动请求 `/favicon.ico` 并收到 404。现已新增原创相对 `favicon.svg` 和静态回归测试；这项修复尚未在新的真实 Chrome 会话中复验。
 
 ## 交付内容
 
 - `experiences/surprises/candle-wishes/index.html`
   - 普通 HTML 入口，包含公开首屏和无 JavaScript 提示。
   - 仅加载本目录相对资源；无 module、远程 URL 或嵌入页面。
+- `experiences/surprises/candle-wishes/favicon.svg`
+  - 本项目原创图标，仅使用 SVG 基本图形和项目色板。
+  - 无脚本、嵌入页面、外部资源或第三方素材。
 - `experiences/surprises/candle-wishes/app.js`
   - 仅消费 `getPublicView()`，不读取 `state.content`、`cursor`、`litIds`、`revision` 或 `config.candles` 裁决点击。
   - 实现 intro、lighting、ready-to-receive、complete 四阶段。
@@ -33,6 +38,7 @@
   - 三项固定 revision、许可证、版权主体、借鉴范围和未复制范围。
 - `experiences/surprises/candle-wishes/ui-contract.test.js`
 - `experiences/surprises/candle-wishes/documentation.test.js`
+- `bugs/2026-07-25-candle-wishes-localhost-favicon-404.md`
 - `learn/2026-07-25-candle-wishes-browser-evidence-boundaries.md`
 
 ## 自动化证据
@@ -103,7 +109,7 @@ Chrome 控制能力返回：浏览器 URL 安全策略禁止访问该地址，�
 
 ### 策略校正前已发生的 localhost 初检
 
-协议：`http://127.0.0.1:4178/experiences/surprises/candle-wishes/index.html`  
+协议：`http://127.0.0.1:4178/experiences/surprises/candle-wishes/index.html`
 Chrome 视口：`1395 × 663`，DPR `2`
 
 开场态读取结果：
@@ -130,9 +136,11 @@ Chrome 视口：`1395 × 663`，DPR `2`
 - `scrollWidth = viewportWidth = 1395`
 - `scrollHeight = viewportHeight = 663`
 
-本机静态服务日志只出现 `index.html`、`styles.css`、`config.js`、`logic.js`、`app.js` 五个成功资源请求；另有浏览器自动请求 `favicon.ico` 返回 404。没有公共网络资源。
+当次本机静态服务日志出现 `index.html`、`styles.css`、`config.js`、`logic.js`、`app.js` 五个成功资源请求；浏览器还自动请求 `favicon.ico` 并收到 404。这是已确认的产品缺陷，不是可忽略的浏览器噪声。
 
-这部分只记录 localhost 下的初步 UI 行为，不作为 `file://`、完整玩法、移动端或无障碍浏览器 Gate 的替代。
+此后已静态修复为显式相对 `favicon.svg`，但没有再次启动 Chrome。真实浏览器是否只请求新的相对图标、控制台是否归零仍待独立会话复验。
+
+这部分只记录 localhost 下的初步 UI 行为和当时发现的 favicon 缺陷，不作为 `file://`、完整玩法、移动端或无障碍浏览器 Gate 的替代。
 
 ## 视觉稿对照
 
@@ -166,6 +174,7 @@ Chrome 视口：`1395 × 663`，DPR `2`
 - 200% 文本与约 400% 缩放；
 - 最大合法配置文案；
 - 完整流程的 console、网络和权限面板；
+- favicon 修复后的 localhost 请求与控制台复验；
 - 最新完整浏览器截图的本地 `view_image` 对照。
 
 ## 借鉴与许可证
@@ -194,5 +203,7 @@ MDN、W3C Pointer Events 和 WCAG 仅用于标准校准，不是代码或运行�
 - `9e9ec3c` — `feat: build candle wishes local UI`
 - `2f1c1df` — `docs: document candle wishes experience`
 - `9e095ef` — `docs: record local browser evidence boundary`
+- `d7ed78c` — `docs: verify candle wishes experience`
+- 本次修复提交 — 添加原创 favicon、静态回归测试和缺陷记录
 
-最终验收文档将在下一提交中单独落地。总控合并前应把“实现与自动化通过”和“浏览器工具边界未闭合”同时保留，不能把后者省略为绿色结论。
+总控合并前应同时保留“实现与自动化通过”“favicon 静态修复已完成”和“真实浏览器 Gate 未闭合”三个事实，不能把后两者省略为绿色结论。
