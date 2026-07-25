@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `f8e3302` |
+| 当前 HEAD | `65e38de` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2199 / 2199` 通过 |
-| 工作树提示 | `memory-merge-board` 三个固定关卡、独立求解器与确定性证明已集成；`our-place-guess` 离线地图资产链已集成；其余核心与视觉提案继续并行 |
+| 本次是否重跑全仓测试 | 是：`2226 / 2226` 通过 |
+| 工作树提示 | `seven-piece-duet` 精确整数几何与 `our-place-guess` 确定性私人题包已集成；两个核心后续阶段与两个视觉提案继续并行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,8 +29,8 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `seven-piece-duet` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-ui` | `codex/exp-seven-piece-duet-ui` | `f8e3302` | `memory-merge-board` 核心与 `334` 已完成并释放槽位；现使用 Image Gen 制作桌面/移动概念与 `338` 视觉合同，不写生产 UI |
-| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架已集成为 `3426c57`；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
-| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 固定 Natural Earth 地图及双 SHA 派生链已集成为 `7a9d106`；继续私人题包、地图数学、规则和房间协议 |
+| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | 17 条精确几何 Gate 与实现已集成为 `3adf4d8`、`8e2f4cd`、`65e38de`；继续原创目标生成、reducer 与 `337` |
+| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 地图与 10 条确定性题包 Gate 已集成；继续地图数学、规则、房间协议与 `340` |
 | Worker 4 | 已分配 | `memory-merge-board` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-ui` | `codex/exp-memory-merge-board-ui` | `580b940` | 使用 Image Gen 制作桌面/移动完整概念与 `335` 视觉合同；只供用户确认，不写生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -140,6 +140,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `seven-piece-duet` 精确几何 | `ac38212`、`a96ccc9`、`04ae783` | `3adf4d8`、`8e2f4cd`、`65e38de` | 定向 `17 / 17`；全仓 `2226 / 2226`；verify | 整数原子三角形、D4 指纹、七个原创模板、仅平行四边形翻面与错误分类；无目标/reducer/UI，不计 installed |
+| `our-place-guess` 私人题包 | `441d31f` | `0c3ff32` | 定向 `10 / 10`；全仓 `2226 / 2226`；verify | 4–24 张、64 KiB、严格纯文本、文件序前四张、虚构示例和隔离冻结副本；不保留文件名/路径；无 UI，不计 installed |
 | `memory-merge-board` 核心验收 | `d8ac7a6` | `f8e3302` | `40 / 40`、全仓 `2199 / 2199`、verify、diff-check、范围与归因复核 | Core Go；完整项目仍等待用户确认视觉、生产 UI、`file://`/输入/响应式/无障碍/双人试玩与最终接入，不计 installed |
 | `memory-merge-board` 可解关卡与求解证明 | `7bbdfa7`、`6b0d3b0`、`5ddc227` | `7e41335`、`3c6c857`、`9c93192` | 定向 `40 / 40`；全仓 `2199 / 2199`；verify | 三个固定关卡由独立确定性搜索和真实 reducer 双重证明；catalog 路径真实 bug 已记录；无 UI，不计 installed |
 | `our-place-guess` 离线地图 | `0b7e35d` | `7a9d106` | 定向 `5 / 5`、派生 `--check`、输入/输出双 SHA、全仓 `2199 / 2199`、verify | Natural Earth v5.1.2 public-domain land 固定派生；运行时只读 123,906 字节本地资产；无 UI，不计 installed |
