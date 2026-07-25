@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `74a04a2` |
+| 当前 HEAD | `9be3915` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2154 / 2154` 通过 |
-| 工作树提示 | 黑胶隐语视觉提案已集成并等待用户确认；两个全新 A 级候选与一个复用本地房间 runtime 的 C 级候选进入前置去重与规格阶段 |
+| 本次是否重跑全仓测试 | 是：`2177 / 2177` 通过 |
+| 工作树提示 | 三个候选的 research / brainstorm / spec / plan 均已集成；`memory-merge-board` 规则层已集成，三个项目正在独立 worktree 推进非视觉核心 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `memory-merge-board` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board` | `codex/exp-memory-merge-board` | `d5e780c` | `322` research 已集成；继续独立提交 brainstorm、spec、plan，不写生产代码 |
-| Worker 2 | 已分配 | `tangram-heart-duet` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/tangram-heart-duet` | `codex/exp-tangram-heart-duet` | `d5e780c` | 实时来源、许可证、几何合同与重复机制审计后，依次提交 research、brainstorm、spec、plan；不写生产代码 |
-| Worker 3 | 已分配 | `our-place-guess` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess` | `codex/exp-our-place-guess` | `0f778fe` | 核验 Posio、离线地图权利与现有 C 级房间复用边界，依次提交 research、brainstorm、spec、plan |
+| Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 脚手架、23 条规则契约、错误 blocked fixture 修复与规则实现已集成；继续 solver、固定关卡和 `334` 核心验证 |
+| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架待总控审查；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
+| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 已派发离线地图派生、私人题包、地图数学、规则和房间协议；不写 UI 或共享 runtime，预留 `340` 核心验证 |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用到 `318`；下列编号区间已互斥预留：
+当前已使用到 `333`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -104,9 +104,12 @@
 | `word-detour-duel` | `316–317` | Worker 2 / 总控 | `316` 视觉提案已集成并等待用户确认，`317` 最终验证保留 |
 | `four-symbol-film-duel` | `318–319` | Worker 1 / 总控 | `318` 视觉提案已集成并等待用户确认，`319` 最终验证保留 |
 | `vinyl-secret` | `320–321` | Worker 3 / 总控 | `320` 视觉提案已集成并等待用户确认，`321` 最终验证保留 |
-| `memory-merge-board` | `322–325` | Worker 1 | `322` research 已集成；`323–325` 继续推进 |
-| `tangram-heart-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 依次推进 |
-| `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 依次推进 |
+| `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 四阶段均已集成 |
+| `seven-piece-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 四阶段及边界修订均已集成 |
+| `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 四阶段及隐私/顺序修订均已集成 |
+| `memory-merge-board` | `334–336` | Worker 1 / 总控 | `334` 核心验证进行中；`335` 视觉提案、`336` 最终验证保留 |
+| `seven-piece-duet` | `337–339` | Worker 2 / 总控 | `337` 核心验证进行中；`338` 视觉提案、`339` 最终验证保留 |
+| `our-place-guess` | `340–342` | Worker 3 / 总控 | `340` 核心验证进行中；`341` 视觉提案、`342` 最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -137,7 +140,10 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
-| `memory-merge-board` research | `d74e11a` | `74a04a2` | 固定 2048 commit/MIT/版权人；逐项去重；`npm ci` 后 verify、diff-check | Conditional Go；只借鉴抽象整盘滑动与合并规则，不复制源码、名称、数字皮肤、布局或资产 |
+| `our-place-guess` 前置 | `96cb023`、`eedebef`、`e872d59`、`f2a6d14`、`ee76c28`、`da831fe`、`5bf1be2`、`b0e0451`、`ad07ad0` | `a6fe37f`、`0ac9fee`、`4bb3d4b`、`6dc8464`、`05f9dbd`、`ff540a7`、`ea7a9ed`、`deefdc3`、`9be3915` | Posio/Natural Earth 固定来源；全仓 `2177 / 2177`；verify | C 级 Conditional Go；私人题包仅房主内存，固定前四张，复用现有 Socket.IO 且不改共享 runtime；无入口，不计 installed |
+| `memory-merge-board` 规则核心 | `5653a49`、`4c2a577`、`a5fca5a`、`06aae0a` | `a20f4b6`、`155e5a9`、`216925f`、`41148eb` | 定向 `23 / 23`；全仓 `2177 / 2177`；verify | 整盘滑动、合并、角色交换、章节分享与 blocked 终局；真实错误 fixture 已记录于 `bugs/`；无 UI，不计 installed |
+| `seven-piece-duet` 前置 | `2fc7801`、`ab80149`、`80742de`、`d790385`、`13cee17`、`831f7db`、`5c56ac2`、`4e3a838`、`8863611` | `03b67f3`、`ecf5390`、`aef1e87`、`835d4b1`、`cd60a84`、`43e887b`、`8fb022e`、`d2e8a94`、`5917f23` | 固定两项 MIT 来源；整数原子三角形、D4 指纹与四个原创目标合同复核；verify | Conditional Go；双席独占片组、共享无计时目标，不复制坐标、谜题、解法、UI 或资产；无入口，不计 installed |
+| `memory-merge-board` 前置 | `d74e11a`、`9533251`、`e7b8608`、`bce40d5` | `74a04a2`、`16ba0d1`、`8a92ad3`、`40fd69a` | 固定 2048 commit/MIT/版权人；逐项去重；verify | Conditional Go；只借鉴抽象整盘滑动与合并规则，不复制源码、名称、数字皮肤、布局或资产 |
 | `vinyl-secret` 视觉提案 | `093f6c0` | `0f778fe` | 定向 `37 / 37`；原图检查、SHA-256、range diff-check、verify | 私人压片工作台；默认无音频、秘密字段按 phase 不存在、运行界面 code-native，等待用户确认，不计 installed |
 | `word-detour-duel` 视觉提案 | `947f40a` | `d5e780c` | 定向 `16 / 16`；原图检查、SHA-256、range diff-check、verify | 纸面路线改道指挥台；秘密子树卸载与交接遮挡合同已冻结，等待用户确认，不计 installed |
 | `four-symbol-film-duel` 视觉提案 | `a8d6592` | `c032f31` | 定向 `25 / 25`；原图检查、SHA-256、range diff-check、verify | 复古影院票根台；厂商 Emoji 仅作概念，生产使用代码原生 Unicode 与中文等价标签，等待用户确认，不计 installed |
