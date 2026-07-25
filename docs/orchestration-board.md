@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `df02219` |
+| 当前 HEAD | `f51c884` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | `emoji-movie-duel` 的 glyph、action 快照、答案位置与来源修复已集成；其槽位转入待确认视觉提案总清单，两个全仓审计与真实浏览器矩阵继续运行 |
+| 工作树提示 | 全仓依赖、runtime 与 launcher 合同审计已集成；Worker 2 已滚动转入 `love-tree` clean-room 前置，许可证审计、真实浏览器矩阵与视觉确认总清单继续运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,7 +29,7 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | Penguin 七类真实边界、bug/learn 与复验已集成并释放槽位；现盘点 58 个入口及非视觉候选的来源固定性、许可证、复制边界和声明覆盖，只写 `363` 与唯一记录 |
-| Worker 2 | 已分配 | 全仓依赖、runtime 与 launcher 合同审计 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-launch-contract-audit` | `260c0bf` | Ricochet 三处真实核心缺口、bug/learn 与复验已集成并释放槽位；现复核 58 个入口的依赖统一、A/B/C/D 启动层和可复用修复建议，只写 `362` 与唯一记录 |
+| Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
 | Worker 3 | 已分配 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | Honeycomb 两类真实核心缺口、bug/learn 与复验已集成并释放槽位；现用 Chrome 验证门户、A 级直开、非 A launcher、控制台与网络边界，只写 `364` 与唯一记录 |
 | Worker 4 | 已分配 | 待确认视觉提案总清单与批量确认路径 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-visual-approval-digest` | `df02219` | Emoji 三类真实缺口、来源补齐、bug/learn 与复验已集成并释放槽位；现把 21 个生产 UI 阻塞项压成可逐项或批量确认的单页清单，只写 `365` |
 
@@ -129,10 +129,11 @@
 | `shadow-sword-duel` | `359` | Worker 3 | 无新核心缺口，现有核心再验收已集成；生产 UI 仍等待 `222` 用户确认 |
 | `honeycomb-passage` | `360` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `226` 用户确认 |
 | `emoji-movie-duel` | `361` | Worker 4 | glyph、action 快照、答案位置、来源与核心再验收已集成；生产 UI 仍等待后续视觉提案确认 |
-| 全仓依赖、runtime 与 launcher 合同审计 | `362` | Worker 2 | 已分配；只审计并提出共享层串行修复建议，不直接修改总控所有的依赖、runtime、launcher 或 catalog |
+| 全仓依赖、runtime 与 launcher 合同审计 | `362` | Worker 2 | 已集成；确认 58/58 HTTP 入口、8/8 非 A 启动器与根依赖锁定，并记录跨 checkout 运行时复用和固定依赖链接漂移 |
 | 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已分配；只盘点并提出串行修复建议，不直接批量修改项目声明、共享索引、依赖或生产文件 |
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已分配；只做真实浏览器与启动层验证并记录证据，不修改生产 UI、入口、launcher、catalog 或共享 runtime |
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已分配；只汇总既有提案、预览和明确确认语句，不新增生产 UI、视觉方向、入口或 catalog |
+| `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -166,6 +167,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| 全仓依赖、runtime 与 launcher 合同审计 | `1adc0b7`、`283dfde`、`3eeedbe`、`07a238a` | `08329e0`、`edf2b56`、`a97c978`、`f51c884` | 58/58 HTTP 入口；8/8 非 A 启动器；`npm ci` 0 vulnerability；全仓 `2301 / 2301`；verify；range diff-check | 根依赖与 launcher 统一性通过；确认跨 checkout 运行时可误复用及固定依赖链接漂移，分别记录两份 bug 和一份内容身份 learn；无生产实现或 UI，不计 installed |
 | `emoji-movie-duel` 内容/动作/来源修复与核心再验收 | `5a95187`、`d2f32a4`、`296011d`、`3ca4287`、`d154b87`、`fb3ecad`、`57a2f2a`、`665395e`、`226693f`、`620410b`、`14e1213`、`eef8004`、`f7a96f2`、`066e96d` | `446e9cd`、`2c0d5e7`、`4b7e6e5`、`91e7cfe`、`972fbf4`、`324bd2a`、`a35d281`、`7364f93`、`3ec3615`、`25a1d84`、`4b5ab75`、`68b2d04`、`8ccc078`、`df02219` | 定向 `30 / 30`；组合后全仓 `2301 / 2301`；verify；range diff-check | token 只接受单个 pictographic glyph，action 采用单 descriptor 快照；32 题答案位置从 `11/12/8/1` 平衡到 `8/8/8/8`，每包每席覆盖四位置；13/13 一手来源和零第三方题库/素材复制边界已锁定；无 UI，不计 installed |
 | `honeycomb-passage` state/replay 修复与核心再验收 | `d916743`、`90342a4`、`e29d430`、`6f069c4`、`153dd3a`、`e57ac89`、`04b33c1`、`2436203`、`3af5839`、`7898f81` | `6862f22`、`b662b1a`、`7cac6a3`、`28a57cc`、`56390b4`、`18e2e16`、`10f8dc4`、`1fc6440`、`11508e2`、`a38c90d` | 定向 `25 / 25`；独立 BFS `14352 / 14352`；组合后全仓 `2298 / 2298`；verify；range diff-check | 权威 state 现在要求 own-data graph 递归冻结；replay 派生快照按 ply/封蜡核算每席行动预算，并证明恰好 moveBudget 步可达；两份 bug、两份 learn 与固定来源/零复制边界已闭环；生产 UI 仍等待用户确认，不计 installed |
 | `penguin-flag-duel` 敌对边界修复与核心再验收 | `2af6c15`、`17d8e84`、`3014654`、`b017863`、`c0c83d3`、`2c106cd`、`59fe3e8`、`bec8ccd`、`005272e`、`293e25d`、`6aacd73`、`f2fed7d`、`f506679`、`f2e6f4f`、`549c559`、`c3694e4`、`2988435` | `220fe2d`、`e473334`、`a0a59a4`、`8d91138`、`f93ba72`、`f12da5f`、`3f428e0`、`6bc1042`、`83eefa3`、`a80c3d6`、`c564814`、`be062d1`、`7dd05c0`、`c504301`、`dcdea42`、`ea060f3`、`5e76c23` | 定向 `28 / 28`；组合后全仓 `2296 / 2296`；verify；range diff-check | 嵌套数组改为 descriptor 快照，合法浏览器默认配置不再被初始化顺序吞掉，revision/剩余时间/Proxy type-replay/速度向量边界均已关闭；Box2D v3.1.0 固定 MIT 来源与零复制边界复核；生产 UI 仍等待用户确认，不计 installed |

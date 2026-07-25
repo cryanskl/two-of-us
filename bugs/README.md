@@ -8,6 +8,8 @@
 
 ## 已记录
 
+- [共享依赖借鉴声明包含失效或未固定的来源链接](./2026-07-25-shared-dependency-attribution-link-drift.md)
+- [运行时复用会接受另一 checkout 的同协议内容](./2026-07-25-runtime-reuse-cross-checkout-drift.md)
 - [四符片名擂台：固定答案位置明显偏斜](./four-symbol-film-duel-answer-position-skew.md)
 - [四符片名擂台：动作类型可在两次快照之间变化](./four-symbol-film-duel-action-snapshot-race.md)
 - [四符片名擂台：多字素和普通文字可冒充 Emoji](./four-symbol-film-duel-glyph-schema.md)
