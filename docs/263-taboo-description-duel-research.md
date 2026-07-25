@@ -150,11 +150,11 @@ Hasbro 官方页面把产品定位为 4 人以上的团队游戏。
 
 ### 4.3 不采用语音识别
 
-[MDN 的 Web Speech API 说明](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
-把语音识别描述为可能使用平台服务或本机处理的能力；其
-[使用指南](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API)
-进一步说明默认识别通常依赖服务器，音频会发送到 Web 服务，离线本机识别则需要
-浏览器支持和预装语言包。
+[W3C Speech API Community Group 的 Web Speech API 规范](https://webaudio.github.io/web-speech-api/)
+说明底层实现可以是服务端或客户端/嵌入式识别；`processLocally` 默认为 false，
+此时用户代理可以选择本地或远程处理，要求本机处理时还需检查可用性并可能安装
+语言。规范同时要求语音输入只能在用户明确知情同意后启动，并由用户代理明显指示
+正在录音。
 
 因此首版：
 
@@ -357,7 +357,7 @@ A 级最终证据仍需三层：
 | [USPTO What is a trademark](https://www.uspto.gov/trademarks/basics/what-trademark) | 区分品牌来源标识与一般词语 | 不是完整清查或法律意见 |
 | [U.S. Copyright Office Games](https://www.copyright.gov/register/tx-games.html) | 区分玩法方法与具体文字/图形表达 | 不推导第三方题库可复制 |
 | [U.S. Copyright Office Circular 33](https://www.copyright.gov/circs/circ33.pdf) | 区分想法、方法、系统、名称与原创表达 | 不替代逐项版权审计 |
-| [MDN Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) | 确认语音识别存在平台/服务与权限边界 | 不把示例代码或语音服务引入项目 |
+| [W3C Web Speech API](https://webaudio.github.io/web-speech-api/) | 确认语音识别的本地/远程实现、同意与录音指示边界 | 不把示例代码、麦克风或语音服务引入项目 |
 | [W3C WCAG 2.2 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) | 键盘等价路径 | 不宣称完整 WCAG 认证 |
 | [W3C WCAG 2.2 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html) | 提供不计时与可调时限 | 不以游戏性为借口取消可调方案 |
 | [W3C Page Visibility](https://www.w3.org/TR/page-visibility-2/) | 隐藏时中断、遮屏与恢复 | 不使用页面可见性作为防作弊证明 |
