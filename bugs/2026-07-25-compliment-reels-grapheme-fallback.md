@@ -46,5 +46,4 @@ Extended Pictographic 的 ZWJ 序列。没有新增运行时依赖，也没有�
 - [x] 修复提交 `cb2ebcb` 后定向测试 24 / 24；
 - [x] 12 / 13 边界覆盖 Unicode Mark、Hangul、emoji modifier、emoji ZWJ 与旗帜；
 - [x] 自定义结语 120 / 121 字素边界在无 Segmenter VM 中通过；
-- [ ] 全仓 `npm test` 与 `npm run verify` 在最终审计阶段统一执行。
-
+- [x] 全仓 `npm test` 2271 / 2271，`npm run verify` 通过。
