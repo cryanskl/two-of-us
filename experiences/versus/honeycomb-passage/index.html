@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f3e8cf">
+    <title>蜜径相逢</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main id="honeycomb-passage" class="experience" data-phase="intro">
+      <div class="experience-grid">
+        <header class="title-block">
+          <h1>蜜径相逢</h1>
+          <p>走一步，或封一格。先到对边，但谁都不能被彻底堵住。</p>
+        </header>
+
+        <section id="intro-panel" class="phase-panel intro-panel">
+          <div class="intro-rules" aria-label="玩法规则">
+            <p><strong>每回合：</strong>移动一步，或放一枚封蜡</p>
+            <p><strong>每人：</strong>4 枚封蜡</p>
+            <p><strong>一局：</strong>最多 16 个完整回合</p>
+          </div>
+          <button id="primary-action" class="primary-action" type="button" hidden>
+            开始这一局
+          </button>
+        </section>
+
+        <div id="experience-root" class="experience-root" hidden>
+          <section id="turn-panel" class="turn-panel" aria-labelledby="turn-heading">
+            <h2 id="turn-heading" tabindex="-1">蜜黄先行动</h2>
+            <p id="turn-copy">选一格移动，或放下一枚封蜡</p>
+          </section>
+
+          <section class="player-rail" aria-label="双方状态">
+            <article id="player-summary-0" class="player-summary player-summary--yellow">
+              <span class="mini-pawn mini-pawn--yellow" aria-hidden="true"></span>
+              <div class="player-identity">
+                <h3 id="player-name-0">蜜黄</h3>
+                <span>先手</span>
+              </div>
+              <dl>
+                <div><dt>封蜡</dt><dd id="player-seals-0">4</dd></div>
+                <div><dt>距终点</dt><dd id="player-distance-0">6</dd></div>
+              </dl>
+            </article>
+            <article id="player-summary-1" class="player-summary player-summary--purple">
+              <span class="mini-pawn mini-pawn--purple" aria-hidden="true"></span>
+              <div class="player-identity">
+                <h3 id="player-name-1">暮紫</h3>
+                <span>后手</span>
+              </div>
+              <dl>
+                <div><dt>封蜡</dt><dd id="player-seals-1">4</dd></div>
+                <div><dt>距终点</dt><dd id="player-distance-1">6</dd></div>
+              </dl>
+            </article>
+          </section>
+
+          <section class="board-stage" aria-label="蜜径棋盘">
+            <div class="board-frame">
+              <div id="route-layer" class="route-layer" aria-hidden="true"></div>
+              <div
+                id="honeycomb-board"
+                class="honeycomb-board"
+                aria-labelledby="turn-heading"
+                aria-describedby="board-instruction"
+              ></div>
+              <section id="handoff-gate" class="handoff-gate" hidden aria-labelledby="handoff-title">
+                <span class="handoff-seal" aria-hidden="true">交</span>
+                <h3 id="handoff-title" tabindex="-1">请把页面交给下一位</h3>
+                <p id="handoff-copy">下一位确认后再继续。</p>
+                <button id="handoff-confirm" type="button">交给下一位</button>
+              </section>
+            </div>
+          </section>
+
+          <p id="board-instruction" class="board-instruction">
+            选一格移动，或放下一枚封蜡
+          </p>
+
+          <section class="mode-switch" aria-label="行动方式">
+            <button id="mode-move" class="mode-button mode-button--move" type="button" aria-pressed="true">
+              <span class="mode-symbol mode-symbol--move" aria-hidden="true"></span>
+              移动
+            </button>
+            <button id="mode-seal" class="mode-button mode-button--seal" type="button" aria-pressed="false">
+              <span class="mode-symbol mode-symbol--seal" aria-hidden="true"></span>
+              封蜡
+            </button>
+          </section>
+
+          <p id="visible-status" class="visible-status" aria-atomic="true">
+            蜜黄先行动。
+          </p>
+
+          <section id="result-panel" class="result-panel" hidden aria-labelledby="result-title">
+            <h2 id="result-title" tabindex="-1">这一局结束了</h2>
+            <p id="result-reason"></p>
+            <div id="result-summaries" class="result-summaries"></div>
+            <p id="final-note" class="final-note"></p>
+            <button id="restart-action" class="primary-action" type="button">再来一局</button>
+          </section>
+        </div>
+      </div>
+
+      <p class="privacy-note">
+        这局只在当前页面运行，不上传、不保存；本地配置里的名字和结语不是秘密。
+      </p>
+      <p id="live-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>
+        <section class="no-script">
+          <h2>蜜径相逢</h2>
+          <p>走一步，或封一格。先到对边，但谁都不能被彻底堵住。</p>
+          <p>请开启 JavaScript 后再开始这一局。</p>
+        </section>
+      </noscript>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
