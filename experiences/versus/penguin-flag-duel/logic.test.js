@@ -209,6 +209,23 @@ test("revision 到达 MAX_SAFE 后拒绝转换且不产生不安全整数状态"
   assert.equal(Number.isSafeInteger(unchanged.revision), true);
 });
 
+test("action Proxy 在 type 的两次 descriptor 观察间变形时 fail closed", () => {
+  let typeDescriptorReads = 0;
+  const action = new Proxy({ type: "START", expectedRevision: 0 }, {
+    getOwnPropertyDescriptor(target, key) {
+      const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+      if (key !== "type") return descriptor;
+      typeDescriptorReads += 1;
+      return {
+        ...descriptor,
+        value: typeDescriptorReads <= 2 ? "START" : "RESUME",
+      };
+    },
+  });
+  const initial = logic.createInitialState();
+  assert.equal(logic.reducePenguinFlagDuel(initial, action), initial);
+});
+
 test("九种输入使用定点加速度，斜向与直向模长接近", () => {
   const spawn = logic.deriveSpawn()[0];
   const right = logic.resolvePlayerMotion(spawn, 3, false);
