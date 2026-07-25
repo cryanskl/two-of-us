@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `683c886` |
+| 当前 HEAD | `7da4ed5` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2304 / 2304` 通过 |
-| 工作树提示 | 共享依赖固定归因、`capsule-docking` 视觉补证和 `love-tree` clean-room 前置均已集成；Worker 3 正在完成运行时内容身份修复，两个新视觉方向等待用户确认 |
+| 本次是否重跑全仓测试 | 是：`2310 / 2310` 通过 |
+| 工作树提示 | 共享依赖固定归因、runtime 内容身份、`capsule-docking` 视觉补证和 `love-tree` clean-room 前置均已集成；两个新视觉方向等待用户确认 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已完成待补位 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | 红测、固定归因、修复报告和最终验收已分别集成；Socket.IO、node-qrcode、Pannellum 的 6 个固定上游链接、真实消费者与分发边界通过结构测试 |
 | Worker 2 | 已完成待确认 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | `366–368`、四张概念图和清理提交已集成；旧生产 UI、商业音频和源包未修改，等待用户明确视觉确认后才能独立重写 |
-| Worker 3 | 已分配 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `364` 浏览器矩阵已集成并释放槽位；现按 `362` bug/learn 走计划、红测、最小实现和双根进程验证，拒绝复用另一 checkout 的同协议旧内容 |
+| Worker 3 | 已完成待补位 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `371–372`、红测、内容身份实现、live witness、bug/learn 与双根真实进程矩阵已分别集成；同内容可复用，内容不同或漂移时 fail closed 并另起端口 |
 | Worker 4 | 已完成待确认 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | desktop/mobile active 概念、生成台账与 `369` 已集成；没有修改生产 UI、core 或 catalog，等待用户确认“纸质近地轨道训练台” |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -136,7 +136,7 @@
 | `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已集成；brainstorm、spec、plan、完整概念稿和文档清理均独立提交，生产 UI 等待用户确认 |
 | `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已集成；desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句齐备，生产 UI 等待用户确认 |
 | 共享依赖固定归因修复 | `370` | Worker 1 | 已集成；三个真实根依赖的固定源码/许可证/版权/消费者边界与防漂移测试通过 |
-| 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已分配；计划、红测、deterministic content identity、双根进程复用矩阵和最终验证，不修改生产 UI 或 catalog |
+| 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已集成；deterministic content identity、live witness、双根进程复用矩阵、bug/learn 与最终验证全部通过 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -171,6 +171,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| 共享 runtime 内容身份修复 | `f292cf7`、`42864c7`、`197b3d2`、`352f6ca`、`1eae300` | `add5077`、`15343e7`、`c171851`、`1c20cb8`、`7da4ed5` | 红测；定向 `23 / 23`；双真实复制根复用/拒绝/存活/端口释放；全仓 `2310 / 2310`；verify | 服务身份、协议版本和当前内容身份三层复用；运行中内容漂移由 live witness 返回不可复用但不杀旧进程；无 UI、catalog 或依赖变更 |
 | `love-tree` clean-room 前置与视觉概念 | `2fbb307`、`e0085fe`、`eea299a`、`0ece012`、`ba9e6c9` | `cccfb5a`、`826fd07`、`122e61b`、`e90211c`、`683c886` | 四张原图尺寸/SHA-256；range diff-check；全仓 `2304 / 2304`；verify | 仅继承可观察体验目标，不读取或复制旧源码、参数、样式、音乐、文案或源包；生产 UI 等待用户确认，不计新增 installed |
 | `capsule-docking` 视觉候选补证 | `13b14ac`、`06d93d6` | `155b237`、`6681311` | desktop/mobile 原图尺寸/SHA-256；range diff-check；全仓 `2304 / 2304`；verify | “纸质近地轨道训练台”统一方向；概念几何不是 core 真值；生产 UI 等待用户确认，不计 installed |
 | 共享依赖固定归因修复 | `61ada43`、`a21d05b`、`71a5451`、`a5bd32d` | `157860e`、`c5be925`、`664e949`、`4457e2d` | 红测；定向 `70 / 70`；固定链接 `6 / 6`；本地链接 `2347 / 2347`；全仓 `2304 / 2304`；verify | Socket.IO、node-qrcode、Pannellum 固定到不可漂移 commit 与同 revision 许可证，覆盖真实消费者和分发边界；无 UI、catalog 或依赖版本变更 |

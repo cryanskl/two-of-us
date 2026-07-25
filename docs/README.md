@@ -262,6 +262,8 @@
 | [368-love-tree-clean-room-plan.md](./368-love-tree-clean-room-plan.md) | Love Tree 视觉确认后独立实现、验收与旧依赖退出的分阶段计划 |
 | [369-capsule-docking-design-proposal.md](./369-capsule-docking-design-proposal.md) | “纸质近地轨道训练台”的桌面/移动视觉锚点、core 投影和生成幻觉边界 |
 | [370-shared-dependency-attribution-remediation.md](./370-shared-dependency-attribution-remediation.md) | Socket.IO、node-qrcode、Pannellum 固定来源、许可证、版权与真实消费者修复记录 |
+| [371-runtime-content-identity-plan.md](./371-runtime-content-identity-plan.md) | 跨 checkout 运行时复用的确定性内容身份、dirty 策略、fail-closed 与验证计划 |
+| [372-runtime-content-identity-verification.md](./372-runtime-content-identity-verification.md) | 内容身份、live witness、双真实复制根复用/拒绝、旧进程存活和端口释放验收 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
