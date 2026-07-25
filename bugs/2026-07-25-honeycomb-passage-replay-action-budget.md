@@ -18,6 +18,8 @@
    `0/0/1`；结果表示对局尚未行动，但双方 8 枚封蜡已经用完；
 2. 从双方各移动一步的合法快照复制全部字段，同样把 ply 改为 0；结果表示初局时
    两枚棋子已经离开起点。
+3. 从黄方移动一步的合法快照复制全部字段，再把黄方位置、距离和合法封蜡改回
+   初局；结果表示黄方执行了一次 `move` 却仍停在起点。
 
 这些快照的 active player、距离、合法移动、合法封蜡和 blocked 数量内部一致，
 所以旧版 `readReplaySnapshot` 会接受并返回合法行动。
@@ -41,6 +43,8 @@ hasRouteForBoth(forged, candidate) → false
 ```
 
 修复前定向结果为 `24 pass / 1 fail`；第一个伪造快照仍返回移动 `-2,0`。
+加入第三个反例后，下界版本同样是 `24 pass / 1 fail`，并为伪造快照返回暮紫的
+三个合法移动。
 
 ## 根因
 
@@ -56,8 +60,8 @@ sealsUsed[player] = 4 - sealsRemaining[player]
 moveBudget[player] = turns[player] - sealsUsed[player]
 ```
 
-若 `moveBudget < 0`，库存消耗已经超出行动数。若起点到当前位置的六角图距离大于
-moveBudget，棋子也不可能在声明的 ply 内到达。
+若 `moveBudget < 0`，库存消耗已经超出行动数。只检查起点到当前位置的最短距离
+仍不够：规则没有原地等待动作，所以“一步后回到起点”同样不可能。
 
 ## 修复
 
@@ -66,6 +70,8 @@ moveBudget，棋子也不可能在声明的 ply 内到达。
 - 按 ply 奇偶计算双方已经取得的行动数；
 - 封蜡消耗不得超过对应玩家的行动数；
 - 剩余移动预算不得小于起点到当前位置的轴坐标最短距离；
+- 在忽略封蜡与对手的完整棋盘上，必须存在**恰好** `moveBudget` 步、允许正常
+  往返的 walk 从起点到当前位置；
 - 任一预算矛盾统一 fail closed。
 
 距离只作为必要下界，不取代权威 history replay；真实 reducer 状态仍完全由事件
@@ -84,3 +90,4 @@ node --test experiences/versus/honeycomb-passage/logic.test.js
 ## 修复提交
 
 - `6f069c4 fix: validate honeycomb replay action budgets`
+- `04b33c1 fix: require exact honeycomb move budgets`
