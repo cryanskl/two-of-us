@@ -134,7 +134,8 @@ test("六阶段语义、四动作顺序、结果因果与焦点合同写入生�
   assert.match(source, /tabIndex\s*=\s*-1/);
   assert.match(source, /\.focus\(/);
   assert.match(source, /latestRound\.effect/);
-  assert.match(source, /matchResult\.reason/);
+  assert.match(source, /view\.matchResult/);
+  assert.match(source, /\.reason/);
 });
 
 test("样式落实纸影视觉、触控尺寸、窄屏、reduced-motion 与 forced-colors", () => {
