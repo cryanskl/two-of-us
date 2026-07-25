@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `ba7c0ce` |
+| 当前 HEAD | `f186744` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2270 / 2270` 通过 |
-| 工作树提示 | `candle-wishes`、`snow-globe-message` 核心复验与 `our-place-guess` 视觉提案均已集成；四个滚动槽位继续既有核心审计 |
+| 本次是否重跑全仓测试 | 是：`2274 / 2274` 通过 |
+| 工作树提示 | `kaleidoscope-names` 与 `vinyl-secret` 真实缺口、来源/借鉴声明和复验均已集成；四个滚动槽位继续既有核心审计 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,10 +28,10 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `compliment-reels` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-core-audit` | `codex/exp-compliment-reels-core-audit` | `44b5edc` | 烟花来源漂移修复与核心复验已集成并释放槽位；现复核赞美转轮内容、reducer、隐私、确定性与固定来源，不写生产 UI |
-| Worker 2 | 已分配 | `kaleidoscope-names` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-core-audit` | `codex/exp-kaleidoscope-names-core-audit` | `9ed8cc4` | 雪景球核心复验已集成并释放槽位；现已复现 frozen content 信任边界缺口，按红测、修复和 bug 记录推进 |
-| Worker 3 | 已分配 | `capsule-docking` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking-core-audit` | `codex/exp-capsule-docking-core-audit` | `2d442c0` | 烛愿核心复验已集成并释放槽位；现已复现 hostile composer/control 缺口，按修复、bug、learn 和复验推进 |
-| Worker 4 | 已分配 | `word-detour-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-core-audit` | `codex/exp-word-detour-duel-core-audit` | `ba7c0ce` | 地点竞猜视觉提案已集成并释放槽位；现复核词语内容、交接遮挡、确定性、来源和机制去重，不写生产 UI |
+| Worker 1 | 已分配 | `four-symbol-film-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-core-audit` | `codex/exp-four-symbol-film-duel-core-audit` | `b039503` | 赞美转轮字素 fallback 修复与核心复验已集成并释放槽位；现复核四符号电影内容、Unicode、盲交接、来源和机制去重 |
+| Worker 2 | 已分配 | `twin-orbit` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-core-audit` | `codex/exp-twin-orbit-core-audit` | `e539ca3` | 万花筒配置规范化与标准来源漂移修复已集成并释放槽位；现复核双环确定性、双席协作、敌对输入与借鉴声明 |
+| Worker 3 | 已分配 | `photo-slider-race` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-core-audit` | `codex/exp-photo-slider-race-core-audit` | `f186744` | 黑胶秘密 Proxy 与来源声明缺口修复已集成并释放槽位；现复核本地图片隐私、确定性、公开投影和借鉴声明 |
+| Worker 4 | 已分配 | `word-detour-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-core-audit` | `codex/exp-word-detour-duel-core-audit` | `ba7c0ce` | 已复现完成态 `7 / 6`、交接卡序泄露与结果派生接受不可能日志；继续修复来源/内容证据缺口 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `351`；下列编号区间已互斥预留：
+当前已使用或预留到 `355`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -115,10 +115,14 @@
 | `snow-globe-message` | `345` | Worker 2 | 现有核心再验收已集成；生产 UI 仍等待 `210` 用户确认 |
 | `flower-language-bouquet` | `346` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `187` 用户确认 |
 | `candle-wishes` | `347` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `217` 用户确认 |
-| `compliment-reels` | `348` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `198` 用户确认 |
-| `capsule-docking` | `349` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待视觉方向选择 |
-| `kaleidoscope-names` | `350` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `314` 用户确认 |
+| `compliment-reels` | `348` | Worker 1 | 字素 fallback 缺口修复与现有核心再验收已集成；生产 UI 仍等待 `198` 用户确认 |
+| `capsule-docking` | `349` | Worker 3 | hostile Proxy 缺口修复、bug/learn 与现有核心再验收已集成；生产 UI 仍等待视觉方向选择 |
+| `kaleidoscope-names` | `350` | Worker 2 | frozen content 规范化与标准来源漂移修复、现有核心再验收已集成；生产 UI 仍等待 `314` 用户确认 |
 | `word-detour-duel` | `351` | Worker 4 | 现有核心再验收进行中；生产 UI 仍等待 `316` 用户确认 |
+| `four-symbol-film-duel` | `352` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `318` 用户确认 |
+| `vinyl-secret` | `353` | Worker 3 | 撤销 Proxy 与来源覆盖缺口修复、现有核心再验收已集成；生产 UI 仍等待 `320` 用户确认 |
+| `twin-orbit` | `354` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `310` 用户确认 |
+| `photo-slider-race` | `355` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `295` 用户确认 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -152,6 +156,10 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `vinyl-secret` Proxy/来源修复与核心再验收 | `9d84e95`、`5aa910e`、`44fd098` | `8b1a712`、`09fdf81`、`f186744` | 定向 `38 / 38`；组合后全仓 `2274 / 2274`；verify；range diff-check | 撤销后的数组 Proxy 从首次品牌检查起 fail closed；补齐 WCAG、WebKit 与 Chrome 一手边界，仍明确无第三方开源实现复制；生产 UI 仍等待用户确认，不计 installed |
+| `kaleidoscope-names` 配置/来源修复与核心再验收 | `1de4a89`、`35d024a`、`e539ca3` | `1de4a89`、`35d024a`、`e539ca3` | 定向 `25 / 25`；组合后全仓 `2273 / 2273`；verify；range diff-check | frozen 外部内容也重建规范化快照；Pointer Events 3 与 Media Queries 5 固定一手版本重新校准；生产 UI 仍等待用户确认，不计 installed |
+| `compliment-reels` 字素 fallback 修复与核心再验收 | `b13fab9`、`cb2ebcb`、`1f48e12`、`15e0ded`、`e9c7ee5`、`f70596e` | `0ec93e7`、`a647c2f`、`24b92fb`、`73e26c4`、`e141768`、`192edb7` | 定向 `24 / 24`；组合后全仓 `2272 / 2272`；verify；range diff-check | 无 `Intl.Segmenter` 时的字素边界已有红测、零依赖 fallback、非 emoji ZWJ 加固与 bug 闭环；生产 UI 仍等待用户确认，不计 installed |
+| `capsule-docking` hostile 输入修复与核心再验收 | `782cc6c`、`092a98c` | `ded6cf9`、`b039503` | 定向 `22 / 22`；组合后全仓 `2272 / 2272`；verify；range diff-check | 函数型 Proxy callback 用内部 wrapper 隔离，对象型 control 查表前收窄；bug 与可复用 learn 已记录；无 UI，不计 installed |
 | `our-place-guess` 视觉提案 | `d01f767` | `ba7c0ce` | 四张 active 原图与 SHA-256；定向 `36 / 36`；Natural Earth 派生 check；verify | 夜行纸图；guessing 只有自己圆点，revealed 才显示对方/目标/距离；生成地理和示例数值均列幻觉，等待用户确认，不计 installed |
 | `snow-globe-message` 现有核心再验收 | `e34bb2d` | `9ed8cc4` | 定向 `17 / 17`；固定来源与 10 张概念图 hash/尺寸；verify；当前主仓全仓 `2270 / 2270` | 上游 HEAD 漂移不影响固定 commit 与许可证；无新核心缺口；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
 | `candle-wishes` 现有核心再验收 | `993eb0a` | `2d442c0` | 定向 `23 / 23`；三项固定来源、两张概念图 hash/尺寸/隐私；verify；当前主仓全仓 `2270 / 2270` | 五实体、路线/展示分离、愿望前缀与错误 no-op 核心复核通过；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
