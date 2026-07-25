@@ -586,17 +586,36 @@
     return buildScheduleFromConfig(packId, config);
   }
 
-  function getWinner(players) {
+  function snapshotPlayerScore(candidate) {
     try {
-      if (!Array.isArray(players) || players.length !== 2) return null;
-      var a = players[0] && players[0].score;
-      var b = players[1] && players[1].score;
-      if (!Number.isSafeInteger(a) || !Number.isSafeInteger(b) || a < 0 || b < 0) return null;
-      if (a === b) return "tie";
-      return a > b ? "A" : "B";
+      if (
+        !candidate ||
+        typeof candidate !== "object" ||
+        Array.isArray(candidate) ||
+        Object.getPrototypeOf(candidate) !== Object.prototype
+      ) {
+        return null;
+      }
+      var descriptor = Object.getOwnPropertyDescriptor(candidate, "score");
+      return descriptor && Object.prototype.hasOwnProperty.call(descriptor, "value")
+        ? { score: descriptor.value }
+        : null;
     } catch (_error) {
       return null;
     }
+  }
+
+  function getWinner(players) {
+    var values = snapshotArray(players, CONSTANTS.PLAYER_COUNT);
+    if (!values) return null;
+    var playerA = snapshotPlayerScore(values[0]);
+    var playerB = snapshotPlayerScore(values[1]);
+    if (!playerA || !playerB) return null;
+    var a = playerA.score;
+    var b = playerB.score;
+    if (!Number.isSafeInteger(a) || !Number.isSafeInteger(b) || a < 0 || b < 0) return null;
+    if (a === b) return "tie";
+    return a > b ? "A" : "B";
   }
 
   function makeState(value) {
