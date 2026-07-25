@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `f51c884` |
+| 当前 HEAD | `0f95f8c` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | 全仓依赖、runtime 与 launcher 合同审计已集成；Worker 2 已滚动转入 `love-tree` clean-room 前置，许可证审计、真实浏览器矩阵与视觉确认总清单继续运行 |
+| 工作树提示 | 21 项视觉确认总清单已集成；`capsule-docking` 被证实尚无可审阅预览，Board 证据漂移已修正，许可证审计、真实浏览器矩阵与 `love-tree` clean-room 前置继续运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -31,7 +31,7 @@
 | Worker 1 | 已分配 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | Penguin 七类真实边界、bug/learn 与复验已集成并释放槽位；现盘点 58 个入口及非视觉候选的来源固定性、许可证、复制边界和声明覆盖，只写 `363` 与唯一记录 |
 | Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
 | Worker 3 | 已分配 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | Honeycomb 两类真实核心缺口、bug/learn 与复验已集成并释放槽位；现用 Chrome 验证门户、A 级直开、非 A launcher、控制台与网络边界，只写 `364` 与唯一记录 |
-| Worker 4 | 已分配 | 待确认视觉提案总清单与批量确认路径 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-visual-approval-digest` | `df02219` | Emoji 三类真实缺口、来源补齐、bug/learn 与复验已集成并释放槽位；现把 21 个生产 UI 阻塞项压成可逐项或批量确认的单页清单，只写 `365` |
+| Worker 4 | 已完成，待补位 | 待确认视觉提案总清单与批量确认路径 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-visual-approval-digest` | `df02219` | `365` 已集成：21/21 阻塞项、122 个本地证据链接和批量/单项确认模板完整；确认 `capsule-docking` 只有简报、没有预览，不能进入批准 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -132,7 +132,7 @@
 | 全仓依赖、runtime 与 launcher 合同审计 | `362` | Worker 2 | 已集成；确认 58/58 HTTP 入口、8/8 非 A 启动器与根依赖锁定，并记录跨 checkout 运行时复用和固定依赖链接漂移 |
 | 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已分配；只盘点并提出串行修复建议，不直接批量修改项目声明、共享索引、依赖或生产文件 |
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已分配；只做真实浏览器与启动层验证并记录证据，不修改生产 UI、入口、launcher、catalog 或共享 runtime |
-| 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已分配；只汇总既有提案、预览和明确确认语句，不新增生产 UI、视觉方向、入口或 catalog |
+| 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
 | `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
@@ -149,7 +149,7 @@
 | `shadow-sword-duel` | 生产 UI 尚未获确认 | `docs/222-shadow-sword-duel-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `compliment-reels` | 生产 UI 尚未获确认 | `docs/198-compliment-reels-design-proposal.md` | 用户 | 确认整体方向、320px 标签与终局标题后再派发 UI |
-| `capsule-docking` | 生产 UI 等待视觉方向选择 | `docs/208-capsule-docking-imagegen-brief.md` | 用户 | 从总控生成的三个视觉方向中选择或提出修改 |
+| `capsule-docking` | 只有 ImageGen 简报，尚无可审阅预览 | `docs/208-capsule-docking-imagegen-brief.md`、`docs/365-visual-approval-digest.md` | 总控先补候选，随后用户确认 | 先生成候选、`GENERATION.md` 与 active 预览；不得让用户批准不存在的“三个方向” |
 | `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
 | `dual-maze-race` | 生产 UI 等待视觉方向确认 | `docs/297-dual-maze-race-design-proposal.md` | 用户 | 确认纸白共享迷宫桌、钴蓝圆点/朱砂菱形方向或提出修改 |
 | `penguin-flag-duel` | 生产 UI 等待视觉方向确认 | `docs/303-penguin-flag-duel-design-proposal.md` | 用户 | 确认极夜冰场、点阵/条纹基地与原创几何企鹅方向或提出修改 |
@@ -167,6 +167,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| 待确认视觉提案总清单 | `5839d05` | `0f95f8c` | 21/21 Blocked 项；122/122 本地证据链接存在；diff-check；verify | 提供 20 项可看图批量确认模板与逐项修改语句；`capsule-docking` 因零预览保持不可批准；不修改或批准生产 UI，不计 installed |
 | 全仓依赖、runtime 与 launcher 合同审计 | `1adc0b7`、`283dfde`、`3eeedbe`、`07a238a` | `08329e0`、`edf2b56`、`a97c978`、`f51c884` | 58/58 HTTP 入口；8/8 非 A 启动器；`npm ci` 0 vulnerability；全仓 `2301 / 2301`；verify；range diff-check | 根依赖与 launcher 统一性通过；确认跨 checkout 运行时可误复用及固定依赖链接漂移，分别记录两份 bug 和一份内容身份 learn；无生产实现或 UI，不计 installed |
 | `emoji-movie-duel` 内容/动作/来源修复与核心再验收 | `5a95187`、`d2f32a4`、`296011d`、`3ca4287`、`d154b87`、`fb3ecad`、`57a2f2a`、`665395e`、`226693f`、`620410b`、`14e1213`、`eef8004`、`f7a96f2`、`066e96d` | `446e9cd`、`2c0d5e7`、`4b7e6e5`、`91e7cfe`、`972fbf4`、`324bd2a`、`a35d281`、`7364f93`、`3ec3615`、`25a1d84`、`4b5ab75`、`68b2d04`、`8ccc078`、`df02219` | 定向 `30 / 30`；组合后全仓 `2301 / 2301`；verify；range diff-check | token 只接受单个 pictographic glyph，action 采用单 descriptor 快照；32 题答案位置从 `11/12/8/1` 平衡到 `8/8/8/8`，每包每席覆盖四位置；13/13 一手来源和零第三方题库/素材复制边界已锁定；无 UI，不计 installed |
 | `honeycomb-passage` state/replay 修复与核心再验收 | `d916743`、`90342a4`、`e29d430`、`6f069c4`、`153dd3a`、`e57ac89`、`04b33c1`、`2436203`、`3af5839`、`7898f81` | `6862f22`、`b662b1a`、`7cac6a3`、`28a57cc`、`56390b4`、`18e2e16`、`10f8dc4`、`1fc6440`、`11508e2`、`a38c90d` | 定向 `25 / 25`；独立 BFS `14352 / 14352`；组合后全仓 `2298 / 2298`；verify；range diff-check | 权威 state 现在要求 own-data graph 递归冻结；replay 派生快照按 ply/封蜡核算每席行动预算，并证明恰好 moveBudget 步可达；两份 bug、两份 learn 与固定来源/零复制边界已闭环；生产 UI 仍等待用户确认，不计 installed |
