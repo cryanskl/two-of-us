@@ -58,7 +58,7 @@ npm test
 npm run verify
 ```
 
-结果：
+原生产分支结果：
 
 - `npm ci`：安装 55 个锁定包，0 个漏洞
 - `npm test`：`2405 / 2405` 通过
@@ -205,3 +205,40 @@ commit/tag、LICENSE URL、版权主体、实际借鉴点与未复制范围。
 
 项目核心、生产 UI、文档、来源、浏览器流程、响应式、辅助模式与仓库总门禁全部
 通过。工作树范围符合授权，没有 push。
+
+## 10. 主线接入复验
+
+2026-07-26 逐项 cherry-pick 到 `main`：
+
+1. `8c359e8`：红灯生产 UI 契约
+2. `3755703`：生产热座 UI
+3. `bb2d7bc`：README 与借鉴声明
+4. `331915e`：计时与秘密 DOM 学习记录
+5. `fe1ea55`：独立生产分支最终验证
+
+总控目录接入后：
+
+```text
+npm test       2441 / 2441 通过
+npm run verify 72 个作品入口通过
+               64 个 A 级直开、8 个非 A 启动器
+```
+
+共享定向回归包含项目 27 项测试、catalog、入口闭包与 favicon 合同，全部通过。
+新增目录契约按本项目真实实现锁定 `defer` 经典脚本顺序、`logic.getView(state)`
+公开投影与无脚本提示，没有为了迁就测试修改生产代码。
+
+主门户 localhost Chrome 复验：
+
+- “绕词对决”标题、卡片和链接各 1 个，分类、等级、安装状态、人数与设备信息正确；
+- 真实点击进入正确项目 URL，返回作品集也真实导航回根门户；
+- intro → setup → handoff → card-ready → describing 真实点击通过；
+- intro、setup、handoff 的秘密节点均为 0；describing 恰好出现 1 个目标“雨伞”
+  与 4 个禁词；
+- 390 × 844 开场主按钮 `y = 695.8`、`bottom = 747.8`，完整位于首屏；设置页
+  主按钮 `y = 1033`、`bottom = 1085`，不在首屏但可纵向滚动到达；
+- 320 × 568 与 844 × 390 均无横向溢出，全部 8 个设置与操作可纵向到达；
+- console error / warn、Runtime exception、Network loading failed、意外公网请求和
+  非预期 HTTP 错误均为 0；根与项目 favicon 均返回 200 / 304。
+
+项目现已完成主线接入，目录总数由 71 增至 72；未 push。
