@@ -8,16 +8,16 @@
 
 以下资料只用于理解抽象工程问题，不构成软件依赖：
 
-1. Min Tang, Young J. Kim, Dinesh Manocha, *Controlled Conservative Advancement for Continuous Collision Detection of Polygonal Models*, ICRA 2009。  
+1. Min Tang, Young J. Kim, Dinesh Manocha, *Controlled Conservative Advancement for Continuous Collision Detection of Polygonal Models*, ICRA 2009。
    <https://gamma-web.iacs.umd.edu/papers/documents/articles/2009/tang09.pdf>
-2. Jeff Linahan, *Improving the Numerical Robustness of Sphere Swept Collision Detection*, 2012。  
+2. Jeff Linahan, *Improving the Numerical Robustness of Sphere Swept Collision Detection*, 2012。
    <https://arxiv.org/abs/1211.0059>
-3. Joachim Breitner, Chris Smith, *Lock-step simulation is child's play*, 2017。  
+3. Joachim Breitner, Chris Smith, *Lock-step simulation is child's play*, 2017。
    <https://arxiv.org/abs/1705.09704>
-4. W3C, *High Resolution Time Level 3*。  
+4. W3C, *High Resolution Time Level 3*。
    <https://www.w3.org/TR/hr-time-3/>
-5. WHATWG, *HTML — Animation frames* 与 *Page visibility*。  
-   <https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames>  
+5. WHATWG, *HTML — Animation frames* 与 *Page visibility*。
+   <https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames>
    <https://html.spec.whatwg.org/multipage/interaction.html#page-visibility>
 
 实际借鉴范围仅为：

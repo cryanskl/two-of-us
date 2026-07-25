@@ -226,4 +226,3 @@ test("车辆圆扫掠在首次接触后保留切向运动并输出覆盖整 tick
   assertRatio(result.segments[0].t0, 0, 1);
   assertRatio(result.segments.at(-1).t1, 1, 1);
 });
-
