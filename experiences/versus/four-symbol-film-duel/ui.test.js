@@ -92,6 +92,7 @@ test("styles include responsive, focus, reduced-motion and forced-colors gates",
 
 test("README freezes direct-open, rules, privacy and attribution boundaries", () => {
   const readme = source("README.md");
+  assert.match(readme, /^## 借鉴与来源声明$/m);
   assert.match(readme, /双击.*index\.html/);
   assert.match(readme, /8\s*题/);
   assert.match(readme, /2\s*\/\s*1\s*\/\s*0/);
