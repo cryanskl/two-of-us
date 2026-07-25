@@ -74,6 +74,7 @@ button:focus-visible,
   position: relative;
   z-index: 3;
   max-width: 540px;
+  pointer-events: none;
 }
 
 .title-block h1 {
@@ -686,6 +687,12 @@ button:focus-visible,
   color: var(--danger);
   font-size: 14px;
   line-height: 1.7;
+  pointer-events: none;
+}
+
+.experience[data-phase="playing"] .title-block p,
+.experience[data-phase="result"] .title-block p {
+  visibility: hidden;
 }
 
 .result-panel {
