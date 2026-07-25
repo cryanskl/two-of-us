@@ -27,7 +27,7 @@
 - **传统四子连线**：采用“轮流向列中落子，率先横、竖或斜向连成四子获胜”的通用棋类机制；没有复制任何商业品牌的名称、视觉、棋子或素材。
 - **[bryanbraun/connect-four](https://github.com/bryanbraun/connect-four)（MIT）**：调研阶段仅用于确认原生 Web 四子棋的交互与移动端可行性；本作品没有复制、改写或打包其源码、样式、音效与素材。
 - **[kbennett2000/lan-games](https://github.com/kbennett2000/lan-games)（MIT）**：调研阶段仅用于比较局域网棋类的房间架构；本作品没有复制其服务器、数据库、房间页面或游戏代码。
-- **[Socket.IO 4.8.1](https://github.com/socketio/socket.io)（MIT）**：本仓库共享本地运行时的直接依赖；本作品只复用仓库已经统一安装和封装的公开房间 API，没有新增依赖副本。
+- **[Socket.IO 4.8.1](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io)**：固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。它是本仓库共享本地运行时的直接依赖；本作品只复用仓库已经统一安装和封装的公开房间 API，没有新增依赖副本，也没有复制或改写其示例源码、文档、视觉或素材。
 - **本仓库“隔屏画猜”**：复用主机权威、版本门控、第三人退出和成员变化重置的内部经验；棋盘 reducer、页面、样式和 `connect-four:*` 协议类型均重新实现。
 
-上述三个上游仓库的许可证已于 2026-07-15 通过 GitHub 当前 `LICENSE` 文件复核。除 Socket.IO 这一仓库已有直接依赖外，本作品没有引入第三方代码、字体、图片、音乐或音效。详细设计见 [`docs/09-lan-connect-four-spec.md`](../../../docs/09-lan-connect-four-spec.md)。
+Socket.IO 的固定许可证已于 2026-07-25 通过上述 commit 下的 `LICENSE` 复核；另两个仅调研上游仍保留 2026-07-15 的历史复核记录，不属于本次依赖修复范围。除 Socket.IO 这一仓库已有直接依赖外，本作品没有引入第三方代码、字体、图片、音乐或音效。依赖版本由根目录 `package-lock.json` 固定；实际分发时应保留依赖包自带的许可证文本与版权声明。详细设计见 [`docs/09-lan-connect-four-spec.md`](../../../docs/09-lan-connect-four-spec.md)。

@@ -35,7 +35,7 @@
 - **[JustalK/COUPLE-APP](https://github.com/JustalK/COUPLE-APP)（MIT）**：只比较关系问答的主题舒适度、跳过与局数；未引入旧 Expo/React Native 技术栈，也未复制代码、题目、视觉、素材或构建配置。
 - **[tomalama/hackbox](https://github.com/tomalama/hackbox)（MIT）**：只参考主机与手机控制器的角色分离；未引入 Socket.IO 2.2、React 16、CRA 3 或 node-sass 4，也未复制代码、题目、视觉、素材或构建配置。
 - **[boardgame.io](https://github.com/boardgameio/boardgame.io)（MIT）**：只比较隐藏玩家视图、阶段和服务端裁判概念；未复制或改写其 reducer、server、Lobby、插件、代码、题目、视觉、素材或构建配置。
-- **[Socket.IO](https://github.com/socketio/socket.io) 4.8.1（MIT）**：共享本地运行时的直接依赖，本作品只调用公开房间、acknowledgment 与定向 socket API；未复制或改写其示例代码、题目、视觉、素材或构建配置。
+- **[Socket.IO 4.8.1](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io)**：固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。它是共享本地运行时的直接依赖，本作品只调用公开房间、acknowledgment 与定向 socket API；未复制或改写其示例代码、题目、视觉、素材或构建配置。
 - **本仓库“密封猜拳”“隔屏画猜”“连心四子棋”**：复用仓库自行实现的密封 registry、真实 sender、房主权威、乱序结果门控和成员重置经验；本作品的问答逻辑、协议类型、题库、代码、页面、视觉、素材与构建配置均重新实现，没有直接复制这些作品的源码。
 
 视觉全部由 HTML、CSS 和一枚精简的内联 SVG 心线构成，没有引入第三方图片、字体、图标、声音或网络素材。机制为本仓库自研实现，未复制任何参考项目的代码、题库或素材。详细产品、协议和视觉边界见 [`docs/17-compatibility-quiz-spec.md`](../../../docs/17-compatibility-quiz-spec.md) 与 [`docs/18-compatibility-quiz-design.md`](../../../docs/18-compatibility-quiz-design.md)。依赖版本由仓库根目录的 `package-lock.json` 固定；实际分发时仍应保留依赖包自带的许可证文本。

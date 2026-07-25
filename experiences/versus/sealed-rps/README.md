@@ -26,7 +26,7 @@
 
 - **传统石头剪刀布**：采用“石头胜剪刀、剪刀胜布、布胜石头”与三局两胜的通用玩法规则；没有复制任何商业游戏的名称扩展、角色、视觉、素材、音效、文案或源码。
 - **[boardgame.io](https://github.com/boardgameio/boardgame.io)（MIT）**：调研阶段仅用于比较回合状态、玩家视图与服务端裁判的架构边界。本作品没有引入该依赖，也没有复制、改写或打包其 reducer、服务器、Lobby、插件、UI、文档、视觉或素材。
-- **[Socket.IO](https://github.com/socketio/socket.io) 4.8.1（MIT）**：作为共享本地运行时的直接依赖，本作品只通过其公开 API 使用连接、房间、acknowledgment 与定向 socket 投递能力；没有复制或改写其示例源码、文档、视觉与素材。
+- **[Socket.IO 4.8.1](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io)**：固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。作为共享本地运行时的直接依赖，本作品只通过其公开 API 使用连接、房间、acknowledgment 与定向 socket 投递能力；没有复制或改写其示例源码、文档、视觉与素材。
 - **本仓库“隔屏画猜”与“连心四子棋”**：复用了真实 sender、定向消息、主机权威、版本门控、第三人退出和成员变化重置的内部经验；密封轮次校验、猜拳状态机、协议适配、页面和视觉均为本作品重新实现，没有直接复制其页面或游戏源码。
 
 视觉使用暖白纸面、朱红与深青双封印的代码原生设计；没有引入第三方图片、字体、图标、音效或其他素材。详细协议与威胁边界见 [`docs/12-sealed-rps-spec.md`](../../../docs/12-sealed-rps-spec.md)。依赖版本由仓库根目录的 `package-lock.json` 固定；实际分发时仍应保留依赖包自带的许可证文本。

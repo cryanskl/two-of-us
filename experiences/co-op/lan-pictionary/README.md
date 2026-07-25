@@ -28,7 +28,7 @@
 
 - **传统 Pictionary / 你画我猜玩法**：借鉴“一人看词作画、另一人猜词、轮换角色”的通用玩法机制；本项目没有复制任何商业版本或第三方项目的题库、规则文案、视觉、音效、素材或源码。
 - **本仓库的同机你画我猜**：复用了共同计分、中文猜词规范化和 Canvas 交互的内部经验；本作品的双设备界面、主机权威状态机、定向秘密消息和笔迹协议均重新实现，没有直接复制其页面源码。
-- **[Socket.IO](https://github.com/socketio/socket.io) 4.8.1（MIT）**：作为本地房间实时传输依赖，通过公开 API 使用房间、广播和 socket 定向投递能力；没有复制或改写其示例源码、文档、视觉与素材。
+- **[Socket.IO 4.8.1](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io)**：固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。作为本地房间实时传输依赖，通过公开 API 使用房间、广播和 socket 定向投递能力；没有复制或改写其示例源码、文档、视觉与素材。
 - **[Whitebophir](https://github.com/lovasoa/whitebophir)（AGPL-3.0）** 与 **[Excalidraw Room](https://github.com/excalidraw/excalidraw-room)（MIT）**：调研阶段仅用于比较自托管白板与房间架构。本作品没有复制、改写、打包或派生它们的源码、视觉、素材与协议实现，因此不把本作品声明为其衍生版本。
 
 详细取舍和协议边界见 [`docs/07-lan-pictionary-spec.md`](../../../docs/07-lan-pictionary-spec.md)。依赖版本由仓库根目录的 `package-lock.json` 固定；实际分发时仍应保留依赖包自带许可证文本。

@@ -37,7 +37,9 @@
 | --- | --- | --- | --- | --- | --- |
 | Hackbox | Tommy Nguyen，[`tomalama/hackbox@4f4daf3`](https://github.com/tomalama/hackbox/tree/4f4daf30c6ab79a9ffbd76123d85210c5bb7c7ca) | 架构机制 | 浏览器设备作为派对游戏控制器的角色划分 | [MIT](https://github.com/tomalama/hackbox/blob/4f4daf30c6ab79a9ffbd76123d85210c5bb7c7ca/LICENSE) | 仅借鉴抽象机制；未复制源码、协议、视觉、文案或素材，也未引入其包 |
 | PocketWebGames | Marcel Dütscher，[`marceld23/PocketWebGames@f9a72e9`](https://github.com/marceld23/PocketWebGames/tree/f9a72e936c7d0c179772598ec24ea358ee1999fd) | 架构机制 | 本地 Wi-Fi、浏览器加入、主机统一掌握公平共享状态 | [MIT](https://github.com/marceld23/PocketWebGames/blob/f9a72e936c7d0c179772598ec24ea358ee1999fd/LICENSE) | 未复制源码、协议字段、游戏、固件、视觉或素材；在现有运行时上自行实现 |
-| Socket.IO | Socket.IO contributors，[`socketio/socket.io@4.8.1`](https://github.com/socketio/socket.io/tree/4.8.1) | 第三方依赖 | 本地房间、可靠有序事件与 acknowledgment | [MIT](https://github.com/socketio/socket.io/blob/4.8.1/LICENSE) | 使用仓库已固定的直接依赖及其公开 API，不复制示例源码 |
+| Socket.IO | `Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`，[`socketio/socket.io@91e1c8b`](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io) | 第三方依赖 `4.8.1` | 本地房间、可靠有序事件与 acknowledgment | [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE) | 使用仓库已固定的直接依赖及其公开 API，不复制示例源码、文档、视觉或素材 |
 | OpenAI 内置图像生成工具 | 本项目 2026-07-17 生成 | 视觉规格 | 桌面与移动比赛态概念图 | 生成内容，仅用于本项目设计规格 | 概念图保存在 `docs/assets/heart-sprint/`；运行页面使用代码原生 HTML/CSS，不嵌入概念截图 |
 
 玩法状态、输入 reducer、协议校验、页面结构、中文文案、样式和测试均为本仓库自行编写。完整设计和协议边界见 [规格文档](../../../docs/23-heart-sprint-spec.md)。
+
+依赖版本由根目录 `package-lock.json` 固定；实际分发时应保留 Socket.IO 包自带的许可证文本与版权声明。

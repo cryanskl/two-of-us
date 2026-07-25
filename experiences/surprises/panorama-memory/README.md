@@ -46,9 +46,9 @@
 
 ## 借鉴与来源声明
 
-- **[Pannellum](https://github.com/mpetroff/pannellum) 2.5.7（MIT）**：作为仓库根目录固定版本依赖，运行时加载其官方 `build/pannellum.js` 与 `build/pannellum.css`，用于等距柱状全景的 WebGL 投影、拖动、缩放、键盘和全屏控制。npm 包内保留上游 `COPYING` 与版权信息；本作品没有复制或改写其源码、示例配置、文档文案、视觉和素材。
+- **[Pannellum 2.5.7](https://github.com/mpetroff/pannellum/tree/a5e2f25d960270b6cdd6136d2c18c21f745bba0e)**：固定版本采用 [MIT `COPYING`](https://github.com/mpetroff/pannellum/blob/a5e2f25d960270b6cdd6136d2c18c21f745bba0e/COPYING)，`Copyright (c) 2011-2026 Matthew Petroff`。作为仓库根目录直接依赖，运行时加载其官方 `build/pannellum.js` 与 `build/pannellum.css`，用于等距柱状全景的 WebGL 投影、拖动、缩放、键盘和全屏控制。npm 包内保留上游 `COPYING` 与版权信息；本作品没有复制或改写其源码、示例配置、文档文案、视觉和素材。
 - Pannellum README 说明历史版本曾基于 three.js r40（MIT）；本作品不单独引入 Three.js。
 - 上游示例全景图采用 CC BY-SA 3.0；本作品不复制、不分发该图片，也不附带任何默认全景照片。
 - 本仓库共享运行时只提供固定版本的精确 vendor 映射、统一安装与本地静态服务；照片验证、两阶段替换、对象 URL 生命周期、页面结构、文案和视觉均为本作品独立实现。
 
-许可证已于 2026-07-15 通过上游 GitHub `COPYING` 复核：MIT，版权 `2011–2026 Matthew Petroff`。Pannellum 2.5.7 的上游安全修复包括热点属性 XSS、standalone JSON 配置同源限制与错误 URL 清理；本作品同时不使用 standalone viewer、远程 JSON 配置或热点 HTML。详细边界见 [`docs/13-panorama-memory-spec.md`](../../../docs/13-panorama-memory-spec.md)。
+许可证已于 2026-07-25 通过上述固定 `COPYING` 复核。Pannellum 2.5.7 的上游安全修复包括热点属性 XSS、standalone JSON 配置同源限制与错误 URL 清理；本作品同时不使用 standalone viewer、远程 JSON 配置或热点 HTML。详细边界见 [`docs/13-panorama-memory-spec.md`](../../../docs/13-panorama-memory-spec.md)。

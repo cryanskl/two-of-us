@@ -110,7 +110,8 @@ socket.emit("room:sealed-submit", {
 
 密封轮次 registry 根据本仓库 `docs/12-sealed-rps-spec.md` 独立实现；没有引入或复制 `boardgame.io` 的 reducer、服务器、Lobby、插件或 UI 代码。
 
-- 使用 [Socket.IO](https://github.com/socketio/socket.io) `4.8.1`（MIT）作为本地房间的实时传输依赖；本仓库通过其公开 API 建立连接和房间，没有复制或改写其示例源码、文档、视觉或素材。
-- 使用 [node-qrcode](https://github.com/soldair/node-qrcode) `1.5.4`（MIT）在本机生成局域网入口二维码；本仓库通过其公开 API 生成 Data URL，没有复制或改写其示例源码、文档、视觉或素材。
+- 使用 [Socket.IO `4.8.1`](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io) 作为本地房间的实时传输依赖；固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。本仓库通过其公开 API 建立连接和房间，没有复制或改写其示例源码、文档、视觉或素材。
+- 使用 [node-qrcode `1.5.4`](https://github.com/soldair/node-qrcode/tree/3848ed2c17de5bcdead487417dbf14c5dd017f8d) 在本机生成局域网入口二维码；固定版本采用 [MIT license](https://github.com/soldair/node-qrcode/blob/3848ed2c17de5bcdead487417dbf14c5dd017f8d/license)，`Copyright (c) 2012 Ryan Day`。本仓库通过其公开 API 生成 Data URL，没有复制或改写其示例源码、文档、视觉或素材。
+- 使用 [Pannellum `2.5.7`](https://github.com/mpetroff/pannellum/tree/a5e2f25d960270b6cdd6136d2c18c21f745bba0e) 的官方 `build/pannellum.js` 与 `build/pannellum.css`；固定版本采用 [MIT `COPYING`](https://github.com/mpetroff/pannellum/blob/a5e2f25d960270b6cdd6136d2c18c21f745bba0e/COPYING)，`Copyright (c) 2011-2026 Matthew Petroff`。运行时只为“全景回忆”暴露固定白名单资源，没有复制或改写其源码、示例配置、文档、视觉或素材。
 
 依赖版本由根目录 `package-lock.json` 固定。实际分发时应同时保留依赖包自带的许可证文本；上述声明不能替代各依赖的许可证。

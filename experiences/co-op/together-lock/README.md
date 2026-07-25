@@ -19,4 +19,6 @@
 
 玩法采用“双方同时按住按钮完成共同目标”的通用合作机关，由本仓库独立设计视觉、状态机和代码；未复制或改写任何第三方游戏的源码、视觉、音效或素材。
 
-实时消息使用 [Socket.IO](https://github.com/socketio/socket.io) `4.8.1`（MIT），由根目录共享运行时提供。作品只通过其公开客户端 API 调用本仓库的通用 `room:create`、`room:join`、`room:state` 与 `room:action` 协议，没有复制或改写 Socket.IO 示例源码、文档、视觉或素材。
+实时消息使用 [Socket.IO `4.8.1`](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io)，由根目录共享运行时提供；固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。作品只通过其公开客户端 API 调用本仓库的通用 `room:create`、`room:join`、`room:state` 与 `room:action` 协议，没有复制或改写 Socket.IO 示例源码、文档、视觉或素材。
+
+依赖版本由根目录 `package-lock.json` 固定；实际分发时应保留依赖包自带的许可证文本与版权声明。

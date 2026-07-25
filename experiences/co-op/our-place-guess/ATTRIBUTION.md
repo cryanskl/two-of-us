@@ -31,7 +31,7 @@ Made with Natural Earth.
 
 ## Socket.IO 与仓库内部经验
 
-- [Socket.IO 4.8.1](https://github.com/socketio/socket.io)（MIT）是仓库现有统一运行依赖。后续 UI 只调用仓库已有的房间、定向消息与密封提交协议，不复制或改写 Socket.IO 示例代码。
+- [Socket.IO 4.8.1](https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io) 是仓库现有统一运行依赖；固定版本采用 [MIT LICENSE](https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE)，`Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors`。后续 UI 只调用仓库已有的房间、定向消息与密封提交协议，不复制或改写 Socket.IO 示例代码、文档、视觉或素材。
 - 本仓库 `compatibility-quiz`、`sealed-rps`、`lan-pictionary`、`lan-connect-four`、`panorama-memory` 与 `fog-navigation` 只提供内部的密封结果、主机权威、成员变化清局、本地文件隐私和阶段秘密经验。本项目的题包、地图数学、距离、状态机和协议门控会独立实现。
 
 ## 本项目原创部分

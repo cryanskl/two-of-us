@@ -10,8 +10,8 @@ const rootDir = path.resolve(fileURLToPath(new URL("../", import.meta.url)));
 const socketIo = {
   packageName: "socket.io",
   version: "4.8.1",
-  sourceUrl: "https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367",
-  licenseUrl: "https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/LICENSE",
+  sourceUrl: "https://github.com/socketio/socket.io/tree/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io",
+  licenseUrl: "https://github.com/socketio/socket.io/blob/91e1c8b3584054db6072046404a24e79a17c1367/packages/socket.io/LICENSE",
   copyright: "Copyright (c) 2014-present Guillermo Rauch and Socket.IO contributors",
 };
 
@@ -106,6 +106,10 @@ test("node-qrcode and Pannellum records stay fixed and match their real consumer
     ...sharedRuntime,
     actualUse: "生成 Data URL",
   }, nodeQrcode);
+  await assertDependencyRecord({
+    ...sharedRuntime,
+    actualUse: "暴露固定白名单资源",
+  }, pannellum);
 
   const panoramaEntry = "experiences/surprises/panorama-memory/index.html";
   const panoramaHtml = await readFile(path.join(rootDir, panoramaEntry), "utf8");
