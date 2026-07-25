@@ -459,6 +459,30 @@ test("score totals equal result sums and all winner outcomes are stable", () => 
   assert.equal(getWinner([{ score: -1 }, { score: 0 }]), null);
 });
 
+test("winner calculation does not execute array or score getters", () => {
+  let arrayGets = 0;
+  const players = new Proxy([{ score: 3 }, { score: 1 }], {
+    get(target, key, receiver) {
+      arrayGets += 1;
+      return Reflect.get(target, key, receiver);
+    }
+  });
+  assert.equal(getWinner(players), "A");
+  assert.equal(arrayGets, 0);
+
+  let scoreGets = 0;
+  const accessorPlayer = {};
+  Object.defineProperty(accessorPlayer, "score", {
+    enumerable: true,
+    get() {
+      scoreGets += 1;
+      return 3;
+    }
+  });
+  assert.equal(getWinner([accessorPlayer, { score: 1 }]), null);
+  assert.equal(scoreGets, 0);
+});
+
 test("round advance resets transient fields and only round eight can summarize", () => {
   let state = playRound(start(), { correct: true, spotlight: true });
   const next = advance(state);
