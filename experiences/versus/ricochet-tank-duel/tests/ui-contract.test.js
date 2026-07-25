@@ -19,6 +19,18 @@ test("生产入口保持公开标题、960×600 舞台、六态壳与 no-JS 说�
   assert.match(html, /<noscript>[^<]*JavaScript[^<]*<\/noscript>/);
 });
 
+test("无脚本模式隐藏假交互，只保留静态标题、隐私提示与返回入口", () => {
+  const html = read("index.html");
+  assert.match(
+    html,
+    /<noscript>\s*<style>\s*\.duel-app\s*\{\s*display:\s*none\s*!important;\s*\}\s*<\/style>\s*<\/noscript>/,
+  );
+  assert.match(html, /<section class="no-script-panel"[^>]*>/);
+  assert.match(html, /<h1>这一弹，拐弯见你<\/h1>/);
+  assert.match(html, /不会联网，也不会保存你的数据/);
+  assert.match(html, /<a href="\.\.\/\.\.\/\.\.\/index\.html">返回作品集<\/a>/);
+});
+
 test("入口只按经典相对路径加载本地样式与脚本，运行面无网络或存储", () => {
   const html = read("index.html");
   assert.doesNotMatch(html, /type=["']module["']/);
