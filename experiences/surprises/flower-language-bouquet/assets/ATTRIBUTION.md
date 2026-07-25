@@ -65,6 +65,6 @@
 | 9 | `desktop-complete-v2-concept.png` | 1586×992 | #4、#6 | `5b3c2532c74b29242029a0dedab95329ed556f1f95a8de719df4fb42eff28aab` |
 | 10 | `mobile-export-error-v2-concept.png` | 852×1846 | #9、#8 | `c770f6a7ca373797ee5d76ee4ca01c1a9e9876a0828dd14bd906ff1960145d0e` |
 
-十张图片只在 `docs/` 中用于设计评审和后续 fidelity 对比，不由生产目录读取、fetch、preload 或作为 CSS background。它们不是花语、状态机、scene、SVG primitive 或导出代码的来源；当前视觉提案仍等待用户确认。
+十张图片只在 `docs/` 中用于设计评审和后续 fidelity 对比，不由生产目录读取、fetch、preload 或作为 CSS background。它们不是花语、状态机、scene、SVG primitive 或导出代码的来源；用户已接受 v2 视觉方向，生产仅复用其材料语言与信息层级，并以冻结规格和独立 SVG primitive registry 为实现真相。
 
 如果未来把任一生成图转为运行时资产，必须新增运行时文件 SHA、处理链、失败降级与权利审计，并同步更新作品 README 和本声明，不能沿用 docs-only 结论。

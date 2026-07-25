@@ -69,7 +69,7 @@ test("app 只投影 core public view，并锁定完整阶段动作与单通道�
 test("页面与 standalone 导出都使用受控 SVG primitive 和结构白名单", () => {
   const source = read("app.js");
   for (const shape of ["rose", "tulip", "daisy", "sunflower", "lisianthus", "gypsophila"]) {
-    assert.match(source, new RegExp(`(?:function|const)\\\\s+[^\\\\n]*${shape}|[\"']${shape}[\"']\\\\s*:`, "u"), shape);
+    assert.match(source, new RegExp(`(?:^|\\n)\\s*(?:[\"']?${shape}[\"']?)\\s*:`, "u"), shape);
   }
   for (const required of [
     "createElementNS",
@@ -102,7 +102,11 @@ test("导出 controller 保持显式 link、可重试错误与安全 object URL 
     assert.equal(source.includes(required), true, required);
   }
   assert.doesNotMatch(source, /\.click\s*\(\s*\)/u);
-  assert.doesNotMatch(source, /pagehide[^]*revokeObjectURL|revokeObjectURL[^]*pagehide/u);
+  const pagehideHandler = source.match(
+    /window\.addEventListener\("pagehide", function \(\) \{([^]*?)\n  \}\);/u,
+  );
+  assert.ok(pagehideHandler, "pagehide handler");
+  assert.doesNotMatch(pagehideHandler[1], /revokeObjectURL|revokeCurrentObjectUrl/u);
   assert.doesNotMatch(source, /保存成功|已保存到|保存到相册/u);
 });
 
@@ -134,8 +138,13 @@ test("样式精确实现已接受 token、触控、焦点、响应式与系统�
 test("生产运行时保持 classic、零公网、零持久化与零 docs 图片依赖", () => {
   for (const file of ["index.html", "app.js", "styles.css"]) {
     const source = read(file);
+    const withoutSvgNamespace = source.replaceAll("http://www.w3.org/2000/svg", "");
     assert.doesNotMatch(source, /docs\/assets|desktop-.*concept|mobile-.*concept/u, file);
-    assert.doesNotMatch(source, /https?:\/\/|(?:^|\n)\s*(?:import|export)\s/u, file);
+    assert.doesNotMatch(
+      withoutSvgNamespace,
+      /https?:\/\/|(?:^|\n)\s*(?:import|export)\s/u,
+      file,
+    );
     assert.doesNotMatch(source, /\b(?:localStorage|sessionStorage|indexedDB|CacheStorage)\b/u, file);
   }
 });

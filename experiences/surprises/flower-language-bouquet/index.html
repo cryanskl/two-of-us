@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#faf8f3">
+    <title>把花语，系成一束</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main id="bouquet-app" class="app-shell">
+      <header class="app-header">
+        <h1>把花语，系成一束</h1>
+        <p>从六种花里依次挑三枝。第一枝做主花，第二枝陪在旁边，第三枝留作点缀；没有选错的花。</p>
+      </header>
+
+      <section id="experience-root" aria-label="花束体验"></section>
+
+      <footer class="privacy-note">
+        <p>这束花里的意思，是我们自己的表达。</p>
+      </footer>
+
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+      <noscript>
+        <p class="noscript-note">需要启用 JavaScript 才能挑花；页面不会联网，也不会上传内容。</p>
+      </noscript>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

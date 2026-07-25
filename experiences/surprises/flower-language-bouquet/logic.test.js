@@ -820,7 +820,7 @@ test("attribution pins all research sources, licenses, and docs-only generated a
     "工具调用结果未暴露",
     "第三方图片、开源截图",
     "十张图片只在 `docs/` 中",
-    "当前视觉提案仍等待用户确认",
+      "用户已接受 v2 视觉方向",
   ]) assert.equal(attribution.includes(expected), true, expected);
 
   const generatedHashes = attribution.match(/`[a-f0-9]{64}`/g) ?? [];
