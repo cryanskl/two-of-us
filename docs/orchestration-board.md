@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `4172fc9` |
+| 当前 HEAD | `a951e52` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`1895 / 1895` 通过 |
-| 工作树提示 | 首轮 3 个执行分支已回包；第二轮 3 个独立工作树已建立并按根 lockfile 安装依赖 |
+| 本次是否重跑全仓测试 | 是：`1919 / 1919` 通过 |
+| 工作树提示 | 第二轮 3 项已独立集成；第三轮 3 个独立工作树已从 `a951e52` 建立并按根 lockfile 安装依赖 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `kaleidoscope-names` core | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-core` | `codex/exp-kaleidoscope-names-core` | `8f63e08` | 仅实现纯逻辑、配置、测试和来源边界，不创建生产 UI |
-| Worker 2 | 已分配 | `taboo-description-duel` | `/Users/zenith/Desktop/two-of-us-worktrees/taboo-description-duel` | `codex/exp-taboo-description-duel` | `8f63e08` | research、brainstorm、spec、plan；先核对商标、题库与机制重复 |
-| Worker 3 | 已分配 | `vinyl-secret` | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret` | `codex/exp-vinyl-secret` | `4172fc9` | research、brainstorm、spec、plan；先证明 A 级与音频/素材来源边界 |
+| Worker 1 | 已分配 | `vinyl-secret` core | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret-core` | `codex/exp-vinyl-secret-core` | `a951e52` | 实现 12 圈、三条有序秘密轨道、四级文字信号和公开 view；不创建 UI |
+| Worker 2 | 已分配 | `word-detour-duel` content/core | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel` | `codex/exp-word-detour-duel` | `a951e52` | 先完成 72 张原创卡审计，再实现纯逻辑状态机；两阶段独立提交 |
+| Worker 3 | 已分配 | `emoji-movie-duel` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/emoji-movie-duel` | `codex/exp-emoji-movie-duel` | `a951e52` | research、brainstorm、spec、plan；先审计影视表达、emoji 字形与题库权利边界 |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -84,8 +84,11 @@
 | `compliment-reels` | `254–255` | 首轮 Worker 1 | plan/core 已集成；`255` 保留后续验证 |
 | `capsule-docking` | `256–258` | 首轮 Worker 2 / 总控 | plan/core 已集成；`258` 保留视觉提案 |
 | `kaleidoscope-names` | `259–262` | 首轮 Worker 3 | 四阶段前置文档已集成 |
-| `taboo-description-duel` | `263–266` | Worker 2 | 已分配 |
-| `vinyl-secret` | `267–270` | Worker 3 | 已分配 |
+| `taboo-description-duel` / `word-detour-duel` | `263–266` | 第二轮 Worker 2 | 四阶段前置文档已集成 |
+| `vinyl-secret` | `267–270` | 第二轮 Worker 3 | 四阶段前置文档已集成 |
+| `emoji-movie-duel` | `271–274` | 第三轮 Worker 3 | 已分配 |
+| `word-detour-duel` | `275–277` | 第三轮 Worker 2 / 总控 | `275` 内容审计；`276` 视觉提案、`277` 最终验证保留 |
+| `vinyl-secret` | `278–279` | 总控 | 视觉提案与最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -107,6 +110,9 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `word-detour-duel` 前置 | `17b9461`、`c3b2e15`、`aa93f35`、`dfac705`、`877b410`、`fc63e54` | `b056a92`、`3096fd9`、`b0bfcbe`、`e0b0a54`、`ab41704`、`a951e52` | verify 通过；商标、题库与 Page Visibility 一手来源复核 | 无入口，不计 installed |
+| `vinyl-secret` 前置 | `d752347`、`f6b53c0`、`b6570a4`、`856a11e` | `b6fa451`、`633bae0`、`48e04ba`、`4bb18a0` | verify 通过；默认无音频 A 级路线成立 | 无入口，不计 installed |
+| `kaleidoscope-names` core | `9c46491`、`31d6d35` | `7abf729`、`76f50e9` | 定向 `24 / 24`；全仓 `1919 / 1919` | 无 UI，不计 installed |
 | `capsule-docking` core | `5f2c7ef`、`cb4395a` | `11cbf83`、`4172fc9` | 定向 `21 / 21`；全仓 `1895 / 1895` | 无 UI，不计 installed |
 | `kaleidoscope-names` 前置 | `5604e12`、`7e547a4`、`5785ed0`、`2293b59` | `a433193`、`973b2b3`、`1e41f73`、`22c1b80` | verify 通过；A 级可行性成立 | 无入口，不计 installed |
 | `compliment-reels` core | `c9cf9bf`、`dc271fb` | `8dce492`、`b08be37` | 定向 `23 / 23`；全仓 `1895 / 1895` | 无 UI，不计 installed |
