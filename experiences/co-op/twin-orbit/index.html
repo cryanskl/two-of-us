@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#090b1d">
+    <title>这一圈，和你同时到</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <main id="main-content" class="app-shell">
+      <nav class="topbar" aria-label="体验导航">
+        <a class="back-link" href="../../../index.html" aria-label="返回项目列表">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>返回项目列表</span>
+        </a>
+      </nav>
+
+      <header class="page-header">
+        <h1>这一圈，和你同时到</h1>
+      </header>
+
+      <section class="shared-rail" aria-label="共同进度">
+        <div class="shared-rail__copy">
+          <span id="gate-count">准备出发</span>
+          <strong id="gate-title">两颗星，共享一个时刻</strong>
+          <span id="window-label">共同开门尚未开始</span>
+        </div>
+        <div class="window-track" aria-hidden="true">
+          <span id="window-fill"></span>
+        </div>
+        <ol id="gate-progress" class="gate-progress" aria-label="五圈共同进度">
+          <li aria-label="第 1 圈"></li>
+          <li aria-label="第 2 圈"></li>
+          <li aria-label="第 3 圈"></li>
+          <li aria-label="第 4 圈"></li>
+          <li aria-label="第 5 圈"></li>
+        </ol>
+      </section>
+
+      <section class="orbit-stage-wrap" aria-label="双星双环轨道">
+        <svg id="orbit-stage" class="orbit-stage" viewBox="0 0 320 320" role="img" aria-labelledby="stage-title stage-description">
+          <title id="stage-title">两颗星共享的双环刻度盘</title>
+          <desc id="stage-description">左边是六角点纹星，右边是四角横纹星。按住进入更快的内轨，松开回到更慢的外轨。</desc>
+          <circle class="tick-ring tick-ring--outer" cx="160" cy="160" r="136"></circle>
+          <circle class="orbit-line orbit-line--outer" cx="160" cy="160" r="126"></circle>
+          <circle class="tick-ring tick-ring--inner" cx="160" cy="160" r="96"></circle>
+          <circle class="orbit-line orbit-line--inner" cx="160" cy="160" r="86"></circle>
+
+          <g class="compass" aria-hidden="true">
+            <circle cx="160" cy="160" r="31"></circle>
+            <path d="m160 126 8 26 26 8-26 8-8 26-8-26-26-8 26-8Z"></path>
+            <circle cx="160" cy="160" r="4"></circle>
+          </g>
+
+          <g id="left-gate" class="target-gate target-gate--left" aria-hidden="true">
+            <path d="M-15 0H15M-15-5v10M15-5v10"></path>
+          </g>
+          <g id="right-gate" class="target-gate target-gate--right" aria-hidden="true">
+            <path d="M-16 0h5m4 0h6m4 0h6m4 0h5"></path>
+          </g>
+
+          <g id="left-player" class="player-marker player-marker--left" data-player-shape="rosette">
+            <path class="marker-body" d="m0-18 6 8 10-2-3 10 7 7-10 3-2 10-8-6-8 6-2-10-10-3 7-7-3-10 10 2Z"></path>
+            <g class="marker-dots" aria-hidden="true">
+              <circle cx="-5" cy="-5" r="1.2"></circle>
+              <circle cx="2" cy="-7" r="1.2"></circle>
+              <circle cx="6" cy="-1" r="1.2"></circle>
+              <circle cx="-7" cy="2" r="1.2"></circle>
+              <circle cx="0" cy="1" r="1.2"></circle>
+              <circle cx="5" cy="6" r="1.2"></circle>
+              <circle cx="-3" cy="7" r="1.2"></circle>
+            </g>
+          </g>
+          <g id="right-player" class="player-marker player-marker--right" data-player-shape="kite">
+            <path class="marker-body" d="M0-20 9-7 20 0 9 7 0 20-9 7-20 0-9-7Z"></path>
+            <path class="marker-texture" d="M-12-5h24M-16 0h32M-12 5h24"></path>
+          </g>
+        </svg>
+
+        <div class="stage-readouts" aria-live="off">
+          <p id="left-readout"><span aria-hidden="true">✦</span> 左边，等待开始</p>
+          <p id="right-readout"><span aria-hidden="true">◆</span> 右边，等待开始</p>
+        </div>
+        <p class="lane-legend"><strong>内轨更快</strong><span aria-hidden="true">·</span><strong>外轨更慢</strong></p>
+      </section>
+
+      <fieldset class="controls">
+        <legend>两边同时控制自己的星</legend>
+        <button class="hold-control hold-control--left" type="button" data-hold-control data-player="left" aria-pressed="false" disabled>
+          <span class="hold-control__mark hold-control__mark--left" data-player-shape="rosette" aria-hidden="true">✦</span>
+          <span class="hold-control__copy">
+            <strong>左边 · <kbd>F</kbd></strong>
+            <span>按住走内轨更快</span>
+            <small>六角点纹</small>
+          </span>
+        </button>
+        <button class="hold-control hold-control--right" type="button" data-hold-control data-player="right" aria-pressed="false" disabled>
+          <span class="hold-control__mark hold-control__mark--right" data-player-shape="kite" aria-hidden="true">◆</span>
+          <span class="hold-control__copy">
+            <strong>右边 · <kbd>J</kbd></strong>
+            <span>按住走内轨更快</span>
+            <small>四角横纹</small>
+          </span>
+        </button>
+        <p class="release-hint">松开走外轨更慢</p>
+      </fieldset>
+
+      <div class="pause-row">
+        <button id="pause-action" class="secondary-action" type="button" hidden>暂停</button>
+      </div>
+
+      <section class="phase-card" aria-live="polite" aria-atomic="true">
+        <h2 id="phase-title">准备一起出发</h2>
+        <p id="phase-message">按住变快，松开变慢。让两颗星在同一拍穿过各自的门。</p>
+        <button id="phase-action" class="primary-action" type="button" data-action="start">开始第一圈</button>
+      </section>
+
+      <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <footer class="privacy-note">只在当前页面运行，不联网，也不保存进度。</footer>
+
+      <noscript>
+        <p><strong>这一圈，和你同时到</strong></p>
+        <p>请启用 JavaScript 后再开始。按住进入更快的内轨，松开回到更慢的外轨。</p>
+      </noscript>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./fixtures.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
