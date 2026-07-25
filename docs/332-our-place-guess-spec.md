@@ -656,16 +656,16 @@ scripts/vendor-our-place-map.mjs
 
 ## 11. 集成
 
-实施时更新：
+执行分支只实现项目目录、`docs/330–333` 与真实产生的唯一 bug/learn，不修改共享接入文件。完成项目级测试和完整浏览器 Gate 后，执行分支向总控返回以下接入清单：
 
 - `experiences/catalog.json`：新增 installed C / co-op 项；
 - `experiences/co-op/README.md`；
 - 根 `README.md`；
 - `docs/README.md`；
-- 需要时扩展 catalog/contract 定向测试；
-- 不改 orchestration Board 的历史状态，除非主任务另有明确工作流要求。
+- catalog/contract 定向测试；
+- orchestration Board 与精确计数。
 
-目录依赖应只声明仓库已有 Socket.IO 运行时，不新增项目私有 `package.json`、lockfile、CDN 或 vendor JS。
+这些共享文件由总控在完整 Gate 通过后串行更新并单独提交，执行分支不得提前把未验收项目登记为 installed。项目目录依赖只声明仓库已有 Socket.IO 运行时，不新增项目私有 `package.json`、lockfile、CDN 或 vendor JS。
 
 ## 12. 自动化测试
 
