@@ -18,6 +18,7 @@
 ```bash
 node experiences/co-op/seven-piece-duet/geometry.test.js
 node experiences/co-op/seven-piece-duet/tools/generate-targets.mjs --check
+node --test experiences/co-op/seven-piece-duet/targets.test.js
 node experiences/co-op/seven-piece-duet/logic.test.js
 ```
 
@@ -31,4 +32,5 @@ node experiences/co-op/seven-piece-duet/logic.test.js
 
 本项目只参考传统七片拼形的抽象机制，并自行实现整数几何、片模板、目标生成、状态机、测试、文案和未来视觉。固定来源、许可证、版权主体以及明确未复制范围见 [`ATTRIBUTION.md`](./ATTRIBUTION.md)。
 
-四个固定目标必须从本仓库生成器产生；固定候选、标准解、D4 指纹和人工内容审计记录在后续 [`TARGETS.md`](./TARGETS.md)。
+四个固定目标均由本仓库生成器产生；固定候选、标准解、D4 指纹、翻面
+exact-cover 证明和人工内容审计记录在 [`TARGETS.md`](./TARGETS.md)。
