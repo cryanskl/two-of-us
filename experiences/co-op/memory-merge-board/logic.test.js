@@ -423,12 +423,12 @@ test("候选耗尽在下一次需要选择时失败", () => {
 test("补页后若没有任一合法滑动则以 blocked 结束", () => {
   const alternating = [
     tile("place"), tile("taste"), tile("sound"), tile("care"),
-    tile("taste"), tile("sound"), tile("care"), tile("place"),
-    tile("sound"), tile("care"), tile("place"), null,
+    tile("taste"), tile("care"), tile("taste"), tile("sound"),
+    tile("sound"), tile("place"), tile("taste"), null,
   ];
   const level = createLevel({
     initialBoard: alternating,
-    initialCandidates: ["taste", "care"],
+    initialCandidates: ["care", "place"],
     supply: [],
   });
   let state = createInitialState(level);
