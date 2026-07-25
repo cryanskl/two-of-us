@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta
+      name="description"
+      content="两个人在同一台设备上轮流描述、共同复核的本地绕词游戏。"
+    >
+    <title>绕词对决</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main id="experience" class="experience-shell">
+      <header id="experience-header" class="experience-header">
+        <a id="back-link" class="back-link" href="../../../index.html">返回作品集</a>
+        <div class="title-row">
+          <div>
+            <h1>绕词对决</h1>
+            <p class="subtitle">绕开四条封路，把目标送到对方那里。</p>
+          </div>
+          <p class="privacy-chip">本地同机 · 不录音</p>
+        </div>
+      </header>
+
+      <noscript>
+        <section class="no-script">
+          <h2>此体验需要浏览器启用 JavaScript</h2>
+          <p>启用后重新打开本页即可开始。页面不录音、不联网。</p>
+        </section>
+      </noscript>
+
+      <section id="match-rail" class="match-rail" aria-label="公共比赛信息">
+        <div class="seat-card seat-card--one">
+          <span class="seat-dot" aria-hidden="true">1</span>
+          <span>
+            <strong>玩家 1</strong>
+            <small id="player-one-role">等待开始</small>
+          </span>
+          <b id="player-one-score" aria-label="玩家 1 得分">—</b>
+        </div>
+        <div class="timer-card">
+          <small>回合计时</small>
+          <strong id="public-timer">待机</strong>
+        </div>
+        <div class="seat-card seat-card--two">
+          <span class="seat-dot" aria-hidden="true">2</span>
+          <span>
+            <strong>玩家 2</strong>
+            <small id="player-two-role">等待开始</small>
+          </span>
+          <b id="player-two-score" aria-label="玩家 2 得分">—</b>
+        </div>
+      </section>
+
+      <section id="stage" class="stage" aria-labelledby="stage-title"></section>
+
+      <p class="trust-footer">
+        题卡只在描述阶段进入页面；交接、暂停与回合结束时会从页面中移除。
+      </p>
+      <p
+        id="global-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+    </main>
+
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
