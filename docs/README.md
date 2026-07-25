@@ -194,6 +194,13 @@
 | [257-capsule-docking-core-verification.md](./257-capsule-docking-core-verification.md) | “太空舱对接”三航段规则核心、确定性 fixture、公开 DTO 与初次核心验收 |
 | [349-capsule-docking-core-verification.md](./349-capsule-docking-core-verification.md) | “太空舱对接”的 hostile Proxy 与 control 加固、22 项核心测试及来源复验 |
 | [384-capsule-docking-final-verification.md](./384-capsule-docking-final-verification.md) | “转一点，推一点，刚好回家”的 29 项定向测试、三航段/六 Gate、六视口/输入/降级矩阵与两项浏览器问题闭环 |
+| [299-ricochet-tank-duel-research.md](./299-ricochet-tank-duel-research.md) | V13“像素坦克折射战”的连续碰撞、同屏双输入、A 级本地边界与固定来源调研 |
+| [300-ricochet-tank-duel-brainstorm.md](./300-ricochet-tank-duel-brainstorm.md) | “这一弹，拐弯见你”的双席移动、三次命中、反射上限和公平暂停产品决策 |
+| [301-ricochet-tank-duel-spec.md](./301-ricochet-tank-duel-spec.md) | 弹射坦克的固定步、连续碰撞、同 tick 原子结算、重放与验收规格 |
+| [302-ricochet-tank-duel-plan.md](./302-ricochet-tank-duel-plan.md) | 弹射坦克几何、模拟、生产 UI、catalog、Chrome 与独立提交实施计划 |
+| [312-ricochet-tank-duel-design-proposal.md](./312-ricochet-tank-duel-design-proposal.md) | 深靛棱镜折射台的桌面/移动概念、珊瑚/湖蓝双席语义与 code-native 偏差台账 |
+| [358-ricochet-tank-duel-core-verification.md](./358-ricochet-tank-duel-core-verification.md) | 弹射坦克镜像、状态可达性、47 项确定性核心测试与来源复验 |
+| [390-ricochet-tank-duel-final-verification.md](./390-ricochet-tank-duel-final-verification.md) | “这一弹，拐弯见你”的 56 项定向测试、双输入、六视口、无 JS 与四项浏览器问题闭环 |
 | [305-twin-orbit-research.md](./305-twin-orbit-research.md) | “双星同轨”的五关同刻穿门、双席职责、名称冲突、本地 A 级与机制去重调研 |
 | [306-twin-orbit-spec.md](./306-twin-orbit-spec.md) | “这一圈，和你同时到”的固定步、双轨速度、五关状态机、公开投影与完整验收规格 |
 | [307-twin-orbit-attribution-dependency-audit.md](./307-twin-orbit-attribution-dependency-audit.md) | 双星同轨的内部机制参考、外部来源、许可证、名称与零复制边界审计 |
