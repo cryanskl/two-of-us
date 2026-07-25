@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `9c93192` |
+| 当前 HEAD | `f8e3302` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -28,7 +28,7 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 三关、独立求解器、40 条核心 Gate 与确定性分支 learn 已集成；正在完成 `334` 核心验证 |
+| Worker 1 | 已分配 | `seven-piece-duet` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-ui` | `codex/exp-seven-piece-duet-ui` | `f8e3302` | `memory-merge-board` 核心与 `334` 已完成并释放槽位；现使用 Image Gen 制作桌面/移动概念与 `338` 视觉合同，不写生产 UI |
 | Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架已集成为 `3426c57`；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
 | Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 固定 Natural Earth 地图及双 SHA 派生链已集成为 `7a9d106`；继续私人题包、地图数学、规则和房间协议 |
 | Worker 4 | 已分配 | `memory-merge-board` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-ui` | `codex/exp-memory-merge-board-ui` | `580b940` | 使用 Image Gen 制作桌面/移动完整概念与 `335` 视觉合同；只供用户确认，不写生产 UI |
@@ -107,8 +107,8 @@
 | `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 四阶段均已集成 |
 | `seven-piece-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 四阶段及边界修订均已集成 |
 | `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 四阶段及隐私/顺序修订均已集成 |
-| `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证进行中；`335` 视觉提案已派发，`336` 最终验证保留 |
-| `seven-piece-duet` | `337–339` | Worker 2 / 总控 | `337` 核心验证进行中；`338` 视觉提案、`339` 最终验证保留 |
+| `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证已集成；`335` 视觉提案进行中，`336` 最终验证保留 |
+| `seven-piece-duet` | `337–339` | Worker 2 / Worker 1 / 总控 | `337` 核心验证进行中；`338` 视觉提案已派发，`339` 最终验证保留 |
 | `our-place-guess` | `340–342` | Worker 3 / 总控 | `340` 核心验证进行中；`341` 视觉提案、`342` 最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
@@ -140,6 +140,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `memory-merge-board` 核心验收 | `d8ac7a6` | `f8e3302` | `40 / 40`、全仓 `2199 / 2199`、verify、diff-check、范围与归因复核 | Core Go；完整项目仍等待用户确认视觉、生产 UI、`file://`/输入/响应式/无障碍/双人试玩与最终接入，不计 installed |
 | `memory-merge-board` 可解关卡与求解证明 | `7bbdfa7`、`6b0d3b0`、`5ddc227` | `7e41335`、`3c6c857`、`9c93192` | 定向 `40 / 40`；全仓 `2199 / 2199`；verify | 三个固定关卡由独立确定性搜索和真实 reducer 双重证明；catalog 路径真实 bug 已记录；无 UI，不计 installed |
 | `our-place-guess` 离线地图 | `0b7e35d` | `7a9d106` | 定向 `5 / 5`、派生 `--check`、输入/输出双 SHA、全仓 `2199 / 2199`、verify | Natural Earth v5.1.2 public-domain land 固定派生；运行时只读 123,906 字节本地资产；无 UI，不计 installed |
 | `seven-piece-duet` 核心脚手架 | `89b6108` | `3426c57` | diff-check、归因边界与 verify | README、双 MIT/W3C 借鉴声明、零依赖 CommonJS 边界；无实现/UI，不计 installed |
