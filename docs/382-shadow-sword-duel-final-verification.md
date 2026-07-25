@@ -22,11 +22,15 @@
 - 六种视口无横向溢出，交互目标最小高度 48 px；
 - `prefers-reduced-motion`、`forced-colors`、无 JavaScript 提示、焦点迁移和单一
   live status 均通过；
-- 浏览器控制台零 warning/error，页面只请求五个本地生产文件；
+- 浏览器控制台零 warning/error；修复隐式 favicon 探测后，页面只请求五个本地
+  生产文件；
 - 定向测试 36 / 36、全仓测试 2,340 / 2,340、仓库验证 61 个入口通过。
 
-本轮 Chrome 验收没有发现生产缺陷，因此没有为了凑记录而新增 `bugs/` 或 `learn/`
-文件。
+本轮 Chrome 主 Gate 后在 HTTP server access log 发现并修复 1 个隐式 favicon
+404；已按红测 → 修复 → 记录闭环沉淀到：
+
+- [`../bugs/2026-07-25-shadow-sword-duel-favicon-404.md`](../bugs/2026-07-25-shadow-sword-duel-favicon-404.md)
+- [`../learn/2026-07-25-data-favicon-for-local-html.md`](../learn/2026-07-25-data-favicon-for-local-html.md)
 
 ## 2. 生产包与本地直开边界
 
@@ -195,7 +199,12 @@ Chrome 实走：
 4. `logic.js`；
 5. `app.js`。
 
-五个请求均位于同一 `127.0.0.1:4175` 作品目录。浏览器自动化扩展自身的
+第一次关闭验收 server 时，access log 暴露浏览器额外探测 `/favicon.ico` 并得到
+404。先增加失败的静态回归，再在 `<head>` 声明空 data favicon；静态合同随后
+7 / 7 通过，并证明图标已由不发起 HTTP 的 data URL 显式接管，生产网络继续闭合为
+上面五个本地文件。
+
+五个生产请求均位于同一 `127.0.0.1:4175` 作品目录。浏览器自动化扩展自身的
 `chrome-extension://.../cursor-chat.png` 不属于页面发起的生产请求；生产 DOM、
 CSS 和 JS 都没有该 URL，也没有任何 HTTP(S) 第三方资源。
 
@@ -235,10 +244,12 @@ CSS 和 JS 都没有该 URL，也没有任何 HTTP(S) 第三方资源。
 experiences/versus/shadow-sword-duel/
 ```
 
-另仅新增本验收文档：
+另仅新增本验收与缺陷沉淀文档：
 
 ```text
 docs/382-shadow-sword-duel-final-verification.md
+bugs/2026-07-25-shadow-sword-duel-favicon-404.md
+learn/2026-07-25-data-favicon-for-local-html.md
 ```
 
 没有修改 catalog、根入口、分类、根 README、docs README、Board、共享运行时或共享
