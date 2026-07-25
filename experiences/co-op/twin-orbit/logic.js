@@ -474,6 +474,32 @@
     return player;
   }
 
+  function hasConfirmedCrossing(state, left, right, gate) {
+    function playerReachedTarget(player, target) {
+      var speed = (
+        player.lane === "inner"
+          ? CONSTANTS.INNER_SPEED
+          : CONSTANTS.OUTER_SPEED
+      );
+      var previousAngle = normalizeAngle(player.angle - speed);
+      return (
+        player.crossed
+        && player.crossingTick === state.tick
+        && player.lane === target.lane
+        && (!player.held || player.lane === "inner")
+        && crossedTarget(previousAngle, target.angle, speed)
+      );
+    }
+
+    return (
+      state.tick >= state.openWindow.start
+      && state.tick <= state.openWindow.end
+      && left.crossingTick === right.crossingTick
+      && playerReachedTarget(left, gate.targets.left)
+      && playerReachedTarget(right, gate.targets.right)
+    );
+  }
+
   function hasExactWindow(value, expected) {
     var snapshot = snapshotRecord(value, WINDOW_KEYS);
     return Boolean(
@@ -558,14 +584,7 @@
       if (
         !isPrefix(completed, completedThrough)
         || state.retryReason !== null
-        || !left.crossed
-        || !right.crossed
-        || left.crossingTick !== right.crossingTick
-        || state.tick !== left.crossingTick
-        || state.tick < state.openWindow.start
-        || state.tick > state.openWindow.end
-        || left.lane !== gate.targets.left.lane
-        || right.lane !== gate.targets.right.lane
+        || !hasConfirmedCrossing(state, left, right, gate)
       ) {
         return null;
       }
@@ -576,6 +595,7 @@
           return item.id;
         }))
         || state.retryReason !== null
+        || !hasConfirmedCrossing(state, left, right, gate)
       ) {
         return null;
       }

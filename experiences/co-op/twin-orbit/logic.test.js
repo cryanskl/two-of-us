@@ -748,6 +748,44 @@ test("terminal phases, stale epochs and safe-integer extremes stay phase-exact",
   assert.equal(reduce(intro, { type: ACTIONS.NEXT_GATE }), intro);
 });
 
+test("complete requires a reachable final same-tick crossing snapshot", () => {
+  const initial = createInitialState();
+  const finalGate = GATES[GATES.length - 1];
+  const forgedComplete = replaceState(initial, {
+    phase: "complete",
+    gateIndex: GATES.length - 1,
+    tick: 0,
+    openWindow: {
+      start: finalGate.openTick - CONSTANTS.OPEN_RADIUS,
+      center: finalGate.openTick,
+      end: finalGate.openTick + CONSTANTS.OPEN_RADIUS
+    },
+    players: {
+      left: {
+        angle: finalGate.startAngles.left,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      },
+      right: {
+        angle: finalGate.startAngles.right,
+        lane: "outer",
+        held: false,
+        crossed: false,
+        crossingTick: null
+      }
+    },
+    completedGateIds: GATES.map((gate) => gate.id)
+  });
+
+  assert.equal(getPublicView(forgedComplete).phase, "intro");
+  assert.deepEqual(
+    reduce(forgedComplete, { type: ACTIONS.RESTART }),
+    createInitialState()
+  );
+});
+
 test("public intro and complete content contain no score, winner or private solver data", () => {
   const intro = getPublicView(createInitialState());
   assert.equal(intro.phase, "intro");
