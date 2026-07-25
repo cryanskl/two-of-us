@@ -208,6 +208,13 @@
 | [295-photo-slider-race-design-proposal.md](./295-photo-slider-race-design-proposal.md) | “午夜双星拼图台”的桌面/移动概念、左右席语义、响应式与 code-native 偏差台账 |
 | [355-photo-slider-race-core-verification.md](./355-photo-slider-race-core-verification.md) | 同图滑块竞速可解性、同局公平、公开视图、图片元数据边界与核心复验 |
 | [391-photo-slider-race-final-verification.md](./391-photo-slider-race-final-verification.md) | “同一张，谁先拼回”的 41 项定向测试、完整对局、本地图片、真实触控、六视口和降级终验 |
+| [283-dual-maze-race-research.md](./283-dual-maze-race-research.md) | V16“双屏迷宫赛”的同图竞速、换席公平、固定 tick、A 级边界与固定来源调研 |
+| [284-dual-maze-race-brainstorm.md](./284-dual-maze-race-brainstorm.md) | “同路，谁先到”的四局换席、同拍结算、输入检查与公平暂停产品决策 |
+| [285-dual-maze-race-spec.md](./285-dual-maze-race-spec.md) | 双屏迷宫赛的固定种子、迷宫校验、30Hz reducer、公开视图和验收规格 |
+| [286-dual-maze-race-plan.md](./286-dual-maze-race-plan.md) | 双屏迷宫赛核心、生产 UI、双席输入、catalog、Chrome 与独立提交实施计划 |
+| [297-dual-maze-race-design-proposal.md](./297-dual-maze-race-design-proposal.md) | 暖纸白共享地图桌、钴蓝/朱砂双席语言、桌面/移动概念和 code-native 偏差台账 |
+| [356-dual-maze-race-core-verification.md](./356-dual-maze-race-core-verification.md) | 双屏迷宫赛连通性、坐标、hostile passage、公开 DTO、来源与核心复验 |
+| [392-dual-maze-race-final-verification.md](./392-dual-maze-race-final-verification.md) | “同路，谁先到”的 32 项定向测试、四局换席、真实双触控、hidden、六视口和降级终验 |
 | [305-twin-orbit-research.md](./305-twin-orbit-research.md) | “双星同轨”的五关同刻穿门、双席职责、名称冲突、本地 A 级与机制去重调研 |
 | [306-twin-orbit-spec.md](./306-twin-orbit-spec.md) | “这一圈，和你同时到”的固定步、双轨速度、五关状态机、公开投影与完整验收规格 |
 | [307-twin-orbit-attribution-dependency-audit.md](./307-twin-orbit-attribution-dependency-audit.md) | 双星同轨的内部机制参考、外部来源、许可证、名称与零复制边界审计 |
