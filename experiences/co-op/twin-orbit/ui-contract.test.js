@@ -14,6 +14,7 @@ const PRODUCTION_FILES = Object.freeze([
   "logic.js",
   "fixtures.js",
   "app.js",
+  "favicon.svg",
   "README.md",
   "ATTRIBUTION.md"
 ]);
@@ -53,6 +54,10 @@ test("A 级生产包完整，并按冻结顺序加载四个经典相对脚本", 
     '<script src="./fixtures.js"></script>',
     '<script src="./app.js"></script>'
   ]);
+  assert.match(
+    html,
+    /<link\s+rel=["']icon["']\s+href=["']\.\/favicon\.svg["']/u
+  );
   assert.doesNotMatch(html, /<script[^>]*\btype=["']module["']/iu);
   assert.doesNotMatch(html, /<(?:base|iframe|frame|embed|object)\b/iu);
   assert.doesNotMatch(
