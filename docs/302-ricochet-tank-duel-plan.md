@@ -89,7 +89,7 @@ npm run verify
 - 确认当前 worktree 和分支；
 - 记录基线 SHA；
 - `git status --short`；
-- 检查 `experiences/ricochet-tank-duel/` 不存在；
+- 检查 `experiences/versus/ricochet-tank-duel/` 不存在；
 - 检查 catalog 没有重复 ID；
 - 检查 docs 编号与生产 ID 未被占用；
 - 阅读相邻项目 README 和测试约定；
@@ -112,10 +112,10 @@ npm run verify
 
 ### 文件
 
-- `experiences/ricochet-tank-duel/index.html`
-- `experiences/ricochet-tank-duel/style.css`
-- `experiences/ricochet-tank-duel/js/constants.js`
-- `experiences/ricochet-tank-duel/js/app.js`
+- `experiences/versus/ricochet-tank-duel/index.html`
+- `experiences/versus/ricochet-tank-duel/style.css`
+- `experiences/versus/ricochet-tank-duel/js/constants.js`
+- `experiences/versus/ricochet-tank-duel/js/app.js`
 
 ### 内容
 
@@ -148,7 +148,7 @@ npm run verify
 
 ### 文件
 
-- `experiences/ricochet-tank-duel/tests/geometry.test.js`
+- `experiences/versus/ricochet-tank-duel/tests/geometry.test.js`
 - 必要的测试入口配置
 
 ### 用例

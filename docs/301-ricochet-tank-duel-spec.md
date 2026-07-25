@@ -50,7 +50,7 @@
 推荐生产目录：
 
 ```text
-experiences/ricochet-tank-duel/
+experiences/versus/ricochet-tank-duel/
 ├── index.html
 ├── style.css
 ├── README.md
