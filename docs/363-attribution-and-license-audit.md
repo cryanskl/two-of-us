@@ -51,6 +51,8 @@
   `heart-sprint`。
 - 40 个入口含运行图片或 SVG；58 个入口均未打包字体文件；唯一运行录音是
   `love-tree/renxi.mp3`。
+- 按本文严格字段口径：**通过 21、 中缺口 29、高缺口 7、阻断 1**。这不是对玩法
+  质量的评分；“中缺口”大多是研究证据固定或许可证链接字段缺失。
 
 ### 2.1 Surprise（17）
 
@@ -311,3 +313,20 @@ Gate 应把 manifest 与 lockfile、HTML/CSS/JS 引用、媒体文件清单和�
 集合连接，而不是把“有标题”当成完成。对于 `usage=researched|excluded`，可以不随包
 复制许可证正文，但仍应固定研究证据；对于 `copied|modified|linked`，必须按许可证
 要求保留正文、版权与 notice。
+
+## 8. 本分支验收
+
+新 worktree 初始没有 `node_modules`，第一次 `npm run verify` 因 Pannellum 白名单
+文件未安装而失败。按现有 lockfile 执行 `npm ci` 后没有修改
+`package.json`/`package-lock.json`，随后结果为：
+
+| Gate | 结果 |
+| --- | --- |
+| 全仓测试 | 111 个测试文件；2296/2296 通过，0 fail |
+| attribution/contract 定向测试 | `experience-contracts`、`capabilities`、`vendor` 共 78/78 通过 |
+| `npm run verify` | 通过；58 个入口（50 A + 8 非 A）和 1 个能力声明 |
+| Markdown 本地链接 | 833 个 Markdown 文件、2190 个本地链接、0 缺失 |
+| `git diff --check 5e76c23..HEAD` | 通过 |
+
+需要强调：现有 `npm run verify` 通过只说明当前实现的既有检查通过；第 5.2 节已证明
+它尚不能作为许可证语义完整性的充分证据。
