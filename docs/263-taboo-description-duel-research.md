@@ -285,10 +285,10 @@ A 级最终证据仍需三层：
 - 到时只派发一次 `TIME_EXPIRED`，和最后一次按钮动作通过 revision 串行化；
 - 数字秒数是唯一时间语义，CSS 圆环不得决定到时。
 
-[W3C Page Visibility](https://www.w3.org/TR/page-visibility-2/)
-定义了 `document.visibilityState` 与 `visibilitychange`，并明确示例可据此暂停或
-调整处理。这里采用更保守的中断遮屏，避免后台节流导致时间漂移，也避免恢复后
-秘密词卡仍裸露。
+[WHATWG HTML Living Standard 的 Page visibility 章节](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility)
+定义了 Document 的 `hidden / visible` 可见性状态，以及状态更新时在 Document
+触发的 `visibilitychange` 事件。这里采用更保守的中断遮屏，避免后台节流导致
+时间漂移，也避免恢复后秘密词卡仍裸露。
 
 ## 8. 输入、无障碍与降动效
 
@@ -360,7 +360,7 @@ A 级最终证据仍需三层：
 | [W3C Web Speech API](https://webaudio.github.io/web-speech-api/) | 确认语音识别的本地/远程实现、同意与录音指示边界 | 不把示例代码、麦克风或语音服务引入项目 |
 | [W3C WCAG 2.2 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) | 键盘等价路径 | 不宣称完整 WCAG 认证 |
 | [W3C WCAG 2.2 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html) | 提供不计时与可调时限 | 不以游戏性为借口取消可调方案 |
-| [W3C Page Visibility](https://www.w3.org/TR/page-visibility-2/) | 隐藏时中断、遮屏与恢复 | 不使用页面可见性作为防作弊证明 |
+| [WHATWG HTML Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility) | 隐藏时中断、遮屏与恢复 | 不使用页面可见性作为防作弊证明 |
 
 ## 11. 下一阶段
 
