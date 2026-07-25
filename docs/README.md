@@ -201,6 +201,13 @@
 | [312-ricochet-tank-duel-design-proposal.md](./312-ricochet-tank-duel-design-proposal.md) | 深靛棱镜折射台的桌面/移动概念、珊瑚/湖蓝双席语义与 code-native 偏差台账 |
 | [358-ricochet-tank-duel-core-verification.md](./358-ricochet-tank-duel-core-verification.md) | 弹射坦克镜像、状态可达性、47 项确定性核心测试与来源复验 |
 | [390-ricochet-tank-duel-final-verification.md](./390-ricochet-tank-duel-final-verification.md) | “这一弹，拐弯见你”的 56 项定向测试、双输入、六视口、无 JS 与四项浏览器问题闭环 |
+| [287-photo-slider-race-research.md](./287-photo-slider-race-research.md) | V15“同图滑块竞速”的可解同局、双席输入、本地照片隐私、A 级边界与固定来源调研 |
+| [288-photo-slider-race-brainstorm.md](./288-photo-slider-race-brainstorm.md) | “同一张，谁先拼回”的同局公平、100 ms 并列窗、图片处理与显式暂停产品决策 |
+| [289-photo-slider-race-spec.md](./289-photo-slider-race-spec.md) | 同图滑块竞速的确定性乱序、双席状态机、本地图片生命周期、输入和验收规格 |
+| [290-photo-slider-race-plan.md](./290-photo-slider-race-plan.md) | 同图滑块竞速核心、生产 UI、图片管线、catalog、Chrome 与独立提交实施计划 |
+| [295-photo-slider-race-design-proposal.md](./295-photo-slider-race-design-proposal.md) | “午夜双星拼图台”的桌面/移动概念、左右席语义、响应式与 code-native 偏差台账 |
+| [355-photo-slider-race-core-verification.md](./355-photo-slider-race-core-verification.md) | 同图滑块竞速可解性、同局公平、公开视图、图片元数据边界与核心复验 |
+| [391-photo-slider-race-final-verification.md](./391-photo-slider-race-final-verification.md) | “同一张，谁先拼回”的 41 项定向测试、完整对局、本地图片、真实触控、六视口和降级终验 |
 | [305-twin-orbit-research.md](./305-twin-orbit-research.md) | “双星同轨”的五关同刻穿门、双席职责、名称冲突、本地 A 级与机制去重调研 |
 | [306-twin-orbit-spec.md](./306-twin-orbit-spec.md) | “这一圈，和你同时到”的固定步、双轨速度、五关状态机、公开投影与完整验收规格 |
 | [307-twin-orbit-attribution-dependency-audit.md](./307-twin-orbit-attribution-dependency-audit.md) | 双星同轨的内部机制参考、外部来源、许可证、名称与零复制边界审计 |

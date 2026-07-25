@@ -757,6 +757,19 @@
       "networkRequired": false
     },
     {
+      "id": "photo-slider-race",
+      "title": "同一张，谁先拼回",
+      "category": "versus",
+      "level": "A",
+      "players": "2 人对抗",
+      "devices": "单设备同屏",
+      "entry": "experiences/versus/photo-slider-race/index.html",
+      "readme": "experiences/versus/photo-slider-race/README.md",
+      "description": "两人用同一张图和完全相同的可解乱序同时拼 3×3 滑块；支持双键盘区、触屏和只在当前页面处理的本地照片。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "balloon-dare",
       "title": "气球胆量局",
       "category": "versus",
