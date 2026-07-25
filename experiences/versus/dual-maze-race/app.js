@@ -271,6 +271,7 @@
     var showResult = phase === "heat-result" || phase === "match-result";
     var showControls = showCheck || showRace;
 
+    document.body.dataset.phase = phase;
     elements.introPanel.hidden = phase !== "intro";
     elements.checkPanel.hidden = !showCheck;
     elements.raceStage.hidden = !showRace;
