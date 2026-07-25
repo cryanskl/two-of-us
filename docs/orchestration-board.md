@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `d5e780c` |
+| 当前 HEAD | `0f778fe` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2154 / 2154` 通过 |
-| 工作树提示 | 禁词绕行与四符号影视视觉提案已集成并等待用户确认；黑胶隐语视觉提案继续推进，两个全新 A 级候选进入前置去重与规格阶段 |
+| 工作树提示 | 黑胶隐语视觉提案已集成并等待用户确认；两个全新 A 级候选与一个复用本地房间 runtime 的 C 级候选进入前置去重与规格阶段 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `memory-merge-board` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board` | `codex/exp-memory-merge-board` | `d5e780c` | 实时来源、许可证与重复机制审计后，依次提交 research、brainstorm、spec、plan；不写生产代码 |
 | Worker 2 | 已分配 | `tangram-heart-duet` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/tangram-heart-duet` | `codex/exp-tangram-heart-duet` | `d5e780c` | 实时来源、许可证、几何合同与重复机制审计后，依次提交 research、brainstorm、spec、plan；不写生产代码 |
-| Worker 3 | 已分配 | `vinyl-secret` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret-ui` | `codex/exp-vinyl-secret-ui` | `ab8665d` | 非视觉核心已集成；只制作概念与设计合同，用户确认前不写生产 UI |
+| Worker 3 | 已分配 | `our-place-guess` 前置四阶段 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess` | `codex/exp-our-place-guess` | `0f778fe` | 核验 Posio、离线地图权利与现有 C 级房间复用边界，依次提交 research、brainstorm、spec、plan |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -103,9 +103,10 @@
 | `kaleidoscope-names` | `314–315` | Worker 3 / 总控 | `314` 视觉提案已集成并等待用户确认，`315` 最终验证保留 |
 | `word-detour-duel` | `316–317` | Worker 2 / 总控 | `316` 视觉提案已集成并等待用户确认，`317` 最终验证保留 |
 | `four-symbol-film-duel` | `318–319` | Worker 1 / 总控 | `318` 视觉提案已集成并等待用户确认，`319` 最终验证保留 |
-| `vinyl-secret` | `320–321` | Worker 3 / 总控 | `320` 视觉提案进行中，`321` 最终验证保留 |
+| `vinyl-secret` | `320–321` | Worker 3 / 总控 | `320` 视觉提案已集成并等待用户确认，`321` 最终验证保留 |
 | `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 依次推进 |
 | `tangram-heart-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 依次推进 |
+| `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 依次推进 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -130,11 +131,13 @@
 | `kaleidoscope-names` | 生产 UI 等待视觉方向确认 | `docs/314-kaleidoscope-names-design-proposal.md` | 用户 | 确认深紫光学调校台、单人异步揭晓方向或提出修改 |
 | `word-detour-duel` | 生产 UI 等待视觉方向确认 | `docs/316-word-detour-duel-design-proposal.md` | 用户 | 确认纸面路线改道指挥台、中央目标与四条封路方向或提出修改 |
 | `four-symbol-film-duel` | 生产 UI 等待视觉方向确认 | `docs/318-four-symbol-film-duel-design-proposal.md` | 用户 | 确认复古影院票根台、猜题与交接遮挡方向或提出修改 |
+| `vinyl-secret` | 生产 UI 等待视觉方向确认 | `docs/320-vinyl-secret-design-proposal.md` | 用户 | 确认私人压片工作台、默认无音频和异步单人寻轨方向或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `vinyl-secret` 视觉提案 | `093f6c0` | `0f778fe` | 定向 `37 / 37`；原图检查、SHA-256、range diff-check、verify | 私人压片工作台；默认无音频、秘密字段按 phase 不存在、运行界面 code-native，等待用户确认，不计 installed |
 | `word-detour-duel` 视觉提案 | `947f40a` | `d5e780c` | 定向 `16 / 16`；原图检查、SHA-256、range diff-check、verify | 纸面路线改道指挥台；秘密子树卸载与交接遮挡合同已冻结，等待用户确认，不计 installed |
 | `four-symbol-film-duel` 视觉提案 | `a8d6592` | `c032f31` | 定向 `25 / 25`；原图检查、SHA-256、range diff-check、verify | 复古影院票根台；厂商 Emoji 仅作概念，生产使用代码原生 Unicode 与中文等价标签，等待用户确认，不计 installed |
 | `kaleidoscope-names` 视觉提案 | `5312a5c` | `ab8665d` | 定向 `24 / 24`；原图检查、SHA-256、range diff-check、verify | 调校/完成双 phase；已修正为准备者离线配置、体验者单人揭晓，等待用户确认，不计 installed |
