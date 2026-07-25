@@ -5,6 +5,7 @@ import { createServer } from "node:http";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import { RoomError, RoomRegistry } from "./rooms.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
 import { createRuntimeServer, registerRoomProtocol } from "./server.js";
@@ -123,6 +124,8 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   assert.equal(healthResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.equal(health.ok, true);
   assert.equal(health.port, details.port);
+  assert.match(health.contentIdentity, /^sha256:[a-f0-9]{64}$/);
+  assert.doesNotMatch(JSON.stringify(health), new RegExp(projectRootPattern()));
   assert.match(health.qrDataUrl, /^data:image\/png;base64,/);
   assert.equal(catalog.experiences[0].id, "love-tree");
   assert.equal(catalogResponse.headers.get("x-two-of-us-runtime"), "1");
@@ -156,6 +159,11 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   await runtime.stop();
   assert.equal(runtime.httpServer.listening, false);
 });
+
+function projectRootPattern() {
+  const root = path.resolve(fileURLToPath(new URL("../../", import.meta.url)));
+  return root.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 test("runtime advertises its IPv4 listener even when the same port has an IPv6-only service", async (context) => {
   const foreign = createServer((_request, response) => response.end("ipv6-foreign"));

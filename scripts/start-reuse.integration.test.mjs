@@ -66,6 +66,33 @@ test("a foreign HTTP service on the preferred port is skipped and a new runtime 
   assert.equal(await canListen(port + 1), true);
 });
 
+test("a same-protocol runtime with different content stays alive while launcher uses the next port", {
+  timeout: 20_000,
+}, async (context) => {
+  const reservation = await reserveConsecutivePorts();
+  const { port } = reservation;
+  await closeServers(reservation.servers);
+
+  const mismatched = createMismatchedRuntime(port);
+  mismatched.listen(port, "127.0.0.1");
+  await once(mismatched, "listening");
+  context.after(() => new Promise((resolve) => mismatched.close(resolve)));
+
+  const launcher = startProcess(port, "panorama-memory");
+  context.after(() => terminateChild(launcher.child));
+  await launcher.waitFor(`本机入口：http://127.0.0.1:${port + 1}/`);
+  assert.match(launcher.output(), /Two of Us 已启动/);
+  assert.doesNotMatch(launcher.output(), /正在复用/);
+  assert.equal(launcher.child.exitCode, null);
+
+  const markerResponse = await fetch(`http://127.0.0.1:${port}/marker`);
+  assert.equal(await markerResponse.text(), "older-checkout");
+  assert.equal(mismatched.listening, true);
+
+  await terminateChild(launcher.child);
+  assert.equal(await canListen(port + 1), true);
+});
+
 async function reserveConsecutivePorts() {
   for (let port = 43000; port < 65000; port += 2) {
     const first = await tryListen(port);
@@ -94,6 +121,50 @@ async function tryListen(port) {
 
 async function closeServers(servers) {
   await Promise.all(servers.map((server) => new Promise((resolve) => server.close(resolve))));
+}
+
+function createMismatchedRuntime(port) {
+  return createServer((request, response) => {
+    response.setHeader("x-two-of-us-runtime", "1");
+    response.setHeader("content-type", "application/json");
+    if (request.url === "/api/health") {
+      response.end(JSON.stringify({
+        ok: true,
+        service: "two-of-us",
+        version: 1,
+        port,
+        localUrl: `http://127.0.0.1:${port}/`,
+        contentIdentity: `sha256:${"0".repeat(64)}`,
+      }));
+      return;
+    }
+    if (request.url === "/api/catalog") {
+      response.end(JSON.stringify({
+        schemaVersion: 1,
+        experiences: [{
+          id: "panorama-memory",
+          title: "旧 checkout",
+          category: "surprise",
+          level: "B",
+          players: "1 人",
+          devices: "单设备",
+          entry: "experiences/surprises/panorama-memory/index.html",
+          readme: "experiences/surprises/panorama-memory/README.md",
+          description: "旧内容",
+          installed: true,
+          networkRequired: false,
+        }],
+      }));
+      return;
+    }
+    if (request.url === "/marker") {
+      response.setHeader("content-type", "text/plain; charset=utf-8");
+      response.end("older-checkout");
+      return;
+    }
+    response.statusCode = 404;
+    response.end("{}");
+  });
 }
 
 function startProcess(port, experienceId) {

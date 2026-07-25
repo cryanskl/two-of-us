@@ -13,6 +13,8 @@ import {
   RUNTIME_PROTOCOL_VERSION,
 } from "./runtime-reuse.mjs";
 
+const expectedContentIdentity = `sha256:${"a".repeat(64)}`;
+
 function catalogEntry(overrides = {}) {
   const value = {
     id: "panorama-memory",
@@ -58,7 +60,7 @@ function response(url, value, overrides = {}) {
   };
 }
 
-function successfulFetch(log = []) {
+function successfulFetch(log = [], contentIdentity = expectedContentIdentity) {
   return async (url, options) => {
     log.push({ url, options });
     if (url.endsWith("api/health")) {
@@ -70,6 +72,7 @@ function successfulFetch(log = []) {
         version: 1,
         port,
         localUrl: `http://127.0.0.1:${port}/`,
+        contentIdentity,
         ignored: true,
       });
     }
@@ -103,6 +106,7 @@ test("successful probe performs exact health/catalog GETs without browser side e
     preferredPort: 4173,
     maxPortAttempts: 1,
     experienceId: "panorama-memory",
+    expectedContentIdentity,
   }, { fetchImpl: successfulFetch(log) });
   assert.deepEqual(Object.keys(result), ["localUrl", "openUrl", "catalog"]);
   assert.equal(result.localUrl, "http://127.0.0.1:4173/");
@@ -121,7 +125,7 @@ test("successful probe performs exact health/catalog GETs without browser side e
 
 test("experienceId null resolves the reusable root portal", async () => {
   const result = await findReusableRuntime({
-    preferredPort: 4173, maxPortAttempts: 1, experienceId: null,
+    preferredPort: 4173, maxPortAttempts: 1, experienceId: null, expectedContentIdentity,
   }, { fetchImpl: successfulFetch() });
   assert.equal(result.openUrl, "http://127.0.0.1:4173/");
 });
@@ -139,7 +143,9 @@ test("invalid status/header/url never reads the rejected response body", async (
       rejectedResponse = response(url, {}, overrides);
       return rejectedResponse;
     };
-    assert.equal(await probeRuntimeCandidate("http://127.0.0.1:4173/", null, { fetchImpl }), null);
+    assert.equal(await probeRuntimeCandidate(
+      "http://127.0.0.1:4173/", null, expectedContentIdentity, { fetchImpl },
+    ), null);
     assert.equal(rejectedResponse.jsonCalls, 0);
   }
 });
@@ -158,18 +164,23 @@ test("catalog status/header/url gates also reject before reading its body", asyn
       catalogResponse = response(url, {}, overrides);
       return catalogResponse;
     };
-    assert.equal(await probeRuntimeCandidate("http://127.0.0.1:4173/", null, { fetchImpl }), null);
+    assert.equal(await probeRuntimeCandidate(
+      "http://127.0.0.1:4173/", null, expectedContentIdentity, { fetchImpl },
+    ), null);
     assert.equal(catalogResponse.jsonCalls, 0);
   }
 });
 
 test("wrong health, malformed catalog, and unavailable targets fail closed", async () => {
   const badHealthValues = [
-    { ok: false, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/" },
-    { ok: true, service: "other", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/" },
-    { ok: true, service: "two-of-us", version: 2, port: 4173, localUrl: "http://127.0.0.1:4173/" },
-    { ok: true, service: "two-of-us", version: 1, port: 4174, localUrl: "http://127.0.0.1:4173/" },
-    { ok: true, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4174/" },
+    { ok: false, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/", contentIdentity: expectedContentIdentity },
+    { ok: true, service: "other", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/", contentIdentity: expectedContentIdentity },
+    { ok: true, service: "two-of-us", version: 2, port: 4173, localUrl: "http://127.0.0.1:4173/", contentIdentity: expectedContentIdentity },
+    { ok: true, service: "two-of-us", version: 1, port: 4174, localUrl: "http://127.0.0.1:4173/", contentIdentity: expectedContentIdentity },
+    { ok: true, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4174/", contentIdentity: expectedContentIdentity },
+    { ok: true, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/" },
+    { ok: true, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/", contentIdentity: "sha256:not-a-digest" },
+    { ok: true, service: "two-of-us", version: 1, port: 4173, localUrl: "http://127.0.0.1:4173/", contentIdentity: `sha256:${"b".repeat(64)}` },
   ];
   for (const health of badHealthValues) {
     let requests = 0;
@@ -177,7 +188,9 @@ test("wrong health, malformed catalog, and unavailable targets fail closed", asy
       requests += 1;
       return response(url, health);
     };
-    assert.equal(await probeRuntimeCandidate("http://127.0.0.1:4173/", null, { fetchImpl }), null);
+    assert.equal(await probeRuntimeCandidate(
+      "http://127.0.0.1:4173/", null, expectedContentIdentity, { fetchImpl },
+    ), null);
     assert.equal(requests, 1);
   }
 
@@ -192,7 +205,9 @@ test("wrong health, malformed catalog, and unavailable targets fail closed", asy
     const fetchImpl = async (url) => (url.endsWith("api/health")
       ? successfulFetch()(url, {}) : response(url, data));
     const id = data.experiences?.length === 0 ? "missing" : "panorama-memory";
-    assert.equal(await probeRuntimeCandidate("http://127.0.0.1:4173/", id, { fetchImpl }), null);
+    assert.equal(await probeRuntimeCandidate(
+      "http://127.0.0.1:4173/", id, expectedContentIdentity, { fetchImpl },
+    ), null);
   }
 });
 
@@ -220,7 +235,10 @@ test("network failure and timeout abort continue to the next candidate and clear
     return successfulFetch()(url, options);
   };
   const result = await findReusableRuntime({
-    preferredPort: 4173, maxPortAttempts: 2, experienceId: "panorama-memory",
+    preferredPort: 4173,
+    maxPortAttempts: 2,
+    experienceId: "panorama-memory",
+    expectedContentIdentity,
   }, { fetchImpl, setTimeoutImpl, clearTimeoutImpl });
   assert.equal(firstAborted, true);
   assert.equal(result.localUrl, "http://127.0.0.1:4174/");
@@ -235,7 +253,7 @@ test("connection failure on one candidate does not prevent a later success", asy
     return successfulFetch()(url, options);
   };
   const result = await findReusableRuntime({
-    preferredPort: 4173, maxPortAttempts: 2, experienceId: null,
+    preferredPort: 4173, maxPortAttempts: 2, experienceId: null, expectedContentIdentity,
   }, { fetchImpl });
   assert.equal(result.localUrl, "http://127.0.0.1:4174/");
   assert.equal(visited[0], "http://127.0.0.1:4173/api/health");
@@ -293,7 +311,9 @@ test("real fetch refuses health/catalog same-origin, cross-origin, and multi-hop
     redirectServer.listen(0, "127.0.0.1");
     await once(redirectServer, "listening");
     const port = redirectServer.address().port;
-    assert.equal(await probeRuntimeCandidate(`http://127.0.0.1:${port}/`, null), null);
+    assert.equal(await probeRuntimeCandidate(
+      `http://127.0.0.1:${port}/`, null, expectedContentIdentity,
+    ), null);
     await new Promise((resolve) => redirectServer.close(resolve));
   }
 });
