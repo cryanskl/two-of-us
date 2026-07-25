@@ -58,8 +58,8 @@ experiences/versus/dual-maze-race/
 ```text
 ROWS = 9
 COLS = 9
-START = { row: 0, col: 4 }
-GOAL = { row: 8, col: 4 }
+START = { row: 4, col: 0 }
+GOAL = { row: 4, col: 8 }
 TICK_HZ = 30
 TICK_MS = 1000 / 30
 COUNTDOWN_TICKS = 90
