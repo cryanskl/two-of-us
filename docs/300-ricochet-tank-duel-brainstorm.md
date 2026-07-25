@@ -1,7 +1,7 @@
 # 「这一弹，拐弯见你」方案发散与收敛
 
-> 候选 ID：`ricochet-tank-duel`  
-> 前置结论：`docs/299-ricochet-tank-duel-research.md` 判定为有条件 Go  
+> 候选 ID：`ricochet-tank-duel`
+> 前置结论：`docs/299-ricochet-tank-duel-research.md` 判定为有条件 Go
 > 本文目标：比较可行玩法骨架，冻结第一版方向，不进入生产实现
 
 ## 1. 设计命题

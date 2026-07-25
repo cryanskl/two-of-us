@@ -1,8 +1,8 @@
 # 「这一弹，拐弯见你」调研报告
 
-> 候选 ID：`ricochet-tank-duel`  
-> 来源：V13「像素坦克折射战」  
-> 推荐结论：**有条件 Go**  
+> 候选 ID：`ricochet-tank-duel`
+> 来源：V13「像素坦克折射战」
+> 推荐结论：**有条件 Go**
 > 推荐等级 / 分类：**A / 对战**
 
 ## 1. 结论先行
@@ -411,26 +411,26 @@ npm 只作为仓库级开发与验证工具，不是玩家运行依赖。
 
 ### 连续碰撞与确定性
 
-1. Min Tang, Young J. Kim, Dinesh Manocha, *Controlled Conservative Advancement for Continuous Collision Detection of Polygonal Models*, ICRA 2009.  
+1. Min Tang, Young J. Kim, Dinesh Manocha, *Controlled Conservative Advancement for Continuous Collision Detection of Polygonal Models*, ICRA 2009.
    https://gamma-web.iacs.umd.edu/papers/documents/articles/2009/tang09.pdf
-2. Jeff Linahan, *Improving the Numerical Robustness of Sphere Swept Collision Detection*, 2012.  
+2. Jeff Linahan, *Improving the Numerical Robustness of Sphere Swept Collision Detection*, 2012.
    https://arxiv.org/abs/1211.0059
-3. Joachim Breitner, Chris Smith, *Lock-step simulation is child's play*, 2017.  
+3. Joachim Breitner, Chris Smith, *Lock-step simulation is child's play*, 2017.
    https://arxiv.org/abs/1705.09704
 
 ### 浏览器时间、输入与可访问性
 
-4. W3C, *High Resolution Time Level 3*.  
+4. W3C, *High Resolution Time Level 3*.
    https://www.w3.org/TR/hr-time-3/
-5. WHATWG, *HTML — Animation frames*.  
+5. WHATWG, *HTML — Animation frames*.
    https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames
-6. WHATWG, *HTML — Page visibility*.  
+6. WHATWG, *HTML — Page visibility*.
    https://html.spec.whatwg.org/multipage/interaction.html#page-visibility
-7. W3C, *Pointer Events Level 3*.  
+7. W3C, *Pointer Events Level 3*.
    https://www.w3.org/TR/pointerevents3/
-8. W3C, *Media Queries Level 5 — prefers-reduced-motion*.  
+8. W3C, *Media Queries Level 5 — prefers-reduced-motion*.
    https://www.w3.org/TR/mediaqueries-5/#prefers-reduced-motion
-9. W3C, *Web Content Accessibility Guidelines (WCAG) 2.2*.  
+9. W3C, *Web Content Accessibility Guidelines (WCAG) 2.2*.
    https://www.w3.org/TR/WCAG22/
 
 ## 11. 推荐结论
