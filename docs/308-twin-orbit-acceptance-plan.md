@@ -199,7 +199,9 @@ npm run verify
 ### 5.2 视觉 Gate
 
 - 不出现英文 “Twin Orbit”；
-- 不像 App Store 双火箭或 Playgama 反转双球生存游戏；
+- 不像 Apple 当前官方条目的双火箭/双指街机表达；
+- 不复刻 Playgama 首轮历史记录中的反转双球/陨石生存表达；该 URL 当前已
+  hidden/redirect，不能作为在架证据；
 - 不使用商业航天、NASA/SpaceX、任务徽章、国旗或真实仪表；
 - 不出现随机目标、比分、排行榜、生命值、连击或射击 HUD；
 - 两席视觉权重相等；

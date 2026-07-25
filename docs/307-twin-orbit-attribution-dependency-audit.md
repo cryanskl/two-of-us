@@ -16,7 +16,8 @@
 - **内部机制边界参考：1 个**，即本仓库 `orbit-star-race`
 - **内部去重对照：8 个以上**，不构成实现复用
 - **外部标准文档：4 类**，只用于平台与无障碍边界
-- **名称冲突证据：至少 2 个当前游戏使用 “Twin Orbit”**
+- **当前精确名称冲突证据：1 个 Apple 官方在架条目**
+- **历史检索记录：1 个 Playgama 条目，当前已 hidden/redirect**
 
 因此可以继续按 A 级、经典脚本、零运行依赖的方向设计。实施阶段不得把本结论
 理解为预先授权复制内部项目代码，也不得把“尚未引入第三方内容”误写成永久的
@@ -29,7 +30,8 @@
 | 内部机制参考 | `orbit-star-race` | 对照“半径状态选择角速度”并主动做差异化 | 否 | 否 |
 | 内部去重审计 | `capsule-docking`、`kaleidoscope-names` 等 | 证明分类和交互边界不重复 | 否 | 否 |
 | 外部标准 | W3C / WHATWG / WAI | 校准键位、Pointer、可见性、动画帧与无障碍 | 否 | 否 |
-| 名称冲突页面 | App Store、Playgama | 证明英文名不宜公开使用 | 否 | 否 |
+| 当前名称冲突 | Apple iTunes Lookup API / App Store | 证明英文名不宜公开使用 | 否 | 否 |
+| 历史检索记录 | Playgama 同名 URL | 记录首轮发现；当前已 hidden/redirect | 否 | 否 |
 
 只有未来真正复制、修改、链接、vendoring、打包或分发的第三方代码/资产，才进入
 文件级许可证、版权通知、NOTICE 和再分发义务审计。
@@ -211,28 +213,55 @@ rg -n \
 
 ## 8. 名称、商标与商业外观
 
-### 8.1 已确认的名称冲突
+### 8.1 当前已确认的名称冲突
 
-快速检索发现：
+2026-07-25 现场复核 Apple 官方
+[iTunes Lookup API](https://itunes.apple.com/lookup?id=6779551879&country=no)，
+当前结果为：
 
-1. Apple App Store 的
-   [Twin Orbit](https://apps.apple.com/no/app/twin-orbit/id6779551879) 是双火箭、
-   双指控制、收集/躲避和排行榜街机游戏；
-2. Playgama 上 Low Gear Games 的
-   [Twin Orbit](https://playgama.com/game/twin-orbit) 是点击反转两颗绕行球、
-   躲避陨石的生存游戏。
+```text
+resultCount=1
+trackId=6779551879
+trackName=Twin Orbit
+releaseDate=2026-06-23
+version=2.1
+currentVersionReleaseDate=2026-07-16
+```
 
-这已经足以做产品决定：**不把 “Twin Orbit” 用作公开作品名。**
+官方描述明确包含双火箭、双指控制、收集/躲避、连击和排行榜。对应
+[App Store 页面](https://apps.apple.com/no/app/twin-orbit/id6779551879)。
 
-### 8.2 冻结名称策略
+这个单一、当前、官方、同类游戏条目已经足以支持产品决定：
+**不把 “Twin Orbit” 用作公开作品名。**
+
+### 8.2 Playgama 历史记录与当前状态
+
+首轮检索曾从 Playgama 的同名 URL 读到 Low Gear Games 的点击反转双球、躲避
+陨石生存游戏描述。2026-07-25 现场复核
+[该 URL](https://playgama.com/game/twin-orbit) 时，服务器当前返回：
+
+```text
+HTTP 301
+location: /category/space
+x-bff-redirect-mechanism: category_fallback
+x-bff-redirect-reason: game_hidden
+```
+
+因此它只作为首轮检索发现过的历史记录，用于提醒不要复刻“反转双球 + 陨石
+生存”的组合表达；它**不是**当前可访问、当前在架、商标存续或权利状态证据。
+来源状态问题见
+[`bugs/2026-07-25-twin-orbit-playgama-source-status.md`](../bugs/2026-07-25-twin-orbit-playgama-source-status.md)。
+
+### 8.3 冻结名称策略
 
 - `twin-orbit`：仅作仓库内部 ID、分支和当前文档定位；
 - `这一圈，和你同时到`：公开页面、门户卡片、README 和截图标题；
 - 不在 logo、favicon、元数据、分享文案或图像中出现 “Twin Orbit”；
-- 不采用“双火箭、反转双球、陨石、生存、连击、霓虹街机、排行榜”等现有
-  产品组合表达。
+- 不采用 Apple 当前条目的“双火箭、双指、收集/躲避、连击、排行榜”组合；
+- 不复刻 Playgama 首轮历史记录中的“反转双球、陨石生存”组合，但不把该记录
+  写成当前在架证据。
 
-### 8.3 证据上限
+### 8.4 证据上限
 
 本轮没有完成：
 
@@ -241,8 +270,10 @@ rg -n \
 - 中文标题“这一圈，和你同时到”的法律清查；
 - 律师意见。
 
-因此只能说“发现英文精确名称冲突并主动避开”，不能说“中文标题已获商标
-清白”。若公开发行、商业化或上架，必须重新检索并按司法辖区评估。
+因此只能说“Apple 官方当前有一个同类英文精确名称条目，我们主动避开；另有
+一条现已 hidden/redirect 的历史检索记录”，不能说“有两个当前在架游戏”，也
+不能说“中文标题已获商标清白”。若公开发行、商业化或上架，必须重新检索并按
+司法辖区评估。
 
 ## 9. 版权、内容与素材边界
 
@@ -259,7 +290,8 @@ rg -n \
 
 ### 9.2 禁止复制
 
-- App Store / Playgama 游戏截图、图标、logo、文案、玩法组合或 UI；
+- Apple 当前条目与 Playgama 历史记录所对应作品的截图、图标、logo、文案、
+  玩法组合或 UI；
 - NASA、航天机构、商业火箭、任务徽章、国旗和真实仪表；
 - `orbit-star-race` 的代码、素材、图片和具体视觉；
 - 第三方天文摄影、星图、字体、音效、音乐、图标或纹理；

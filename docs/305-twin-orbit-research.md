@@ -228,19 +228,28 @@ discontinued draft，不作为现行规范来源。
 
 ### 9.1 名称风险
 
-2026-07-25 的快速检索发现：
+2026-07-25 的来源复核发现：
 
-- Apple App Store 已有名为
-  [Twin Orbit](https://apps.apple.com/no/app/twin-orbit/id6779551879) 的双火箭
-  街机游戏；
-- Playgama 也列有 Low Gear Games 的
-  [Twin Orbit](https://playgama.com/game/twin-orbit)，核心是点击反转两颗绕行球。
+- Apple 官方
+  [iTunes Lookup API](https://itunes.apple.com/lookup?id=6779551879&country=no)
+  当前返回 `resultCount=1`：`trackId=6779551879`、`trackName=Twin Orbit`、
+  `releaseDate=2026-06-23`、`version=2.1`、
+  `currentVersionReleaseDate=2026-07-16`；描述明确包含双火箭、双指控制、收集/
+  躲避和排行榜。对应
+  [App Store 页面](https://apps.apple.com/no/app/twin-orbit/id6779551879)；
+- 首轮检索曾从 Playgama 的同名 URL 读到 Low Gear Games 的点击反转双球、
+  躲避陨石描述；但当前
+  [该 URL](https://playgama.com/game/twin-orbit) 返回 `301` 到
+  `/category/space`，响应头为 `x-bff-redirect-reason: game_hidden`。它只保留为
+  2026-07-25 首轮检索的历史记录，不是当前可访问或在架证据。
 
 因此：
 
 - `twin-orbit` 只作当前仓库内部工作 ID；
 - 页面标题、卡片标题、README 标题和未来截图都使用“这一圈，和你同时到”；
-- 不使用上述游戏的名称呈现、火箭、双球反转、陨石、生存、排行榜、视觉或文案；
+- Apple 当前官方条目单独足以支持英文名称避让；
+- 不使用 Apple 当前条目及 Playgama 历史记录中的名称呈现、火箭、双球反转、
+  陨石、生存、排行榜、视觉或文案；
 - 本轮检索不是法律意见，也不是商标清查；
 - 若未来公开发布、商业化或上架，必须用 USPTO TSDR、WIPO Global Brand
   Database 和目标司法辖区数据库做正式检索，并视风险更换目录 ID。
