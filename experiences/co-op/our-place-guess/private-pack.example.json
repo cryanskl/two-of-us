@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "title": "四段虚构的共同回忆",
+  "finalNote": "请把私人题包保存在本项目静态目录之外。",
+  "cards": [
+    {
+      "id": "paper-map-one",
+      "title": "第一张纸地图",
+      "clue": "用一句只有你们理解、但不包含地址的纯文本替换这里。",
+      "era": "某个季节",
+      "target": {
+        "longitude": 12.5,
+        "latitude": 41.9
+      },
+      "revealNote": "用一句揭晓后才出现的纯文本替换这里。"
+    },
+    {
+      "id": "paper-map-two",
+      "title": "第二张纸地图",
+      "clue": "首版会严格按照文件顺序使用前四张卡。",
+      "era": "",
+      "target": {
+        "longitude": 139.7,
+        "latitude": 35.7
+      },
+      "revealNote": ""
+    },
+    {
+      "id": "paper-map-three",
+      "title": "第三张纸地图",
+      "clue": "不要把改好的私人文件放回仓库或静态目录。",
+      "era": "",
+      "target": {
+        "longitude": -43.2,
+        "latitude": -22.9
+      },
+      "revealNote": ""
+    },
+    {
+      "id": "paper-map-four",
+      "title": "第四张纸地图",
+      "clue": "房主将在页面中用文件选择器读取你的本地副本。",
+      "era": "",
+      "target": {
+        "longitude": -122.4,
+        "latitude": 37.8
+      },
+      "revealNote": "这份公开模板完全虚构，只用于说明字段格式。"
+    }
+  ]
+}
