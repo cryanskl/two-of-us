@@ -146,13 +146,19 @@ test("canonicalVertex accepts only exact safe integer data records", () => {
     { x: NaN, y: 0 },
     { x: Infinity, y: 0 },
     { x: "0", y: 0 },
-    { x: geometry.CONSTANTS.MAX_COORDINATE + 1, y: 0 },
     Object.assign(Object.create(null), { x: 0, y: 0 }),
     Object.assign(Object.create({ inherited: true }), { x: 0, y: 0 }),
     throwingProxy()
   ]) {
     assert.throws(() => geometry.canonicalVertex(invalid), TypeError);
   }
+  assert.throws(
+    () => geometry.canonicalVertex({
+      x: geometry.CONSTANTS.MAX_COORDINATE + 1,
+      y: 0
+    }),
+    RangeError
+  );
 });
 
 test("descriptor snapshots reject accessors and never invoke getters", () => {
