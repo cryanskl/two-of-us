@@ -110,6 +110,7 @@ test("visual system preserves the paper theatre and all accessibility fallbacks"
   ]) assert.equal(css.includes(expected), true, expected);
   assert.match(css, /@media\s*\([^)]*max-width:\s*390px/);
   assert.match(css, /@media\s*\([^)]*max-width:\s*844px/);
+  assert.match(css, /@media\s*\(forced-colors:\s*active\)[\s\S]*\.silhouette \.head,[\s\S]{0,240}border:\s*3px solid CanvasText/);
   assert.doesNotMatch(css, /url\s*\(/i);
 });
 
