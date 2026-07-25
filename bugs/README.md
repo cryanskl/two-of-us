@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [Attribution Gate 只检查标题导致完整性假阳性](./2026-07-25-attribution-gate-heading-only-false-positive.md)
 - [太空舱对接看板声称存在三个视觉方向，但仓库没有可审阅预览](./2026-07-25-capsule-docking-visual-direction-evidence-gap.md)
 - [共享依赖借鉴声明包含失效或未固定的来源链接](./2026-07-25-shared-dependency-attribution-link-drift.md)
 - [运行时复用会接受另一 checkout 的同协议内容](./2026-07-25-runtime-reuse-cross-checkout-drift.md)

@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `85a6c9d` |
+| 当前 HEAD | `bf2eb56` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | 21 项视觉确认总清单与 `capsule-docking` 证据漂移修复已集成；Worker 4 已滚动补位生成真实可审阅候选，许可证审计、浏览器矩阵与 `love-tree` clean-room 前置继续运行 |
+| 工作树提示 | 全仓归因/许可证审计与 58 项真实 Chrome 矩阵已集成；两个槽位待滚动补位到固定共享依赖归因和运行时内容身份修复，`love-tree` clean-room 与 `capsule-docking` 视觉补证继续运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | Penguin 七类真实边界、bug/learn 与复验已集成并释放槽位；现盘点 58 个入口及非视觉候选的来源固定性、许可证、复制边界和声明覆盖，只写 `363` 与唯一记录 |
+| Worker 1 | 已完成，待补位 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | `363`、Attribution Gate 假阳性 bug 与四清单连接 learn 已集成；58 installed 为 21 通过/29 中缺口/7 高缺口/1 阻断，21 候选当前 main 为 8/12/1 |
 | Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
-| Worker 3 | 已分配 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | Honeycomb 两类真实核心缺口、bug/learn 与复验已集成并释放槽位；现用 Chrome 验证门户、A 级直开、非 A launcher、控制台与网络边界，只写 `364` 与唯一记录 |
+| Worker 3 | 已完成，待补位 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | `364` 已集成：58/58 localhost full-load，A/C 深路径通过，B/D 权限边界诚实保留，A/B/C/D 移动代表无横溢，0 console/HTTP/公网异常 |
 | Worker 4 | 已分配 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | `365` 与证据漂移 bug 已集成并释放槽位；现按 `208` 统一方向生成 desktop/mobile 可审阅候选、`GENERATION.md` 与 `369` 提案，不修改生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -130,8 +130,8 @@
 | `honeycomb-passage` | `360` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `226` 用户确认 |
 | `emoji-movie-duel` | `361` | Worker 4 | glyph、action 快照、答案位置、来源与核心再验收已集成；生产 UI 仍等待后续视觉提案确认 |
 | 全仓依赖、runtime 与 launcher 合同审计 | `362` | Worker 2 | 已集成；确认 58/58 HTTP 入口、8/8 非 A 启动器与根依赖锁定，并记录跨 checkout 运行时复用和固定依赖链接漂移 |
-| 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已分配；只盘点并提出串行修复建议，不直接批量修改项目声明、共享索引、依赖或生产文件 |
-| 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已分配；只做真实浏览器与启动层验证并记录证据，不修改生产 UI、入口、launcher、catalog 或共享 runtime |
+| 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已集成；逐项覆盖 58 installed 与 21 候选，区分中/高缺口和公开分发阻断，并给出共享依赖与结构化 Gate 修复顺序 |
+| 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已集成；真实 Chrome 验证 58/58 localhost 首载、8/8 launcher、A/B/C/D 深路径代表、移动视口与端口释放 |
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
 | `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
 | `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已分配；补 desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句，不修改生产 UI、core 或 catalog |
@@ -168,6 +168,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| 58 个 installed 的真实浏览器首载与统一入口矩阵 | `2127d9d`、`e26219a`、`206f0f0`、`a44f81e`、`2c1eac3` | `3d63956`、`c675690`、`46b1263`、`eccab40`、`bf2eb56` | 58/58 localhost full-load；8/8 launcher；A/C 深路径；B/D 能力前置；390×844 A/B/C/D；全仓 `2301 / 2301`；verify | 0 console warning/error、0 HTTP 失败、0意外公网请求；A `file://` 由静态合同补证，照片和麦克风权限边界未绕过；无生产修改，不计 installed |
+| 全仓借鉴声明、固定来源与许可证盘点 | `58d862b`、`6ded147`、`4486203`、`eee85bf`、`a032c8a`、`75b4489`、`c175540` | `c3a24cd`、`4a79033`、`ef02b94`、`2c5752f`、`a71b3ba`、`3fe25d0`、`0507e98` | 58 installed + 21 候选；78/78 定向；2190/2190 本地链接；全仓 `2301 / 2301`；verify | `love-tree` 为当前唯一公开分发阻断并进入 clean-room；Four Symbol 当前 main 已通过；记录标题式 Gate 假阳性和四清单连接方法；无生产修改，不计 installed |
 | 待确认视觉提案总清单 | `5839d05` | `0f95f8c` | 21/21 Blocked 项；122/122 本地证据链接存在；diff-check；verify | 提供 20 项可看图批量确认模板与逐项修改语句；`capsule-docking` 因零预览保持不可批准；不修改或批准生产 UI，不计 installed |
 | 全仓依赖、runtime 与 launcher 合同审计 | `1adc0b7`、`283dfde`、`3eeedbe`、`07a238a` | `08329e0`、`edf2b56`、`a97c978`、`f51c884` | 58/58 HTTP 入口；8/8 非 A 启动器；`npm ci` 0 vulnerability；全仓 `2301 / 2301`；verify；range diff-check | 根依赖与 launcher 统一性通过；确认跨 checkout 运行时可误复用及固定依赖链接漂移，分别记录两份 bug 和一份内容身份 learn；无生产实现或 UI，不计 installed |
 | `emoji-movie-duel` 内容/动作/来源修复与核心再验收 | `5a95187`、`d2f32a4`、`296011d`、`3ca4287`、`d154b87`、`fb3ecad`、`57a2f2a`、`665395e`、`226693f`、`620410b`、`14e1213`、`eef8004`、`f7a96f2`、`066e96d` | `446e9cd`、`2c0d5e7`、`4b7e6e5`、`91e7cfe`、`972fbf4`、`324bd2a`、`a35d281`、`7364f93`、`3ec3615`、`25a1d84`、`4b5ab75`、`68b2d04`、`8ccc078`、`df02219` | 定向 `30 / 30`；组合后全仓 `2301 / 2301`；verify；range diff-check | token 只接受单个 pictographic glyph，action 采用单 descriptor 快照；32 题答案位置从 `11/12/8/1` 平衡到 `8/8/8/8`，每包每席覆盖四位置；13/13 一手来源和零第三方题库/素材复制边界已锁定；无 UI，不计 installed |

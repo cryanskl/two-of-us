@@ -6,6 +6,7 @@
 
 ## 已沉淀
 
+- [借鉴声明不是一段文案，而是四张清单的连接](./2026-07-25-attribution-is-a-source-asset-dependency-join.md)
 - [运行时兼容性不等于当前内容身份](./2026-07-25-runtime-compatibility-is-not-content-identity.md)
 - [内容不变量不能止于数量检查](./2026-07-25-content-invariants-beyond-counts.md)
 - [校验派生快照：字段自洽之外还要核对行动预算](./2026-07-25-derived-snapshot-action-budget-invariants.md)
