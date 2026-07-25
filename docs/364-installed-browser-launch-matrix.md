@@ -90,7 +90,27 @@
 
 ## 4. 非 A 首载矩阵
 
-待完成。
+统一运行时保持在 `127.0.0.1:4173`。对 8 个作品分别执行
+`node scripts/start.mjs --experience <id> --no-open`，8/8 都识别并复用了已运行服务，
+输出的“当前作品”与门户实际 `href` 完全一致；随后用真实 Chrome 导航该入口。
+
+| 级别 | id | `document.title` | 首个 `h1/h2` | 网络 | 页内返库 | 结论 |
+| --- | --- | --- | --- | ---: | ---: | --- |
+| B | panorama-memory | 回到那一天 · Two of Us | 回到那一天 | 7/7 | 0 | 通过 |
+| D | i-heard-you | 我听见了 · Two of Us | 我听见了 | 9/9 | 0 | 通过 |
+| C | together-lock | 同心解锁 · Two of Us | 隔着两块屏幕，按住同一颗心。 | 10/10 | 0 | 通过 |
+| C | lan-pictionary | 隔屏画猜 · Two of Us | 你画的，我来猜。 | 11/10 | 1 | 通过 |
+| C | compatibility-quiz | 和你一样 · Two of Us | 和你一样 | 12/12 | 0 | 通过 |
+| C | lan-connect-four | 连心四子棋 · Two of Us | 连心四子棋 | 11/11 | 0 | 通过 |
+| C | sealed-rps | 密封猜拳 · Two of Us | 密封猜拳 | 12/11 | 0 | 通过 |
+| C | heart-sprint | 心跳冲刺 · Two of Us | 心跳冲刺 | 12/12 | 0 | 通过 |
+
+### 非 A 阶段结论
+
+- 统一 launcher 复用：8/8；localhost 首载：8/8。
+- HTTP 4xx/5xx、加载失败、意外公网请求、console warning/error、首屏横向溢出：均为 0。
+- `lan-pictionary` 与 `sealed-rps` 的“请求数比响应数多 1”来自保持中的 Socket.IO/WebSocket 连接；Chrome 没有记录 `Network.loadingFailed`。
+- 只有 `lan-pictionary` 提供明确的“← 返回体验库”页内链接；其他 7 个非 A 作品需依赖浏览器后退返回门户。代表深测会真实验证这两条返回路径。
 
 ## 5. A/B/C/D 高风险代表深测
 
