@@ -1,7 +1,7 @@
 # Love Tree clean-room 重制：Brainstorm
 
-> 阶段：视觉与产品方向探索  
-> 范围：仅定义体验，不修改 `experiences/surprises/love-tree/`  
+> 阶段：视觉与产品方向探索
+> 范围：仅定义体验，不修改 `experiences/surprises/love-tree/`
 > 结论：等待用户确认视觉概念后，才进入实现
 
 ## 1. 为什么重制
@@ -19,7 +19,7 @@ Love Tree 的核心惊喜仍然成立：收礼者轻触一颗心，看见一棵�
 
 本轮只使用了以下允许材料：
 
-- `catalog/experiences.json` 中的产品目录信息；
+- `experiences/catalog.json` 中的产品目录信息；
 - `experiences/surprises/love-tree/README.md`；
 - 现有 `preview.png`；
 - 旧页面的黑盒运行画面：初始、树干生长、花冠与情书揭晓；

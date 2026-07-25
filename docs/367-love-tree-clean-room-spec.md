@@ -1,8 +1,8 @@
 # Love Tree clean-room 重制：产品与技术规格
 
-> 状态：视觉确认前的候选规格  
-> 依赖方向：原生 HTML / CSS / JavaScript，零运行时第三方依赖  
-> 生产代码状态：未开始  
+> 状态：视觉确认前的候选规格
+> 依赖方向：原生 HTML / CSS / JavaScript，零运行时第三方依赖
+> 生产代码状态：未开始
 > 前置方向：`docs/366-love-tree-clean-room-brainstorm.md`
 
 ## 1. 目标

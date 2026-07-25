@@ -1,8 +1,8 @@
 # Love Tree clean-room 视觉概念
 
-> 用途：视觉方向评审，不是生产 UI 或生产素材  
-> 方向：暮蓝纸雕花园  
-> 生成日期：2026-07-25  
+> 用途：视觉方向评审，不是生产 UI 或生产素材
+> 方向：暮蓝纸雕花园
+> 生成日期：2026-07-25
 > 前置文档：`docs/366-love-tree-clean-room-brainstorm.md`、`docs/367-love-tree-clean-room-spec.md`、`docs/368-love-tree-clean-room-plan.md`
 
 ## 1. 概念总览
