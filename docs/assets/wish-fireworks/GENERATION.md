@@ -179,7 +179,7 @@ canvas, technical message or mode switch.
 - 本轮只输入原创文字 brief 和本轮先前生成的候选，没有输入第三方图片；
 - [Fireworks.js](https://github.com/crashmax-dev/fireworks-js) 的 MIT 实现只提供
   粒子生命周期与有限动画的抽象参考；
-- [canvas-text-particle](https://github.com/tangren1998/canvas-text-particle) 与
+- [canvas-text-particle](https://github.com/dango0812/canvas-text-particle) 与
   [canvas-confetti](https://github.com/catdad/canvas-confetti) 的 ISC 实现只提供
   点阵表现和 reduced-motion 边界参考；
 - W3C Pointer Events 与 WCAG 资料只提供输入取消、目标尺寸、闪光和系统偏好
