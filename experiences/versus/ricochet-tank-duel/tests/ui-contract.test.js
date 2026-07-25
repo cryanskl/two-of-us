@@ -84,6 +84,8 @@ test("输入层以来源集合统一键盘和 pointer，并对取消与页面生
   ]) assert.match(source, new RegExp(token));
   assert.match(source, /FIRE_EDGE/);
   assert.match(source, /activeElement/);
+  assert.match(source, /event\.code === "Enter"[\s\S]*activeElement\.matches\("button"\)/);
+  assert.doesNotMatch(source, /return activeElement\.matches\("button,/);
   assert.match(source, /Escape/);
   assert.match(source, /KeyP/);
 });
