@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `1169d67` |
+| 当前 HEAD | `683c886` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | 全仓归因/许可证审计与 58 项真实 Chrome 矩阵已集成；Worker 1/3 已滚动补位到固定共享依赖归因和运行时内容身份修复，四个执行槽位均真实运行 |
+| 本次是否重跑全仓测试 | 是：`2304 / 2304` 通过 |
+| 工作树提示 | 共享依赖固定归因、`capsule-docking` 视觉补证和 `love-tree` clean-room 前置均已集成；Worker 3 正在完成运行时内容身份修复，两个新视觉方向等待用户确认 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,10 +28,10 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | `363` 审计已集成并释放槽位；现统一 Socket.IO、node-qrcode、Pannellum 的固定源码/许可证/版权/实际使用边界，并加防漂移测试，只处理真实依赖链 |
-| Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
+| Worker 1 | 已完成待补位 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | 红测、固定归因、修复报告和最终验收已分别集成；Socket.IO、node-qrcode、Pannellum 的 6 个固定上游链接、真实消费者与分发边界通过结构测试 |
+| Worker 2 | 已完成待确认 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | `366–368`、四张概念图和清理提交已集成；旧生产 UI、商业音频和源包未修改，等待用户明确视觉确认后才能独立重写 |
 | Worker 3 | 已分配 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `364` 浏览器矩阵已集成并释放槽位；现按 `362` bug/learn 走计划、红测、最小实现和双根进程验证，拒绝复用另一 checkout 的同协议旧内容 |
-| Worker 4 | 已分配 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | `365` 与证据漂移 bug 已集成并释放槽位；现按 `208` 统一方向生成 desktop/mobile 可审阅候选、`GENERATION.md` 与 `369` 提案，不修改生产 UI |
+| Worker 4 | 已完成待确认 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | desktop/mobile active 概念、生成台账与 `369` 已集成；没有修改生产 UI、core 或 catalog，等待用户确认“纸质近地轨道训练台” |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `365`；下列编号区间已互斥预留：
+当前已使用或预留到 `372`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -133,9 +133,9 @@
 | 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已集成；逐项覆盖 58 installed 与 21 候选，区分中/高缺口和公开分发阻断，并给出共享依赖与结构化 Gate 修复顺序 |
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已集成；真实 Chrome 验证 58/58 localhost 首载、8/8 launcher、A/B/C/D 深路径代表、移动视口与端口释放 |
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
-| `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
-| `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已分配；补 desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句，不修改生产 UI、core 或 catalog |
-| 共享依赖固定归因修复 | `370` | Worker 1 | 已分配；固定三个真实根依赖的源码与许可证证据，覆盖共享 runtime 和实际入口，并以测试防止 tag/链接再次漂移 |
+| `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已集成；brainstorm、spec、plan、完整概念稿和文档清理均独立提交，生产 UI 等待用户确认 |
+| `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已集成；desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句齐备，生产 UI 等待用户确认 |
+| 共享依赖固定归因修复 | `370` | Worker 1 | 已集成；三个真实根依赖的固定源码/许可证/版权/消费者边界与防漂移测试通过 |
 | 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已分配；计划、红测、deterministic content identity、双根进程复用矩阵和最终验证，不修改生产 UI 或 catalog |
 
 执行 Session 不得自行抢占未在本表登记的编号。
@@ -152,7 +152,7 @@
 | `shadow-sword-duel` | 生产 UI 尚未获确认 | `docs/222-shadow-sword-duel-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `compliment-reels` | 生产 UI 尚未获确认 | `docs/198-compliment-reels-design-proposal.md` | 用户 | 确认整体方向、320px 标签与终局标题后再派发 UI |
-| `capsule-docking` | 只有 ImageGen 简报，尚无可审阅预览 | `docs/208-capsule-docking-imagegen-brief.md`、`docs/365-visual-approval-digest.md` | 总控先补候选，随后用户确认 | 先生成候选、`GENERATION.md` 与 active 预览；不得让用户批准不存在的“三个方向” |
+| `capsule-docking` | 生产 UI 等待视觉方向确认 | `docs/369-capsule-docking-design-proposal.md`、`docs/assets/capsule-docking/GENERATION.md` | 用户 | 确认“纸质近地轨道训练台”的 desktop/mobile active 方向或提出修改 |
 | `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
 | `dual-maze-race` | 生产 UI 等待视觉方向确认 | `docs/297-dual-maze-race-design-proposal.md` | 用户 | 确认纸白共享迷宫桌、钴蓝圆点/朱砂菱形方向或提出修改 |
 | `penguin-flag-duel` | 生产 UI 等待视觉方向确认 | `docs/303-penguin-flag-duel-design-proposal.md` | 用户 | 确认极夜冰场、点阵/条纹基地与原创几何企鹅方向或提出修改 |
@@ -165,11 +165,15 @@
 | `memory-merge-board` | 生产 UI 等待视觉方向确认 | `docs/335-memory-merge-board-design-proposal.md` | 用户 | 确认冷雾蓝共同剪贴簿、共享 3×4 拼板与 phase 互斥方向或提出修改 |
 | `seven-piece-duet` | 生产 UI 等待视觉方向确认 | `docs/338-seven-piece-duet-design-proposal.md` | 用户 | 确认深墨纸面拼形台、A4/B3 纹理片组与共享轮廓方向或提出修改 |
 | `our-place-guess` | 生产 UI 等待视觉方向确认 | `docs/341-our-place-guess-design-proposal.md` | 用户 | 确认夜行纸图、guessing 仅自己圆点与 revealed 三形 pin 方向或提出修改 |
+| `love-tree` | clean-room 生产 UI 等待视觉方向确认 | `docs/366-love-tree-clean-room-brainstorm.md`、`docs/367-love-tree-clean-room-spec.md`、`docs/368-love-tree-clean-room-plan.md` | 用户 | 确认暮蓝纸雕花园、自然心形花冠、树根展信与桌面/移动构图；确认前不修改旧生产 UI |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `love-tree` clean-room 前置与视觉概念 | `2fbb307`、`e0085fe`、`eea299a`、`0ece012`、`ba9e6c9` | `cccfb5a`、`826fd07`、`122e61b`、`e90211c`、`683c886` | 四张原图尺寸/SHA-256；range diff-check；全仓 `2304 / 2304`；verify | 仅继承可观察体验目标，不读取或复制旧源码、参数、样式、音乐、文案或源包；生产 UI 等待用户确认，不计新增 installed |
+| `capsule-docking` 视觉候选补证 | `13b14ac`、`06d93d6` | `155b237`、`6681311` | desktop/mobile 原图尺寸/SHA-256；range diff-check；全仓 `2304 / 2304`；verify | “纸质近地轨道训练台”统一方向；概念几何不是 core 真值；生产 UI 等待用户确认，不计 installed |
+| 共享依赖固定归因修复 | `61ada43`、`a21d05b`、`71a5451`、`a5bd32d` | `157860e`、`c5be925`、`664e949`、`4457e2d` | 红测；定向 `70 / 70`；固定链接 `6 / 6`；本地链接 `2347 / 2347`；全仓 `2304 / 2304`；verify | Socket.IO、node-qrcode、Pannellum 固定到不可漂移 commit 与同 revision 许可证，覆盖真实消费者和分发边界；无 UI、catalog 或依赖版本变更 |
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `2127d9d`、`e26219a`、`206f0f0`、`a44f81e`、`2c1eac3` | `3d63956`、`c675690`、`46b1263`、`eccab40`、`bf2eb56` | 58/58 localhost full-load；8/8 launcher；A/C 深路径；B/D 能力前置；390×844 A/B/C/D；全仓 `2301 / 2301`；verify | 0 console warning/error、0 HTTP 失败、0意外公网请求；A `file://` 由静态合同补证，照片和麦克风权限边界未绕过；无生产修改，不计 installed |
 | 全仓借鉴声明、固定来源与许可证盘点 | `58d862b`、`6ded147`、`4486203`、`eee85bf`、`a032c8a`、`75b4489`、`c175540` | `c3a24cd`、`4a79033`、`ef02b94`、`2c5752f`、`a71b3ba`、`3fe25d0`、`0507e98` | 58 installed + 21 候选；78/78 定向；2190/2190 本地链接；全仓 `2301 / 2301`；verify | `love-tree` 为当前唯一公开分发阻断并进入 clean-room；Four Symbol 当前 main 已通过；记录标题式 Gate 假阳性和四清单连接方法；无生产修改，不计 installed |
 | 待确认视觉提案总清单 | `5839d05` | `0f95f8c` | 21/21 Blocked 项；122/122 本地证据链接存在；diff-check；verify | 提供 20 项可看图批量确认模板与逐项修改语句；`capsule-docking` 因零预览保持不可批准；不修改或批准生产 UI，不计 installed |

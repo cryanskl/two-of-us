@@ -1,7 +1,7 @@
 # 视觉阻塞项审批摘要
 
 - 基线：`df022190817806d2f9e4d385c9b3bc1526e8a666`
-- 范围：仅汇总 `docs/orchestration-board.md` 的 21 个视觉 Blocked 项，顺序与 Board 一致。
+- 范围：汇总 `docs/orchestration-board.md` 原有的 21 个视觉 Blocked 项，并单列本轮新增的 `love-tree` clean-room 方向。
 - 作用：帮助用户查看既有方向与证据，并明确批准、修改或继续阻塞。
 - 边界：本文不批准任何项目，不生成图片，不授权生产 UI，也不把概念图当作运行时资产、规则真值或可访问性证据。
 
@@ -11,19 +11,20 @@
 
 ### 批量确认模板
 
-以下模板只覆盖已有可审阅图片的 20 项，**不包含 `capsule-docking`**：
+以下模板覆盖原有 21 项，`capsule-docking` 已补齐可审阅图片；**不包含本轮新增的 `love-tree`**：
 
 ```text
-我确认以下 20 项按 docs/365 所列现有视觉方向进入生产 UI：
+我确认以下 21 项按 docs/365 所列现有视觉方向进入生产 UI：
 wish-fireworks、snow-globe-message、flower-language-bouquet、candle-wishes、
 shadow-duet、shadow-sword-duel、honeycomb-passage、compliment-reels、
+capsule-docking、
 photo-slider-race、dual-maze-race、penguin-flag-duel、twin-orbit、
 ricochet-tank-duel、kaleidoscope-names、word-detour-duel、
 four-symbol-film-duel、vinyl-secret、memory-merge-board、
 seven-piece-duet、our-place-guess。
 我确认的是提案中的设计原则、active/final 候选和明确偏差，不确认生成图中的错字、
 错误几何、未来状态、隐私泄漏或其他生成幻觉；生产仍须 code-native 重建并通过测试与浏览器 Gate。
-capsule-docking 保持未确认，先补齐可审阅候选。
+love-tree 保持未确认，按新增审批项单独回复。
 ```
 
 ### 单项修改模板
@@ -114,11 +115,11 @@ capsule-docking 保持未确认，先补齐可审阅候选。
 ### 9. `capsule-docking`
 
 - 用途：两人分别控制姿态与推进，共同让一艘舱体满足六项安全条件并稳定 30 tick。
-- 现有方向：简报只冻结了一个“纸质近地轨道训练台”方向：深炭蓝观察窗、暖灰纸模站体、珊瑚姿态席、青绿推进席、四项遥测与六条 Gate。
+- 现有方向：已补齐一个“纸质近地轨道训练台”统一方向：深炭蓝观察窗、暖灰纸模舱体、珊瑚姿态席、青绿推进席、四项遥测与六条 Gate。
 - 关键边界：只显示一艘共享舱体，不显示个人失误、分数、燃料、倒计时或真实航天建议；规则几何、遥测、Gate、文字、焦点和无障碍必须 code-native；禁止真实航天机构品牌、真实接口、金路径、下一按键和生成式错误几何。
-- 证据：[ImageGen 简报](./208-capsule-docking-imagegen-brief.md)
-- 当前预览：**无。** 简报明确写明“尚未生成概念”，`docs/assets/capsule-docking/` 与 `GENERATION.md` 均不存在。Board 所称“三个视觉方向”没有仓库证据，因此本项当前不可批准。
-- 可直接回复：`暂不确认 capsule-docking：请先按 208 简报补齐可审阅候选、GENERATION 台账和 active 预览，再让我选择或修改。`
+- 证据：[ImageGen 简报](./208-capsule-docking-imagegen-brief.md) · [视觉提案](./369-capsule-docking-design-proposal.md) · [生成台账](./assets/capsule-docking/GENERATION.md)
+- 当前预览：[desktop active](./assets/capsule-docking/d05-desktop-approaching-partial.png) · [mobile active](./assets/capsule-docking/d12-mobile-390-approaching.png)
+- 可直接回复：`确认 capsule-docking：接受“纸质近地轨道训练台”统一方向，以 desktop active 与 mobile active 两张当前概念为视觉锚点；生产 UI 按 369 的 code-native、隐私、规则、无障碍和生成幻觉边界实现。`
 
 ### 10. `photo-slider-race`
 
@@ -227,6 +228,15 @@ capsule-docking 保持未确认，先补齐可审阅候选。
 - 证据：[视觉提案](./341-our-place-guess-design-proposal.md)
 - 当前预览：[desktop guessing](./assets/our-place-guess/desktop-guessing-concept.png) · [desktop revealed](./assets/our-place-guess/desktop-revealed-concept.png) · [mobile guessing](./assets/our-place-guess/mobile-guessing-concept.png) · [mobile revealed](./assets/our-place-guess/mobile-revealed-concept.png)
 - 可直接回复：`确认 our-place-guess：按“夜行纸图 + guessing 仅自己的圆点 + revealed 三形 pin”现有提案进入生产 UI。`
+
+## 新增审批项：`love-tree`
+
+- 用途：单人触发一棵树从根部生长、形成自然但可读为心形的花冠，最后从树根展开给对方的信与共同时间。
+- 现有方向：暮蓝纸雕花园；珊瑚心形种子、暖金枝干、低饱和粉色花冠和从树根展开的暖纸信笺。
+- 关键边界：这是 clean-room 重构方向，只继承“点击、生长、花冠、情书、共同时间”的可观察体验目标；不读取、复制或改写旧源码、动画参数、CSS、商业歌曲、文案、压缩包或具体花冠图形。生产实现必须原创、code-native，并在验收通过后以独立提交退出旧依赖链。
+- 证据：[brainstorm](./366-love-tree-clean-room-brainstorm.md) · [规格](./367-love-tree-clean-room-spec.md) · [计划](./368-love-tree-clean-room-plan.md) · [概念与生成边界](./assets/love-tree-clean-room/README.md)
+- 当前预览：[desktop idle](./assets/love-tree-clean-room/concept-01-desktop-idle.png) · [desktop growing](./assets/love-tree-clean-room/concept-03-desktop-growing.png) · [desktop reveal](./assets/love-tree-clean-room/concept-02-desktop-reveal.png) · [mobile reveal](./assets/love-tree-clean-room/concept-04-mobile-reveal.png)
+- 可直接回复：`确认 love-tree：采用“暮蓝纸雕花园”；花冠自然但可读为心形；信纸从树根展开；桌面左下信件、手机树上信下；声音开关保留右上角低存在感。`
 
 ## 审批结果解释
 

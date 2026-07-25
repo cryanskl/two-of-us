@@ -253,6 +253,15 @@
 | [195-unified-optional-capability-setup-plan.md](./195-unified-optional-capability-setup-plan.md) | 可选能力统一安装的分步实现、独立审查、文档与无下载验收计划 |
 | [196-unified-optional-capability-setup-verification.md](./196-unified-optional-capability-setup-verification.md) | Node 22 真实基础安装、模型零下载、1563 项整仓测试与独立审查验收 |
 | [70-moon-phase-secret-verification.md](./70-moon-phase-secret-verification.md) | “把月亮拨回那一天”的 file 直开、三轴解锁、跨输入、阶段 DOM、响应式、降级与视觉忠实度验收记录 |
+| [362-launch-contract-and-dependency-audit.md](./362-launch-contract-and-dependency-audit.md) | 58 个 installed 的依赖、runtime、launcher 与本地启动合同审计 |
+| [363-attribution-and-license-audit.md](./363-attribution-and-license-audit.md) | installed 与候选项目的借鉴声明、固定来源、许可证和公开分发风险盘点 |
+| [364-installed-browser-launch-matrix.md](./364-installed-browser-launch-matrix.md) | 58 个 installed 的真实 Chrome 首载、非 A launcher、代表性深路径与移动视口矩阵 |
+| [365-visual-approval-digest.md](./365-visual-approval-digest.md) | 视觉阻塞项的可点击证据、批量确认模板，以及新增 Love Tree clean-room 审批项 |
+| [366-love-tree-clean-room-brainstorm.md](./366-love-tree-clean-room-brainstorm.md) | Love Tree 在不继承旧授权风险前提下保留体验命题的 clean-room 方案取舍 |
+| [367-love-tree-clean-room-spec.md](./367-love-tree-clean-room-spec.md) | Love Tree 原创重写的状态、交互、隐私、响应式、可访问性与归属规格 |
+| [368-love-tree-clean-room-plan.md](./368-love-tree-clean-room-plan.md) | Love Tree 视觉确认后独立实现、验收与旧依赖退出的分阶段计划 |
+| [369-capsule-docking-design-proposal.md](./369-capsule-docking-design-proposal.md) | “纸质近地轨道训练台”的桌面/移动视觉锚点、core 投影和生成幻觉边界 |
+| [370-shared-dependency-attribution-remediation.md](./370-shared-dependency-attribution-remediation.md) | Socket.IO、node-qrcode、Pannellum 固定来源、许可证、版权与真实消费者修复记录 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
