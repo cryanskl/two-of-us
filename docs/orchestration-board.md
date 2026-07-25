@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `d87a8c6` |
+| 当前 HEAD | `1ce7c6a` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2252 / 2252` 通过 |
-| 工作树提示 | `memory-merge-board` 视觉提案与 `our-place-guess` 规则/协议均已集成；七片目标等待 exact-cover 修订，一个视觉槽位已释放 |
+| 本次是否重跑全仓测试 | 是：`2269 / 2269` 通过 |
+| 工作树提示 | `seven-piece-duet` 完整非视觉核心与视觉提案、`our-place-guess` 核心验收、`shadow-duet` 再验收均已集成；四个滚动槽位继续视觉或既有核心审计 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,10 +28,10 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `seven-piece-duet` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-ui` | `codex/exp-seven-piece-duet-ui` | `f8e3302` | `memory-merge-board` 核心与 `334` 已完成并释放槽位；现使用 Image Gen 制作桌面/移动概念与 `338` 视觉合同，不写生产 UI |
-| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | 17 条精确几何 Gate 与实现已集成为 `3adf4d8`、`8e2f4cd`、`65e38de`；继续原创目标生成、reducer 与 `337` |
-| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 离线地图、题包、地图数学、规则与房间协议均已集成；继续 `340` 核心验收，不写生产 UI |
-| Worker 4 | 可补位 | — | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-ui` | `codex/exp-memory-merge-board-ui` | `580b940` | `memory-merge-board` active v2 桌面/移动提案已集成并等待用户确认，槽位可滚动派发新的非 UI 前置阶段 |
+| Worker 1 | 已分配 | `wish-fireworks` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/wish-fireworks-core-audit` | `codex/exp-wish-fireworks-core-audit` | `5d99563` | 七片完整核心已集成并释放槽位；现复核烟花 reducer、输入生命周期、闪烁/降动效数据合同与固定来源，仅真实缺口才修复 |
+| Worker 2 | 已分配 | `snow-globe-message` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-core-audit` | `codex/exp-snow-globe-message-core-audit` | `5d99563` | 七片视觉提案已集成并释放槽位；现复核雪景球确定性粒子/状态机、降动效、来源和机制去重，不写生产 UI |
+| Worker 3 | 已分配 | `flower-language-bouquet` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-core-audit` | `codex/exp-flower-language-bouquet-core-audit` | `1ce7c6a` | 地点核心与 Shadow Duet 再验收完成并释放槽位；现复核原创花语、配置/导出纯逻辑、图片隐私和来源资产 |
+| Worker 4 | 已分配 | `our-place-guess` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-ui` | `codex/exp-our-place-guess-ui` | `76f6958` | `memory-merge-board` 视觉已集成并释放槽位；现制作地点竞猜桌面/移动概念与 `341`，只供用户确认 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -107,9 +107,13 @@
 | `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 四阶段均已集成 |
 | `seven-piece-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 四阶段及边界修订均已集成 |
 | `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 四阶段及隐私/顺序修订均已集成 |
-| `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证已集成；`335` 视觉提案进行中，`336` 最终验证保留 |
-| `seven-piece-duet` | `337–339` | Worker 2 / Worker 1 / 总控 | `337` 核心验证进行中；`338` 视觉提案已派发，`339` 最终验证保留 |
-| `our-place-guess` | `340–342` | Worker 3 / 总控 | `340` 核心验证进行中；`341` 视觉提案、`342` 最终验证保留 |
+| `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证、`335` 视觉提案已集成并等待用户确认；`336` 最终验证保留 |
+| `seven-piece-duet` | `337–339` | Worker 2 / Worker 1 / 总控 | `337` 核心验证、`338` 视觉提案已集成并等待用户确认；`339` 最终验证保留 |
+| `our-place-guess` | `340–342` | Worker 3 / Worker 4 / 总控 | `340` 核心验证已集成；`341` 视觉提案进行中，`342` 最终验证保留 |
+| `shadow-duet` | `343` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `205` 用户确认 |
+| `wish-fireworks` | `344` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `229` 用户确认 |
+| `snow-globe-message` | `345` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `210` 用户确认 |
+| `flower-language-bouquet` | `346` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `187` 用户确认 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -136,11 +140,16 @@
 | `four-symbol-film-duel` | 生产 UI 等待视觉方向确认 | `docs/318-four-symbol-film-duel-design-proposal.md` | 用户 | 确认复古影院票根台、猜题与交接遮挡方向或提出修改 |
 | `vinyl-secret` | 生产 UI 等待视觉方向确认 | `docs/320-vinyl-secret-design-proposal.md` | 用户 | 确认私人压片工作台、默认无音频和异步单人寻轨方向或提出修改 |
 | `memory-merge-board` | 生产 UI 等待视觉方向确认 | `docs/335-memory-merge-board-design-proposal.md` | 用户 | 确认冷雾蓝共同剪贴簿、共享 3×4 拼板与 phase 互斥方向或提出修改 |
+| `seven-piece-duet` | 生产 UI 等待视觉方向确认 | `docs/338-seven-piece-duet-design-proposal.md` | 用户 | 确认深墨纸面拼形台、A4/B3 纹理片组与共享轮廓方向或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `shadow-duet` 现有核心再验收 | `562e892` | `1ce7c6a` | 定向 `28 / 28`；固定来源与 16 张概念资产 hash/尺寸；verify；当前主仓全仓 `2269 / 2269` | 历史核心 `ee7df10` 与归因 `9cca69e` 复核通过，无新缺口、无重复改写；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
+| `seven-piece-duet` 视觉提案 | `71b6e33` | `5d99563` | active 原图与 SHA-256；定向核心 `34 / 34`；全仓 `2269 / 2269`；verify | 深墨纸面拼形台；桌面与移动均恰好 A4/B3 七片、单共享轮廓、无计时分数；等待用户确认，不计 installed |
+| `seven-piece-duet` 完整非视觉核心 | `f3db4b5`、`4ab916e`、`1d6f508`、`34a81ce`、`6d3a758`、`3555fd9`、`6444176` | `f2c7c8d`、`8ac9f5a`、`67efac8`、`9d672fd`、`4e7e6fc`、`f6d7627`、`dbc3111` | 定向 `34 / 34`；生成器固定 SHA；全仓 `2269 / 2269`；verify | 四个原创目标、deterministic exact-cover、`echo` no-flip UNSAT、双席 reducer、单调 revision 与四局严格 replay；真实证明缺口已记 bugs；无 UI，不计 installed |
+| `our-place-guess` 核心验收 | `bf4a386` | `a4eea1e` | 项目核心 `41 / 41`、共享联测 `22 / 22`、Natural Earth 双 SHA、全仓 `2269 / 2269`、verify | 非视觉核心 Conditional Go；固定 Posio/Natural Earth 借鉴边界，未改共享 runtime/依赖，仍等待视觉、UI、双浏览器与接入，不计 installed |
 | `our-place-guess` 房间协议 | `454997b` | `d87a8c6` | 项目与共享 runtime 联测 `51 / 51`；全仓 `2252 / 2252`；verify | 复用现有两人席位与 sealed-round；host 身份、密封坐标、四版本有界乱序队列、ack/result 单调和成员变化清局；未改共享 runtime 或依赖；无 UI，不计 installed |
 | `memory-merge-board` 视觉提案 | `bd5084e` | `b07668b` | 定向 `40 / 40`；active 原图与 SHA-256；全仓 `2252 / 2252`；verify | 冷雾蓝共同剪贴簿；桌面 choose 仅两候选可操作，移动 place 仅右侧空位可操作；v1 标记 superseded，等待用户确认，不计 installed |
 | `our-place-guess` 密封规则 | `9772f83` | `d50b0b6` | 项目定向 `29 / 29`；全仓 `2252 / 2252`；verify | Haversine/反经线、50/200/800 km 档位、四轮状态机、较远者共同评分、私人目标只在揭晓后公开与访客重算；无 UI，不计 installed |
