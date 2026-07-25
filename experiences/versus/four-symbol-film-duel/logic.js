@@ -123,8 +123,7 @@
     try {
       if (
         !Array.isArray(value) ||
-        Object.getPrototypeOf(value) !== Array.prototype ||
-        value.length !== length
+        Object.getPrototypeOf(value) !== Array.prototype
       ) {
         return null;
       }
@@ -133,6 +132,14 @@
         return null;
       }
       var descriptors = Object.getOwnPropertyDescriptors(value);
+      var lengthDescriptor = descriptors.length;
+      if (
+        !lengthDescriptor ||
+        !Object.prototype.hasOwnProperty.call(lengthDescriptor, "value") ||
+        lengthDescriptor.value !== length
+      ) {
+        return null;
+      }
       var snapshot = [];
       for (var index = 0; index < length; index += 1) {
         var descriptor = descriptors[String(index)];
@@ -146,6 +153,30 @@
         snapshot.push(descriptor.value);
       }
       return snapshot;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function snapshotArrayInRange(value, minimum, maximum) {
+    try {
+      if (
+        !Array.isArray(value) ||
+        Object.getPrototypeOf(value) !== Array.prototype
+      ) {
+        return null;
+      }
+      var descriptor = Object.getOwnPropertyDescriptor(value, "length");
+      if (
+        !descriptor ||
+        !Object.prototype.hasOwnProperty.call(descriptor, "value") ||
+        !Number.isSafeInteger(descriptor.value) ||
+        descriptor.value < minimum ||
+        descriptor.value > maximum
+      ) {
+        return null;
+      }
+      return snapshotArray(value, descriptor.value);
     } catch (_error) {
       return null;
     }
@@ -220,9 +251,7 @@
       var id = cleanId(item.id);
       var glyph = cleanText(item.glyph, 1, 4, true);
       var label = cleanText(item.labelZh, 1, 8, true);
-      var concepts = Array.isArray(item.concepts)
-        ? snapshotArray(item.concepts, item.concepts.length)
-        : null;
+      var concepts = snapshotArrayInRange(item.concepts, 1, 5);
       if (!id || ids.has(id)) {
         errors.push("token:" + index + ":id");
       }
@@ -475,7 +504,7 @@
     return parseConfig(candidate) || DEFAULT_CONFIG;
   }
 
-  function validateGameData(candidate) {
+  function snapshotGameData(candidate) {
     try {
       if (
         !candidate ||
@@ -483,13 +512,40 @@
         Array.isArray(candidate) ||
         Object.getPrototypeOf(candidate) !== Object.prototype
       ) {
+        return null;
+      }
+      var descriptors = Object.getOwnPropertyDescriptors(candidate);
+      var snapshot = {};
+      var required = ["tokens", "cards", "packs"];
+      for (var index = 0; index < required.length; index += 1) {
+        var descriptor = descriptors[required[index]];
+        if (!descriptor || !Object.prototype.hasOwnProperty.call(descriptor, "value")) {
+          return null;
+        }
+        snapshot[required[index]] = descriptor.value;
+      }
+      var genres = descriptors.genres;
+      if (genres && !Object.prototype.hasOwnProperty.call(genres, "value")) {
+        return null;
+      }
+      snapshot.genres = genres ? genres.value : DEFAULT_CONFIG.genres;
+      return snapshot;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function validateGameData(candidate) {
+    try {
+      var data = snapshotGameData(candidate);
+      if (!data) {
         return deepFreeze(["data:shape"]);
       }
       var errors = [];
-      var genres = parseGenres(candidate.genres || DEFAULT_CONFIG.genres, errors);
-      var tokens = genres ? parseTokens(candidate.tokens, errors) : null;
-      var cards = tokens && genres ? parseCards(candidate.cards, tokens, genres, errors) : null;
-      if (cards && genres) parsePacks(candidate.packs, cards, genres, errors);
+      var genres = parseGenres(data.genres, errors);
+      var tokens = genres ? parseTokens(data.tokens, errors) : null;
+      var cards = tokens && genres ? parseCards(data.cards, tokens, genres, errors) : null;
+      if (cards && genres) parsePacks(data.packs, cards, genres, errors);
       return deepFreeze(errors.slice());
     } catch (_error) {
       return deepFreeze(["data:hostile"]);
