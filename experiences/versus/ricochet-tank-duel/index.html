@@ -8,6 +8,11 @@
   <title>这一弹，拐弯见你</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <noscript>
+    <style>
+      .duel-app { display: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
   <main class="duel-app" data-phase="instructions">
@@ -147,7 +152,13 @@
     </form>
   </dialog>
 
-  <noscript>这一弹，拐弯见你需要启用 JavaScript；它不会联网，也不会保存你的数据。</noscript>
+  <noscript>
+    <section class="no-script-panel" aria-labelledby="no-script-title">
+      <h1 id="no-script-title">这一弹，拐弯见你</h1>
+      <p>这个本地游戏需要启用 JavaScript。它不会联网，也不会保存你的数据。</p>
+      <a href="../../../index.html">返回作品集</a>
+    </section>
+  </noscript>
   <script defer src="config.js"></script>
   <script defer src="js/constants.js"></script>
   <script defer src="js/fixed.js"></script>
