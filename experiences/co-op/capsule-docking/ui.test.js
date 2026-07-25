@@ -144,6 +144,7 @@ test("CSS 锁定纸质训练台、触控尺寸、回流与系统可访问模式"
 
 test("README 说明直开、双席信任边界、配置入口和完整借鉴声明", () => {
   const markdown = read("README.md");
+  assert.match(markdown, /^## 借鉴与来源声明$/m);
   for (const fragment of [
     "双击",
     "index.html",

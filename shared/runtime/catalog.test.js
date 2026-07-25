@@ -925,6 +925,52 @@ test("shadow duet keeps file launch, dual-seat input, and attribution boundaries
   assert.match(attribution, /没有复制、翻译、改写、链接或打包/);
 });
 
+test("catalog exposes the installed A-level capsule docking", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "capsule-docking");
+
+  assert.equal(experience.title, "转一点，推一点，刚好回家");
+  assert.equal(experience.category, "co-op");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "2 人合作");
+  assert.equal(experience.devices, "单设备同屏");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /capsule-docking\/index\.html$/);
+  assert.match(portal, /"id": "capsule-docking"/);
+});
+
+test("capsule docking keeps file launch, fixed-step input, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/capsule-docking/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("style.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="\.\/logic\.js" defer><\/script>\s*<script src="\.\/config\.js" defer><\/script>\s*<script src="\.\/app\.js" defer><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|getUserMedia|AudioContext)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /inputEpoch/);
+  assert.match(app, /rafGeneration/);
+  assert.match(html, /<noscript>[\s\S]*请开启本地 JavaScript/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /20b453de30ef725a538e235fcdec909f30c95783/);
+  assert.match(attribution, /2beb2750f42d29014e289cb803b7269d5b0edaad/);
+  assert.match(attribution, /20e612681d1f9eabc9ea34dc98c4d27f985ffec6/);
+  assert.match(attribution, /41be1e462bc600064e498cba370bfa8c5c055a22/);
+  assert.match(attribution, /未复制/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

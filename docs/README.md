@@ -190,6 +190,10 @@
 | [207-capsule-docking-brainstorm.md](./207-capsule-docking-brainstorm.md) | “太空舱对接”的 public DTO、阶段 DOM、输入/rAF generation、六条 Gate、真实 CommonJS、无脚本与视觉确认 Gate 决策 |
 | [208-capsule-docking-imagegen-brief.md](./208-capsule-docking-imagegen-brief.md) | “太空舱对接”的十三张完整设计锚点、八组真实浏览器证据、双席语义、六条 Gate、文案锁、SVG intentional deviation 与资产边界 |
 | [228-capsule-docking-source-refresh.md](./228-capsule-docking-source-refresh.md) | “太空舱对接”的四仓库 commit/许可证哈希、NASA 状态量与浏览器标准状态维护复核 |
+| [256-capsule-docking-plan.md](./256-capsule-docking-plan.md) | “太空舱对接”的规则核心、生产 UI、输入时钟、catalog、Chrome 与独立提交实施计划 |
+| [257-capsule-docking-core-verification.md](./257-capsule-docking-core-verification.md) | “太空舱对接”三航段规则核心、确定性 fixture、公开 DTO 与初次核心验收 |
+| [349-capsule-docking-core-verification.md](./349-capsule-docking-core-verification.md) | “太空舱对接”的 hostile Proxy 与 control 加固、22 项核心测试及来源复验 |
+| [384-capsule-docking-final-verification.md](./384-capsule-docking-final-verification.md) | “转一点，推一点，刚好回家”的 29 项定向测试、三航段/六 Gate、六视口/输入/降级矩阵与两项浏览器问题闭环 |
 | [210-catalog-local-launch-brainstorm.md](./210-catalog-local-launch-brainstorm.md) | 由 catalog 自动扩展的 A 级 file 直开、B/C/D 启动器、静态依赖图与真实浏览器证据决策 |
 | [211-catalog-local-launch-spec.md](./211-catalog-local-launch-spec.md) | 本地直达 renderer、HTML/CSS/JS 依赖扫描、稳定错误、fixture 与 verify 集成规格 |
 | [212-catalog-local-launch-plan.md](./212-catalog-local-launch-plan.md) | 本地直达合同的子代理边界、三次独立提交、Chrome 全量 A 级与 B/C/D 抽样验收计划 |

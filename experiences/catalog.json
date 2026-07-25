@@ -561,6 +561,19 @@
       "networkRequired": false
     },
     {
+      "id": "capsule-docking",
+      "title": "转一点，推一点，刚好回家",
+      "category": "co-op",
+      "level": "A",
+      "players": "2 人合作",
+      "devices": "单设备同屏",
+      "entry": "experiences/co-op/capsule-docking/index.html",
+      "readme": "experiences/co-op/capsule-docking/README.md",
+      "description": "姿态席只管转、推进席只管推，两人让同一艘纸模舱体同时满足六项安全条件并完成三段对接。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "i-heard-you",
       "title": "我听见了",
       "category": "co-op",
