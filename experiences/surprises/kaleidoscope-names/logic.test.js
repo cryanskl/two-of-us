@@ -588,6 +588,62 @@ test("JSON cloned state is accepted and newly returned state is frozen", () => {
   assertDeepFrozen(getPublicView(clone));
 });
 
+test("frozen external content is canonicalized without ordinary property reads", () => {
+  const externalContent = validConfig({
+    publicTitle: "  把\u00a0名字  折成光  ",
+    marks: ["e\u0301", "光"]
+  });
+  Object.freeze(externalContent.marks);
+  Object.freeze(externalContent);
+
+  const externalComplete = Object.freeze({
+    version: CONSTANTS.VERSION,
+    phase: "complete",
+    content: externalContent,
+    selection: Object.freeze({
+      folds: externalContent.targetFolds,
+      phaseStep: externalContent.targetPhase
+    }),
+    revision: 7
+  });
+  const normalizedView = getPublicView(externalComplete);
+
+  assert.equal(normalizedView.publicTitle, "把 名字 折成光");
+  assert.equal(normalizedView.marks[0].text, "é");
+  const restarted = reduce(externalComplete, {
+    type: ACTIONS.RESTART,
+    revision: externalComplete.revision
+  });
+  assert.notEqual(restarted.content, externalContent);
+  assert.equal(restarted.content.publicTitle, "把 名字 折成光");
+  assert.equal(restarted.content.marks[0], "é");
+
+  const proxyTarget = validConfig();
+  Object.freeze(proxyTarget.marks);
+  Object.freeze(proxyTarget);
+  let ordinaryGets = 0;
+  const proxiedContent = new Proxy(proxyTarget, {
+    get() {
+      ordinaryGets += 1;
+      throw new Error("ordinary property reads are forbidden");
+    }
+  });
+  const proxiedIntro = {
+    version: CONSTANTS.VERSION,
+    phase: "intro",
+    content: proxiedContent,
+    selection: {
+      folds: CONSTANTS.INITIAL_FOLDS,
+      phaseStep: CONSTANTS.INITIAL_PHASE
+    },
+    revision: 0
+  };
+
+  assert.doesNotThrow(() => getPublicView(proxiedIntro));
+  assert.equal(getPublicView(proxiedIntro).title, DEFAULT_CONFIG.publicTitle);
+  assert.equal(ordinaryGets, 0);
+});
+
 test("intro public view has exact public-only keys", () => {
   const view = getPublicView(createInitialState());
   assert.deepEqual(view, {

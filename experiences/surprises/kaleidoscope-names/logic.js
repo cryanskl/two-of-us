@@ -370,9 +370,36 @@
     });
   }
 
-  function isCanonicalContent(value) {
+  function isCanonicalContent(value, parsedContent) {
     try {
-      return Object.isFrozen(value) && Object.isFrozen(value.marks);
+      var snapshot = snapshotRecord(value, CONFIG_KEYS);
+      if (!snapshot) {
+        return false;
+      }
+      var marks = snapshotMarks(snapshot.marks);
+      if (
+        !marks ||
+        !Object.isFrozen(value) ||
+        !Object.isFrozen(snapshot.marks)
+      ) {
+        return false;
+      }
+
+      for (var index = 0; index < CONFIG_KEYS.length; index += 1) {
+        var key = CONFIG_KEYS[index];
+        if (key === "marks") {
+          if (
+            marks[0] !== parsedContent.marks[0] ||
+            marks[1] !== parsedContent.marks[1]
+          ) {
+            return false;
+          }
+        } else if (snapshot[key] !== parsedContent[key]) {
+          return false;
+        }
+      }
+
+      return true;
     } catch (_error) {
       return false;
     }
@@ -422,9 +449,10 @@
 
     return {
       phase: state.phase,
-      content: isCanonicalContent(state.content)
+      content: isCanonicalContent(state.content, parsedContent)
         ? state.content
         : parsedContent,
+      normalizedContent: parsedContent,
       folds: selection.folds,
       phaseStep: selection.phaseStep,
       revision: state.revision
@@ -509,8 +537,8 @@
         var startEvaluation = evaluateSelection(
           state.folds,
           state.phaseStep,
-          state.content.targetFolds,
-          state.content.targetPhase
+          state.normalizedContent.targetFolds,
+          state.normalizedContent.targetPhase
         );
         if (startEvaluation.aligned) {
           return candidateState;
@@ -537,8 +565,8 @@
         var foldEvaluation = evaluateSelection(
           action.value,
           state.phaseStep,
-          state.content.targetFolds,
-          state.content.targetPhase
+          state.normalizedContent.targetFolds,
+          state.normalizedContent.targetPhase
         );
         return makeState(
           foldEvaluation.aligned ? "aligned" : "tuning",
@@ -561,8 +589,8 @@
         var phaseEvaluation = evaluateSelection(
           state.folds,
           action.value,
-          state.content.targetFolds,
-          state.content.targetPhase
+          state.normalizedContent.targetFolds,
+          state.normalizedContent.targetPhase
         );
         return makeState(
           phaseEvaluation.aligned ? "aligned" : "tuning",
@@ -620,8 +648,8 @@
         return deepFreeze({
           phase: "intro",
           revision: state.revision,
-          title: state.content.publicTitle,
-          instructions: state.content.publicInstructions,
+          title: state.normalizedContent.publicTitle,
+          instructions: state.normalizedContent.publicInstructions,
           primaryAction: {
             id: "start",
             label: "开始折光"
@@ -635,8 +663,8 @@
         var evaluation = evaluateSelection(
           state.folds,
           state.phaseStep,
-          state.content.targetFolds,
-          state.content.targetPhase
+          state.normalizedContent.targetFolds,
+          state.normalizedContent.targetPhase
         );
         var foldStatusText = STATUS_TEXT[evaluation.foldStatus];
         var phaseStatusText = STATUS_TEXT[evaluation.phaseStatus];
@@ -644,10 +672,10 @@
         return deepFreeze({
           phase: "tuning",
           revision: state.revision,
-          title: state.content.publicTitle,
+          title: state.normalizedContent.publicTitle,
           foldControl: {
             label: "选择镜面阶数",
-            hint: state.content.foldHint,
+            hint: state.normalizedContent.foldHint,
             values: CONSTANTS.FOLD_VALUES.slice(),
             selected: state.folds,
             status: evaluation.foldStatus,
@@ -655,7 +683,7 @@
           },
           phaseControl: {
             label: "转动相位",
-            hint: state.content.phaseHint,
+            hint: state.normalizedContent.phaseHint,
             min: CONSTANTS.PHASE_MIN,
             max: CONSTANTS.PHASE_MAX,
             step: 1,
@@ -674,7 +702,7 @@
         return deepFreeze({
           phase: "aligned",
           revision: state.revision,
-          title: state.content.publicTitle,
+          title: state.normalizedContent.publicTitle,
           summary: "这束光已经对齐。",
           selection: {
             folds: state.folds,
@@ -692,22 +720,22 @@
       return deepFreeze({
         phase: "complete",
         revision: state.revision,
-        publicTitle: state.content.publicTitle,
-        finalTitle: state.content.finalTitle,
+        publicTitle: state.normalizedContent.publicTitle,
+        finalTitle: state.normalizedContent.finalTitle,
         marks: [
           {
             position: "left",
             label: "左边的光",
-            text: state.content.marks[0]
+            text: state.normalizedContent.marks[0]
           },
           {
             position: "right",
             label: "右边的光",
-            text: state.content.marks[1]
+            text: state.normalizedContent.marks[1]
           }
         ],
-        finalMessage: state.content.finalMessage,
-        signature: state.content.signature,
+        finalMessage: state.normalizedContent.finalMessage,
+        signature: state.normalizedContent.signature,
         pattern: pattern,
         primaryAction: {
           id: "restart",
