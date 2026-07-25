@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `1ce7c6a` |
+| 当前 HEAD | `44b5edc` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2269 / 2269` 通过 |
-| 工作树提示 | `seven-piece-duet` 完整非视觉核心与视觉提案、`our-place-guess` 核心验收、`shadow-duet` 再验收均已集成；四个滚动槽位继续视觉或既有核心审计 |
+| 本次是否重跑全仓测试 | 是：`2270 / 2270` 通过 |
+| 工作树提示 | `wish-fireworks` 来源漂移修复与核心复验、`flower-language-bouquet` 核心复验均已集成；四个滚动槽位继续三个既有核心审计与一个视觉提案 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `wish-fireworks` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/wish-fireworks-core-audit` | `codex/exp-wish-fireworks-core-audit` | `5d99563` | 七片完整核心已集成并释放槽位；现复核烟花 reducer、输入生命周期、闪烁/降动效数据合同与固定来源，仅真实缺口才修复 |
+| Worker 1 | 已分配 | `compliment-reels` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-core-audit` | `codex/exp-compliment-reels-core-audit` | `44b5edc` | 烟花来源漂移修复与核心复验已集成并释放槽位；现复核赞美转轮内容、reducer、隐私、确定性与固定来源，不写生产 UI |
 | Worker 2 | 已分配 | `snow-globe-message` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-core-audit` | `codex/exp-snow-globe-message-core-audit` | `5d99563` | 七片视觉提案已集成并释放槽位；现复核雪景球确定性粒子/状态机、降动效、来源和机制去重，不写生产 UI |
-| Worker 3 | 已分配 | `flower-language-bouquet` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-core-audit` | `codex/exp-flower-language-bouquet-core-audit` | `1ce7c6a` | 地点核心与 Shadow Duet 再验收完成并释放槽位；现复核原创花语、配置/导出纯逻辑、图片隐私和来源资产 |
+| Worker 3 | 已分配 | `candle-wishes` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-core-audit` | `codex/exp-candle-wishes-core-audit` | `25aa56f` | 花语花束核心复验已集成并释放槽位；现复核蜡烛点亮顺序、火焰数据合同、来源和机制去重，不写生产 UI |
 | Worker 4 | 已分配 | `our-place-guess` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-ui` | `codex/exp-our-place-guess-ui` | `76f6958` | `memory-merge-board` 视觉已集成并释放槽位；现制作地点竞猜桌面/移动概念与 `341`，只供用户确认 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用到 `333`；下列编号区间已互斥预留：
+当前已使用或预留到 `348`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -111,9 +111,11 @@
 | `seven-piece-duet` | `337–339` | Worker 2 / Worker 1 / 总控 | `337` 核心验证、`338` 视觉提案已集成并等待用户确认；`339` 最终验证保留 |
 | `our-place-guess` | `340–342` | Worker 3 / Worker 4 / 总控 | `340` 核心验证已集成；`341` 视觉提案进行中，`342` 最终验证保留 |
 | `shadow-duet` | `343` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `205` 用户确认 |
-| `wish-fireworks` | `344` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `229` 用户确认 |
+| `wish-fireworks` | `344` | Worker 1 | 现有核心再验收与一处来源漂移修复已集成；生产 UI 仍等待 `229` 用户确认 |
 | `snow-globe-message` | `345` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `210` 用户确认 |
-| `flower-language-bouquet` | `346` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `187` 用户确认 |
+| `flower-language-bouquet` | `346` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `187` 用户确认 |
+| `candle-wishes` | `347` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `217` 用户确认 |
+| `compliment-reels` | `348` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `198` 用户确认 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -146,6 +148,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `wish-fireworks` 来源修复与核心再验收 | `48521d8`、`43fd632`、`a7cfd3f`、`9a7f3b4`、`12c3887` | `989914e`、`56417d2`、`b2173f1`、`110bc10`、`44b5edc` | 定向 `31 / 31`；五项固定来源与许可证 hash；全仓 `2270 / 2270`；verify；range diff-check | 真实 docs-only 同名仓库 URL 漂移已由红测、最小修复和 bug 记录闭环；格式复核误报另以独立提交修正；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
+| `flower-language-bouquet` 现有核心再验收 | `3d663ca` | `25aa56f` | 定向 `39 / 39`；11 项固定来源、10 张概念图 hash/尺寸/隐私；全仓 `2270 / 2270`；verify | 历史配置、120 排列、阶段隐私与导出数据模型复核通过，无新核心缺口；真实 SVG/Blob、移动保存与生产 UI 仍等待用户确认，不计 installed |
 | `shadow-duet` 现有核心再验收 | `562e892` | `1ce7c6a` | 定向 `28 / 28`；固定来源与 16 张概念资产 hash/尺寸；verify；当前主仓全仓 `2269 / 2269` | 历史核心 `ee7df10` 与归因 `9cca69e` 复核通过，无新缺口、无重复改写；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
 | `seven-piece-duet` 视觉提案 | `71b6e33` | `5d99563` | active 原图与 SHA-256；定向核心 `34 / 34`；全仓 `2269 / 2269`；verify | 深墨纸面拼形台；桌面与移动均恰好 A4/B3 七片、单共享轮廓、无计时分数；等待用户确认，不计 installed |
 | `seven-piece-duet` 完整非视觉核心 | `f3db4b5`、`4ab916e`、`1d6f508`、`34a81ce`、`6d3a758`、`3555fd9`、`6444176` | `f2c7c8d`、`8ac9f5a`、`67efac8`、`9d672fd`、`4e7e6fc`、`f6d7627`、`dbc3111` | 定向 `34 / 34`；生成器固定 SHA；全仓 `2269 / 2269`；verify | 四个原创目标、deterministic exact-cover、`echo` no-flip UNSAT、双席 reducer、单调 revision 与四局严格 replay；真实证明缺口已记 bugs；无 UI，不计 installed |
