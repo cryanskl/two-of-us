@@ -10,16 +10,16 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `aec935f` |
+| 当前 HEAD | `2bf3c80` |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 60 |
-| 当前 installed | 60 |
-| 距离目标 | 15 |
-| A / B / C / D | 52 / 1 / 6 / 1 |
-| surprise / co-op / versus | 19 / 24 / 17 |
-| 本次 repository verify | 通过：60 个入口、52 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2326 / 2326` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`wish-fireworks` 与 `flower-language-bouquet` 已正式上架，`snow-globe-message`、`candle-wishes`、`compliment-reels` 继续收口，`shadow-duet` 已滚动补位。`love-tree` clean-room 仍待浏览器 Gate |
+| 当前 catalog 总数 | 61 |
+| 当前 installed | 61 |
+| 距离目标 | 14 |
+| A / B / C / D | 53 / 1 / 6 / 1 |
+| surprise / co-op / versus | 20 / 24 / 17 |
+| 本次 repository verify | 通过：61 个入口、53 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2333 / 2333` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`wish-fireworks`、`flower-language-bouquet` 与 `compliment-reels` 已正式上架，`snow-globe-message` 等待总控集成，`candle-wishes` 独立复验中，`shadow-duet` 与 `shadow-sword-duel` 已滚动补位。`love-tree` clean-room 仍待浏览器 Gate |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,9 +29,9 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 进行中 | `candle-wishes` 独立浏览器复验 | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui` | `codex/exp-candle-wishes-ui` | `3aaba82` | 代码、定向测试和全仓 Gate 已通过；由非原实现者补齐 localhost 完整流程、六档视口、键盘/触屏和降级矩阵 |
-| Worker 2 | 进行中 | `snow-globe-message` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-ui` | `codex/exp-snow-globe-message-ui` | `3aaba82` | 视觉自治已释放；重点验证粒子性能、触屏、文字回退与 reduced-motion，最终验证使用 `377` |
+| Worker 2 | 等待集成 | `snow-globe-message` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-ui` | `codex/exp-snow-globe-message-ui` | `3aaba82` | HEAD `7ff79ef`；22 项定向、全仓 2315、verify、六档视口、真实触摸拖拽、键盘与 reduced-motion 已通过 |
 | Worker 3 | 进行中 | `shadow-duet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui` | `codex/exp-shadow-duet-ui` | `aec935f` | 视觉自治已释放；复用既有 28 项核心合同与 `205` 方向，重点验证双人同刻输入、节拍窗口、六档视口与降级，最终验证使用 `381` |
-| Worker 4 | 复核修正 | `compliment-reels` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-ui` | `codex/exp-compliment-reels-ui` | `3d4b5d6` | 29 项定向、全仓、六档 Chrome 已通过；总控 range diff-check 发现 3 个文档末尾空行，退回原分支做独立格式修复后再集成 |
+| Worker 4 | 进行中 | `shadow-sword-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-sword-duel-ui` | `codex/exp-shadow-sword-duel-ui` | `2bf3c80` | 视觉自治已释放；复用 29 项核心合同与 `222` 方向，重点验证热座遮屏、四动作密封、原子揭晓、九回合终局与降级，最终验证使用 `382` |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -39,6 +39,7 @@
 
 | 项目 | 分支 | commits | 测试 | 浏览器 | 许可证 | 总控结论 |
 | --- | --- | --- | --- | --- | --- | --- |
+| `snow-globe-message` | `codex/exp-snow-globe-message-ui` | `61ef09c`…`7ff79ef` | 定向 `22 / 22`；分支全仓 `2315 / 2315`；verify；range diff-check | 1504/1280/390/320/844×390、鼠标、Enter、真实触摸拖拽、reduced-motion、完整结果树、焦点/live、0 console、0 远程资源 | 固定 revision、许可证、版权、借鉴和未复制范围齐全 | 可进入总控审查与共享上架；file 双击由 A 级静态合同证明 |
 | `candle-wishes` | `codex/exp-candle-wishes-ui` | `7cae4fd`…`e61892e` | 定向 `28 / 28`；分支全仓 `2313 / 2313`；verify；range diff-check | `file://` 被工具策略阻止；策略校正前 localhost 仅完成 intro/lighting 初检；favicon 修复后尚待独立会话完整复验 | 三项固定 revision、许可证、版权、借鉴和未复制范围齐全 | 代码与静态合同通过，浏览器 Gate 未闭合，不集成、不计 installed |
 
 ## 建议首轮候选
@@ -56,24 +57,23 @@
 
 队列只表示“值得复核”，不表示已经获准复制、已完成规格或必然进入 75：
 
-1. `shadow-sword-duel`
-2. `honeycomb-passage`
-3. `capsule-docking`
-4. `vinyl-secret`
-5. `twin-orbit`
-6. `kaleidoscope-names`
-7. `emoji-movie-duel`
-8. `taboo-description-duel`
-9. `ricochet-tank-duel`
-10. `photo-slider-race`
-11. `dual-maze-race`
-12. `penguin-flag-duel`
+1. `honeycomb-passage`
+2. `capsule-docking`
+3. `vinyl-secret`
+4. `twin-orbit`
+5. `kaleidoscope-names`
+6. `emoji-movie-duel`
+7. `taboo-description-duel`
+8. `ricochet-tank-duel`
+9. `photo-slider-race`
+10. `dual-maze-race`
+11. `penguin-flag-duel`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
 ## 文档编号预留
 
-当前已使用或预留到 `381`；下列编号区间已互斥预留：
+当前已使用或预留到 `382`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -137,6 +137,7 @@
 | 首轮四个视觉自治生产 UI | `376–379` | Worker 1–4 | `wish-fireworks`、`snow-globe-message`、`flower-language-bouquet`、`candle-wishes` 各自独占一个最终验证编号 |
 | `compliment-reels` 生产 UI | `380` | Worker 4 | Candle 释放实现槽位后滚动补位；独占最终验证编号 |
 | `shadow-duet` 生产 UI | `381` | Worker 3 | 花语花束正式上架后滚动补位；独占最终验证编号 |
+| `shadow-sword-duel` 生产 UI | `382` | Worker 4 | 夸夸老虎机正式上架后滚动补位；独占最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -144,7 +145,6 @@
 
 | 项目 | 阻塞原因 | 已有证据 | 需要谁决定 | 下一步 |
 | --- | --- | --- | --- | --- |
-| `shadow-sword-duel` | 生产 UI 尚未获确认 | `docs/222-shadow-sword-duel-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
 | `capsule-docking` | 生产 UI 等待视觉方向确认 | `docs/369-capsule-docking-design-proposal.md`、`docs/assets/capsule-docking/GENERATION.md` | 用户 | 确认“纸质近地轨道训练台”的 desktop/mobile active 方向或提出修改 |
 | `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
@@ -164,6 +164,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `compliment-reels` 生产 UI 与上架 | `6201130`…`2550c05` | `fed8378`…`b08e350`、`2bf3c80` | 定向 `29 / 29`；共享接入 `198 / 198`；全仓 `2333 / 2333`；verify；六档视口/键盘/触屏/降级 | 安装入口增至 61；三项 UI bug 均红测后修复，4 个固定来源和 GPL/MIT 冲突排除边界齐全 |
 | `flower-language-bouquet` 生产 UI 与上架 | `1843512`、`0abfc70`、`000b179`、`923f8ef` | `1a12cfd`、`7967173`、`3741d9e`、`0cb2e93`、`aec935f` | 定向 `47 / 47`；共享接入 `214 / 214`；全仓 `2326 / 2326`；verify；桌面/移动端/键盘/触屏/撤回/失败恢复 | 安装入口增至 60；完成态才准备本地 SVG，未虚报浏览器下载落盘；11 个固定来源与零复制边界齐全 |
 | `wish-fireworks` 生产 UI 与上架 | `781749d`…`ee96ef2` | `f59e1fa`…`d690f24`、`81a2aa7` | 定向 `35 / 35`；共享接入 `200 / 200`；全仓 `2316 / 2316`；verify；六档视口/键盘/触屏/降级 | 安装入口增至 59；三束确定性烟火、无 Canvas/无 JS 回退、5 个固定来源与零复制边界齐全 |
 | 共享 runtime 内容身份修复 | `f292cf7`、`42864c7`、`197b3d2`、`352f6ca`、`1eae300` | `add5077`、`15343e7`、`c171851`、`1c20cb8`、`7da4ed5` | 红测；定向 `23 / 23`；双真实复制根复用/拒绝/存活/端口释放；全仓 `2310 / 2310`；verify | 服务身份、协议版本和当前内容身份三层复用；运行中内容漂移由 live witness 返回不可复用但不杀旧进程；无 UI、catalog 或依赖变更 |
