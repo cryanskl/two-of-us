@@ -173,6 +173,25 @@ test("built-in content has 48 safe tokens, 32 cards, 16 pairs and 4 balanced pac
   }
 });
 
+test("fixed answer positions are balanced within every pack and side", () => {
+  for (const pack of DEFAULT_CONFIG.packs) {
+    for (const side of ["A", "B"]) {
+      const positions = pack.pairIds.map((pairId) => {
+        const card = DEFAULT_CONFIG.cards.find(
+          (item) =>
+            item.packId === pack.id &&
+            item.pairId === pairId &&
+            item.side === side
+        );
+        return card.options.findIndex(
+          (option) => option.id === card.answerOptionId
+        );
+      });
+      assert.deepEqual(positions.slice().sort(), [0, 1, 2, 3]);
+    }
+  }
+});
+
 test("validator detects duplicate token, unknown token, wrong answer, wrong spotlight and broken pair", () => {
   const duplicate = editableConfig();
   duplicate.tokens[1].id = duplicate.tokens[0].id;
