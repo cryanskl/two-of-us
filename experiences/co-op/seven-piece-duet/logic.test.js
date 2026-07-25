@@ -139,15 +139,20 @@ test("actions require exact revisions, schemas and data descriptors", () => {
     { ...valid, extra: true },
     { type: "MOVE_DRAFT", revision: state.revision, seat: "A", dx: 0, dy: 0 },
     { type: "ROTATE_DRAFT", revision: state.revision, seat: "A", direction: 0 },
-    Object.assign(Object.create(null), valid),
-    new Proxy(valid, {
-      get() {
-        throw new Error("must not read");
-      }
-    })
+    Object.assign(Object.create(null), valid)
   ]) {
     assert.equal(logic.transition(state, invalid), state);
   }
+
+  let proxyReads = 0;
+  const descriptorProxy = new Proxy(valid, {
+    get() {
+      proxyReads += 1;
+      throw new Error("must not read");
+    }
+  });
+  assert.notEqual(logic.transition(state, descriptorProxy), state);
+  assert.equal(proxyReads, 0);
 
   const accessor = {};
   let reads = 0;
