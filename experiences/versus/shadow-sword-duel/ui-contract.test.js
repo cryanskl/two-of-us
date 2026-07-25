@@ -32,6 +32,7 @@ test("生产包完整且保持 A 级经典脚本闭包", () => {
   assert.doesNotMatch(html, /type\s*=\s*["']module["']/i);
   assert.doesNotMatch(html, /(?:src|href)\s*=\s*["'](?:https?:)?\/\//i);
   assert.doesNotMatch(html, /<(?:base|iframe|form)\b/i);
+  assert.match(html, /<link\b[^>]*rel="icon"[^>]*href="data:,"/i);
   assert.match(html, /<noscript\b[^>]*>[\s\S]*此体验需要浏览器启用 JavaScript/);
 
   const localReferences = [...html.matchAll(
