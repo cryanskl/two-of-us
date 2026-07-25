@@ -326,13 +326,25 @@
     return Number.isSafeInteger(index) && index >= 0 && index < maze.rows * maze.cols;
   }
 
+  function isPassageMask(value) {
+    return Number.isSafeInteger(value) && value >= 0 && value <= 15;
+  }
+
+  function hasValidPassageMasks(maze) {
+    for (var index = 0; index < maze.passages.length; index += 1) {
+      if (!isPassageMask(maze.passages[index])) return false;
+    }
+    return true;
+  }
+
   function canMove(mazeValue, index, directionName) {
     var maze = readMaze(mazeValue);
     if (!maze || !isCellIndex(maze, index) || DIRECTION_NAMES.indexOf(directionName) < 0) {
       return false;
     }
     var direction = DIRECTIONS[directionName];
-    if ((maze.passages[index] & direction.bit) === 0) {
+    if (!isPassageMask(maze.passages[index])
+      || (maze.passages[index] & direction.bit) === 0) {
       return false;
     }
     var point = indexToPoint(index, maze.cols);
@@ -367,10 +379,12 @@
     var errors = [];
     var nodeCount = maze.rows * maze.cols;
     var edgeCount = 0;
+    var passageMasksValid = true;
     for (var index = 0; index < nodeCount; index += 1) {
       var mask = maze.passages[index];
-      if (!Number.isSafeInteger(mask) || mask < 0 || mask > 15) {
+      if (!isPassageMask(mask)) {
         errors.push("passage:" + index + ":mask");
+        passageMasksValid = false;
         continue;
       }
       var point = indexToPoint(index, maze.cols);
@@ -387,7 +401,11 @@
           continue;
         }
         var neighborIndex = nextRow * maze.cols + nextCol;
-        if ((maze.passages[neighborIndex] & DIRECTIONS[direction.opposite].bit) === 0) {
+        var neighborMask = maze.passages[neighborIndex];
+        if (
+          isPassageMask(neighborMask)
+          && (neighborMask & DIRECTIONS[direction.opposite].bit) === 0
+        ) {
           errors.push("passage:" + index + ":" + directionName + ":asymmetric");
         }
         if (directionName === "right" || directionName === "down") {
@@ -396,20 +414,57 @@
       }
     }
 
-    var expectedFingerprint = buildFingerprint(
-      maze.rows,
-      maze.cols,
-      pointToIndex(maze.start, maze.cols),
-      pointToIndex(maze.goal, maze.cols),
-      maze.seed,
-      maze.passages
-    );
-    if (maze.fingerprint !== expectedFingerprint) {
-      errors.push("fingerprint");
+    if (passageMasksValid) {
+      var expectedFingerprint = buildFingerprint(
+        maze.rows,
+        maze.cols,
+        pointToIndex(maze.start, maze.cols),
+        pointToIndex(maze.goal, maze.cols),
+        maze.seed,
+        maze.passages
+      );
+      if (maze.fingerprint !== expectedFingerprint) {
+        errors.push("fingerprint");
+      }
     }
 
-    var path = findShortestPath(mazeValue, pointToIndex(maze.start, maze.cols), null);
-    if (!path) {
+    var reachable = new Uint8Array(nodeCount);
+    var queue = [pointToIndex(maze.start, maze.cols)];
+    var cursor = 0;
+    var reachableCount = 1;
+    reachable[queue[0]] = 1;
+    while (cursor < queue.length) {
+      var current = queue[cursor];
+      cursor += 1;
+      var currentPoint = indexToPoint(current, maze.cols);
+      for (var reachableDirectionIndex = 0;
+        reachableDirectionIndex < DIRECTION_NAMES.length;
+        reachableDirectionIndex += 1) {
+        var reachableDirection = DIRECTIONS[DIRECTION_NAMES[reachableDirectionIndex]];
+        if (
+          !isPassageMask(maze.passages[current])
+          || (maze.passages[current] & reachableDirection.bit) === 0
+        ) {
+          continue;
+        }
+        var reachableRow = currentPoint.row + reachableDirection.dr;
+        var reachableCol = currentPoint.col + reachableDirection.dc;
+        if (
+          reachableRow < 0 ||
+          reachableRow >= maze.rows ||
+          reachableCol < 0 ||
+          reachableCol >= maze.cols
+        ) {
+          continue;
+        }
+        var reachableIndex = reachableRow * maze.cols + reachableCol;
+        if (reachable[reachableIndex] !== 0) continue;
+        reachable[reachableIndex] = 1;
+        reachableCount += 1;
+        queue.push(reachableIndex);
+      }
+    }
+    if (reachableCount !== nodeCount) {
       errors.push("unreachable");
     }
     if (edgeCount !== nodeCount - 1) {
@@ -420,7 +475,7 @@
 
   function findShortestPath(mazeValue, from, to) {
     var maze = readMaze(mazeValue);
-    if (!maze) {
+    if (!maze || !hasValidPassageMasks(maze)) {
       return null;
     }
     var startIndex = from === undefined ? pointToIndex(maze.start, maze.cols) : from;
@@ -683,11 +738,13 @@
     var mazes = snapshotArray(value, MAPS.length);
     if (!mazes || mazes.length !== MAPS.length) return null;
     for (var index = 0; index < MAPS.length; index += 1) {
-      var diagnostics = validateMaze(mazes[index]);
+      var maze = readMaze(mazes[index]);
+      if (!maze) return null;
+      var diagnostics = validateMaze(maze);
       if (
         !diagnostics.valid ||
-        mazes[index].seed !== MAPS[index].seed ||
-        mazes[index].fingerprint !== DEFAULT_MAZES[index].fingerprint
+        maze.seed !== MAPS[index].seed ||
+        maze.fingerprint !== DEFAULT_MAZES[index].fingerprint
       ) {
         return null;
       }

@@ -260,6 +260,24 @@ test("validation detects fingerprint drift, edge drift, asymmetry and out-of-bou
   assert.ok(logic.validateMaze(bounds).errors.some((error) => error.includes("bounds")));
 });
 
+test("validation rejects a reachable goal beside a disconnected cyclic island", () => {
+  const disconnected = {
+    rows: 3,
+    cols: 3,
+    start: { row: 0, col: 0 },
+    goal: { row: 0, col: 1 },
+    seed: 1,
+    passages: [2, 8, 4, 6, 10, 13, 3, 10, 9],
+    fingerprint: "v1|3x3|0|1|00000001|020804060a0d030a09"
+  };
+  const diagnostics = logic.validateMaze(disconnected);
+  assert.equal(diagnostics.nodeCount, 9);
+  assert.equal(diagnostics.edgeCount, 8);
+  assert.equal(logic.findShortestPath(disconnected).at(-1), 1);
+  assert.equal(diagnostics.valid, false);
+  assert.ok(diagnostics.errors.includes("unreachable"));
+});
+
 test("maze DTOs sever caller ownership and reject malformed or accessor-driven input", () => {
   const options = {
     rows: 2,
@@ -296,6 +314,24 @@ test("maze DTOs sever caller ownership and reject malformed or accessor-driven i
   assert.equal(logic.validateMaze(throwingProxy()).valid, false);
   assert.equal(logic.findShortestPath(throwingProxy()), null);
   assert.equal(logic.canMove(throwingProxy(), 0, "up"), false);
+});
+
+test("maze APIs fail closed on a passage value that cannot be numerically coerced", () => {
+  const hostilePassage = editableMaze(logic.DEFAULT_MAZES[0]);
+  hostilePassage.passages[0] = Object.create(null);
+
+  let diagnostics;
+  assert.doesNotThrow(() => {
+    diagnostics = logic.validateMaze(hostilePassage);
+  });
+  assert.equal(diagnostics.valid, false);
+  assert.ok(diagnostics.errors.includes("passage:0:mask"));
+  assert.doesNotThrow(() => {
+    assert.equal(logic.canMove(hostilePassage, 0, "right"), false);
+    assert.equal(logic.moveIndex(hostilePassage, 0, "right"), 0);
+    assert.equal(logic.findShortestPath(hostilePassage), null);
+    assert.equal(logic.analyzeMaze(hostilePassage), null);
+  });
 });
 
 test("navigation rejects invalid positions and directions without leaking mutable data", () => {
@@ -358,6 +394,22 @@ test("initial state normalizes names, freezes ownership and rejects non-fixture 
   });
   assert.deepEqual(fallback.playerNames, ["玩家一", "玩家二"]);
   assert.equal(fallback.mazes, logic.DEFAULT_MAZES);
+
+  const lateThrowingMaze = new Proxy(logic.DEFAULT_MAZES[0], {
+    get(target, key, receiver) {
+      if (key === "seed") throw new Error("late hostile get");
+      return Reflect.get(target, key, receiver);
+    }
+  });
+  let proxyFallback;
+  assert.doesNotThrow(() => {
+    proxyFallback = logic.createInitialState({
+      playerNames: ["甲", "乙"],
+      mazes: [lateThrowingMaze, logic.DEFAULT_MAZES[1]]
+    });
+  });
+  assert.deepEqual(proxyFallback.playerNames, ["甲", "乙"]);
+  assert.equal(proxyFallback.mazes, logic.DEFAULT_MAZES);
 });
 
 test("input check requires both direction sets and joint success or explicit warning acceptance", () => {
@@ -486,13 +538,65 @@ test("player enqueue order does not affect same-tick movement or a simultaneous 
   assert.equal(leftFirst.heatResults[0].elapsedTicks, 28);
 });
 
-test("single-player finish awards one point without hidden time or bump tiebreaks", () => {
-  const finished = raceAlong(startRacing(), [0]);
-  assert.equal(finished.phase, "heat-result");
-  assert.equal(finished.heatResults[0].winner, 0);
-  assert.deepEqual(finished.heatResults[0].points, [1, 0]);
-  assert.equal(finished.positions[1], 36);
-  assert.equal(logic.stepRace(finished), finished);
+test("single-player finishes mirror by player id without hidden tiebreaks", () => {
+  const playerZero = raceAlong(startRacing(), [0]);
+  const playerOne = raceAlong(startRacing(), [1]);
+  assert.equal(playerZero.phase, "heat-result");
+  assert.equal(playerOne.phase, "heat-result");
+  assert.equal(playerZero.heatResults[0].winner, 0);
+  assert.equal(playerOne.heatResults[0].winner, 1);
+  assert.deepEqual(playerZero.heatResults[0].points, [1, 0]);
+  assert.deepEqual(playerOne.heatResults[0].points, [0, 1]);
+  assert.equal(playerZero.heatResults[0].elapsedTicks, playerOne.heatResults[0].elapsedTicks);
+  assert.deepEqual(playerZero.heatResults[0].bumps, playerOne.heatResults[0].bumps);
+  assert.equal(playerZero.positions[1], 36);
+  assert.equal(playerOne.positions[0], 36);
+  assert.equal(logic.stepRace(playerZero), playerZero);
+  assert.equal(logic.stepRace(playerOne), playerOne);
+});
+
+test("the same integer action trace replays identically across dispatcher groupings", () => {
+  const trace = [
+    { type: logic.ACTIONS.ENTER_INPUT_CHECK }
+  ];
+  for (const playerId of [0, 1]) {
+    for (const direction of logic.DIRECTION_NAMES) {
+      trace.push({
+        type: logic.ACTIONS.RECORD_DIRECTION_CHECK,
+        playerId,
+        direction
+      });
+    }
+  }
+  trace.push({ type: logic.ACTIONS.RECORD_JOINT_CHECK });
+  trace.push({ type: logic.ACTIONS.START_MATCH });
+  for (let tick = 0; tick < logic.CONSTANTS.COUNTDOWN_TICKS; tick += 1) {
+    trace.push({ type: logic.ACTIONS.TICK });
+  }
+  for (const direction of pathDirections(logic.DEFAULT_MAZES[0])) {
+    trace.push({ type: logic.ACTIONS.QUEUE_MOVE, playerId: 0, direction });
+    trace.push({ type: logic.ACTIONS.QUEUE_MOVE, playerId: 1, direction });
+    trace.push({ type: logic.ACTIONS.TICK });
+  }
+
+  function replay(groupSize) {
+    let state = logic.createInitialState();
+    for (let start = 0; start < trace.length; start += groupSize) {
+      for (const event of trace.slice(start, start + groupSize)) {
+        state = logic.reduce(state, {
+          ...event,
+          revision: state.revision
+        });
+      }
+    }
+    return state;
+  }
+
+  const perEvent = replay(1);
+  const batched = replay(7);
+  assert.equal(perEvent.phase, "heat-result");
+  assert.deepEqual(batched, perEvent);
+  assert.deepEqual(logic.getPublicView(batched), logic.getPublicView(perEvent));
 });
 
 test("four heats pair both seeds, swap seats and accept a tied match", () => {
