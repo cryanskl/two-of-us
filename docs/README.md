@@ -245,6 +245,7 @@
 | [187-flower-language-bouquet-design-proposal.md](./187-flower-language-bouquet-design-proposal.md) | “花语配方”的视觉方向提案与待确认 Gate |
 | [188-flower-language-bouquet-plan.md](./188-flower-language-bouquet-plan.md) | “花语配方”的分步实施、独立提交与验收计划 |
 | [232-flower-language-bouquet-source-refresh.md](./232-flower-language-bouquet-source-refresh.md) | “花语配方”的 11 个固定来源、许可/归因边界与现行平台规范维护复核 |
+| [378-flower-language-bouquet-final-verification.md](./378-flower-language-bouquet-final-verification.md) | “把花语，系成一束”的 47 项定向测试、桌面/移动端/键盘/触屏/撤回/失败恢复浏览器矩阵、SVG 保存边界与来源终验 |
 | [189-non-a-direct-launch-brainstorm.md](./189-non-a-direct-launch-brainstorm.md) | B/C/D 作品直达启动与已有运行时复用的方案取舍 |
 | [190-non-a-direct-launch-spec.md](./190-non-a-direct-launch-spec.md) | 作品级薄启动器、运行时身份探测与安全复用规格 |
 | [191-non-a-direct-launch-plan.md](./191-non-a-direct-launch-plan.md) | 运行时复用、七套直达启动器、文档和浏览器验收计划 |

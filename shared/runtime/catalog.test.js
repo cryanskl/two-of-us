@@ -605,6 +605,51 @@ test("wish fireworks keeps its file protocol and attribution boundary", async ()
   assert.match(attribution, /不\s*安装、链接、打包或复制任何第三方/);
 });
 
+test("catalog exposes the installed A-level flower language bouquet surprise", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "flower-language-bouquet");
+
+  assert.equal(experience.title, "把花语，系成一束");
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /flower-language-bouquet\/index\.html$/);
+  assert.match(portal, /"id": "flower-language-bouquet"/);
+});
+
+test("flower language bouquet keeps file launch, controlled SVG export, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/flower-language-bouquet/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="config\.js"><\/script>\s*<script src="logic\.js"><\/script>\s*<script src="app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|clipboard|share)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /createElementNS/);
+  assert.match(app, /createObjectURL/);
+  assert.match(app, /revokeObjectURL/);
+  assert.doesNotMatch(app, /\.click\s*\(\s*\)/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /页面不上传、不请求网络、不使用本地存储/);
+  assert.match(attribution, /8db7a51b4b4bfc4b9a0b05df1cf5d4dda4d923c9/);
+  assert.match(attribution, /cea522bc41bfadc364837293d0c4dc585a65ac46/);
+  assert.match(attribution, /没有复制其源码、API、类名、算法/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
@@ -1150,7 +1195,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1216,7 +1261,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1289,7 +1334,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1362,7 +1407,7 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
@@ -1431,7 +1476,7 @@ test("seven day garden keeps its file protocol, rule, asset and attribution boun
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "seven-day-garden"/);
   assert.match(coOpIndex, /\.\/seven-day-garden\//);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
 });
 
@@ -1500,7 +1545,7 @@ test("constellation relay keeps its file protocol, graph, asset and attribution 
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "constellation-relay"/);
   assert.match(coOpIndex, /\.\/constellation-relay\//);
-  assert.match(backlog, /已有 41 项[\s\S]*单人惊喜 13 项[\s\S]*双人合作 18 项[\s\S]*其余 19 项/);
+  assert.match(backlog, /已有 42 项[\s\S]*单人惊喜 14 项[\s\S]*双人合作 18 项[\s\S]*其余 18 项/);
   assert.match(backlog, /\[星座接线员（已实现为“把星光，一笔一笔交给你”）\]\(\.\.\/experiences\/co-op\/constellation-relay\/\)/);
 });
 
