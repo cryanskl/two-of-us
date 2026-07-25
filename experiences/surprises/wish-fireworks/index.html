@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>今晚，点三束光</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main id="wish-fireworks">
+      <header class="title-block">
+        <h1 id="page-title" tabindex="-1">今晚，点三束光</h1>
+      </header>
+
+      <p class="instructions">
+        按住蓄光，松开就会发射；也可以选好高度后直接点燃。每一束都会成功。
+      </p>
+
+      <figure id="sky-stage" class="sky-stage" aria-hidden="true">
+        <div class="static-sky"></div>
+        <canvas id="fireworks-canvas" width="1000" height="1000"></canvas>
+        <div id="burst-fallback" class="burst-fallback"></div>
+      </figure>
+
+      <ol
+        id="revealed-glyphs"
+        class="revealed-glyphs js-only"
+        aria-label="已经留在夜空里的字"
+      ></ol>
+
+      <p id="progress-status" class="progress-status js-only"></p>
+
+      <section id="launch-controls" class="launch-controls js-only" hidden>
+        <label for="height-select">烟火高度</label>
+        <select id="height-select">
+          <option value="0">低</option>
+          <option value="1">较低</option>
+          <option value="2" selected>中</option>
+          <option value="3">较高</option>
+          <option value="4">高</option>
+        </select>
+        <div class="launch-actions">
+          <button
+            id="hold-launch"
+            type="button"
+            aria-disabled="false"
+            aria-pressed="false"
+          >
+            <span>按住蓄光</span>
+            <span class="charge-fill" aria-hidden="true"></span>
+          </button>
+          <button id="direct-launch" type="button" aria-disabled="false">
+            直接点燃
+          </button>
+        </div>
+        <p class="guarantee">无需蓄满，每一束都会成功。</p>
+      </section>
+
+      <button id="primary-action" class="primary-action js-only" type="button">
+        开始点光
+      </button>
+
+      <p class="privacy-note">
+        内容写在本地文件里；页面不上传、不另存，愿望会在最后一束落定后出现。
+      </p>
+
+      <p id="live-region" class="visually-hidden js-only" aria-live="polite"></p>
+
+      <p class="no-js-status">请开启 JavaScript 后再点燃三束光</p>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
