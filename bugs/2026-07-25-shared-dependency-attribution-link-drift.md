@@ -51,7 +51,7 @@ Socket.IO 的发布 tag 命名包含包名前缀，声明按普通 `4.8.1` tag �
 - [x] `node_modules` 中三个直接依赖均为精确版本、MIT 且携带许可证文件
 - [x] 新增结构测试，自动发现 6 个 installed Socket.IO 消费者并验证三项依赖声明
 - [x] 共享运行时、真实依赖入口与 `our-place-guess` 计划依赖已统一到固定 commit
-- [ ] `npm run verify` 与全仓测试在最终修复记录完成后执行
+- [x] `npm run verify` 通过；全仓 112 个测试文件、2304/2304 通过
 
 ## 借鉴与来源声明
 
