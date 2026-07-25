@@ -10,16 +10,16 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `2bf3c80` |
+| 当前 HEAD | `f729deb` |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 61 |
-| 当前 installed | 61 |
-| 距离目标 | 14 |
-| A / B / C / D | 53 / 1 / 6 / 1 |
-| surprise / co-op / versus | 20 / 24 / 17 |
-| 本次 repository verify | 通过：61 个入口、53 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2333 / 2333` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`wish-fireworks`、`flower-language-bouquet` 与 `compliment-reels` 已正式上架，`snow-globe-message` 等待总控集成，`candle-wishes` 独立复验中，`shadow-duet` 与 `shadow-sword-duel` 已滚动补位。`love-tree` clean-room 仍待浏览器 Gate |
+| 当前 catalog 总数 | 63 |
+| 当前 installed | 63 |
+| 距离目标 | 12 |
+| A / B / C / D | 55 / 1 / 6 / 1 |
+| surprise / co-op / versus | 22 / 24 / 17 |
+| 本次 repository verify | 通过：63 个入口、55 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2347 / 2347` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`snow-globe-message` 与 `candle-wishes` 已正式上架，`shadow-duet`、`shadow-sword-duel`、`honeycomb-passage` 与 `capsule-docking` 占满四个生产 UI 槽位。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,8 +28,8 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 进行中 | `candle-wishes` 独立浏览器复验 | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui` | `codex/exp-candle-wishes-ui` | `3aaba82` | 代码、定向测试和全仓 Gate 已通过；由非原实现者补齐 localhost 完整流程、六档视口、键盘/触屏和降级矩阵 |
-| Worker 2 | 等待集成 | `snow-globe-message` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-ui` | `codex/exp-snow-globe-message-ui` | `3aaba82` | HEAD `7ff79ef`；22 项定向、全仓 2315、verify、六档视口、真实触摸拖拽、键盘与 reduced-motion 已通过 |
+| Worker 1 | 进行中 | `honeycomb-passage` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/honeycomb-passage-ui` | `codex/exp-honeycomb-passage-ui` | `f729deb` | 视觉自治已释放；复用 25 项核心合同与 `226` 方向，重点验证轮流走子/封蜡、路径可达、热座交接、六档视口和降级，最终验证使用 `383` |
+| Worker 2 | 进行中 | `capsule-docking` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking-ui` | `codex/exp-capsule-docking-ui` | `f729deb` | 视觉自治已释放；复用 22 项核心合同与 `369` 方向，重点验证双席分权、60 Hz 固定步、三航段、六项 Gate、触屏/键盘和降级，最终验证使用 `384` |
 | Worker 3 | 进行中 | `shadow-duet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui` | `codex/exp-shadow-duet-ui` | `aec935f` | 视觉自治已释放；复用既有 28 项核心合同与 `205` 方向，重点验证双人同刻输入、节拍窗口、六档视口与降级，最终验证使用 `381` |
 | Worker 4 | 进行中 | `shadow-sword-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-sword-duel-ui` | `codex/exp-shadow-sword-duel-ui` | `2bf3c80` | 视觉自治已释放；复用 29 项核心合同与 `222` 方向，重点验证热座遮屏、四动作密封、原子揭晓、九回合终局与降级，最终验证使用 `382` |
 
@@ -37,10 +37,7 @@
 
 ## Ready for Review
 
-| 项目 | 分支 | commits | 测试 | 浏览器 | 许可证 | 总控结论 |
-| --- | --- | --- | --- | --- | --- | --- |
-| `snow-globe-message` | `codex/exp-snow-globe-message-ui` | `61ef09c`…`7ff79ef` | 定向 `22 / 22`；分支全仓 `2315 / 2315`；verify；range diff-check | 1504/1280/390/320/844×390、鼠标、Enter、真实触摸拖拽、reduced-motion、完整结果树、焦点/live、0 console、0 远程资源 | 固定 revision、许可证、版权、借鉴和未复制范围齐全 | 可进入总控审查与共享上架；file 双击由 A 级静态合同证明 |
-| `candle-wishes` | `codex/exp-candle-wishes-ui` | `7cae4fd`…`e61892e` | 定向 `28 / 28`；分支全仓 `2313 / 2313`；verify；range diff-check | `file://` 被工具策略阻止；策略校正前 localhost 仅完成 intro/lighting 初检；favicon 修复后尚待独立会话完整复验 | 三项固定 revision、许可证、版权、借鉴和未复制范围齐全 | 代码与静态合同通过，浏览器 Gate 未闭合，不集成、不计 installed |
+当前没有等待总控审查的项目；四个执行槽位均在生产 UI 阶段。
 
 ## 建议首轮候选
 
@@ -49,25 +46,23 @@
 | 优先级 | 项目 ID | 分类 | 预计等级 | 已有前置材料 | 派发前检查 |
 | --- | --- | --- | --- | --- | --- |
 | P0 | `wish-fireworks` | surprise | A | research、spec、design、plan、source refresh | 已上架并完成 35 项定向、全仓 2316 项与浏览器矩阵 |
-| P0 | `snow-globe-message` | surprise | A | research、spec、design、plan、source refresh | Worker 2 实施；粒子性能、触屏与文字回退进入验收 |
+| P0 | `snow-globe-message` | surprise | A | research、spec、design、plan、source refresh | 已上架并完成 22 项定向、全仓 2340 项与浏览器矩阵 |
 | P0 | `flower-language-bouquet` | surprise | A | research、spec、design、plan、source refresh | 已上架并完成 47 项定向、全仓 2326 项与浏览器矩阵 |
-| P0 | `candle-wishes` | surprise | A | research、spec、design、plan | 实现完成，Worker 1 正在做独立浏览器终验 |
+| P0 | `candle-wishes` | surprise | A | research、spec、design、plan | 已上架并完成 28 项定向、全仓 2347 项与独立浏览器终验 |
 
 ## 后续候选队列
 
 队列只表示“值得复核”，不表示已经获准复制、已完成规格或必然进入 75：
 
-1. `honeycomb-passage`
-2. `capsule-docking`
-3. `vinyl-secret`
-4. `twin-orbit`
-5. `kaleidoscope-names`
-6. `emoji-movie-duel`
-7. `taboo-description-duel`
-8. `ricochet-tank-duel`
-9. `photo-slider-race`
-10. `dual-maze-race`
-11. `penguin-flag-duel`
+1. `vinyl-secret`
+2. `twin-orbit`
+3. `kaleidoscope-names`
+4. `emoji-movie-duel`
+5. `taboo-description-duel`
+6. `ricochet-tank-duel`
+7. `photo-slider-race`
+8. `dual-maze-race`
+9. `penguin-flag-duel`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
@@ -138,6 +133,8 @@
 | `compliment-reels` 生产 UI | `380` | Worker 4 | Candle 释放实现槽位后滚动补位；独占最终验证编号 |
 | `shadow-duet` 生产 UI | `381` | Worker 3 | 花语花束正式上架后滚动补位；独占最终验证编号 |
 | `shadow-sword-duel` 生产 UI | `382` | Worker 4 | 夸夸老虎机正式上架后滚动补位；独占最终验证编号 |
+| `honeycomb-passage` 生产 UI | `383` | Worker 1 | Candle 正式上架后滚动补位；独占最终验证编号 |
+| `capsule-docking` 生产 UI | `384` | Worker 2 | Snow Globe 正式上架后滚动补位；独占最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -145,8 +142,6 @@
 
 | 项目 | 阻塞原因 | 已有证据 | 需要谁决定 | 下一步 |
 | --- | --- | --- | --- | --- |
-| `honeycomb-passage` | 生产 UI 尚未获确认 | `docs/226-honeycomb-passage-design-proposal.md` | 用户 | 确认或修改视觉方案后再派发 UI |
-| `capsule-docking` | 生产 UI 等待视觉方向确认 | `docs/369-capsule-docking-design-proposal.md`、`docs/assets/capsule-docking/GENERATION.md` | 用户 | 确认“纸质近地轨道训练台”的 desktop/mobile active 方向或提出修改 |
 | `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
 | `dual-maze-race` | 生产 UI 等待视觉方向确认 | `docs/297-dual-maze-race-design-proposal.md` | 用户 | 确认纸白共享迷宫桌、钴蓝圆点/朱砂菱形方向或提出修改 |
 | `penguin-flag-duel` | 生产 UI 等待视觉方向确认 | `docs/303-penguin-flag-duel-design-proposal.md` | 用户 | 确认极夜冰场、点阵/条纹基地与原创几何企鹅方向或提出修改 |
@@ -164,6 +159,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `candle-wishes` 生产 UI 与上架 | `7cae4fd`…`7b65f01` | `68b92dc`…`5f3be1f`、`f729deb` | 定向 `28 / 28`；共享接入 `201 / 201`；全仓 `2347 / 2347`；verify；独立六档视口/键盘/触屏/降级 | 安装入口增至 63；无 JavaScript 惰性控件经红测闭环，三项固定来源、许可证、版权、借鉴和未复制边界齐全 |
+| `snow-globe-message` 生产 UI 与上架 | `61ef09c`…`7ff79ef` | `8a45b97`…`382bcf1`、`0be1be0` | 定向 `22 / 22`；共享接入 `193 / 193`；全仓 `2340 / 2340`；verify；六档视口/键盘/真实触摸拖拽/reduced-motion | 安装入口增至 62；四阵风、确定性雪花、完整结果树与固定来源/零复制边界齐全 |
 | `compliment-reels` 生产 UI 与上架 | `6201130`…`2550c05` | `fed8378`…`b08e350`、`2bf3c80` | 定向 `29 / 29`；共享接入 `198 / 198`；全仓 `2333 / 2333`；verify；六档视口/键盘/触屏/降级 | 安装入口增至 61；三项 UI bug 均红测后修复，4 个固定来源和 GPL/MIT 冲突排除边界齐全 |
 | `flower-language-bouquet` 生产 UI 与上架 | `1843512`、`0abfc70`、`000b179`、`923f8ef` | `1a12cfd`、`7967173`、`3741d9e`、`0cb2e93`、`aec935f` | 定向 `47 / 47`；共享接入 `214 / 214`；全仓 `2326 / 2326`；verify；桌面/移动端/键盘/触屏/撤回/失败恢复 | 安装入口增至 60；完成态才准备本地 SVG，未虚报浏览器下载落盘；11 个固定来源与零复制边界齐全 |
 | `wish-fireworks` 生产 UI 与上架 | `781749d`…`ee96ef2` | `f59e1fa`…`d690f24`、`81a2aa7` | 定向 `35 / 35`；共享接入 `200 / 200`；全仓 `2316 / 2316`；verify；六档视口/键盘/触屏/降级 | 安装入口增至 59；三束确定性烟火、无 Canvas/无 JS 回退、5 个固定来源与零复制边界齐全 |
