@@ -364,6 +364,13 @@ test("tracks reject sparse arrays, subclasses, extras, symbols and accessors", (
     },
   });
   assert.equal(logic.sanitizeConfig(accessor), logic.DEFAULT_CONFIG);
+
+  const revoked = candidateConfig();
+  const revocableTracks = Proxy.revocable([], {});
+  revoked.tracks = revocableTracks.proxy;
+  revocableTracks.revoke();
+  assert.doesNotThrow(() => logic.sanitizeConfig(revoked));
+  assert.equal(logic.sanitizeConfig(revoked), logic.DEFAULT_CONFIG);
 });
 
 test("track objects reject wrong prototypes, missing/extra/symbol/accessor fields", () => {

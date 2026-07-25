@@ -194,11 +194,13 @@
   }
 
   function snapshotDenseArray(value, maximumLength) {
-    if (!arrayIsArray(value)) return null;
+    let isArray;
     let prototype;
     let ownKeys;
     let lengthDescriptor;
     try {
+      isArray = arrayIsArray(value);
+      if (!isArray) return null;
       prototype = reflectGetPrototypeOf(value);
       ownKeys = reflectOwnKeys(value);
       lengthDescriptor = reflectGetOwnPropertyDescriptor(value, "length");
