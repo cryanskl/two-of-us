@@ -971,6 +971,51 @@ test("capsule docking keeps file launch, fixed-step input, and attribution bound
   assert.match(attribution, /未复制/);
 });
 
+test("catalog exposes the installed A-level vinyl secret", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "vinyl-secret");
+
+  assert.equal(experience.title, "把秘密藏进这一圈");
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /vinyl-secret\/index\.html$/);
+  assert.match(portal, /"id": "vinyl-secret"/);
+});
+
+test("vinyl secret keeps file launch, staged secrets, optional audio, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/vinyl-secret/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js" defer><\/script>\s*<script src="\.\/logic\.js" defer><\/script>\s*<script src="\.\/app\.js" defer><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|getUserMedia|AudioContext)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /replaceChildren/);
+  assert.match(html, /<audio[^>]*preload="none"/);
+  assert.match(html, /<noscript>[\s\S]*需要浏览器启用 JavaScript/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /默认无音频/);
+  assert.match(attribution, /没有查看、选择、下载、vendoring 或复制任何第三方开源项目实现/);
+  assert.match(attribution, /Library of Congress/);
+  assert.match(attribution, /U\.S\. Copyright Office/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

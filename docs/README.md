@@ -194,6 +194,13 @@
 | [257-capsule-docking-core-verification.md](./257-capsule-docking-core-verification.md) | “太空舱对接”三航段规则核心、确定性 fixture、公开 DTO 与初次核心验收 |
 | [349-capsule-docking-core-verification.md](./349-capsule-docking-core-verification.md) | “太空舱对接”的 hostile Proxy 与 control 加固、22 项核心测试及来源复验 |
 | [384-capsule-docking-final-verification.md](./384-capsule-docking-final-verification.md) | “转一点，推一点，刚好回家”的 29 项定向测试、三航段/六 Gate、六视口/输入/降级矩阵与两项浏览器问题闭环 |
+| [267-vinyl-secret-research.md](./267-vinyl-secret-research.md) | S14“黑胶寻声”的三轨文字主路线、可选本地音频、阶段隐私与权利边界调研 |
+| [268-vinyl-secret-brainstorm.md](./268-vinyl-secret-brainstorm.md) | “黑胶寻声”的十二圈远近反馈、三轨顺序、默认无音频与失败软降级决策 |
+| [269-vinyl-secret-spec.md](./269-vinyl-secret-spec.md) | “把秘密藏进这一圈”的 reducer、公开投影、媒体生命周期、响应式与验收规格 |
+| [270-vinyl-secret-plan.md](./270-vinyl-secret-plan.md) | “把秘密藏进这一圈”的核心、生产 UI、音频/隐私 Gate、独立提交和浏览器实施计划 |
+| [320-vinyl-secret-design-proposal.md](./320-vinyl-secret-design-proposal.md) | “私人压片工作台”的桌面寻槽、移动终局、纯 CSS 视觉与生成概念边界 |
+| [353-vinyl-secret-core-verification.md](./353-vinyl-secret-core-verification.md) | “黑胶寻声”的 Proxy 撤销、来源覆盖、38 项核心测试与阶段公开数据复验 |
+| [385-vinyl-secret-final-verification.md](./385-vinyl-secret-final-verification.md) | “把秘密藏进这一圈”的 46 项定向测试、三轨完整路线、六视口/音频/隐私/降级终验 |
 | [210-catalog-local-launch-brainstorm.md](./210-catalog-local-launch-brainstorm.md) | 由 catalog 自动扩展的 A 级 file 直开、B/C/D 启动器、静态依赖图与真实浏览器证据决策 |
 | [211-catalog-local-launch-spec.md](./211-catalog-local-launch-spec.md) | 本地直达 renderer、HTML/CSS/JS 依赖扫描、稳定错误、fixture 与 verify 集成规格 |
 | [212-catalog-local-launch-plan.md](./212-catalog-local-launch-plan.md) | 本地直达合同的子代理边界、三次独立提交、Chrome 全量 A 级与 B/C/D 抽样验收计划 |

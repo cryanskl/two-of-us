@@ -288,6 +288,19 @@
       "networkRequired": false
     },
     {
+      "id": "vinyl-secret",
+      "title": "把秘密藏进这一圈",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/vinyl-secret/index.html",
+      "readme": "experiences/surprises/vinyl-secret/README.md",
+      "description": "沿十二圈唱片沟槽寻找三段文字，依次根据远近信号落下唱针；三轨找齐后才打开本地定制的私人封套，可选音频失败也不影响完成。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",
