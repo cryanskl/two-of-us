@@ -53,4 +53,3 @@ FNV-1a 哈希同时分叉。旧测试只证明 `mirrorState(mirrorState(state)) 
 - [x] 左方单独发射得到奇数 ID，右方单独发射得到偶数 ID
 - [x] 100 组、每组 240 个 playing tick 的确定性随机日志通过镜像等价探针
 - [x] 定向核心测试通过
-

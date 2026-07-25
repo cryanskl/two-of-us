@@ -47,4 +47,3 @@ state，再把非法 action 处理为 no-op；合法冻结 state 仍保持引用
 - [x] 合法 state + 畸形 frame 保持 no-op
 - [x] 合法 STEP 的固定 tick 行为不变
 - [x] 定向核心测试通过
-

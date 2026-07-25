@@ -1,9 +1,9 @@
 # `ricochet-tank-duel` 非视觉核心再验收
 
-> 日期：2026-07-25  
-> 基线：`b9bddfe31b9559b3fe095fd010e6a4591a074257`  
-> 分支：`codex/exp-ricochet-tank-duel-core-reaudit`  
-> 范围：项目现有非视觉核心、定向测试、必要 `bugs/` 与 `learn/`  
+> 日期：2026-07-25
+> 基线：`b9bddfe31b9559b3fe095fd010e6a4591a074257`
+> 分支：`codex/exp-ricochet-tank-duel-core-reaudit`
+> 范围：项目现有非视觉核心、定向测试、必要 `bugs/` 与 `learn/`
 > 不在范围：生产 UI、Board、catalog、共享依赖、launcher
 
 ## 1. 结论
@@ -152,4 +152,3 @@ git diff --check b9bddfe..HEAD
 
 这些不是当前 Core 的缺陷，但都是“本地点开即玩”验收所需的剩余生产工作。生产
 UI 必须先取得视觉方向确认，并继续沿用现有 `ATTRIBUTION.md` 的独立实现边界。
-
