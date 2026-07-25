@@ -934,3 +934,18 @@ test("production attribution freezes five sources, licenses, hashes, and zero-co
     assert.match(attribution, new RegExp(value));
   }
 });
+
+test("generation ledger points at the same frozen canvas-text-particle repository", () => {
+  const generationLedger = fs.readFileSync(
+    new URL("../../../docs/assets/wish-fireworks/GENERATION.md", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    generationLedger,
+    /https:\/\/github\.com\/dango0812\/canvas-text-particle/,
+  );
+  assert.doesNotMatch(
+    generationLedger,
+    /https:\/\/github\.com\/tangren1998\/canvas-text-particle/,
+  );
+});
