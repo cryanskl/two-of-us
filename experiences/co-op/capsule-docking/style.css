@@ -91,11 +91,14 @@ button {
 .masthead h1,
 .noscript-shell h1 {
   margin: 0;
-  max-width: 18ch;
   font-size: clamp(2.05rem, 3.7vw, 3.95rem);
   line-height: .98;
   letter-spacing: -.055em;
   text-wrap: balance;
+}
+
+.noscript-shell h1 {
+  max-width: 18ch;
 }
 
 .rule-copy,
