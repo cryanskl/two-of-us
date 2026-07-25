@@ -1,0 +1,810 @@
+:root {
+  --night: #070c18;
+  --night-deep: #03060d;
+  --ivory: #f0d3a1;
+  --gold: #e4bc78;
+  --plum: #351424;
+  --plum-deep: #240d17;
+  --copper: #a8753e;
+  --coral: #b54c36;
+  --paper: #e9d1a9;
+  --ink: #2b211b;
+  --focus: #b8a4ff;
+  --muted: #c7aa7d;
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  background: var(--night);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 280px;
+  background: var(--night);
+}
+
+body {
+  min-width: 280px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--ivory);
+  background:
+    radial-gradient(circle at 12% 15%, rgb(240 211 161 / 42%) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 72% 11%, rgb(228 188 120 / 32%) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 86% 32%, rgb(240 211 161 / 25%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 38% 42%, rgb(181 76 54 / 13%) 0 1px, transparent 1.8px),
+    linear-gradient(145deg, #0a1120 0%, var(--night) 48%, var(--night-deep) 100%);
+  background-size: 173px 181px, 231px 257px, 313px 293px, 197px 223px, auto;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.js-only {
+  display: none !important;
+}
+
+.app-ready .js-only:not([hidden]) {
+  display: revert !important;
+}
+
+.app-ready .no-js-status {
+  display: none;
+}
+
+#wish-fireworks {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1320px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding:
+    max(38px, env(safe-area-inset-top))
+    clamp(20px, 5vw, 72px)
+    max(30px, env(safe-area-inset-bottom));
+}
+
+#wish-fireworks::after {
+  position: fixed;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(24px, 5vw, 58px);
+  border-top: 1px solid rgb(168 117 62 / 62%);
+  background:
+    linear-gradient(100deg, transparent 0 18%, rgb(228 188 120 / 20%) 25%, transparent 32%),
+    linear-gradient(180deg, #171625 0%, #090b12 42%, #02040a 100%);
+  box-shadow: 0 -8px 30px rgb(0 0 0 / 45%);
+  content: "";
+}
+
+.title-block {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+}
+
+h1,
+h2,
+.progress-status,
+.glyph-label,
+.result-letter {
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+}
+
+h1 {
+  margin: 0;
+  color: var(--ivory);
+  font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0.075em;
+  text-shadow: 0 0 22px rgb(228 188 120 / 18%);
+}
+
+.instructions {
+  max-width: 860px;
+  margin: clamp(18px, 2.8vw, 28px) 0 0;
+  color: #e5c796;
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+  font-size: clamp(1.05rem, 1.55vw, 1.28rem);
+  line-height: 1.75;
+  letter-spacing: 0.045em;
+}
+
+.sky-stage {
+  position: relative;
+  min-height: clamp(270px, 37vh, 390px);
+  margin: clamp(16px, 2.8vw, 30px) 0 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgb(168 117 62 / 62%);
+}
+
+.static-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(16deg, transparent 0 63%, rgb(139 96 82 / 7%) 64% 65%, transparent 66%),
+    radial-gradient(ellipse at 68% 48%, rgb(53 20 36 / 18%), transparent 49%),
+    linear-gradient(180deg, transparent 68%, rgb(3 6 13 / 42%));
+}
+
+.static-sky::after {
+  position: absolute;
+  right: -3%;
+  bottom: -1px;
+  left: -3%;
+  height: 24px;
+  border-top: 1px solid rgb(228 188 120 / 30%);
+  background:
+    linear-gradient(95deg, #0b0b13 0 44%, #17121a 44.2% 66%, #080910 66.2%),
+    var(--night-deep);
+  box-shadow: 0 -12px 42px rgb(181 76 54 / 7%);
+  content: "";
+}
+
+#fireworks-canvas {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: clamp(0px, 5vw, 80px);
+  width: auto;
+  height: min(100%, 390px);
+  max-width: 72%;
+  transform: translateY(-50%);
+}
+
+.burst-fallback {
+  position: absolute;
+  z-index: 1;
+  inset: 12px 4% 28px auto;
+  display: none;
+  width: min(52vw, 360px);
+  place-items: center;
+}
+
+.canvas-failed .burst-fallback {
+  display: grid;
+}
+
+.revealed-glyphs {
+  display: flex !important;
+  width: min(100%, 760px);
+  min-height: 64px;
+  margin: 0;
+  padding: 13px 0 10px;
+  list-style: none;
+  border-bottom: 1px solid var(--copper);
+  gap: clamp(34px, 9vw, 110px);
+}
+
+.revealed-glyph {
+  min-width: 68px;
+  text-align: center;
+}
+
+.glyph-label {
+  color: var(--ivory);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+
+.glyph-grid {
+  display: none;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  width: min(38vw, 180px);
+  aspect-ratio: 1;
+  gap: 3px;
+}
+
+.glyph-dot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.glyph-dot[data-active="true"] {
+  background: var(--gold);
+  box-shadow: 0 0 9px rgb(228 188 120 / 86%);
+}
+
+.canvas-failed .revealed-glyphs {
+  width: 100%;
+  align-items: end;
+  justify-content: space-evenly;
+  gap: clamp(10px, 4vw, 44px);
+}
+
+.canvas-failed .revealed-glyph {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.canvas-failed .revealed-glyph .glyph-grid {
+  display: grid;
+}
+
+.progress-status,
+.no-js-status {
+  max-width: 820px;
+  margin: clamp(20px, 3vw, 32px) 0 0;
+  color: #dfa45a;
+  font-size: clamp(1.2rem, 2vw, 1.58rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.055em;
+}
+
+.launch-controls {
+  width: min(100%, 760px);
+  margin-top: clamp(20px, 3vw, 32px);
+}
+
+.launch-controls > label {
+  display: inline-block;
+  min-width: 122px;
+  color: var(--ivory);
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+  font-size: clamp(1.08rem, 1.6vw, 1.3rem);
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+#height-select {
+  width: min(100%, 360px);
+  min-height: 56px;
+  padding: 0 48px 0 22px;
+  border: 1px solid var(--copper);
+  border-radius: 5px;
+  color: var(--ivory);
+  background: var(--plum);
+  box-shadow: inset 0 0 0 2px rgb(228 188 120 / 10%);
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+}
+
+.launch-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 22px;
+  gap: 18px;
+}
+
+#hold-launch,
+#direct-launch,
+.primary-action {
+  position: relative;
+  min-height: 64px;
+  padding: 13px 28px;
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  color: #f3bf70;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 3%), transparent 42%),
+    var(--plum);
+  box-shadow:
+    inset 0 0 0 4px var(--plum-deep),
+    inset 0 0 0 5px rgb(228 188 120 / 42%),
+    0 10px 24px rgb(0 0 0 / 24%);
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+  font-size: clamp(1.25rem, 2vw, 1.72rem);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+#hold-launch > span:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.charge-fill {
+  position: absolute;
+  z-index: 1;
+  inset: 5px auto 5px 5px;
+  width: var(--charge, 0%);
+  max-width: calc(100% - 10px);
+  background: linear-gradient(90deg, rgb(181 76 54 / 28%), rgb(228 188 120 / 34%));
+}
+
+#hold-launch[data-can-hold="true"] {
+  touch-action: none;
+}
+
+#hold-launch.is-holding {
+  border-style: double;
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 0 0 5px #180812,
+    inset 0 0 0 6px var(--gold);
+}
+
+#hold-launch[aria-disabled="true"],
+#direct-launch[aria-disabled="true"] {
+  border-style: dashed;
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.guarantee {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+  font-size: clamp(1rem, 1.4vw, 1.16rem);
+  line-height: 1.6;
+}
+
+.primary-action {
+  width: min(100%, 370px);
+  min-height: 72px;
+  margin-top: clamp(24px, 4vw, 42px);
+}
+
+.privacy-note {
+  max-width: 870px;
+  margin: clamp(26px, 5vw, 54px) 0 0;
+  color: #d4b684;
+  font-family: "Songti SC", STSong, "Noto Serif CJK SC", serif;
+  font-size: clamp(0.95rem, 1.35vw, 1.1rem);
+  line-height: 1.75;
+  letter-spacing: 0.035em;
+}
+
+.result-letter {
+  position: relative;
+  width: min(100%, 760px);
+  margin-top: clamp(26px, 4vw, 42px);
+  padding: clamp(30px, 5vw, 54px);
+  border: 1px solid #c89b5d;
+  color: var(--ink);
+  background:
+    linear-gradient(96deg, transparent 0 48%, rgb(82 51 30 / 5%) 49% 50%, transparent 51%),
+    linear-gradient(180deg, #efdcb9 0%, var(--paper) 100%);
+  box-shadow: 0 22px 52px rgb(0 0 0 / 36%);
+}
+
+.result-letter::before,
+.result-letter::after {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-color: #a8753e;
+  content: "";
+}
+
+.result-letter::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.result-letter::after {
+  right: 12px;
+  bottom: 12px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.result-letter p,
+.result-letter h2 {
+  max-width: 58ch;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.pattern-label {
+  margin-top: 0;
+  margin-bottom: 26px;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+}
+
+.recipient-line,
+.signature {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  letter-spacing: 0.08em;
+}
+
+#final-title {
+  width: fit-content;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.final-note {
+  margin-top: 0;
+  margin-bottom: 24px;
+  white-space: pre-line;
+  font-size: clamp(1.05rem, 1.65vw, 1.28rem);
+  line-height: 1.8;
+}
+
+.signature {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+button:hover:not([aria-disabled="true"]) {
+  border-color: #f3cf93;
+  background-color: #46192d;
+}
+
+button:active:not([aria-disabled="true"]) {
+  transform: translateY(2px);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 5px;
+}
+
+#page-title:focus-visible {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 700px) {
+  #wish-fireworks {
+    padding:
+      max(28px, env(safe-area-inset-top))
+      max(18px, env(safe-area-inset-right))
+      max(30px, env(safe-area-inset-bottom))
+      max(18px, env(safe-area-inset-left));
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 12vw, 3.35rem);
+    line-height: 1.12;
+    letter-spacing: 0.045em;
+  }
+
+  .instructions {
+    font-size: 1.02rem;
+    line-height: 1.82;
+  }
+
+  .sky-stage {
+    min-height: clamp(230px, 38vh, 315px);
+    margin-top: 14px;
+  }
+
+  #fireworks-canvas {
+    right: 50%;
+    max-width: 100%;
+    height: min(100%, 315px);
+    transform: translate(50%, -50%);
+  }
+
+  .burst-fallback {
+    inset: 12px 50% 28px auto;
+    width: min(74vw, 270px);
+    transform: translateX(50%);
+  }
+
+  .revealed-glyphs {
+    width: 100%;
+    min-height: 58px;
+    justify-content: space-around;
+    gap: 16px;
+  }
+
+  .revealed-glyph {
+    min-width: 44px;
+  }
+
+  .progress-status {
+    font-size: 1.14rem;
+  }
+
+  .launch-controls > label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  #height-select {
+    width: 100%;
+  }
+
+  .launch-actions {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #hold-launch,
+  #direct-launch,
+  .primary-action {
+    width: 100%;
+    min-height: 64px;
+  }
+
+  .result-letter {
+    padding: 32px 24px 36px;
+  }
+
+  .privacy-note {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 350px) {
+  #wish-fireworks {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .sky-stage {
+    min-height: 224px;
+  }
+
+  .result-letter {
+    padding-right: 19px;
+    padding-left: 19px;
+  }
+}
+
+@media (min-width: 700px) and (max-height: 520px) and (orientation: landscape) {
+  #wish-fireworks[data-phase="ready"],
+  #wish-fireworks[data-phase="bursting"],
+  #wish-fireworks[data-phase="complete"] {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.92fr) minmax(390px, 1.2fr);
+    grid-template-areas:
+      "stage title"
+      "stage instructions"
+      "stage revealed"
+      "stage progress"
+      "stage controls"
+      "stage result"
+      "stage action"
+      "privacy privacy"
+      "live live";
+    column-gap: clamp(24px, 4vw, 58px);
+    align-content: start;
+    padding-top: 20px;
+  }
+
+  .title-block {
+    grid-area: title;
+  }
+
+  .instructions {
+    grid-area: instructions;
+    margin-top: 12px;
+  }
+
+  .sky-stage {
+    grid-area: stage;
+    align-self: start;
+    min-height: 330px;
+    height: calc(100vh - 52px);
+    max-height: 430px;
+    margin-top: 0;
+  }
+
+  .revealed-glyphs {
+    grid-area: revealed;
+    min-height: 48px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+  }
+
+  .progress-status {
+    grid-area: progress;
+    margin-top: 11px;
+    font-size: 1.1rem;
+  }
+
+  .launch-controls {
+    grid-area: controls;
+    margin-top: 13px;
+  }
+
+  .launch-controls > label {
+    min-width: 108px;
+    font-size: 1rem;
+  }
+
+  #height-select {
+    min-height: 56px;
+  }
+
+  .launch-actions {
+    margin-top: 13px;
+    gap: 12px;
+  }
+
+  #hold-launch,
+  #direct-launch {
+    min-height: 56px;
+    font-size: 1.12rem;
+  }
+
+  .guarantee {
+    margin-top: 10px;
+  }
+
+  .result-letter {
+    grid-area: result;
+    margin-top: 13px;
+    padding: 24px 30px;
+  }
+
+  .result-letter .pattern-label {
+    margin-bottom: 12px;
+    font-size: 1.55rem;
+  }
+
+  .result-letter #final-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.35rem;
+  }
+
+  .result-letter .final-note {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .primary-action {
+    grid-area: action;
+    min-height: 56px;
+    margin-top: 13px;
+  }
+
+  .privacy-note {
+    grid-area: privacy;
+    margin-top: 20px;
+    font-size: 0.88rem;
+  }
+
+  .visually-hidden {
+    grid-area: live;
+  }
+
+  h1 {
+    font-size: clamp(2.55rem, 5.7vw, 4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  #hold-launch {
+    touch-action: auto;
+  }
+}
+
+@media (forced-colors: active) {
+  :root,
+  html,
+  body {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  body,
+  #wish-fireworks::after,
+  .static-sky,
+  .static-sky::after,
+  #height-select,
+  #hold-launch,
+  #direct-launch,
+  .primary-action,
+  .result-letter,
+  .charge-fill {
+    background: Canvas;
+    background-image: none;
+    box-shadow: none;
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  #fireworks-canvas {
+    display: none;
+  }
+
+  .burst-fallback {
+    display: grid;
+  }
+
+  .revealed-glyphs {
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .revealed-glyph {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+  }
+
+  .revealed-glyph .glyph-grid {
+    display: grid;
+  }
+
+  .glyph-dot[data-active="true"] {
+    border: 2px solid CanvasText;
+    background: Highlight;
+    box-shadow: none;
+  }
+
+  h1,
+  .instructions,
+  .progress-status,
+  .glyph-label,
+  .guarantee,
+  .privacy-note,
+  .result-letter {
+    color: CanvasText;
+    text-shadow: none;
+  }
+
+  #height-select,
+  #hold-launch,
+  #direct-launch,
+  .primary-action,
+  .result-letter,
+  .revealed-glyphs {
+    border: 2px solid CanvasText;
+  }
+
+  #hold-launch[aria-disabled="true"],
+  #direct-launch[aria-disabled="true"] {
+    border-style: dashed;
+    color: GrayText;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+}
