@@ -99,6 +99,16 @@
     var options = titles.map(function makeOption(title, index) {
       return option(cardId, "o" + (index + 1), title);
     });
+    var answerOptionId = options[answerIndex].id;
+    var spotlightRemoves = options[removeIndex].id;
+    var packIndex = packs.findIndex(function findPack(pack) {
+      return pack.id === data[1];
+    });
+    var pairIndex = packs[packIndex].pairIds.indexOf(data[2]);
+    var displayAnswerIndex =
+      (pairIndex + packIndex + (data[3] === "B" ? 2 : 0)) % 4;
+    var answerOption = options.splice(answerIndex, 1)[0];
+    options.splice(displayAnswerIndex, 0, answerOption);
     return {
       id: cardId,
       packId: data[1],
@@ -107,9 +117,9 @@
       difficulty: data[4],
       genre: data[5],
       tokens: data[6],
-      answerOptionId: options[answerIndex].id,
+      answerOptionId: answerOptionId,
       options: options,
-      spotlightRemoves: options[removeIndex].id,
+      spotlightRemoves: spotlightRemoves,
       rationale: data[7],
       authorship: "original-project-copy",
       reviewed: true
