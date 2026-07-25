@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `0f95f8c` |
+| 当前 HEAD | `85a6c9d` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | 21 项视觉确认总清单已集成；`capsule-docking` 被证实尚无可审阅预览，Board 证据漂移已修正，许可证审计、真实浏览器矩阵与 `love-tree` clean-room 前置继续运行 |
+| 工作树提示 | 21 项视觉确认总清单与 `capsule-docking` 证据漂移修复已集成；Worker 4 已滚动补位生成真实可审阅候选，许可证审计、浏览器矩阵与 `love-tree` clean-room 前置继续运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -31,7 +31,7 @@
 | Worker 1 | 已分配 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | Penguin 七类真实边界、bug/learn 与复验已集成并释放槽位；现盘点 58 个入口及非视觉候选的来源固定性、许可证、复制边界和声明覆盖，只写 `363` 与唯一记录 |
 | Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
 | Worker 3 | 已分配 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | Honeycomb 两类真实核心缺口、bug/learn 与复验已集成并释放槽位；现用 Chrome 验证门户、A 级直开、非 A launcher、控制台与网络边界，只写 `364` 与唯一记录 |
-| Worker 4 | 已完成，待补位 | 待确认视觉提案总清单与批量确认路径 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-visual-approval-digest` | `df02219` | `365` 已集成：21/21 阻塞项、122 个本地证据链接和批量/单项确认模板完整；确认 `capsule-docking` 只有简报、没有预览，不能进入批准 |
+| Worker 4 | 已分配 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | `365` 与证据漂移 bug 已集成并释放槽位；现按 `208` 统一方向生成 desktop/mobile 可审阅候选、`GENERATION.md` 与 `369` 提案，不修改生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -134,6 +134,7 @@
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已分配；只做真实浏览器与启动层验证并记录证据，不修改生产 UI、入口、launcher、catalog 或共享 runtime |
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
 | `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
+| `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已分配；补 desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句，不修改生产 UI、core 或 catalog |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
