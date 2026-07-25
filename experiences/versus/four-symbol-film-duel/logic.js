@@ -687,42 +687,60 @@
   }
 
   function parseAction(candidate, state) {
-    var header = snapshotRecord(candidate, ["type", "revision"]);
-    if (
-      header &&
-      Object.prototype.hasOwnProperty.call(ACTIONS, Object.keys(ACTIONS).find(function findAction(key) {
-        return ACTIONS[key] === header.type;
-      }) || "") &&
-      Number.isSafeInteger(header.revision) &&
-      header.revision === state.revision
-    ) {
-      return header;
-    }
-    if (!candidate || typeof candidate !== "object") return null;
-    var typeDescriptor;
     try {
-      typeDescriptor = Object.getOwnPropertyDescriptor(candidate, "type");
+      if (
+        !candidate ||
+        typeof candidate !== "object" ||
+        Array.isArray(candidate) ||
+        Object.getPrototypeOf(candidate) !== Object.prototype
+      ) {
+        return null;
+      }
+      var descriptors = Object.getOwnPropertyDescriptors(candidate);
+      var own = Reflect.ownKeys(descriptors);
+      var typeDescriptor = descriptors.type;
+      if (
+        !typeDescriptor ||
+        !Object.prototype.hasOwnProperty.call(typeDescriptor, "value") ||
+        Object.values(ACTIONS).indexOf(typeDescriptor.value) < 0
+      ) {
+        return null;
+      }
+      var keys =
+        typeDescriptor.value === ACTIONS.START_MATCH
+          ? ["type", "revision", "packId", "playerNames"]
+          : typeDescriptor.value === ACTIONS.SELECT_OPTION
+            ? ["type", "revision", "optionId"]
+            : ["type", "revision"];
+      if (
+        own.length !== keys.length ||
+        own.some(function unknownKey(key) {
+          return typeof key !== "string" || keys.indexOf(key) < 0;
+        })
+      ) {
+        return null;
+      }
+      var value = {};
+      for (var index = 0; index < keys.length; index += 1) {
+        var descriptor = descriptors[keys[index]];
+        if (
+          !descriptor ||
+          descriptor.enumerable !== true ||
+          !Object.prototype.hasOwnProperty.call(descriptor, "value")
+        ) {
+          return null;
+        }
+        value[keys[index]] = descriptor.value;
+      }
+      return (
+        Number.isSafeInteger(value.revision) &&
+        value.revision === state.revision
+      )
+        ? value
+        : null;
     } catch (_error) {
       return null;
     }
-    if (!typeDescriptor || !Object.prototype.hasOwnProperty.call(typeDescriptor, "value")) return null;
-    var type = typeDescriptor.value;
-    var keys =
-      type === ACTIONS.START_MATCH
-        ? ["type", "revision", "packId", "playerNames"]
-        : type === ACTIONS.SELECT_OPTION
-          ? ["type", "revision", "optionId"]
-          : ["type", "revision"];
-    var value = snapshotRecord(candidate, keys);
-    if (
-      !value ||
-      !Number.isSafeInteger(value.revision) ||
-      value.revision !== state.revision ||
-      Object.values(ACTIONS).indexOf(value.type) < 0
-    ) {
-      return null;
-    }
-    return value;
   }
 
   function reduce(state, action) {
