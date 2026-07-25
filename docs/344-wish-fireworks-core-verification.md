@@ -1,9 +1,9 @@
 # `wish-fireworks` 非视觉核心复验
 
-> 日期：2026-07-25  
-> 基线：`5d995630672668df6e1a4f356b5eef67606d89b0`  
-> 分支：`codex/exp-wish-fireworks-core-audit`  
-> 范围：确定性核心、输入/动效数据合同、来源与资源、已安装作品去重  
+> 日期：2026-07-25
+> 基线：`5d995630672668df6e1a4f356b5eef67606d89b0`
+> 分支：`codex/exp-wish-fireworks-core-audit`
+> 范围：确定性核心、输入/动效数据合同、来源与资源、已安装作品去重
 > 明确不在范围：生产 UI、浏览器验收、launcher 与 catalog Gate
 
 ## 1. 结论
