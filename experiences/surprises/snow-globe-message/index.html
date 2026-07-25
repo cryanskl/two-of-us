@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <title>等雪停下</title>
+    <meta
+      name="description"
+      content="把四阵风收进雪球里，等雪慢慢落下。一个完全在本机运行的小惊喜。"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main id="snow-globe-app" class="experience" hidden>
+      <header class="page-header">
+        <h1>等雪停下</h1>
+      </header>
+
+      <p class="instruction">
+        把四阵风收进雪球里。等雪慢慢落下，会有一句话留在里面。
+      </p>
+
+      <section id="globe-stage" class="globe-stage" data-phase="intro">
+        <div id="globe-interaction" class="globe-interaction" aria-hidden="true">
+          <canvas id="snow-canvas" width="1000" height="900" aria-hidden="true"></canvas>
+          <div id="canvas-fallback" class="canvas-fallback" aria-hidden="true"></div>
+          <span class="glass-shine glass-shine-one" aria-hidden="true"></span>
+          <span class="glass-shine glass-shine-two" aria-hidden="true"></span>
+          <span class="snow-bank" aria-hidden="true"></span>
+        </div>
+        <div class="globe-base" aria-hidden="true">
+          <span class="base-line"></span>
+          <span class="base-emblem">✦</span>
+        </div>
+      </section>
+
+      <div id="wind-controls" class="wind-controls" aria-label="收集四阵风">
+        <button type="button" class="wind-button" data-direction="up" aria-pressed="false">
+          <span class="wind-label">上</span>
+          <span class="wind-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="wind-button" data-direction="right" aria-pressed="false">
+          <span class="wind-label">右</span>
+          <span class="wind-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="wind-button" data-direction="down" aria-pressed="false">
+          <span class="wind-label">下</span>
+          <span class="wind-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="wind-button" data-direction="left" aria-pressed="false">
+          <span class="wind-label">左</span>
+          <span class="wind-state" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <p id="progress" class="progress-text">正在把这只雪球准备好。</p>
+
+      <button id="main-action" class="main-action" type="button" hidden></button>
+
+      <p class="privacy-note">
+        这只雪球只在本机运行，留言会在雪停后才出现。
+      </p>
+
+      <p
+        id="live-region"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+    </main>
+
+    <noscript>
+      <main class="experience no-script-experience">
+        <header class="page-header">
+          <h1>等雪停下</h1>
+        </header>
+        <p class="instruction">
+          把四阵风收进雪球里。等雪慢慢落下，会有一句话留在里面。
+        </p>
+        <div class="globe-stage static-globe" aria-hidden="true">
+          <div class="globe-interaction">
+            <span class="glass-shine glass-shine-one"></span>
+            <span class="glass-shine glass-shine-two"></span>
+            <span class="snow-bank"></span>
+          </div>
+          <div class="globe-base">
+            <span class="base-line"></span>
+            <span class="base-emblem">✦</span>
+          </div>
+        </div>
+        <p class="no-script-note">请开启 JavaScript 后再收集四阵风</p>
+        <p class="privacy-note">
+          这只雪球只在本机运行，留言会在雪停后才出现。
+        </p>
+      </main>
+    </noscript>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
