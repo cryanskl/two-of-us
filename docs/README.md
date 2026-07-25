@@ -194,6 +194,14 @@
 | [257-capsule-docking-core-verification.md](./257-capsule-docking-core-verification.md) | “太空舱对接”三航段规则核心、确定性 fixture、公开 DTO 与初次核心验收 |
 | [349-capsule-docking-core-verification.md](./349-capsule-docking-core-verification.md) | “太空舱对接”的 hostile Proxy 与 control 加固、22 项核心测试及来源复验 |
 | [384-capsule-docking-final-verification.md](./384-capsule-docking-final-verification.md) | “转一点，推一点，刚好回家”的 29 项定向测试、三航段/六 Gate、六视口/输入/降级矩阵与两项浏览器问题闭环 |
+| [305-twin-orbit-research.md](./305-twin-orbit-research.md) | “双星同轨”的五关同刻穿门、双席职责、名称冲突、本地 A 级与机制去重调研 |
+| [306-twin-orbit-spec.md](./306-twin-orbit-spec.md) | “这一圈，和你同时到”的固定步、双轨速度、五关状态机、公开投影与完整验收规格 |
+| [307-twin-orbit-attribution-dependency-audit.md](./307-twin-orbit-attribution-dependency-audit.md) | 双星同轨的内部机制参考、外部来源、许可证、名称与零复制边界审计 |
+| [308-twin-orbit-acceptance-plan.md](./308-twin-orbit-acceptance-plan.md) | 双星同轨的核心、生产 UI、双输入、catalog、浏览器、bugs/learn 与独立提交计划 |
+| [309-twin-orbit-core-verification.md](./309-twin-orbit-core-verification.md) | 双星同轨的固定五关、独立求解器、公开 DTO 与初次非视觉核心验收 |
+| [310-twin-orbit-design-proposal.md](./310-twin-orbit-design-proposal.md) | “午夜双环刻度盘”的桌面/移动概念、双席语义、响应式与 code-native 偏差台账 |
+| [354-twin-orbit-core-verification.md](./354-twin-orbit-core-verification.md) | 双星同轨的完成态、重试、可达角度、隐私、标准来源与 39 项核心复验 |
+| [386-twin-orbit-final-verification.md](./386-twin-orbit-final-verification.md) | “这一圈，和你同时到”的 47 项定向测试、双环入口/失败路线、六视口、无 JS 与三项产品问题闭环 |
 | [267-vinyl-secret-research.md](./267-vinyl-secret-research.md) | S14“黑胶寻声”的三轨文字主路线、可选本地音频、阶段隐私与权利边界调研 |
 | [268-vinyl-secret-brainstorm.md](./268-vinyl-secret-brainstorm.md) | “黑胶寻声”的十二圈远近反馈、三轨顺序、默认无音频与失败软降级决策 |
 | [269-vinyl-secret-spec.md](./269-vinyl-secret-spec.md) | “把秘密藏进这一圈”的 reducer、公开投影、媒体生命周期、响应式与验收规格 |

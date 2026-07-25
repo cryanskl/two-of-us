@@ -971,6 +971,53 @@ test("capsule docking keeps file launch, fixed-step input, and attribution bound
   assert.match(attribution, /未复制/);
 });
 
+test("catalog exposes the installed A-level twin orbit", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "twin-orbit");
+
+  assert.equal(experience.title, "这一圈，和你同时到");
+  assert.equal(experience.category, "co-op");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "2 人合作");
+  assert.equal(experience.devices, "单设备同屏");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /twin-orbit\/index\.html$/);
+  assert.match(portal, /"id": "twin-orbit"/);
+});
+
+test("twin orbit keeps file launch, fixed-step dual input, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/co-op/twin-orbit/", import.meta.url);
+  const [html, config, logic, fixtures, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("fixtures.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, fixtures, app, css].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js"><\/script>\s*<script src="\.\/logic\.js"><\/script>\s*<script src="\.\/fixtures\.js"><\/script>\s*<script src="\.\/app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|getUserMedia|AudioContext)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /requestAnimationFrame/);
+  assert.match(app, /inputEpoch/);
+  assert.match(html, /data-player="left"/);
+  assert.match(html, /data-player="right"/);
+  assert.match(html, /<noscript>[\s\S]*请启用 JavaScript/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /外部开源项目直接借鉴为 0/);
+  assert.match(attribution, /orbit-star-race/);
+  assert.match(attribution, /没有复制、修改、翻译、链接或打包/);
+});
+
 test("catalog exposes the installed A-level vinyl secret", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
