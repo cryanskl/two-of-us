@@ -290,6 +290,25 @@ test("deterministic grapheme fallback preserves exact limits without Intl.Segmen
     `, context), "你");
   }
 
+  context.recipient = "a\u200db".repeat(6);
+  assert.equal(vm.runInContext(`
+    COMPLIMENT_REELS_LOGIC.sanitizeConfig({
+      recipient,
+      sender: "我",
+      columns: COMPLIMENT_REELS_CONFIG.columns,
+      composeJackpotNote: COMPLIMENT_REELS_CONFIG.composeJackpotNote
+    }).content.recipient
+  `, context), context.recipient);
+  context.recipient = `${"a\u200db".repeat(6)}c`;
+  assert.equal(vm.runInContext(`
+    COMPLIMENT_REELS_LOGIC.sanitizeConfig({
+      recipient,
+      sender: "我",
+      columns: COMPLIMENT_REELS_CONFIG.columns,
+      composeJackpotNote: COMPLIMENT_REELS_CONFIG.composeJackpotNote
+    }).content.recipient
+  `, context), "你");
+
   context.noteText = "👍🏽".repeat(120);
   assert.equal(vm.runInContext(`
     COMPLIMENT_REELS_LOGIC.createArmAction({
