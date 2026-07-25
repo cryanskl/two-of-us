@@ -1,9 +1,9 @@
 # 四符片名擂台：实现计划
 
-> 依据：`docs/273-emoji-movie-duel-spec.md`  
-> 产品 ID：`four-symbol-film-duel`  
-> 产品名：四符片名擂台  
-> 结论：Conditional Go；完成内容、平台字形、公平性和无障碍 Go Gate 后转为 Go  
+> 依据：`docs/273-emoji-movie-duel-spec.md`
+> 产品 ID：`four-symbol-film-duel`
+> 产品名：四符片名擂台
+> 结论：Conditional Go；完成内容、平台字形、公平性和无障碍 Go Gate 后转为 Go
 > 本文只规划后续实现，不在本阶段修改生产代码、导航或共享文件
 
 ## 1. 实现原则

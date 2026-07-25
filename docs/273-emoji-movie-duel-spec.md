@@ -1,11 +1,11 @@
 # 四符片名擂台：产品与技术规格
 
-> 状态：待实现  
-> 前置：`docs/271-emoji-movie-duel-research.md`、`docs/272-emoji-movie-duel-brainstorm.md`  
-> 产品 ID：`four-symbol-film-duel`  
-> 产品名：四符片名擂台  
-> 分类：双人对抗  
-> 本地等级：A  
+> 状态：待实现
+> 前置：`docs/271-emoji-movie-duel-research.md`、`docs/272-emoji-movie-duel-brainstorm.md`
+> 产品 ID：`four-symbol-film-duel`
+> 产品名：四符片名擂台
+> 分类：双人对抗
+> 本地等级：A
 > 实现边界：原生 HTML / CSS / JavaScript，零运行时第三方依赖
 
 ## 1. 目标
