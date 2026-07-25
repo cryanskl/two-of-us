@@ -67,6 +67,10 @@ a {
   display: revert !important;
 }
 
+.app-ready .revealed-glyphs.js-only:not([hidden]) {
+  display: flex !important;
+}
+
 .app-ready .no-js-status {
   display: none;
 }

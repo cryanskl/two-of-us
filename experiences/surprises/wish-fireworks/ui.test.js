@@ -73,6 +73,7 @@ test("styles implement the accepted responsive, reduced-motion, and forced-color
     "min-height: 56px",
     "touch-action: none",
     "grid-template-areas",
+    ".app-ready .revealed-glyphs.js-only:not([hidden])",
   ]) {
     assert.match(css, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
