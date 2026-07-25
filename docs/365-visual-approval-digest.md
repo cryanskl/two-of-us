@@ -229,14 +229,14 @@ love-tree 保持未确认，按新增审批项单独回复。
 - 当前预览：[desktop guessing](./assets/our-place-guess/desktop-guessing-concept.png) · [desktop revealed](./assets/our-place-guess/desktop-revealed-concept.png) · [mobile guessing](./assets/our-place-guess/mobile-guessing-concept.png) · [mobile revealed](./assets/our-place-guess/mobile-revealed-concept.png)
 - 可直接回复：`确认 our-place-guess：按“夜行纸图 + guessing 仅自己的圆点 + revealed 三形 pin”现有提案进入生产 UI。`
 
-## 新增审批项：`love-tree`
+## 已授权直接执行：`love-tree`
 
 - 用途：单人触发一棵树从根部生长、形成自然但可读为心形的花冠，最后从树根展开给对方的信与共同时间。
 - 现有方向：暮蓝纸雕花园；珊瑚心形种子、暖金枝干、低饱和粉色花冠和从树根展开的暖纸信笺。
 - 关键边界：这是 clean-room 重构方向，只继承“点击、生长、花冠、情书、共同时间”的可观察体验目标；不读取、复制或改写旧源码、动画参数、CSS、商业歌曲、文案、压缩包或具体花冠图形。生产实现必须原创、code-native，并在验收通过后以独立提交退出旧依赖链。
 - 证据：[brainstorm](./366-love-tree-clean-room-brainstorm.md) · [规格](./367-love-tree-clean-room-spec.md) · [计划](./368-love-tree-clean-room-plan.md) · [概念与生成边界](./assets/love-tree-clean-room/README.md)
 - 当前预览：[desktop idle](./assets/love-tree-clean-room/concept-01-desktop-idle.png) · [desktop growing](./assets/love-tree-clean-room/concept-03-desktop-growing.png) · [desktop reveal](./assets/love-tree-clean-room/concept-02-desktop-reveal.png) · [mobile reveal](./assets/love-tree-clean-room/concept-04-mobile-reveal.png)
-- 可直接回复：`确认 love-tree：采用“暮蓝纸雕花园”；花冠自然但可读为心形；信纸从树根展开；桌面左下信件、手机树上信下；声音开关保留右上角低存在感。`
+- 授权状态：用户已明确取消本项目的视觉确认门；总控可以按 [373 决策](./373-love-tree-visual-autonomy-decision.md) 直接实现，其他项目的确认状态不变。
 
 ## 审批结果解释
 
