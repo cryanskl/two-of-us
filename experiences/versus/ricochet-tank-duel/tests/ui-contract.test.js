@@ -13,6 +13,7 @@ test("生产入口保持公开标题、960×600 舞台、六态壳与 no-JS 说�
   assert.match(html, /<title>这一弹，拐弯见你<\/title>/);
   assert.match(html, /<h1[^>]*>这一弹，拐弯见你<\/h1>/);
   assert.match(html, /<canvas[^>]+width="960"[^>]+height="600"/);
+  assert.match(html, /<a class="back-link" href="\.\.\/\.\.\/\.\.\/index\.html">返回作品集<\/a>/);
   for (const phase of [
     "instructions", "countdown", "playing", "round-result", "paused", "match-result",
   ]) assert.match(html, new RegExp(`data-phase-panel="${phase}"`));
