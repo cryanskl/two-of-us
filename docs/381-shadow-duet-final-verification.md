@@ -1,8 +1,8 @@
 # Shadow Duet 最终验收与集成 Runbook
 
-日期：2026-07-25  
-工作树：`/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui`  
-分支：`codex/exp-shadow-duet-ui`  
+日期：2026-07-25
+工作树：`/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui`
+分支：`codex/exp-shadow-duet-ui`
 基线：`aec935f`
 
 ## 结论
