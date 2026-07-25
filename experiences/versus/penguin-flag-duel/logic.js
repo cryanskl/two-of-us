@@ -581,7 +581,7 @@
     for (const action of actions) {
       const parsed = parseAction(action, state.revision);
       if (!parsed) throw new TypeError("invalid replay action");
-      const next = reducePenguinFlagDuel(state, action);
+      const next = reducePenguinFlagDuel(state, parsed);
       if (next === state) throw new TypeError("replay action is illegal in the current phase");
       state = next;
     }
