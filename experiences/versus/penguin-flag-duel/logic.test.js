@@ -636,6 +636,11 @@ test("hostile state 额外字段、getter、NaN、Infinity 和 symbol 均 fail c
   const targetWhilePlaying = clone(startPlaying());
   targetWhilePlaying.scores = [3, 0];
   assert.throws(() => logic.assertState(targetWhilePlaying), TypeError);
+  const elapsedPaused = clone(startPlaying());
+  elapsedPaused.phase = "paused";
+  elapsedPaused.pauseReason = "manual";
+  elapsedPaused.liveTicksRemaining = 0;
+  assert.throws(() => logic.assertState(elapsedPaused), TypeError);
   const movedIntro = clone(initial);
   movedIntro.players[0].x += 1;
   assert.throws(() => logic.assertState(movedIntro), TypeError);
