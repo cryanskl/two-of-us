@@ -791,6 +791,9 @@
     const y = requireInteger(source.y, PLAYER_RADIUS, WORLD_HEIGHT - PLAYER_RADIUS, "y");
     const vx = requireInteger(source.vx, -MAX_SPEED, MAX_SPEED, "vx");
     const vy = requireInteger(source.vy, -MAX_SPEED, MAX_SPEED, "vy");
+    if (vx * vx + vy * vy > MAX_SPEED * MAX_SPEED) {
+      throw new TypeError("player speed exceeds maximum");
+    }
     const lastNormalIndex = requireInteger(source.lastNormalIndex, 0, NORMAL_VECTORS.length - 1, "lastNormalIndex");
     return { seat, x, y, vx, vy, lastNormalIndex };
   }
@@ -817,6 +820,10 @@
       if (pickupLockTicks !== 0 || looseTicks !== 0
         || x !== players[carrierSeat].x || y !== players[carrierSeat].y) {
         throw new TypeError("carried flag invariant failed");
+      }
+      const carrier = players[carrierSeat];
+      if (carrier.vx * carrier.vx + carrier.vy * carrier.vy > CARRIER_MAX_SPEED * CARRIER_MAX_SPEED) {
+        throw new TypeError("carrier speed exceeds maximum");
       }
     } else if (pickupLockTicks > 0 && looseTicks !== 0) {
       throw new TypeError("locked flag cannot age");
