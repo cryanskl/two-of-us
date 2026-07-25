@@ -1,11 +1,17 @@
 # Tangram Heart Duet：七片协作拼形调研
 
-> 调研日期：2026-07-25  
-> 候选代号：`tangram-heart-duet`  
-> 推荐发布 ID：`seven-piece-duet`  
-> 推荐中文名：**七片同心**  
-> 分类：`co-op`  
-> 运行等级：A，经典脚本、相对路径、`file://` 直开  
+> 调研日期：2026-07-25
+>
+> 候选代号：`tangram-heart-duet`
+>
+> 正式发布 ID：`seven-piece-duet`
+>
+> 正式中文名：**七片同心**
+>
+> 分类：`co-op`
+>
+> 运行等级：A，经典脚本、相对路径、`file://` 直开
+>
 > 调研结论：**Conditional Go**
 
 ## 1. 执行结论
