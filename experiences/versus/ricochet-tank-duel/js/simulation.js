@@ -267,6 +267,55 @@
     if (state.phase === "match-result" && state.bullets.length !== 0) {
       throw new Error("match-result must clear bullets");
     }
+    const reachedTargetScore = state.scores.some((score) => score >= RULES.TARGET_SCORE);
+    const reachedTimeLimit = state.activeMatchTicks >= RULES.MATCH_ACTIVE_TICKS;
+    const terminalReason = reachedTargetScore || reachedTimeLimit;
+    if (
+      ["instructions", "countdown", "playing", "paused"].includes(state.phase)
+      && reachedTargetScore
+    ) throw new Error(`${state.phase} is a nonterminal phase and cannot have target score`);
+    if (
+      ["instructions", "countdown", "playing", "paused"].includes(state.phase)
+      && reachedTimeLimit
+    ) throw new Error(`${state.phase} is a nonterminal phase and cannot reach time limit`);
+    if (state.phase === "round-result") {
+      if (terminalReason && state.pendingMatchResult === null) {
+        throw new Error("round-result requires pending result after terminal score or time");
+      }
+      if (!terminalReason && state.pendingMatchResult !== null) {
+        throw new Error("round-result pending result requires a terminal score or time");
+      }
+      if (
+        state.pendingMatchResult !== null
+        && state.pendingMatchResult !== matchResultFor(state.scores)
+      ) throw new Error("pending result must match final scores");
+    }
+    if (state.phase === "match-result") {
+      if (!terminalReason) throw new Error("match-result requires a terminal score or time");
+      if (state.matchResult !== matchResultFor(state.scores)) {
+        throw new Error("match result must match final scores");
+      }
+    }
+    if (state.phase === "instructions") {
+      const initialTanks = state.tanks.every((tank, seat) => (
+        tank.id === seat
+        && tank.xFp === SPAWNS[seat].xFp
+        && tank.yFp === SPAWNS[seat].yFp
+        && tank.heading === SPAWNS[seat].heading
+        && tank.cooldownTicks === 0
+      ));
+      if (
+        state.activeMatchTicks !== 0
+        || state.scores[0] !== 0
+        || state.scores[1] !== 0
+        || !initialTanks
+        || state.bullets.length !== 0
+        || state.nextBulletId !== 1
+        || state.roundIndex !== 1
+        || state.lastRoundResult !== null
+        || state.semanticEvents.length !== 0
+      ) throw new Error("instructions must preserve the initial state contract");
+    }
   }
 
   function validateState(rawState) {

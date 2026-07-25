@@ -531,10 +531,140 @@ test("结果字段、弹体集合与 phase 必须满足交叉不变量", () => {
   const terminal = clone(playing());
   Object.assign(terminal, {
     phase: "match-result",
+    scores: [3, 0],
     matchResult: "left",
   });
   assert.doesNotThrow(() => simulation.validateState(terminal));
   terminal.bullets = [bullet()];
   terminal.nextBulletId = 2;
   assert.throws(() => simulation.validateState(terminal), /match-result.*bullets/i);
+});
+
+test("phase、比分、时间与终局结果必须来自可达状态", () => {
+  const playingAtTimeCap = clone(playing());
+  playingAtTimeCap.activeMatchTicks = constants.RULES.MATCH_ACTIVE_TICKS;
+  assert.throws(
+    () => simulation.validateState(playingAtTimeCap),
+    /playing.*time|nonterminal.*time/i,
+  );
+
+  const playingAtTarget = clone(playing());
+  playingAtTarget.scores = [constants.RULES.TARGET_SCORE, 0];
+  assert.throws(
+    () => simulation.validateState(playingAtTarget),
+    /playing.*score|nonterminal.*score/i,
+  );
+
+  const legalPlayingBoundary = clone(playing());
+  legalPlayingBoundary.activeMatchTicks = constants.RULES.MATCH_ACTIVE_TICKS - 1;
+  legalPlayingBoundary.scores = [constants.RULES.TARGET_SCORE - 1, constants.RULES.TARGET_SCORE - 1];
+  assert.doesNotThrow(() => simulation.validateState(legalPlayingBoundary));
+
+  const countdownAtTarget = clone(playingAtTarget);
+  countdownAtTarget.phase = "countdown";
+  countdownAtTarget.phaseTicksRemaining = constants.RULES.COUNTDOWN_TICKS;
+  assert.throws(
+    () => simulation.validateState(countdownAtTarget),
+    /countdown.*score|nonterminal.*score/i,
+  );
+
+  const pausedAtTimeCap = clone(playingAtTimeCap);
+  pausedAtTimeCap.phase = "paused";
+  pausedAtTimeCap.pauseReason = "manual";
+  assert.throws(
+    () => simulation.validateState(pausedAtTimeCap),
+    /paused.*time|nonterminal.*time/i,
+  );
+  const legalPausedBoundary = clone(legalPlayingBoundary);
+  legalPausedBoundary.phase = "paused";
+  legalPausedBoundary.pauseReason = "manual";
+  assert.doesNotThrow(() => simulation.validateState(legalPausedBoundary));
+
+  const legalInterRoundCountdown = clone(playing());
+  Object.assign(legalInterRoundCountdown, {
+    phase: "countdown",
+    phaseTicksRemaining: constants.RULES.COUNTDOWN_TICKS,
+    activeMatchTicks: 123,
+    scores: [1, 0],
+    roundIndex: 2,
+    lastRoundResult: "left-hit",
+  });
+  assert.doesNotThrow(() => simulation.validateState(legalInterRoundCountdown));
+
+  const nonterminalRound = clone(playing());
+  Object.assign(nonterminalRound, {
+    phase: "round-result",
+    phaseTicksRemaining: constants.RULES.ROUND_RESULT_TICKS,
+    activeMatchTicks: 10,
+    scores: [1, 0],
+    lastRoundResult: "left-hit",
+  });
+  assert.doesNotThrow(() => simulation.validateState(nonterminalRound));
+  nonterminalRound.pendingMatchResult = "left";
+  assert.throws(
+    () => simulation.validateState(nonterminalRound),
+    /pending.*terminal|round-result.*pending/i,
+  );
+
+  const targetRound = clone(nonterminalRound);
+  targetRound.scores = [constants.RULES.TARGET_SCORE, 0];
+  targetRound.pendingMatchResult = null;
+  assert.throws(
+    () => simulation.validateState(targetRound),
+    /round-result.*pending/i,
+  );
+  targetRound.pendingMatchResult = "right";
+  assert.throws(
+    () => simulation.validateState(targetRound),
+    /pending.*scores|pending.*result/i,
+  );
+  targetRound.pendingMatchResult = "left";
+  assert.doesNotThrow(() => simulation.validateState(targetRound));
+
+  const timedRound = clone(nonterminalRound);
+  timedRound.activeMatchTicks = constants.RULES.MATCH_ACTIVE_TICKS;
+  timedRound.scores = [1, 2];
+  timedRound.pendingMatchResult = "right";
+  assert.doesNotThrow(() => simulation.validateState(timedRound));
+
+  const terminal = clone(playing());
+  Object.assign(terminal, {
+    phase: "match-result",
+    scores: [constants.RULES.TARGET_SCORE, 0],
+    matchResult: "right",
+  });
+  assert.throws(
+    () => simulation.validateState(terminal),
+    /match result.*scores|match-result.*result/i,
+  );
+  terminal.matchResult = "left";
+  assert.doesNotThrow(() => simulation.validateState(terminal));
+
+  const timedDraw = clone(playing());
+  Object.assign(timedDraw, {
+    phase: "match-result",
+    activeMatchTicks: constants.RULES.MATCH_ACTIVE_TICKS,
+    scores: [2, 2],
+    matchResult: "draw",
+  });
+  assert.doesNotThrow(() => simulation.validateState(timedDraw));
+
+  const noTerminalReason = clone(playing());
+  Object.assign(noTerminalReason, {
+    phase: "match-result",
+    scores: [1, 0],
+    matchResult: "left",
+  });
+  assert.throws(
+    () => simulation.validateState(noTerminalReason),
+    /match-result.*terminal/i,
+  );
+
+  const forgedInstructions = clone(simulation.createInitialState());
+  forgedInstructions.roundIndex = 2;
+  assert.throws(
+    () => simulation.validateState(forgedInstructions),
+    /instructions.*initial/i,
+  );
+  assert.doesNotThrow(() => simulation.validateState(simulation.createInitialState()));
 });
