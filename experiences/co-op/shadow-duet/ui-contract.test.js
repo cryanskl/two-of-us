@@ -28,6 +28,7 @@ test("HTML is semantic, progressively enhanced, and keeps exactly eight native p
   assert.match(html, /<main\b[^>]*id=["']shadow-duet["']/i);
   assert.match(html, /<h1\b[^>]*>把影子，跳成我们<\/h1>/);
   assert.match(html, /四个姿势，两道影子。看准目标，在亮起的这一拍一起定格。/);
+  assert.doesNotMatch(html, /一座只给两个人的纸幕剧场/);
   assert.match(html, /<section\b[^>]*aria-labelledby=/i);
   assert.equal((html.match(/<fieldset\b/g) || []).length, 2);
   assert.equal((html.match(/<button\b[^>]*data-seat=/g) || []).length, 8);

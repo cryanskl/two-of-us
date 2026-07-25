@@ -68,7 +68,6 @@ button {
   text-align: center;
 }
 
-.eyebrow,
 .scene-kicker,
 .target-label {
   margin: 0;
@@ -735,10 +734,6 @@ h2:focus-visible {
 
   .hero {
     margin-bottom: 10px;
-  }
-
-  .eyebrow {
-    display: none;
   }
 
   h1 {
