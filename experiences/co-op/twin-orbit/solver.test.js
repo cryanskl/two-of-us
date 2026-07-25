@@ -365,6 +365,10 @@ test("real reducer completes all five fixtures and only then enters complete", (
   assert.equal(view.phase, "complete");
   assert.equal(view.completedCount, 5);
   assert.equal(view.canRestart, true);
+  assert.deepEqual(
+    view.players.map((player) => [player.targetAngle, player.targetLane]),
+    [[null, null], [null, null]]
+  );
   assert.equal(JSON.stringify(view).includes("first-meeting"), false);
 });
 

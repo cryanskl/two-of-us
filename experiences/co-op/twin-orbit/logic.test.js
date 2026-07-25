@@ -795,6 +795,10 @@ test("public intro and complete content contain no score, winner or private solv
     intro.players.map((player) => player.name),
     ["左边", "右边"]
   );
+  assert.deepEqual(
+    intro.players.map((player) => [player.targetAngle, player.targetLane]),
+    [[null, null], [null, null]]
+  );
   assert.equal(JSON.stringify(intro).includes("openTick"), false);
   assert.equal(JSON.stringify(intro).includes("winner"), false);
   assert.equal(JSON.stringify(intro).includes("score"), false);

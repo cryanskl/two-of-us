@@ -318,8 +318,8 @@ SUSPEND { reason }
       name,
       angle,
       lane,
-      targetAngle,
-      targetLane,
+      targetAngle, // intro / complete 为 null
+      targetLane,  // intro / complete 为 null
       relationText
     }
   ],
@@ -334,7 +334,9 @@ SUSPEND { reason }
 ```
 
 不公开 fixture、未来关卡、输入 epoch、内部 retry 枚举、个人 control tick 或
-求解路径。
+求解路径。intro 在玩家按下 `START` 前不公开第 1 关目标角与目标半径；complete
+也不继续携带最后一关目标字段。两阶段保持 DTO 键稳定，但 `targetAngle` 和
+`targetLane` 均为 `null`，`relationText` 只表达等待开始或共同完成。
 
 ## 8. 单 tick 更新顺序
 

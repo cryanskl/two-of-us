@@ -1114,9 +1114,15 @@
         name: playerId === "left" ? state.content.leftName : state.content.rightName,
         angle: state.players[playerId].angle,
         lane: state.players[playerId].lane,
-        targetAngle: gate.targets[playerId].angle,
-        targetLane: gate.targets[playerId].lane,
-        relationText: relationTextFor(state, playerId)
+        targetAngle: showGate ? gate.targets[playerId].angle : null,
+        targetLane: showGate ? gate.targets[playerId].lane : null,
+        relationText: showGate
+          ? relationTextFor(state, playerId)
+          : (
+            state.phase === "intro"
+              ? "等待一起开始"
+              : "五圈已经一起完成"
+          )
       };
     });
 
