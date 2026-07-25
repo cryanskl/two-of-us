@@ -695,6 +695,50 @@ test("compliment reels keeps file launch, staged privacy, and attribution bounda
   assert.match(attribution, /没有复制、\s*翻译、改写、链接或打包/);
 });
 
+test("catalog exposes the installed A-level snow globe message surprise", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "snow-globe-message");
+
+  assert.equal(experience.title, "等雪停下");
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /snow-globe-message\/index\.html$/);
+  assert.match(portal, /"id": "snow-globe-message"/);
+});
+
+test("snow globe message keeps file launch, sensor exclusion, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/snow-globe-message/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("assets/ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="config\.js"><\/script>\s*<script src="logic\.js"><\/script>\s*<script src="app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|DeviceMotionEvent|DeviceOrientationEvent|getUserMedia)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /getContext\("2d"\)/);
+  assert.match(app, /no-canvas/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /不会把\s*内容写入浏览器存储，也不会上传/);
+  assert.match(readme, /## 借鉴与来源声明/);
+  assert.match(attribution, /627b3fc7d1a0d0fe524e2fea5f89fa7589b18d59/);
+  assert.match(attribution, /70d42d5484db7fd1646e48cc17caa5ff1c9d92cb/);
+  assert.match(attribution, /NOASSERTION/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");
@@ -1240,7 +1284,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1306,7 +1350,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1379,7 +1423,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1452,7 +1496,7 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
@@ -1521,7 +1565,7 @@ test("seven day garden keeps its file protocol, rule, asset and attribution boun
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "seven-day-garden"/);
   assert.match(coOpIndex, /\.\/seven-day-garden\//);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
 });
 
@@ -1590,7 +1634,7 @@ test("constellation relay keeps its file protocol, graph, asset and attribution 
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "constellation-relay"/);
   assert.match(coOpIndex, /\.\/constellation-relay\//);
-  assert.match(backlog, /已有 43 项[\s\S]*单人惊喜 15 项[\s\S]*双人合作 18 项[\s\S]*其余 17 项/);
+  assert.match(backlog, /已有 44 项[\s\S]*单人惊喜 16 项[\s\S]*双人合作 18 项[\s\S]*其余 16 项/);
   assert.match(backlog, /\[星座接线员（已实现为“把星光，一笔一笔交给你”）\]\(\.\.\/experiences\/co-op\/constellation-relay\/\)/);
 });
 

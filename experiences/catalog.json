@@ -262,6 +262,19 @@
       "networkRequired": false
     },
     {
+      "id": "snow-globe-message",
+      "title": "等雪停下",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/snow-globe-message/index.html",
+      "readme": "experiences/surprises/snow-globe-message/README.md",
+      "description": "依次收集上、右、下、左四阵风，再亲手让雪落下；雪停后，确定性雪花图案与本地留言一同显现。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",

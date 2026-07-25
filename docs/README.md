@@ -214,6 +214,7 @@
 | [209-snow-globe-message-plan.md](./209-snow-globe-message-plan.md) | “雪球留言”的分步实施、独立提交、逻辑/视觉/UI Gate 与验收计划 |
 | [210-snow-globe-message-design-proposal.md](./210-snow-globe-message-design-proposal.md) | “雪球留言”的十态视觉概念、设计令牌、响应式/降级提案与待确认 Gate |
 | [233-snow-globe-message-source-refresh.md](./233-snow-globe-message-source-refresh.md) | “雪球留言”的固定来源、许可载体、标准状态、排除项与视觉 Gate 维护复核 |
+| [377-snow-globe-message-final-verification.md](./377-snow-globe-message-final-verification.md) | “等雪停下”的 22 项定向测试、六档视口/真实触摸拖拽/键盘/降动效浏览器矩阵、横屏修复与来源终验 |
 | [234-origami-heart-brainstorm.md](./234-origami-heart-brainstorm.md) | “折纸心机关”的产品边界、五道折痕、Pointer/按钮、隐私和代码原生视觉决策 |
 | [235-origami-heart-research.md](./235-origami-heart-research.md) | “折纸心机关”的定向调研、固定来源、零复制边界、平台标准与 Go 结论 |
 | [236-origami-heart-spec.md](./236-origami-heart-spec.md) | “折纸心机关”的五步 reducer、配置、Pointer、公开 DTO、隐私、视觉降级与验收规格 |
