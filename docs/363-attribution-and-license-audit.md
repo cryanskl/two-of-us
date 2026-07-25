@@ -154,3 +154,154 @@
 - **生成资产**：大多数运行图片已有 `assets/ATTRIBUTION.md` 或生成台账；
   `star-code-unlock` 和 `light-trail-hunt` 的生产生成资产仍缺工具、日期或输入链字段。
 
+### 3.3 运行目录的孤立或历史副本
+
+- `future-cookie-notes/assets/favicon.svg` 没有被入口引用，README/ATTRIBUTION
+  也未声明。其 SHA-256 为
+  `94863630b36a514347c1efb0cd509b658cdcf1d472dca830786cb9f3ca4bc629`。
+  这是低风险卫生问题，但“未使用”不等于“不用归因”；应在串行修复时确认原创来源
+  并补台账，或在取得删除授权后移出运行目录。
+- `love-tree/preview.png` 是 README 已说明的非运行截图。
+- `archive/source-packages/html5-love-original.rar` 仍跟踪完整迁移源包，SHA-256
+  为 `769bea8156b7088a6c1c8f5321122216695689fc5e2f48c907849649c053d0db`。
+  上游无统一许可证时，保留压缩包副本同样属于未闭合再分发，不是“仅存档”即可豁免。
+- 运行 HTML/CSS 未发现 CDN、远程字体或外部资源请求。`our-place-guess` 的开发期
+  地图下载脚本是唯一远程取数路径，输入固定到 Natural Earth commit，派生输出与
+  ATTRIBUTION 中的哈希一致。
+
+## 4. 当前非视觉候选（21）
+
+现场差集为 79 个物理体验目录减去 58 个 catalog 入口，共 **21** 个候选；21 个
+均没有 `index.html`、尚未 installed。每个候选已有项目级或资产级
+`ATTRIBUTION.md`。只有 `memory-merge-board`、`seven-piece-duet` 已有 README；
+另外 19 个在接入生产 UI/catalog 前仍需创建 README，并复述最终真实依赖、资产和
+借鉴边界。
+
+“research 全量来源”与“最终项目声明来源”应有一致口径：可以在后续复验中明确
+淘汰某个调研来源，但不能静默省略。下表把缺失分成“许可字段缺口”和“research
+覆盖缺口”，避免把 W3C/版权资料误写成运行依赖。
+
+| # | 候选 | 固定来源、许可与实际边界 | 代码/资产/内容分类 | 审计结论 |
+| ---: | --- | --- | --- | --- |
+| 1 | `candle-wishes` | birthday-cake、吹蜡烛、wish.elixpo 三项有裸 SHA、许可证名/版权/哈希，缺固定 commit URL 与固定 LICENSE URL；标准来源只概述 | 独立状态机；零第三方代码/图片/音频/字体；概念图仅 docs | **中缺口：许可字段** |
+| 2 | `compliment-reels` | slot-machine-gen、seedrandom、Tween.js、canvas-confetti 固定 commit、许可证 URL、版权齐；冲突许可项目明确排除；七项 Web 标准未全量转入声明 | 独立规则核心；零依赖、零源码/算法/赌场素材复制 | 中缺口：research 覆盖 |
+| 3 | `flower-language-bouquet` | 六个机制项目与五个标准仓库均固定 commit、许可证 URL、权利主体和哈希 | 独立配方/scene；零源码/API/资产复制；生成概念图台账完整 | 通过 |
+| 4 | `kaleidoscope-names` | 无外部开源实现；WHATWG/W3C 平台和许可边界已列 | 独立 2520 整数圈；零第三方代码/纹样/字体/音频 | 通过 |
+| 5 | `snow-globe-message` | tsParticles、canvas-text-particle、canvas-confetti、W3C deviceorientation、shake.js 只有首页+裸 SHA+许可名/哈希；缺固定版本 URL、固定 LICENSE URL，标准来源仅概述 | 独立核心；零第三方运行依赖和素材 | **中缺口：许可字段** |
+| 6 | `vinyl-secret` | 无开源实现；史料、媒体标准、自动播放和录音版权边界已列 | 原创三轨状态机；默认 `audioSrc=null`，无媒体资产；用户自备音频需自行授权 | 通过 |
+| 7 | `wish-fireworks` | 五项来源已固定 tree，但五个许可证仅写名称、未给固定 LICENSE URL；早期两个浮动候选已在研究中淘汰，项目声明未复述淘汰轨迹 | 独立规则核心；零第三方代码/粒子实现/资产 | **中缺口：许可 URL** |
+| 8 | `capsule-docking` | Gymnasium、p2.js、sat-js、Phaser 固定 commit、许可证 URL、版权齐；NASA 来源已列；键盘/Pointer/Visibility/WCAG 未全量转入声明 | 独立整数物理与状态机；零引擎、算法、素材复制 | 中缺口：research 覆盖 |
+| 9 | `memory-merge-board` | 2048 固定 commit、MIT URL、版权与哈希齐 | 只借鉴整盘滑动/一次合并抽象；4×3 非数字棋盘、关卡和求解器原创；零源码/皮肤/资产复制 | 通过 |
+| 10 | `our-place-guess` | Posio 固定 MIT；Natural Earth v5.1.2 固定 commit、public-domain 条款、派生脚本和哈希齐；实际 Socket.IO 4.8.1 仍为浮动仓库且缺许可 URL/版权 | 直接使用 Socket.IO；地图 GeoJSON 为固定 Natural Earth 派生；私人地点卡不入库 | **高缺口：实际依赖** |
+| 11 | `seven-piece-duet` | tangram、BlockPuzzleSolver 与两个 W3C 仓库均固定 commit、许可证 URL、权利主体 | 只研究七片和格约束；坐标、四个题面、求解边界原创；零代码/题面/标准解复制 | 通过 |
+| 12 | `shadow-duet` | Bemuse、osu!、PixiJS、MediaPipe 只有首页+裸 SHA+许可名/哈希；缺固定版本与许可证 URL，MediaPipe 版权未转入；标准只概述 | 独立节奏/姿势状态机；零源码、模型、WASM、谱面和素材 | **中缺口：许可字段** |
+| 13 | `twin-orbit` | 当前核心无外部开源来源；W3C/WHATWG 权利边界完整；内部 `orbit-star-race` 机制边界清楚 | 独立整数双星核心；零外部依赖/资产；Apple/Playgama 同名记录只用于名称避让 | 中缺口：名称检索证据未回链 |
+| 14 | `dual-maze-race` | 三篇算法论文与 12 项浏览器/硬件一手资料已全量进入声明 | DFS/xorshift/BFS 独立实现；零论文伪码/代码/图表复制；地图运行时原创生成 | 通过 |
+| 15 | `four-symbol-film-duel` | 8 项 Unicode/版权/WCAG 来源已列；research 另有 Author Help、Circular 45、USPTO 单一作品标题、Emoji FAQ、WAI-ARIA；TR51 仍使用浮动入口而非研究中的固定 `tr51-29.html` | 原创 32 张虚构片名题包；只存 Unicode 字符，不带厂商 Emoji、字体、海报、剧照或真实电影题库 | 中缺口：research 覆盖/浮动标准 |
+| 16 | `honeycomb-passage` | 两个 GitHub 源已固定，W3C 标准已列；两个 MIT LICENSE URL 和 W3C Document License URL 未转入声明，版权资料两项未回链 | 独立六角格/BFS；零源码、公式排版、地图、素材复制 | **中缺口：许可 URL** |
+| 17 | `penguin-flag-duel` | Box2D v3.1.0 固定 commit、MIT URL、版权齐；其余键盘、ghosting、Pointer、RAF/Visibility/WCAG 未转入声明 | 只借鉴固定步、阻尼/摩擦与穿透测试；零引擎/API/地图/素材 | 中缺口：research 覆盖 |
+| 18 | `photo-slider-race` | 当前列 ImageBitmap、File API、High Resolution Time、Visibility；research 另列 File Upload、image-orientation、Canvas、USCO、WCAG、ARIA Grid | 独立 3×3 规则和状态机；默认图计划原创生成；用户照片仅本地处理 | 中缺口：research 覆盖 |
+| 19 | `ricochet-tank-duel` | 三篇论文、High Resolution Time、RAF、Visibility 已列；Pointer/reduced-motion/WCAG 未转入声明 | 独立定点物理、地图、重放和测试；零开源游戏/引擎/论文伪码复制 | 中缺口：research 覆盖 |
+| 20 | `shadow-sword-duel` | OpenSpiel、boardgame.io、PrinceJS 均固定 commit；Apache/MIT/Unlicense 名称与版权边界齐，缺三个固定许可证 URL；W3C Document License URL 未回链 | 独立秘密行动策略；零源码、API、角色、关卡、品牌和资产复制 | **中缺口：许可 URL** |
+| 21 | `word-detour-duel` | 13 项商业品牌、政府、语音标准与无障碍来源与 research 一致 | 原创词库、规则和文本；未复制商业卡牌、规则文字、字体、音频或开源题库 | 通过 |
+
+### 4.1 候选修复分组
+
+1. **先修实际依赖**：`our-place-guess` 把 Socket.IO 固定到
+   `91e1c8b3584054db6072046404a24e79a17c1367`，补固定 LICENSE URL 和版权人。
+2. **补固定许可载体**：`candle-wishes`、`snow-globe-message`、
+   `wish-fireworks`、`shadow-duet`、`honeycomb-passage`、`shadow-sword-duel`。
+3. **明确 research 缩减规则**：`compliment-reels`、`capsule-docking`、
+   `twin-orbit`、`four-symbol-film-duel`、`penguin-flag-duel`、
+   `photo-slider-race`、`ricochet-tank-duel`。若某来源只参与早期筛选，应在最终
+   ATTRIBUTION 或复验文档明确“已淘汰、未参与实现”，而不是靠 URL 集合静默变化。
+4. **安装前 README**：为其余 19 个候选创建 README，引用项目 ATTRIBUTION，
+   并按最终生产文件重新核对实际依赖、资产、字体、音频、地图和题库。
+
+## 5. 全仓声明与实际图谱不一致
+
+### 5.1 公开分发阻断：Love Tree
+
+现场上游复核显示 `cryanskl/html_lovetree` 当前 `main` 指向
+`43cfc9ec67d7d6228117c23f71a7bed29070f2ab`，仓库根目录未发现
+`LICENSE`、`LICENSE.md`、`license`、`license.md` 或 `COPYING`。即使以后把 README
+的浮动 URL 固定到这个 commit，也只能固定证据，不能补出不存在的复制授权。
+
+运行入口实际加载：
+
+- jQuery 1.7.1、多个 Jscex 文件、`functions.js` 与 `love.js`；
+- `renxi.mp3`，文件元数据指向张靓颖《终于等到你》，SHA-256
+  `1a5ffd32c0a5069039d8610e8ca817dd0a92e1542c54a43f3548fb6ae7a7941d`；
+- 未闭合许可的历史 RAR 副本。
+
+README 的风险提示是诚实的，但风险披露不构成许可证。总控串行修复应在下列方案
+中选择：
+
+1. clean-room 重写无许可业务代码，仅保留不受保护的高层“爱心—树生长—情书”
+   概念；对保留的 jQuery/Jscex 逐文件固定来源并随包保留许可；
+2. 换成原创、明确许可或用户自行放入且不入库的音乐；
+3. 获得上游代码/素材和录音的书面授权；
+4. 在授权闭合前从 installed/公开分发集合移出，并隔离历史压缩包。
+
+### 5.2 现有验证器产生“完整”的假阳性
+
+`scripts/validate-repository.mjs` 当前只用正则确认每个 installed README 含
+`## 借鉴与来源声明` 标题，并确认能力包至少存在一个许可证文件；它没有解析或验证：
+
+- 固定 commit/tag URL；
+- 固定 `LICENSE`/`COPYING` URL；
+- 版权人；
+- 实际依赖和资产是否全部映射；
+- copied/researched/used/excluded 的边界；
+- 音频、字体、地图与题库的独立权利。
+
+因此校验器可以在 `love-tree` 明确未获统一许可证、商业录音仍入库，以及早期入口
+仍使用浮动来源时输出“资源与借鉴声明完整”。这不是文案问题，而是 Gate 的可复现
+假阳性；详见对应 bug 记录。
+
+## 6. 建议的串行修复顺序
+
+本审计分支不直接批量改声明。总控应按以下顺序串行执行，避免多个项目并发修改共享
+README/runtime：
+
+1. **P0：Love Tree** 授权、clean-room 重写或移出 installed，并处理 RAR 与录音。
+2. **P1：真实依赖** 统一建立 Socket.IO、node-qrcode、Pannellum 的固定上游与
+   许可证载体；共享 runtime 作为规范来源，各入口明确“实际使用/仅研究”并链接回去。
+3. **P1：验证器** 把标题存在升级为结构化字段与实际依赖/资产闭包检查；错误信息不得
+   再声称“完整”。
+4. **P2：浮动旧声明** 修复 `scratch-surprise`、`date-wheel`、
+   `photo-swap-puzzle`、`paper-plane-mail`、`paper-soccer`、
+   `lan-pictionary`、`compatibility-quiz`、`lan-connect-four`、
+   `sealed-rps` 等。
+5. **P2：固定许可证 URL** 为已固定 commit 但只写许可证名/哈希的项目补同一 commit
+   下的许可证载体；不要链接 `main`/`master`。
+6. **P2：候选闭环** 先修第 4.1 节，再进入生产 UI 与 catalog。
+7. **P3：资产卫生** 补 `star-code-unlock`、`light-trail-hunt` 与孤立
+   `favicon.svg` 的生成/原创台账。
+
+## 7. 可机器化的最低字段
+
+后续可为每个外部来源增加不改变用户体验的结构化清单（JSON/YAML/Markdown
+front matter 均可），至少包含：
+
+```text
+project_id
+source_kind = code | dependency | image | font | audio | map | question_bank | standard | research
+upstream_repository
+upstream_revision
+upstream_revision_url
+license_name
+license_url
+copyright_holder
+usage = copied | modified | linked | generated | researched | excluded
+borrowed
+not_copied
+local_files
+notice_files
+verified_at
+```
+
+Gate 应把 manifest 与 lockfile、HTML/CSS/JS 引用、媒体文件清单和能力包许可证做
+集合连接，而不是把“有标题”当成完成。对于 `usage=researched|excluded`，可以不随包
+复制许可证正文，但仍应固定研究证据；对于 `copied|modified|linked`，必须按许可证
+要求保留正文、版权与 notice。
