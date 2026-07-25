@@ -3,7 +3,7 @@
 - 发现日期：2026-07-25
 - 发现阶段：`compliment-reels` 非视觉核心全仓回归
 - 影响：所有目录名不是精确 `two-of-us` 的独立 worktree
-- 状态：项目分支仅记录；共享测试需由总控修复
+- 状态：已由总控修复
 
 ## 复现
 
@@ -42,7 +42,15 @@ path.resolve(repositoryRoot, "index.html")
 同时保留“路径不得逃出 repository root”的独立断言。不要放宽为任意
 `index.html` 后缀，否则会削弱 traversal Gate。
 
-## 当前回归证据
+## 已实施修复
+
+总控将目录名正则替换为当前测试文件解析出的 repository root 与 `index.html` 的
+绝对路径等值断言。该断言既允许任意合法 worktree 目录名，也不会退化成只检查
+任意 `index.html` 后缀；原有 traversal 与公开路径 Gate 保持不变。
+
+修复后分别在主工作树和独立项目 worktree 运行全仓测试，确保两种目录形状均通过。
+
+## 发现时的回归证据
 
 - `compliment-reels` 定向测试：22/22 通过；
 - 其余全仓测试：1872/1872 通过；

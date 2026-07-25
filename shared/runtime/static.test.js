@@ -1,11 +1,14 @@
 import assert from "node:assert/strict";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import { crossOriginIsolationHeaders, resolveStaticPath } from "./static.js";
 
 const root = new URL("../../", import.meta.url);
+const rootPath = path.resolve(fileURLToPath(root));
 
 test("static resolver maps the portal and keeps files inside the repository", () => {
-  assert.match(resolveStaticPath(root, "/"), /two-of-us\/index\.html$/);
+  assert.equal(resolveStaticPath(root, "/"), path.join(rootPath, "index.html"));
   assert.match(
     resolveStaticPath(root, "/experiences/surprises/love-tree/index.html"),
     /love-tree\/index\.html$/,
