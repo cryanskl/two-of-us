@@ -694,7 +694,7 @@ h1 {
   .no-script-experience .globe-stage {
     grid-column: 1;
     grid-row: 1 / 8;
-    width: min(100%, 18rem);
+    width: min(100%, 14rem);
     padding-top: 0;
   }
 
