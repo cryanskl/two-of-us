@@ -200,9 +200,10 @@ intro → gate-intro → playing → gate-success
 - 完成页提供“再绕一次”，明确从第 1 关开始；
 - 任何终态都必须幂等，按键和 Pointer 不能继续改状态。
 
-[Page Visibility Level 2](https://www.w3.org/TR/page-visibility-2/) 规定
-`visibilitychange` 与 hidden/visible 状态；本作据此选择“失去可靠输入时重置当前
-关”，而不是猜测后台经过的时间。
+[WHATWG HTML：Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility)
+规定 `visibilityState` 与 `visibilitychange`；本作据此选择“失去可靠输入时
+重置当前关”，而不是猜测后台经过的时间。W3C Page Visibility Level 2 已是
+discontinued draft，不作为现行规范来源。
 
 ## 8. 可访问性与动效边界
 
