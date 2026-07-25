@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `3426c57` |
+| 当前 HEAD | `580b940` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -20,7 +20,7 @@
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2177 / 2177` 通过 |
 | 工作树提示 | 三个候选的 research / brainstorm / spec / plan 均已集成；`memory-merge-board` 规则层已集成，三个项目正在独立 worktree 推进非视觉核心 |
-| 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
+| 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
 
@@ -31,7 +31,7 @@
 | Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 脚手架、23 条规则契约、错误 blocked fixture 修复与规则实现已集成；继续 solver、固定关卡和 `334` 核心验证 |
 | Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架已集成为 `3426c57`；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
 | Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 已派发离线地图派生、私人题包、地图数学、规则和房间协议；不写 UI 或共享 runtime，预留 `340` 核心验证 |
-| Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
+| Worker 4 | 已分配 | `memory-merge-board` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-ui` | `codex/exp-memory-merge-board-ui` | `580b940` | 使用 Image Gen 制作桌面/移动完整概念与 `335` 视觉合同；只供用户确认，不写生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -107,7 +107,7 @@
 | `memory-merge-board` | `322–325` | Worker 1 | research、brainstorm、spec、plan 四阶段均已集成 |
 | `seven-piece-duet` | `326–329` | Worker 2 | research、brainstorm、spec、plan 四阶段及边界修订均已集成 |
 | `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 四阶段及隐私/顺序修订均已集成 |
-| `memory-merge-board` | `334–336` | Worker 1 / 总控 | `334` 核心验证进行中；`335` 视觉提案、`336` 最终验证保留 |
+| `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证进行中；`335` 视觉提案已派发，`336` 最终验证保留 |
 | `seven-piece-duet` | `337–339` | Worker 2 / 总控 | `337` 核心验证进行中；`338` 视觉提案、`339` 最终验证保留 |
 | `our-place-guess` | `340–342` | Worker 3 / 总控 | `340` 核心验证进行中；`341` 视觉提案、`342` 最终验证保留 |
 
