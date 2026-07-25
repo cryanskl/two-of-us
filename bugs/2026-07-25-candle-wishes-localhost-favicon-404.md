@@ -42,8 +42,11 @@ HTML 没有声明 favicon，Chromium 自动请求站点根目录 `/favicon.ico`�
 - [x] 静态测试确认 `index.html` 使用相对 `favicon.svg`
 - [x] 静态测试确认图标文件存在且不引用外部资源
 - [x] Candle Wishes 定向测试通过
-- [ ] 真实 Chrome 独立会话重新打开 localhost，确认不再出现 favicon 404
-- [ ] 真实 Chrome 控制台确认没有新增错误
+- [x] 真实 Chrome 独立会话重新打开 localhost，页面成功请求相对 `favicon.svg`
+- [x] 受控页面加载窗口内六项本地资源均返回 `200`
+- [x] CDP `Log` 与 `Runtime` 忽略缓存重载未采集到 console 事件
+
+补充：页面交互结束约四分钟后，服务清理前出现一条没有伴随 document 请求的孤立 `/favicon.ico` 404。它不属于受控页面加载资源序列，单凭服务日志无法归因到作品页面、其他标签或 Chrome 会话外壳。因此修复结论限于“作品入口已显式闭合相对图标请求”，不扩张为“整个浏览器生命周期绝不会探测站点根图标”。
 
 ## 相关提交
 
