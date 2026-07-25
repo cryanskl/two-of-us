@@ -23,18 +23,27 @@ Microsoft、Samsung 等厂商的 Emoji PNG、SVG、截图或导出字形。
 
 - [Unicode Emoji Images and Rights](https://unicode.org/emoji/images.html)
   用于区分字符编码与平台厂商拥有的彩色字形图像。
-- [Unicode Technical Standard #51](https://www.unicode.org/reports/tr51/)
+- [Unicode Technical Standard #51, Revision 29](https://www.unicode.org/reports/tr51/tr51-29.html)
   用于理解 Emoji 字符与序列的标准边界；本项目没有复制标准的数据文件。
+- [Unicode Emoji & Pictographs FAQ](https://www.unicode.org/faq/emoji_dingbats.html)
+  用于核对编码字符、字形呈现和平台互操作边界。
 - [Unicode Licensing Policy](https://www.unicode.org/policies/licensing_policy.html)
   用于确认未来若引入 Unicode 数据文件时需要单独履行许可义务。
 - [U.S. Copyright Office Circular 33](https://www.copyright.gov/circs/circ33.pdf)
-  与 [Motion Pictures](https://www.copyright.gov/registration/motion-pictures/)
-  用于区分短标题与影视作品表达的权利边界。
+  与 [Standard Application Help: Author](https://www.copyright.gov/eco/help-author.html)
+  用于区分短标题、作者性与可登记表达。
+- [Motion Pictures](https://www.copyright.gov/registration/motion-pictures/)
+  与 [Circular 45](https://copyright.gov/circs/circ45.pdf)
+  用于核对影视作品及其具体表达的保护边界。
+- [USPTO Title of a Single Creative Work](https://www.uspto.gov/trademarks/laws/title-single-work-refusal-and-how-overcome-refusal)
+  用于核对单一作品标题的商标审查边界。
 - [USPTO Likelihood of Confusion](https://www.uspto.gov/trademarks/search/likelihood-confusion)
   用于校准名称近似与品牌混淆检查。
 - [WCAG 2.2 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)
   与 [Technique H86](https://www.w3.org/WAI/WCAG22/Techniques/html/H86)
   用于确认 Emoji 需要等价文本。
+- [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria/)
+  用于核对生产 UI 中可访问名称和隐藏语义的实现边界。
 
 这些资料不是运行依赖、题库来源或可复制的视觉素材；本实现没有复制其中的
 示例代码。
