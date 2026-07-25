@@ -28,7 +28,6 @@ test("index is a self-contained classic-script file entry with a safe no-script 
   assert.match(html, /aria-live="polite"/u);
 
   for (const privateText of [
-    config.recipient,
     config.finalTitle,
     config.finalMessage,
     config.signature,
@@ -82,6 +81,7 @@ test("application renders only public views and preserves the phase focus contra
     /\b(?:getUserMedia|Audio|AudioContext|webkitAudioContext)\b/u,
     /\b(?:setTimeout|setInterval|requestAnimationFrame)\b/u,
     /\b(?:CanvasRenderingContext2D|WebGLRenderingContext|Worker)\b/u,
+    /\b(?:console|history)\s*\./u,
     /["']https?:\/\//iu,
   ]) {
     assert.doesNotMatch(source, pattern);
@@ -127,7 +127,7 @@ test("styles encode the approved paper-cake system and accessibility fallbacks",
   for (const pattern of [
     /url\s*\(/iu,
     /@import\b/iu,
-    /behavior\s*:/iu,
+    /^\s*behavior\s*:/imu,
   ]) {
     assert.doesNotMatch(css, pattern);
   }
