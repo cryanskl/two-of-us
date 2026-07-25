@@ -261,6 +261,13 @@
     return left.q === right.q && left.r === right.r;
   }
 
+  function cellDistance(left, right) {
+    const deltaQ = left.q - right.q;
+    const deltaR = left.r - right.r;
+    const deltaS = -deltaQ - deltaR;
+    return Math.max(Math.abs(deltaQ), Math.abs(deltaR), Math.abs(deltaS));
+  }
+
   function copyCell(value) {
     const cell = readCell(value);
     return cell && isWithinRadius(cell, BOARD_RADIUS) ? { q: cell.q, r: cell.r } : null;
@@ -551,6 +558,15 @@
       if (blockedKeys.some((key) => positionKeys.includes(key))
         || blockedKeys.length !== STARTING_SEALS * PLAYER_COUNT
           - sealsRemaining[YELLOW] - sealsRemaining[PURPLE]) return null;
+      const turnsTaken = [
+        Math.ceil(record.ply / PLAYER_COUNT),
+        Math.floor(record.ply / PLAYER_COUNT),
+      ];
+      for (let player = 0; player < PLAYER_COUNT; player += 1) {
+        const sealsUsed = STARTING_SEALS - sealsRemaining[player];
+        const moveBudget = turnsTaken[player] - sealsUsed;
+        if (moveBudget < 0 || cellDistance(STARTS[player], positions[player]) > moveBudget) return null;
+      }
 
       const raw = {
         positions,

@@ -743,6 +743,37 @@ test("history、event、state、action 和 replay 的恶意输入安全拒绝", 
   assert.equal(logic.hasRouteForBoth(throwingProxy(), { q: 0, r: 0 }), false);
 });
 
+test("公开 replay 拒绝超出 ply 行动预算的库存与位置", () => {
+  let sealedHistory = [];
+  for (let index = 0; index < 8; index += 1) {
+    const replay = logic.replayHistory(sealedHistory);
+    sealedHistory = logic.applyAction(
+      sealedHistory,
+      replay.activePlayer,
+      "seal",
+      replay.legalSeals[0],
+    );
+    assert.ok(sealedHistory);
+  }
+  const impossibleInventory = structuredClone(logic.replayHistory(sealedHistory));
+  impossibleInventory.ply = 0;
+  impossibleInventory.round = 1;
+  impossibleInventory.completedRounds = 0;
+
+  let movedHistory = logic.applyAction([], logic.YELLOW, "move", { q: -2, r: 0 });
+  movedHistory = logic.applyAction(movedHistory, logic.PURPLE, "move", { q: 2, r: 0 });
+  const impossiblePositions = structuredClone(logic.replayHistory(movedHistory));
+  impossiblePositions.ply = 0;
+  impossiblePositions.round = 1;
+  impossiblePositions.completedRounds = 0;
+
+  for (const forged of [impossibleInventory, impossiblePositions]) {
+    assert.deepEqual(logic.getLegalMoves(forged), []);
+    assert.deepEqual(logic.getLegalSeals(forged), []);
+    assert.equal(logic.hasRouteForBoth(forged, { q: 0, r: 0 }), false);
+  }
+});
+
 test("玩家与坐标镜像后初始移动、封蜡和距离保持镜像", () => {
   const yellow = logic.replayHistory([]);
   const afterSymmetricSeal = logic.replayHistory(logic.applyAction(
