@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `5900cbe` |
+| 当前 HEAD | `f38f463` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2051 / 2051` 通过 |
-| 工作树提示 | 照片滑块、双迷宫 core 与企鹅前置已集成；三个滚动槽位继续从各自已验收 main 基线运行并统一使用根 lockfile |
+| 工作树提示 | 照片滑块、双迷宫 core 与企鹅逻辑基础已集成；三个滚动槽位继续从各自已验收 main 基线运行并统一使用根 lockfile |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,7 +28,7 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `penguin-flag-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel-core` | `codex/exp-penguin-flag-duel-core` | `10349e6` | 实现定点 fixed tick、夺旗闭环与确定性重放；不创建 UI |
+| Worker 1 | 已分配 | `penguin-flag-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel-core` | `codex/exp-penguin-flag-duel-core` | `10349e6` | 配置与归属基础已集成；继续修正夹墙重叠边界并实现夺旗闭环与确定性重放 |
 | Worker 2 | 已分配 | `twin-orbit` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit` | `codex/exp-twin-orbit` | `5900cbe` | research、brainstorm、spec、plan；先证明双人相位协作相对现有轨道项目的机制增量 |
 | Worker 3 | 已分配 | `ricochet-tank-duel` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel` | `codex/exp-ricochet-tank-duel` | `224eaf3` | research、brainstorm、spec、plan；先证明反弹碰撞相对现有对抗项目的机制增量 |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
@@ -119,6 +119,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `penguin-flag-duel` 逻辑基础 | `6bd7988` | `f38f463` | `node --check`、冻结配置探针、verify 与全仓 `2051 / 2051` 通过 | 配置合同与 Box2D 概念借鉴边界已冻结；无 UI，不计 installed |
 | `dual-maze-race` core | `36b7f79`、`4fc259b`、`5d01d13`、`6f0390a` | `cbe8b2b`、`cb5b174`、`09de214`、`8af7fd1`、`5900cbe` | 定向 `23 / 23`；全仓 `2051 / 2051`；坐标转置文档已修正 | 无 UI；键盘、触屏、响应式与 `file://` 未验收，不计 installed |
 | `penguin-flag-duel` 前置 | `02f03e1`、`fe26dca`、`e87ff2a`、`3ceb27b` | `e591647`、`821738f`、`3d17125`、`10349e6` | verify 通过；Box2D 固定来源与夺旗闭环边界复核 | Conditional Go；无入口，不计 installed |
 | `photo-slider-race` core | `1903397`、`1420e9b`、`6e74078` | `a5a30b5`、`5bb48b2`、`224eaf3` | 定向 `31 / 31`；全仓 `2028 / 2028` | 无 UI；图片解码与 `file://` 未验收，不计 installed |
