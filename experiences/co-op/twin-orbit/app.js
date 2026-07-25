@@ -346,12 +346,12 @@
 
   function placeGate(element, player) {
     if (player.targetAngle === null || player.targetLane === null) {
-      element.hidden = true;
+      element.setAttribute("hidden", "");
       return;
     }
     var radius = player.targetLane === "inner" ? 86 : 126;
     var degrees = player.targetAngle * 0.5;
-    element.hidden = false;
+    element.removeAttribute("hidden");
     element.setAttribute(
       "transform",
       "translate(160 160) rotate(" + degrees + ") translate(0 -" + radius + ")"

@@ -174,6 +174,16 @@ test("控制器只从 public view 渲染，并覆盖六阶段的唯一合法操�
     source,
     /\b(?:getBoundingClientRect|getComputedStyle|animationend|transitionend)\b/u
   );
+  assert.match(
+    source,
+    /setAttribute\(\s*["']hidden["']/u,
+    "SVG target gates must set the actual hidden attribute outside gate phases"
+  );
+  assert.match(
+    source,
+    /removeAttribute\(\s*["']hidden["']/u,
+    "SVG target gates must remove the actual hidden attribute in gate phases"
+  );
 });
 
 test("30Hz 固定步、长帧保护与 SUSPEND 生命周期由核心常量驱动", () => {
