@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>同路，谁先到</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell" id="game">
+      <header class="game-header">
+        <span class="route-line route-line--left" aria-hidden="true"></span>
+        <h1>同路，谁先到</h1>
+        <span class="route-line route-line--right" aria-hidden="true"></span>
+        <p id="tagline">同一条路，换个位置，再比一次。</p>
+      </header>
+
+      <noscript>
+        <section class="panel noscript-panel">
+          <h2>需要启用 JavaScript</h2>
+          <p>这个本地双人游戏的迷宫、计时和公平结算都由页面脚本运行。请启用 JavaScript 后重新打开。</p>
+        </section>
+      </noscript>
+
+      <section class="panel intro-panel" id="intro-panel" aria-labelledby="intro-heading">
+        <div class="panel-copy">
+          <p class="section-label">四局公平赛</p>
+          <h2 id="intro-heading">同一张图，两边同时出发</h2>
+          <p>两张迷宫完全相同。每张图跑两次，第二次交换左右席和按键；同一逻辑拍到达就是平局。</p>
+        </div>
+
+        <div class="name-grid">
+          <label class="name-field name-field--one">
+            <span><i class="identity-mark identity-mark--one" aria-hidden="true"></i>玩家一</span>
+            <input id="player-one-name" name="player-one-name" maxlength="40" autocomplete="off">
+          </label>
+          <label class="name-field name-field--two">
+            <span><i class="identity-mark identity-mark--two" aria-hidden="true"></i>玩家二</span>
+            <input id="player-two-name" name="player-two-name" maxlength="40" autocomplete="off">
+          </label>
+        </div>
+
+        <ul class="format-summary">
+          <li><strong>4 局</strong><span>COUP 与 PAIR 各跑两次</span></li>
+          <li><strong>30 Hz</strong><span>同一拍原子结算</span></li>
+          <li><strong>本地</strong><span>不联网、不保存、不申请权限</span></li>
+        </ul>
+
+        <button class="primary-button" id="begin-check" type="button">开始输入检查</button>
+      </section>
+
+      <section class="panel check-panel" id="check-panel" aria-labelledby="check-heading" hidden>
+        <div class="panel-copy">
+          <p class="section-label">开赛前 · 输入检查</p>
+          <h2 id="check-heading" tabindex="-1">先试试两边的方向键</h2>
+          <p>用键盘或下方触控按钮依次试完八个方向。检查只能尽早发现风险，不能保证所有物理键盘组合。</p>
+        </div>
+
+        <div class="check-grid">
+          <article class="check-card check-card--one">
+            <h3><i class="identity-mark identity-mark--one" aria-hidden="true"></i><span id="check-name-one">玩家一</span></h3>
+            <p>左席 · W A S D</p>
+            <div class="check-directions" id="checks-one" aria-label="玩家一方向检查"></div>
+          </article>
+          <article class="check-card check-card--two">
+            <h3><i class="identity-mark identity-mark--two" aria-hidden="true"></i><span id="check-name-two">玩家二</span></h3>
+            <p>右席 · 方向键</p>
+            <div class="check-directions" id="checks-two" aria-label="玩家二方向检查"></div>
+          </article>
+        </div>
+
+        <div class="joint-check" id="joint-check">
+          <div>
+            <strong>一起按一下</strong>
+            <p>同时按住左席 <kbd>D</kbd> 与右席 <kbd>←</kbd>，看看这块键盘能不能同时听见你们。</p>
+          </div>
+          <span class="joint-state" id="joint-state">等待检测</span>
+        </div>
+
+        <div class="warning-box" id="warning-box" hidden>
+          <strong>此键盘可能漏键。</strong>
+          <p>建议比赛时改用下方两组触控按钮；也可以了解风险后继续。</p>
+          <button class="secondary-button" id="accept-warning" type="button">我知道风险，仍要继续</button>
+        </div>
+
+        <button class="primary-button" id="start-match" type="button" disabled>开始比赛</button>
+      </section>
+
+      <section class="race-stage" id="race-stage" aria-label="双人迷宫比赛" hidden>
+        <div class="match-rail" aria-label="比赛状态">
+          <div class="rail-score rail-score--one">
+            <i class="identity-mark identity-mark--one" aria-hidden="true"></i>
+            <strong id="score-one">0 分</strong>
+          </div>
+          <div class="rail-heat">
+            <span id="heat-label">第 1 / 4 局 · COUP</span>
+          </div>
+          <div class="rail-time">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>
+            <strong id="elapsed-time">0.0 秒</strong>
+          </div>
+          <div class="rail-rule">同一张迷宫 · 同一拍结算</div>
+          <div class="rail-score rail-score--two">
+            <strong id="score-two">0 分</strong>
+            <i class="identity-mark identity-mark--two" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <div class="player-headings">
+          <div class="player-heading" id="left-player-heading">
+            <i class="identity-mark" id="left-identity" aria-hidden="true"></i>
+            <div>
+              <strong id="left-player-name">玩家一</strong>
+              <span id="left-seat-copy">左席 · WASD</span>
+            </div>
+            <span class="bump-count" id="left-bumps">撞墙 0</span>
+          </div>
+          <div class="player-heading" id="right-player-heading">
+            <i class="identity-mark" id="right-identity" aria-hidden="true"></i>
+            <div>
+              <strong id="right-player-name">玩家二</strong>
+              <span id="right-seat-copy">右席 · 方向键</span>
+            </div>
+            <span class="bump-count" id="right-bumps">撞墙 0</span>
+          </div>
+        </div>
+
+        <div class="race-field">
+          <section class="board-region" id="left-board" aria-label="左席迷宫">
+            <div class="maze-board" id="left-maze" aria-hidden="true"></div>
+            <p class="board-summary" id="left-board-summary">左席位于起点，终点在右侧中部。</p>
+          </section>
+          <section class="board-region" id="right-board" aria-label="右席迷宫">
+            <div class="maze-board" id="right-maze" aria-hidden="true"></div>
+            <p class="board-summary" id="right-board-summary">右席位于起点，终点在右侧中部。</p>
+          </section>
+        </div>
+
+        <div class="countdown-overlay" id="countdown-overlay" aria-hidden="true" hidden>
+          <strong id="countdown-number">3</strong>
+          <span id="countdown-copy">准备出发</span>
+        </div>
+
+        <section class="pause-panel" id="pause-panel" aria-labelledby="pause-heading" hidden>
+          <p class="section-label">公平暂停</p>
+          <h2 id="pause-heading">比赛已暂停</h2>
+          <p id="pause-reason">继续前会重新倒数，后台时间不会补跑。</p>
+          <button class="primary-button" id="resume-match" type="button">继续比赛</button>
+        </section>
+      </section>
+
+      <section class="control-deck" id="control-deck" aria-label="双人方向控制" hidden>
+        <div class="control-seat control-seat--one">
+          <span class="control-label" id="left-control-label">左席 · WASD</span>
+          <div class="direction-pad" aria-label="左席方向按钮">
+            <button class="direction-button direction-button--up" type="button" data-seat="left" data-direction="up" aria-label="左席向上">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--left" type="button" data-seat="left" data-direction="left" aria-label="左席向左">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5.5-5.5L5 12l5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--right" type="button" data-seat="left" data-direction="right" aria-label="左席向右">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5.5-5.5L19 12l-5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--down" type="button" data-seat="left" data-direction="down" aria-label="左席向下">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m5.5-5.5L12 19l-5.5-5.5"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <button class="pause-button" id="pause-match" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"></path></svg>
+          <span>暂停比赛</span>
+        </button>
+
+        <div class="control-seat control-seat--two">
+          <span class="control-label" id="right-control-label">右席 · 方向键</span>
+          <div class="direction-pad" aria-label="右席方向按钮">
+            <button class="direction-button direction-button--up" type="button" data-seat="right" data-direction="up" aria-label="右席向上">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--left" type="button" data-seat="right" data-direction="left" aria-label="右席向左">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5.5-5.5L5 12l5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--right" type="button" data-seat="right" data-direction="right" aria-label="右席向右">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5.5-5.5L19 12l-5.5 5.5"></path></svg>
+            </button>
+            <button class="direction-button direction-button--down" type="button" data-seat="right" data-direction="down" aria-label="右席向下">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m5.5-5.5L12 19l-5.5 5.5"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel result-panel" id="result-panel" aria-labelledby="result-heading" hidden>
+        <p class="section-label" id="result-label">本局结果</p>
+        <h2 id="result-heading" tabindex="-1">同一拍到达</h2>
+        <p class="result-lead" id="result-lead"></p>
+        <div class="result-score" id="result-score"></div>
+        <ol class="heat-history" id="heat-history"></ol>
+        <p class="match-note" id="match-note" hidden></p>
+        <button class="primary-button" id="result-action" type="button">下一局</button>
+      </section>
+
+      <div id="app-status" role="status" aria-live="polite" aria-atomic="true">准备开始一场四局比赛。</div>
+      <p class="local-note">所有内容只在这个页面里运行，不联网，也不保存名字或成绩。</p>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
