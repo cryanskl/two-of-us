@@ -10,17 +10,17 @@
 | --- | --- |
 | 快照日期 | 2026-07-26（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `df4d0cc`（本轮调度基线） |
+| 当前 HEAD | `be66904`（Ricochet 集成后） |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 72 |
-| 当前 installed | 72 |
-| 距离目标 | 3 |
-| A / B / C / D | 64 / 1 / 6 / 1 |
-| surprise / co-op / versus | 24 / 27 / 21 |
-| 本次 repository verify | 通过：72 个入口、64 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2441 / 2441` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`kaleidoscope-names`、`four-symbol-film-duel`、`word-detour-duel` 已正式上架并完成主线 Chrome 复验。`ricochet-tank-duel`、`photo-slider-race`、`dual-maze-race` 正在隔离 worktree 生产 UI。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
-| 平台真实并发 | 1 个总控 + 3 个执行 Session（3 个进行中） |
+| 当前 catalog 总数 | 73 |
+| 当前 installed | 73 |
+| 距离目标 | 2 |
+| A / B / C / D | 65 / 1 / 6 / 1 |
+| surprise / co-op / versus | 24 / 27 / 22 |
+| 本次 repository verify | 通过：73 个入口、65 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2452 / 2452` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`ricochet-tank-duel` 已正式上架并完成主线 Chrome 进出闭环。`photo-slider-race` 与 `dual-maze-race` 已在隔离 worktree 完成生产 UI，等待总控集成。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
+| 平台真实并发 | 1 个总控；三个执行 Session 已完成 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
 
@@ -28,16 +28,17 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 进行中 | `ricochet-tank-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 视觉自治已释放；复用 44 项确定性核心合同与 `312` 方向，重点验证双席同刻输入、连续折射、固定步、暂停清理、六档视口和降级，最终验证使用 `390` |
-| Worker 2 | 进行中 | `photo-slider-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-production-ui` | `codex/exp-photo-slider-race-production-ui` | `df4d0cc` | 视觉自治已释放；采用 `295` 深夜蓝双棋盘方向，复用已验收核心，重点验证本地图片生命周期、双席拼图竞速、失败软恢复、六档视口和降级，最终验证使用 `391` |
-| Worker 3 | 进行中 | `dual-maze-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 视觉自治已释放；采用 `297` 纸白共享迷宫桌方向，复用 fixed-tick 核心，重点验证双席同刻输入、公平换席、完整比赛、六档视口和降级，最终验证使用 `392` |
+| Worker 1 | 已集成 | `ricochet-tank-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 56 项定向、独立 Chrome、四项浏览器问题与主门户进出闭环通过；已上架为第 73 个入口 |
+| Worker 2 | Ready | `photo-slider-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-production-ui` | `codex/exp-photo-slider-race-production-ui` | `df4d0cc` | 41 项定向、完整对局、本地照片 Blob 生命周期、真实触控与辅助模式通过；等待总控合并和主线 verify |
+| Worker 3 | Ready | `dual-maze-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 31 项定向、四局换席、2:2、真实触控、hidden、六视口与降级通过；等待总控合并 |
 | Worker 4 | 空闲 | — | — | — | — | 等待前三个项目最先完成者进入总控集成后滚动补位 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
 ## Ready for Review
 
-当前无待总控集成项目；三个执行项目均在生产 UI 阶段。
+- `photo-slider-race`：HEAD `d748b1d`，工作树干净。
+- `dual-maze-race`：HEAD `8135068`，工作树干净。
 
 ## 建议首轮候选
 
@@ -153,6 +154,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `ricochet-tank-duel` 生产 UI 与上架 | `f974809`…`5b0a813` | `05b64bc`…`be66904` | 定向 `56 / 56`；组合定向 `249 / 249`；全仓 `2452 / 2452`；verify；双键盘/双触控/六视口/暂停/降级/主门户 | 安装入口增至 73；混合输入、移动 HUD、40px 目标、noJS 假控件和缺少返回入口均经红测闭环；九项固定来源与零开源游戏/资产复制边界齐全 |
 | `word-detour-duel` 生产 UI 与上架 | `8c359e8`…`fe1ea55` | `057141f`、`df4d0cc` | 定向 `27 / 27`；全仓 `2441 / 2441`；verify；四回合/计时与不计时/六视口/秘密 DOM/生命周期/输入与降级 | 安装入口增至 72；门户真实点击和返回、公开投影、计时增量渲染、blur/hidden/pagehide 卸密均通过；13 项一手来源、商业表达边界和零开源复制声明齐全 |
 | `four-symbol-film-duel` 生产 UI 与上架 | `4ac0f23`…`704bc62` | `e446eca`、`e734cc5`、`97913e2`、`df08ef6` | 定向 `38 / 38`；全仓 `2431 / 2431`；verify；完整八题/六视口/秘密 DOM/键盘触控/降级 | 安装入口增至 71；借鉴标题合同与 390px 首屏主操作经独立修复闭环，原创虚构题卡、Unicode 字形和零开源复制边界齐全 |
 | `kaleidoscope-names` 生产 UI 与上架 | `615ebb5`…`697f220` | `580dd84` | 定向 `35 / 35`；verify；六视口/秘密延迟 DOM/键盘触控/Canvas 失败与降级 | 安装入口增至 70；深紫光学校准台按确认概念落地，标题焦点、组合摘要和 Canvas 降级经浏览器修复闭环，零第三方运行依赖 |
