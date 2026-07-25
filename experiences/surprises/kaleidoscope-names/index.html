@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="根据两条线索校准折面与相位，主动照见藏在同一束光里的名字。">
+  <title>把名字折成同一束光</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">跳到折光台</a>
+
+  <header class="page-header" aria-hidden="true">
+    <span class="header-line"></span>
+    <span class="header-aperture"></span>
+    <span class="header-line"></span>
+  </header>
+
+  <main id="app" class="kaleidoscope-app">
+    <section class="phase phase-intro" aria-labelledby="initial-title">
+      <h1 id="initial-title">把名字折成同一束光</h1>
+      <p>读两条线索，选折面、转相位，让两项都对齐。</p>
+    </section>
+  </main>
+
+  <noscript>
+    <section class="no-script" aria-labelledby="no-script-title">
+      <h2 id="no-script-title">需要启用 JavaScript</h2>
+      <p>启用后才能开始折光；页面不会联网，也不会保存任何内容。</p>
+    </section>
+  </noscript>
+
+  <script src="./config.js"></script>
+  <script src="./logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -176,7 +176,7 @@ test("private reveal nodes are created only by the complete renderer", () => {
     assert.equal(completeRenderer.includes(privateField), true, privateField);
   }
 
-  assert.ok(completeRenderer.includes('document.createElement("h1")'));
+  assert.ok(completeRenderer.includes("createHeading(view.finalTitle"));
   assert.ok(completeRenderer.includes('document.createElement("dl")'));
   assert.ok(completeRenderer.includes("view.marks.forEach"));
 });
