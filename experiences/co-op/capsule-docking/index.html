@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#e8dfcc" />
+    <title>转一点，推一点，刚好回家 · Two of Us</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <noscript>
+      <main class="noscript-shell">
+        <h1>转一点，推一点，刚好回家</h1>
+        <p>姿态席只管转，推进席只管推。六条条件一起安全，并保持 30 格，就能稳稳接住。</p>
+        <div class="noscript-stage" aria-hidden="true">
+          <span class="noscript-capsule"></span>
+          <span class="noscript-dock"></span>
+        </div>
+        <p>请开启本地 JavaScript 后再开始对接；页面不会联网。</p>
+        <p>这是归一化的合作游戏，不是航天训练或真实操作建议。</p>
+      </main>
+    </noscript>
+
+    <main id="capsule-docking-app" class="training-sheet" data-phase="intro" hidden>
+      <header class="masthead" data-region="header">
+        <h1>转一点，推一点，刚好回家</h1>
+        <p class="rule-copy">姿态席只管转，推进席只管推。六条条件一起安全，并保持 30 格，就能稳稳接住。</p>
+        <p class="trust-copy">本地同机，不联网。这是归一化的合作游戏，不是航天训练或真实操作建议。</p>
+      </header>
+
+      <section class="phase-panel" data-region="phase" aria-labelledby="phase-heading">
+        <div class="phase-copy">
+          <p class="phase-label">当前阶段 <span id="phase-name">准备</span></p>
+          <h2 id="phase-heading" tabindex="-1">先分好两席</h2>
+          <p id="status-text"></p>
+          <div id="phase-extra"></div>
+        </div>
+        <button id="primary-action" class="primary-action" type="button" disabled>开始对接</button>
+      </section>
+
+      <section
+        id="stage-panel"
+        class="stage-panel"
+        data-region="stage"
+        tabindex="-1"
+        aria-labelledby="stage-heading"
+      >
+        <h2 id="stage-heading" class="sr-only">近地轨道观察窗</h2>
+        <svg
+          id="docking-stage"
+          class="docking-stage"
+          viewBox="0 0 1000 620"
+          role="img"
+          aria-labelledby="stage-title stage-description"
+        >
+          <title id="stage-title">共享太空舱与右侧对接口</title>
+          <desc id="stage-description">太空舱正在安全区左侧，船头朝右下，右侧是等待对接的接口。</desc>
+          <defs>
+            <pattern id="stage-dots" width="44" height="44" patternUnits="userSpaceOnUse">
+              <circle cx="3" cy="3" r="1.2"></circle>
+            </pattern>
+            <filter id="craft-shadow" x="-30%" y="-40%" width="160%" height="180%">
+              <feDropShadow dx="0" dy="7" stdDeviation="7" flood-opacity=".28"></feDropShadow>
+            </filter>
+          </defs>
+          <rect class="stage-sky" width="1000" height="620" rx="22"></rect>
+          <rect class="stage-stars" width="1000" height="620" rx="22"></rect>
+          <path class="stage-crosshair" d="M32 54h48M56 30v48M410 54h180M500 30v48M32 566h48M56 542v48M410 566h180M500 542v48"></path>
+          <rect class="safe-boundary" x="22" y="22" width="956" height="576" rx="10"></rect>
+          <rect class="capture-window" x="805" y="296" width="30" height="28"></rect>
+          <g id="station" class="station" aria-hidden="true">
+            <rect class="station-hull" x="840" y="0" width="160" height="270"></rect>
+            <rect class="station-hull" x="840" y="350" width="160" height="270"></rect>
+            <rect class="station-back" x="860" y="270" width="140" height="80"></rect>
+            <path class="dock-rim" d="M840 270h42l18 22v36l-18 22h-42l18-28v-24Z"></path>
+            <path class="station-panel" d="M912 0v270M912 350v270M966 0v270M966 350v270"></path>
+            <circle class="station-fastener" cx="875" cy="245" r="5"></circle>
+            <circle class="station-fastener" cx="875" cy="375" r="5"></circle>
+          </g>
+          <g id="velocity-vector" class="velocity-vector" aria-hidden="true">
+            <path id="velocity-line" d="M0 0H0"></path>
+            <path id="velocity-arrow" d="M0 0l-8-5v10Z"></path>
+          </g>
+          <g id="capsule" class="capsule" filter="url(#craft-shadow)" aria-hidden="true">
+            <path class="thrust-flame thrust-forward" d="M-31-11-55 0l24 11Z"></path>
+            <path class="thrust-flame thrust-reverse" d="M34-10 53 0 34 10Z"></path>
+            <path class="attitude-flame rotate-left" d="M2-22 12-40l7 20Z"></path>
+            <path class="attitude-flame rotate-right" d="M2 22 12 40l7-20Z"></path>
+            <path class="capsule-body" d="M-34-20h25L25-13 39 0 25 13-9 20h-25l-7-8V-12Z"></path>
+            <path class="capsule-band" d="M-15-18v36"></path>
+            <path class="capsule-seam" d="M4-15v30M23-11v22"></path>
+            <path class="capsule-heading" d="M7 0h17m-6-6 6 6-6 6"></path>
+            <circle class="capsule-port" cx="-28" cy="-7" r="2.5"></circle>
+            <circle class="capsule-port" cx="-28" cy="7" r="2.5"></circle>
+          </g>
+          <text class="axis-label" x="815" y="287" text-anchor="middle">安全窗</text>
+        </svg>
+      </section>
+
+      <section class="telemetry-strip" data-region="telemetry" aria-labelledby="telemetry-heading">
+        <h2 id="telemetry-heading" class="sr-only">公开遥测</h2>
+        <dl>
+          <div>
+            <dt>位置 x / y</dt>
+            <dd><span id="position-value">0.00 / 0.00</span><small>距离单位</small></dd>
+          </div>
+          <div>
+            <dt>线速度 vx / vy</dt>
+            <dd><span id="velocity-value">0.00 / 0.00</span><small>距离单位/tick</small></dd>
+          </div>
+          <div>
+            <dt>船头角差</dt>
+            <dd><span id="angle-value">0</span><small>角度格</small></dd>
+          </div>
+          <div>
+            <dt>角速度</dt>
+            <dd><span id="angular-velocity-value">0</span><small>角度格/tick</small></dd>
+          </div>
+        </dl>
+        <p id="telemetry-sentence" class="telemetry-sentence"></p>
+      </section>
+
+      <section id="gate-panel" class="gate-panel" data-region="gates" aria-labelledby="gate-heading">
+        <div class="section-heading">
+          <h2 id="gate-heading">六条安全条件</h2>
+          <p id="gate-status"></p>
+        </div>
+        <ol class="gate-list">
+          <li data-gate="positionOk"><span>位置进入接口</span><strong>未安全</strong></li>
+          <li data-gate="velocityOk"><span>线速度收住</span><strong>未安全</strong></li>
+          <li data-gate="angleOk"><span>船头对准</span><strong>未安全</strong></li>
+          <li data-gate="angularVelocityOk"><span>角速度收住</span><strong>未安全</strong></li>
+          <li data-gate="controlsReleased"><span>四键已松开</span><strong>未安全</strong></li>
+          <li data-gate="collisionFree"><span>路径无碰撞</span><strong>未安全</strong></li>
+        </ol>
+      </section>
+
+      <section class="seat-panel attitude-seat" data-region="attitude-controls" aria-labelledby="attitude-heading">
+        <div class="seat-heading">
+          <p>席位 01</p>
+          <h2 id="attitude-heading"><span id="attitude-name">你</span> · 姿态席</h2>
+          <span>只管转</span>
+        </div>
+        <div class="control-row">
+          <button
+            type="button"
+            class="control-button"
+            data-seat="attitude"
+            data-control="rotate-left"
+            data-code="KeyA"
+            aria-label="姿态席，向左转，A"
+            aria-pressed="false"
+            disabled
+          ><span aria-hidden="true">◀</span><strong>向左转</strong><kbd>A</kbd></button>
+          <button
+            type="button"
+            class="control-button"
+            data-seat="attitude"
+            data-control="rotate-right"
+            data-code="KeyD"
+            aria-label="姿态席，向右转，D"
+            aria-pressed="false"
+            disabled
+          ><span aria-hidden="true">▶</span><strong>向右转</strong><kbd>D</kbd></button>
+        </div>
+      </section>
+
+      <section class="seat-panel thrust-seat" data-region="thrust-controls" aria-labelledby="thrust-heading">
+        <div class="seat-heading">
+          <p>席位 02</p>
+          <h2 id="thrust-heading"><span id="thrust-name">TA</span> · 推进席</h2>
+          <span>只管推</span>
+        </div>
+        <div class="control-row">
+          <button
+            type="button"
+            class="control-button"
+            data-seat="thrust"
+            data-control="thrust-forward"
+            data-code="KeyJ"
+            aria-label="推进席，主推，J"
+            aria-pressed="false"
+            disabled
+          ><span aria-hidden="true">▲</span><strong>主推</strong><kbd>J</kbd></button>
+          <button
+            type="button"
+            class="control-button"
+            data-seat="thrust"
+            data-control="thrust-reverse"
+            data-code="KeyL"
+            aria-label="推进席，反推，L"
+            aria-pressed="false"
+            disabled
+          ><span aria-hidden="true">▼</span><strong>反推</strong><kbd>L</kbd></button>
+        </div>
+      </section>
+
+      <section id="stable-panel" class="stable-panel" data-region="stable" aria-labelledby="stable-heading">
+        <div class="stable-copy">
+          <h2 id="stable-heading">稳定窗口</h2>
+          <strong id="stable-value">0 / 30</strong>
+        </div>
+        <div id="stable-track" class="stable-track" aria-hidden="true"></div>
+      </section>
+
+      <section class="mission-log" data-region="log" aria-labelledby="log-heading">
+        <div class="section-heading">
+          <h2 id="log-heading">共同完成日志</h2>
+          <p id="log-empty">还没有完成的航段。</p>
+        </div>
+        <ol id="completed-list"></ol>
+      </section>
+
+      <p id="live-status" class="sr-only" data-region="live" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+
+    <script src="./logic.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
