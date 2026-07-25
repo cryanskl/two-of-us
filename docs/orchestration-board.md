@@ -8,19 +8,19 @@
 
 | 字段 | 当前值 |
 | --- | --- |
-| 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
+| 快照日期 | 2026-07-26（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `bda0d45` |
+| 当前 HEAD | `d6b783d` |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 68 |
-| 当前 installed | 68 |
-| 距离目标 | 7 |
-| A / B / C / D | 60 / 1 / 6 / 1 |
-| surprise / co-op / versus | 23 / 26 / 19 |
-| 本次 repository verify | 通过：68 个入口、60 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2397 / 2397` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`vinyl-secret` 已正式上架，`twin-orbit`、`four-symbol-film-duel`、`kaleidoscope-names` 与 `word-detour-duel` 占满四个生产 UI 槽位。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
-| 平台真实并发 | 1 个总控 + 4 个执行 Session |
+| 当前 catalog 总数 | 69 |
+| 当前 installed | 69 |
+| 距离目标 | 6 |
+| A / B / C / D | 61 / 1 / 6 / 1 |
+| surprise / co-op / versus | 23 / 27 / 19 |
+| 本次 repository verify | 通过：69 个入口、61 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2409 / 2409` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`twin-orbit` 已正式上架，根门户 favicon 404 已闭环。`four-symbol-film-duel` 与 `kaleidoscope-names` 已完成待总控集成，`word-detour-duel` 与 `ricochet-tank-duel` 正在生产 UI。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
+| 平台真实并发 | 1 个总控 + 4 个执行 Session（2 个进行中、2 个 Ready for Review） |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
 
@@ -28,16 +28,17 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 进行中 | `twin-orbit` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-production-ui` | `codex/exp-twin-orbit-production-ui` | `6b4cfe3` | 视觉自治已释放；复用 39 项核心合同与 `310` 方向，对外只用中文标题，重点验证双环同刻输入、穿门证据、固定步、六档视口和降级，最终验证使用 `386` |
-| Worker 2 | 进行中 | `four-symbol-film-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-production-ui` | `codex/exp-four-symbol-film-duel-production-ui` | `69a3b28` | 视觉自治已释放；复用 30 项核心合同与 `318` 方向，重点验证原创 32 题、8 回合、提示经济、交接秘密 DOM、六档视口和降级，最终验证使用 `388` |
-| Worker 3 | 进行中 | `kaleidoscope-names` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-production-ui` | `codex/exp-kaleidoscope-names-production-ui` | `69c8e74` | 视觉自治已释放；复用 25 项核心合同与 `314` 方向，重点验证准备者/体验者边界、秘密延迟 DOM、旋钮/键盘/触控、六档视口和降级，最终验证使用 `387` |
+| Worker 1 | 进行中 | `ricochet-tank-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 视觉自治已释放；复用 44 项确定性核心合同与 `312` 方向，重点验证双席同刻输入、连续折射、固定步、暂停清理、六档视口和降级，最终验证使用 `390` |
+| Worker 2 | Ready for Review | `four-symbol-film-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-production-ui` | `codex/exp-four-symbol-film-duel-production-ui` | `69a3b28` | HEAD `f6c1f92`，38 / 38 定向通过；完整八题、六视口、键盘/真实触控、秘密 DOM 与降级通过，等待总控 range 审查和共享接入 |
+| Worker 3 | Ready for Review | `kaleidoscope-names` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-production-ui` | `codex/exp-kaleidoscope-names-production-ui` | `69c8e74` | HEAD `36122b2`，35 / 35 定向通过；秘密延迟 DOM、六视口、键盘/真实触控、Canvas 失败与降级通过，等待总控 range 审查和共享接入 |
 | Worker 4 | 进行中 | `word-detour-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-production-ui` | `codex/exp-word-detour-duel-production-ui` | `bda0d45` | 视觉自治已释放；复用 19 项核心合同与 `316` 方向，重点验证目标词/禁词秘密 DOM、热座交接、公开计分、六档视口与降级，最终验证使用 `389` |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
 ## Ready for Review
 
-当前没有等待总控审查的项目；四个执行槽位均在生产 UI 阶段。
+- `four-symbol-film-duel`：项目提交 `f35d3a8`…`f6c1f92`，工作树干净，等待总控范围审查与共享 catalog/门户接入。
+- `kaleidoscope-names`：项目提交 `7bc0222`…`36122b2`，工作树干净，等待总控范围审查与共享 catalog/门户接入。
 
 ## 建议首轮候选
 
@@ -54,19 +55,18 @@
 
 队列只表示“值得复核”，不表示已经获准复制、已完成规格或必然进入 75：
 
-1. `ricochet-tank-duel`
-2. `photo-slider-race`
-3. `dual-maze-race`
-4. `penguin-flag-duel`
-5. `memory-merge-board`
-6. `seven-piece-duet`
-7. `our-place-guess`
+1. `photo-slider-race`
+2. `dual-maze-race`
+3. `penguin-flag-duel`
+4. `memory-merge-board`
+5. `seven-piece-duet`
+6. `our-place-guess`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
 ## 文档编号预留
 
-当前已使用或预留到 `389`；下列编号区间已互斥预留：
+当前已使用或预留到 `390`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -138,6 +138,7 @@
 | `kaleidoscope-names` 生产 UI | `387` | Worker 3 | Shadow Duet 正式上架后滚动补位；独占最终验证编号 |
 | `four-symbol-film-duel` 生产 UI | `388` | Worker 2 | Capsule Docking 正式上架后滚动补位；独占最终验证编号 |
 | `word-detour-duel` 生产 UI | `389` | Worker 4 | Vinyl Secret 正式上架后滚动补位；独占最终验证编号 |
+| `ricochet-tank-duel` 生产 UI | `390` | Worker 1 | Twin Orbit 正式上架后滚动补位；独占最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -151,6 +152,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| 根门户本地 favicon | — | `3f020f0` | 静态 `2 / 2`；组合定向 `187 / 187`；Chrome favicon 200、`/favicon.ico` 0 请求、console/network/runtime 0 异常 | 手写被动 SVG，不含脚本、外链或第三方素材；独立 bug 记录与回归测试闭环，不改变 installed |
+| `twin-orbit` 生产 UI 与上架 | `97f4373`…`202c408` | `3f020f0`、`d6b783d` | 定向 `47 / 47`；共享接入 `232 / 232`；全仓 `2409 / 2409`；verify；五关/六视口/键盘/触控/暂停清理/降级 | 安装入口增至 69；双星同 tick 穿门、确定性 golden replay、无 JS 诚实回退与三项浏览器问题闭环，固定来源和零开源复制边界齐全 |
 | `vinyl-secret` 生产 UI 与上架 | `7d26cac`…`d577cd3` | `9464911`…`b6028e4`、`bda0d45` | 定向 `46 / 46`；共享接入 `229 / 229`；全仓 `2397 / 2397`；verify；三轨/六视口/键盘/真实触控/可选音频/秘密 DOM/降级 | 安装入口增至 68；默认无音频即可完成，WAV 成功与缺失 MP3 软失败均通过；一手资料、音乐/录音权和零开源复制边界齐全 |
 | `capsule-docking` 生产 UI 与上架 | `e5c4cd4`…`efd5980` | `d262ceb`…`ec2af4e`、`69a3b28` | 定向 `29 / 29`；共享接入 `210 / 210`；全仓 `2387 / 2387`；verify；三航段/六视口/键盘/真实触控/暂停清理/降级 | 安装入口增至 67；标题窄屏换行和复用 pointerId 的 lostcapture 竞态经红测闭环，五项固定来源与零复制边界齐全 |
 | `shadow-duet` 生产 UI 与上架 | `d4defed`…`deb8e90` | `a8b55cc`…`2f51282`、`69c8e74` | 定向 `38 / 38`；共享接入 `217 / 217`；全仓 `2378 / 2378`；verify；六幕/六视口/键盘/双触控/隐私/降级 | 安装入口增至 66；终局首屏、forced-colors 人影与未冻结文案均经红测闭环，四项固定来源和零复制/零链接边界齐全 |
