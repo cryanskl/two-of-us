@@ -257,6 +257,59 @@ test("Unicode grapheme limits accept composed emoji and reject lone surrogates o
   assert.equal(hash(inventoryFrom(logic.sanitizeConfig(control).content)), EXPECTED_INVENTORY_HASH);
 });
 
+test("deterministic grapheme fallback preserves exact limits without Intl.Segmenter", () => {
+  const configSource = fs.readFileSync(require.resolve("./config.js"), "utf8");
+  const logicSource = fs.readFileSync(require.resolve("./logic.js"), "utf8");
+  const context = vm.createContext({ module: { exports: {} }, Intl: {} });
+  vm.runInContext(configSource, context, { filename: "config.js" });
+  context.module = { exports: {} };
+  vm.runInContext(logicSource, context, { filename: "logic.js" });
+
+  const clusters = [
+    "e\u0301", "שְ", "نّ", "का", "가", "❤️", "👍🏽", "👩‍❤️‍👩", "🇲🇾",
+  ];
+  for (const cluster of clusters) {
+    context.recipient = cluster.repeat(12);
+    assert.equal(vm.runInContext(`
+      COMPLIMENT_REELS_LOGIC.sanitizeConfig({
+        recipient,
+        sender: "我",
+        columns: COMPLIMENT_REELS_CONFIG.columns,
+        composeJackpotNote: COMPLIMENT_REELS_CONFIG.composeJackpotNote
+      }).content.recipient
+    `, context), context.recipient);
+
+    context.recipient = cluster.repeat(13);
+    assert.equal(vm.runInContext(`
+      COMPLIMENT_REELS_LOGIC.sanitizeConfig({
+        recipient,
+        sender: "我",
+        columns: COMPLIMENT_REELS_CONFIG.columns,
+        composeJackpotNote: COMPLIMENT_REELS_CONFIG.composeJackpotNote
+      }).content.recipient
+    `, context), "你");
+  }
+
+  context.noteText = "👍🏽".repeat(120);
+  assert.equal(vm.runInContext(`
+    COMPLIMENT_REELS_LOGIC.createArmAction({
+      recipient: "甲",
+      sender: "乙",
+      columns: COMPLIMENT_REELS_CONFIG.columns,
+      composeJackpotNote() { return noteText; }
+    }, Array.from(COMPLIMENT_REELS_LOGIC.FALLBACK_ENTROPY), "fallback").jackpotNote
+  `, context), context.noteText);
+  context.noteText = "👍🏽".repeat(121);
+  assert.notEqual(vm.runInContext(`
+    COMPLIMENT_REELS_LOGIC.createArmAction({
+      recipient: "甲",
+      sender: "乙",
+      columns: COMPLIMENT_REELS_CONFIG.columns,
+      composeJackpotNote() { return noteText; }
+    }, Array.from(COMPLIMENT_REELS_LOGIC.FALLBACK_ENTROPY), "fallback").jackpotNote
+  `, context), context.noteText);
+});
+
 test("createArmAction calls composer once with a frozen guarded summary", () => {
   let calls = 0;
   let captured;
