@@ -617,6 +617,35 @@ test("action getters, sparse names, array subclasses and polluted schemas are no
   assert.equal(reduce(initial, subclass), initial);
 });
 
+test("action schema is selected from one descriptor snapshot", () => {
+  const state = start();
+  let typeReads = 0;
+  const shifting = new Proxy(
+    {
+      type: ACTIONS.ACK_HANDOFF,
+      revision: state.revision,
+      optionId: "any-option"
+    },
+    {
+      getOwnPropertyDescriptor(target, key) {
+        const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+        if (key !== "type") return descriptor;
+        typeReads += 1;
+        return {
+          ...descriptor,
+          value:
+            typeReads === 1
+              ? ACTIONS.SELECT_OPTION
+              : ACTIONS.ACK_HANDOFF
+        };
+      }
+    }
+  );
+
+  assert.equal(reduce(state, shifting), state);
+  assert.equal(typeReads, 1);
+});
+
 test("maximum revision stops every action without integer overflow", () => {
   const initial = createInitialState();
   let state = initial;
