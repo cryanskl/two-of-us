@@ -634,6 +634,9 @@
     if (phase !== "match-result" && Math.max(...scores) >= TARGET_SCORE) {
       throw new TypeError("non-terminal state reached target score");
     }
+    if (phase !== "match-result" && liveTicksRemaining < 1) {
+      throw new TypeError("non-terminal state exhausted live ticks");
+    }
     if (phase === "intro") {
       if (countdownTicks !== 0 || pauseReason !== null || result !== null
         || liveTicksRemaining !== MATCH_LIVE_TICKS || scores[0] !== 0 || scores[1] !== 0
