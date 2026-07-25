@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#101426">
+  <title>这一弹，拐弯见你</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="duel-app" data-phase="instructions">
+    <header class="game-header">
+      <div class="title-block">
+        <h1>这一弹，拐弯见你</h1>
+        <p>看得见对方，不必朝对方开火</p>
+      </div>
+
+      <section class="scoreboard" aria-label="比分与剩余时间">
+        <p class="score score--left"><span>左方</span><strong id="left-score">0</strong></p>
+        <div class="timer">
+          <span>剩余时间</span>
+          <strong id="remaining-time">01:30</strong>
+        </div>
+        <p class="score score--right"><strong id="right-score">0</strong><span>右方</span></p>
+      </section>
+
+      <nav class="header-actions" aria-label="比赛操作">
+        <button type="button" class="utility-button" data-action="pause">暂停</button>
+        <button type="button" class="utility-button" data-action="rules">规则</button>
+      </nav>
+    </header>
+
+    <section class="duel-layout" aria-label="折射对战区">
+      <aside class="player-status player-status--left" aria-labelledby="left-status-title">
+        <h2 id="left-status-title"><span class="team-mark team-mark--left" aria-hidden="true"></span>左方</h2>
+        <dl>
+          <div><dt>朝向</dt><dd id="left-heading">东</dd></div>
+          <div><dt>位置</dt><dd id="left-zone">左区 / 左列 / 中行</dd></div>
+          <div><dt>在途</dt><dd id="left-bullets">0 / 2</dd></div>
+          <div><dt>发射</dt><dd id="left-cooldown">可发射</dd></div>
+          <div><dt>来弹</dt><dd id="left-threat">暂无来弹</dd></div>
+        </dl>
+      </aside>
+
+      <section class="stage-column" aria-labelledby="stage-title">
+        <h2 id="stage-title" class="visually-hidden">棱镜折射赛场</h2>
+        <div class="stage-frame">
+          <canvas id="duel-canvas" width="960" height="600" aria-describedby="stage-description"></canvas>
+          <p id="stage-description" class="visually-hidden">
+            左右镜像的棱镜折射赛场。左方使用实心珊瑚标记，右方使用条纹湖蓝标记；完整状态同时显示在赛场两侧。
+          </p>
+
+          <section class="stage-panel stage-panel--instructions" data-phase-panel="instructions" aria-labelledby="instructions-title">
+            <h2 id="instructions-title">聪明的一弹，会从墙后拐弯来见你</h2>
+            <ol>
+              <li>转动车头，光点从车头方向发出。</li>
+              <li>光点碰墙会折射，最多反射 3 次。</li>
+              <li>每人最多 2 枚在途，先命中 3 次获胜。</li>
+            </ol>
+            <button type="button" class="primary-button" data-action="start">开始</button>
+          </section>
+
+          <section class="stage-panel stage-panel--countdown" data-phase-panel="countdown" hidden aria-live="polite">
+            <strong id="countdown-copy">三</strong>
+          </section>
+
+          <section class="stage-panel stage-panel--playing" data-phase-panel="playing" hidden aria-hidden="true">
+            <span>对战进行中</span>
+          </section>
+
+          <section class="stage-panel stage-panel--result" data-phase-panel="round-result" hidden aria-labelledby="round-result-title">
+            <h2 id="round-result-title">左方命中</h2>
+            <p id="round-result-copy">比分已同时结算。</p>
+          </section>
+
+          <section class="stage-panel stage-panel--paused" data-phase-panel="paused" hidden aria-labelledby="pause-title">
+            <h2 id="pause-title" tabindex="-1">比赛已暂停</h2>
+            <p id="pause-copy">双方输入已清空，赛场停在同一刻。</p>
+            <button type="button" class="primary-button" data-action="resume">继续</button>
+          </section>
+
+          <section class="stage-panel stage-panel--match" data-phase-panel="match-result" hidden aria-labelledby="match-result-title">
+            <h2 id="match-result-title" tabindex="-1">平局</h2>
+            <p id="match-result-copy">最终比分 0 : 0</p>
+            <div class="result-actions">
+              <button type="button" class="primary-button" data-action="restart">再来一局</button>
+              <button type="button" class="utility-button" data-action="rules">查看规则</button>
+            </div>
+          </section>
+        </div>
+
+        <p class="event-strip" id="event-strip">准备好后，一起按下开始。</p>
+      </section>
+
+      <aside class="player-status player-status--right" aria-labelledby="right-status-title">
+        <h2 id="right-status-title">右方<span class="team-mark team-mark--right" aria-hidden="true"></span></h2>
+        <dl>
+          <div><dt>朝向</dt><dd id="right-heading">西</dd></div>
+          <div><dt>位置</dt><dd id="right-zone">右区 / 右列 / 中行</dd></div>
+          <div><dt>在途</dt><dd id="right-bullets">0 / 2</dd></div>
+          <div><dt>发射</dt><dd id="right-cooldown">可发射</dd></div>
+          <div><dt>来弹</dt><dd id="right-threat">暂无来弹</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="control-deck" aria-label="双方控制">
+      <fieldset class="control-pad control-pad--left">
+        <legend><span>左方</span><small>W · S · A · D · F</small></legend>
+        <div class="control-grid">
+          <button type="button" data-seat="left" data-control="forward">前进</button>
+          <button type="button" data-seat="left" data-control="reverse">后退</button>
+          <button type="button" data-seat="left" data-control="turn-left">左转</button>
+          <button type="button" data-seat="left" data-control="turn-right">右转</button>
+          <button type="button" data-seat="left" data-control="fire">发射</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="control-pad control-pad--right">
+        <legend><span>右方</span><small>↑ · ↓ · ← · → · Enter</small></legend>
+        <div class="control-grid">
+          <button type="button" data-seat="right" data-control="forward">前进</button>
+          <button type="button" data-seat="right" data-control="reverse">后退</button>
+          <button type="button" data-seat="right" data-control="turn-left">左转</button>
+          <button type="button" data-seat="right" data-control="turn-right">右转</button>
+          <button type="button" data-seat="right" data-control="fire">发射</button>
+        </div>
+      </fieldset>
+    </section>
+
+    <p id="live-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+  </main>
+
+  <dialog id="rules-dialog" aria-labelledby="rules-title">
+    <form method="dialog">
+      <h2 id="rules-title" tabindex="-1">规则</h2>
+      <ol>
+        <li>左右两方同时移动、转向和发射；车头决定光点方向。</li>
+        <li>每方最多有 2 枚光点在途，每枚最多反射 3 次、存留 6 秒。</li>
+        <li>先命中 3 次获胜；同一刻双方命中时双方各得 1 分。</li>
+        <li>比赛活跃时间最多 90 秒，到时按比分结算。</li>
+        <li>失焦、隐藏或长帧会公平暂停，继续前重新倒数三秒。</li>
+      </ol>
+      <button type="submit" class="primary-button">返回赛场</button>
+    </form>
+  </dialog>
+
+  <noscript>这一弹，拐弯见你需要启用 JavaScript；它不会联网，也不会保存你的数据。</noscript>
+  <script defer src="config.js"></script>
+  <script defer src="js/constants.js"></script>
+  <script defer src="js/fixed.js"></script>
+  <script defer src="js/geometry.js"></script>
+  <script defer src="js/simulation.js"></script>
+  <script defer src="js/input.js"></script>
+  <script defer src="js/renderer.js"></script>
+  <script defer src="js/accessibility.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
