@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070b13" />
+    <title>把影子，跳成我们 · Two of Us</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./logic.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main id="shadow-duet" class="shadow-duet">
+      <header class="hero">
+        <p class="eyebrow" aria-hidden="true">一座只给两个人的纸幕剧场</p>
+        <h1>把影子，跳成我们</h1>
+        <p class="rule">四个姿势，两道影子。看准目标，在亮起的这一拍一起定格。</p>
+      </header>
+
+      <section class="play-layout" aria-labelledby="phase-heading">
+        <div id="phase-panel" class="phase-panel js-only">
+          <p id="scene-kicker" class="scene-kicker"></p>
+          <h2 id="phase-heading" tabindex="-1">纸幕还没有亮起</h2>
+          <p id="phase-copy" class="phase-copy"></p>
+          <div id="target-card" class="target-card" hidden>
+            <span class="target-label">目标姿势</span>
+            <p>
+              <span id="target-left"></span>
+              <span aria-hidden="true">·</span>
+              <span id="target-right"></span>
+            </p>
+          </div>
+        </div>
+
+        <section class="paper-stage" aria-label="两道影子的纸幕舞台">
+          <span class="stage-pin pin-nw" aria-hidden="true"></span>
+          <span class="stage-pin pin-ne" aria-hidden="true"></span>
+          <span class="stage-pin pin-sw" aria-hidden="true"></span>
+          <span class="stage-pin pin-se" aria-hidden="true"></span>
+          <div class="silhouette silhouette-left" data-silhouette="left" data-pose="neutral" aria-hidden="true">
+            <span class="head"></span>
+            <span class="torso"></span>
+            <span class="arm arm-a"></span>
+            <span class="arm arm-b"></span>
+            <span class="leg leg-a"></span>
+            <span class="leg leg-b"></span>
+          </div>
+          <div class="silhouette silhouette-right" data-silhouette="right" data-pose="neutral" aria-hidden="true">
+            <span class="head"></span>
+            <span class="torso"></span>
+            <span class="arm arm-a"></span>
+            <span class="arm arm-b"></span>
+            <span class="leg leg-a"></span>
+            <span class="leg leg-b"></span>
+          </div>
+          <p id="stage-description" class="sr-only">两道中性的影子面对面站在纸幕两侧。</p>
+        </section>
+
+        <div class="status-strip js-only">
+          <p id="progress-status">已定格 0 / 6</p>
+          <ol id="beat-rail" class="beat-rail" aria-label="六小拍稳定进度">
+            <li></li><li></li><li></li><li></li><li></li><li></li>
+          </ol>
+          <div class="status-pair">
+            <p id="attempt-status">第 1 次尝试</p>
+            <p id="stable-status">稳定 0 / 6</p>
+          </div>
+          <p id="current-status">当前姿势：你还没有姿势 · TA还没有姿势</p>
+        </div>
+
+        <div class="controls js-only" aria-label="双人姿势控制">
+          <fieldset data-seat-group="left" disabled>
+            <legend>你</legend>
+            <div class="pose-grid">
+              <button type="button" data-seat="left" data-pose="high" aria-pressed="false">
+                <span>举高</span><kbd>W</kbd>
+              </button>
+              <button type="button" data-seat="left" data-pose="wide" aria-pressed="false">
+                <span>展开</span><kbd>A</kbd>
+              </button>
+              <button type="button" data-seat="left" data-pose="low" aria-pressed="false">
+                <span>低身</span><kbd>S</kbd>
+              </button>
+              <button type="button" data-seat="left" data-pose="near" aria-pressed="false">
+                <span>向内</span><kbd>D</kbd>
+              </button>
+            </div>
+          </fieldset>
+          <fieldset data-seat-group="right" disabled>
+            <legend>TA</legend>
+            <div class="pose-grid">
+              <button type="button" data-seat="right" data-pose="high" aria-pressed="false">
+                <span>举高</span><kbd>↑</kbd>
+              </button>
+              <button type="button" data-seat="right" data-pose="wide" aria-pressed="false">
+                <span>展开</span><kbd>→</kbd>
+              </button>
+              <button type="button" data-seat="right" data-pose="low" aria-pressed="false">
+                <span>低身</span><kbd>↓</kbd>
+              </button>
+              <button type="button" data-seat="right" data-pose="near" aria-pressed="false">
+                <span>向内</span><kbd>←</kbd>
+              </button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div id="phase-tail" class="phase-tail js-only"></div>
+      </section>
+
+      <p id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <noscript>
+        <p class="no-js">请开启 JavaScript 后再一起排这支影子舞</p>
+      </noscript>
+      <footer class="privacy">这支舞只在本机运行，不录音、不录像，也不会上传两个人的操作。</footer>
+    </main>
+  </body>
+</html>
