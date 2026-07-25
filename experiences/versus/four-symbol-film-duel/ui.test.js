@@ -93,7 +93,7 @@ test("README freezes direct-open, rules, privacy and attribution boundaries", ()
   assert.match(readme, /双击.*index\.html/);
   assert.match(readme, /8\s*题/);
   assert.match(readme, /2\s*\/\s*1\s*\/\s*0/);
-  assert.match(readme, /确认前.*DOM/);
-  assert.match(readme, /没有复制.*开源.*代码/);
+  assert.match(readme, /交接页[\s\S]*不会出现在 DOM/);
+  assert.match(readme, /没有参考或复制[\s\S]*开源项目[\s\S]*代码/);
   assert.match(readme, /Unicode/);
 });
