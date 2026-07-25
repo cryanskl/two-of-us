@@ -363,6 +363,7 @@
   function normalizeConfig(candidate) {
     const data = ownDataSnapshot(candidate, ["seats", "composeCompletionNote"]);
     if (!data || typeof data.composeCompletionNote !== "function") return DEFAULT_CONFIG;
+    const composer = data.composeCompletionNote;
     const seats = nativeArraySnapshot(data.seats);
     if (!seats || seats.length !== 2) return DEFAULT_CONFIG;
     const normalizedSeats = seats.map(trimUnicode);
@@ -375,7 +376,9 @@
     ) return DEFAULT_CONFIG;
     return deepFreeze({
       seats: normalizedSeats,
-      composeCompletionNote: data.composeCompletionNote,
+      composeCompletionNote(summary) {
+        return composer(summary);
+      },
     });
   }
 
@@ -679,6 +682,7 @@
   }
 
   function validControlAction(action) {
+    if (typeof action.seat !== "string" || typeof action.control !== "string") return false;
     const control = CONTROL_BY_ID[action.control];
     return control && control.seat === action.seat;
   }

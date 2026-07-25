@@ -457,6 +457,51 @@ test("配置原子回退，完成赠言只接收冻结断引用 summary", () => 
   }), /稳稳接回家/);
 });
 
+test("函数型 Proxy 配置与对象型 control 都按敌对输入安全处理", () => {
+  const hostileComposer = new Proxy(function () {
+    return "代理函数仍可通过安全包装调用";
+  }, {
+    ownKeys() {
+      throw new Error("composer ownKeys trap");
+    },
+  });
+  const candidate = {
+    seats: ["甲", "乙"],
+    composeCompletionNote: hostileComposer,
+  };
+  let normalized;
+  assert.doesNotThrow(() => {
+    normalized = logic.normalizeConfig(candidate);
+  });
+  assert.deepEqual(normalized.seats, ["甲", "乙"]);
+  assert.notEqual(normalized.composeCompletionNote, hostileComposer);
+  assert.equal(Object.isFrozen(hostileComposer), false);
+  assert.doesNotThrow(() => logic.resolveCompletionNote({
+    seats: ["甲", "乙"],
+    legCount: 3,
+    totalAttempts: 3,
+    retries: 0,
+    legs: ["一", "二", "三"],
+  }, candidate));
+
+  const hostileControl = new Proxy({}, {
+    get() {
+      throw new Error("control coercion trap");
+    },
+  });
+  const approaching = beginLeg();
+  assert.doesNotThrow(() => logic.reduce(approaching, {
+    type: "PRESS",
+    seat: "attitude",
+    control: hostileControl,
+  }));
+  assert.equal(logic.reduce(approaching, {
+    type: "PRESS",
+    seat: "attitude",
+    control: hostileControl,
+  }), approaching);
+});
+
 test("畸形 state 安全回初态，accessor 与数组子类不抛异常", () => {
   const malformed = { phase: "approaching" };
   assert.deepEqual(logic.reduce(malformed, { type: "TICK", count: 1 }), logic.createInitialState());
