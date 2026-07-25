@@ -84,7 +84,7 @@ test("runtime protocol constants and candidate URL boundaries are frozen", () =>
   assert.equal(RUNTIME_HEADER_NAME, "x-two-of-us-runtime");
   assert.equal(RUNTIME_HEADER_VALUE, "1");
   assert.equal(RUNTIME_PROTOCOL_VERSION, 1);
-  assert.equal(RUNTIME_PROBE_TIMEOUT_MS, 250);
+  assert.equal(RUNTIME_PROBE_TIMEOUT_MS, 1_000);
   assert.equal(DEFAULT_MAX_PORT_ATTEMPTS, 20);
   assert.deepEqual(buildRuntimeCandidateUrls(0, 20), []);
   assert.deepEqual(buildRuntimeCandidateUrls(4173, 3), [
@@ -215,7 +215,7 @@ test("network failure and timeout abort continue to the next candidate and clear
   const timers = { set: 0, cleared: 0 };
   const setTimeoutImpl = (callback, delay) => {
     timers.set += 1;
-    assert.equal(delay, 250);
+    assert.equal(delay, 1_000);
     return setTimeout(callback, delay);
   };
   const clearTimeoutImpl = (timer) => {

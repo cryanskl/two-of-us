@@ -28,9 +28,10 @@ export async function createRuntimeServer({
   maxPortAttempts = 20,
   dataDir,
   contentIdentity,
+  contentIdentityProvider = computeContentIdentity,
 } = {}) {
   const resolvedContentIdentity = contentIdentity
-    ?? await computeContentIdentity(rootDir);
+    ?? await contentIdentityProvider(rootDir);
   if (!isContentIdentity(resolvedContentIdentity)) {
     throw new Error("运行时内容身份格式无效。");
   }
@@ -42,6 +43,19 @@ export async function createRuntimeServer({
   const rooms = new RoomRegistry({ maxMembers: 2 });
   const sealedRounds = new SealedRoundRegistry();
   let runtimeDetails = null;
+  let inFlightContentIdentityCheck = null;
+
+  function getReusableContentIdentity() {
+    if (inFlightContentIdentityCheck) return inFlightContentIdentityCheck;
+    inFlightContentIdentityCheck = Promise.resolve()
+      .then(() => contentIdentityProvider(rootDir))
+      .then((currentIdentity) => (
+        currentIdentity === resolvedContentIdentity ? resolvedContentIdentity : null
+      ))
+      .catch(() => null)
+      .finally(() => { inFlightContentIdentityCheck = null; });
+    return inFlightContentIdentityCheck;
+  }
 
   const httpServer = createServer(async (request, response) => {
     try {
@@ -57,12 +71,13 @@ export async function createRuntimeServer({
       }
 
       if (url.pathname === "/api/health") {
+        const reusableContentIdentity = await getReusableContentIdentity();
         return sendJson(request, response, 200, {
           ok: true,
           service: "two-of-us",
           version: 1,
           node: process.versions.node,
-          contentIdentity: resolvedContentIdentity,
+          contentIdentity: reusableContentIdentity,
           ...runtimeDetails,
         }, {
           [RUNTIME_HEADER_NAME]: RUNTIME_HEADER_VALUE,

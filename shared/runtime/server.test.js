@@ -11,6 +11,7 @@ import { SealedRoundRegistry } from "./sealed-rounds.js";
 import { createRuntimeServer, registerRoomProtocol } from "./server.js";
 
 const testContentIdentity = `sha256:${"a".repeat(64)}`;
+const testContentIdentityProvider = async () => testContentIdentity;
 
 class FakeIo {
   constructor() {
@@ -106,6 +107,7 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
     preferredPort: 0,
     dataDir,
     contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
   });
   context.after(() => runtime.stop());
 
@@ -192,6 +194,7 @@ test("runtime advertises its IPv4 listener even when the same port has an IPv6-o
     maxPortAttempts: 1,
     dataDir,
     contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
   });
   context.after(() => runtime.stop());
 
@@ -231,6 +234,7 @@ test("runtime listener truncates its occupied window at 65535", async (context) 
     maxPortAttempts: 20,
     dataDir,
     contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
   });
   context.after(() => runtime.stop());
 
@@ -252,6 +256,7 @@ test("runtime selects the next port when the preferred one is occupied", async (
     preferredPort: occupiedPort,
     maxPortAttempts,
     contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
   });
   context.after(() => runtime.stop());
 
@@ -266,6 +271,7 @@ test("runtime room registry rejects a third member with ROOM_FULL", async (conte
     host: "127.0.0.1",
     preferredPort: 0,
     contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
   });
   context.after(() => runtime.stop());
 
@@ -275,6 +281,33 @@ test("runtime room registry rejects a third member with ROOM_FULL", async (conte
     () => runtime.rooms.join(room.id, "socket-c", "第三人"),
     (error) => error instanceof RoomError && error.code === "ROOM_FULL",
   );
+});
+
+test("runtime becomes non-reusable when its checkout changes after startup", async (context) => {
+  let currentContentIdentity = testContentIdentity;
+  const runtime = await createRuntimeServer({
+    rootDir: new URL("../../", import.meta.url),
+    host: "127.0.0.1",
+    preferredPort: 0,
+    contentIdentity: testContentIdentity,
+    contentIdentityProvider: async () => currentContentIdentity,
+  });
+  context.after(() => runtime.stop());
+
+  const details = await runtime.start();
+  const initialHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  assert.equal(initialHealth.contentIdentity, testContentIdentity);
+
+  currentContentIdentity = `sha256:${"b".repeat(64)}`;
+  const changedHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  assert.equal(changedHealth.ok, true);
+  assert.equal(changedHealth.contentIdentity, null);
+  assert.equal(runtime.httpServer.listening, true);
+
+  currentContentIdentity = null;
+  const unreadableHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  assert.equal(unreadableHealth.contentIdentity, null);
+  assert.equal(runtime.httpServer.listening, true);
 });
 
 test("room protocol cleans sealed rounds by participant before clearing an empty room", async () => {

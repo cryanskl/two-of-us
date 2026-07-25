@@ -5,7 +5,7 @@ import { resolveExperienceUrl } from "./start-target.mjs";
 export const RUNTIME_HEADER_NAME = "x-two-of-us-runtime";
 export const RUNTIME_HEADER_VALUE = "1";
 export const RUNTIME_PROTOCOL_VERSION = 1;
-export const RUNTIME_PROBE_TIMEOUT_MS = 250;
+export const RUNTIME_PROBE_TIMEOUT_MS = 1_000;
 export const DEFAULT_MAX_PORT_ATTEMPTS = 20;
 
 export function buildRuntimeCandidateUrls(preferredPort, maxPortAttempts) {
