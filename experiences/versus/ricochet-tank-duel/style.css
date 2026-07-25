@@ -92,6 +92,26 @@ button:disabled {
   border-bottom: 1px solid rgba(181, 189, 209, 0.28);
 }
 
+.back-link {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: var(--duel-muted);
+  font-size: 0.82rem;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: var(--duel-text);
+}
+
+.back-link:focus-visible {
+  outline: 3px solid var(--duel-focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 .title-block h1 {
   margin: 0;
   font: 700 clamp(1.35rem, 2.2vw, 1.875rem)/1.15 var(--font-display);
