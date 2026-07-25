@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `260c0bf` |
+| 当前 HEAD | `5e76c23` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2291 / 2291` 通过 |
-| 工作树提示 | `ricochet-tank-duel` 的镜像 ID、STEP 校验与对手重叠修复已集成；其槽位转入全仓依赖/启动合同审计，其余三个核心审计继续运行 |
+| 本次是否重跑全仓测试 | 是：`2296 / 2296` 通过 |
+| 工作树提示 | `penguin-flag-duel` 七类边界修复已集成；其槽位转入全仓借鉴/许可证盘点，依赖/启动合同审计与另外两个核心审计继续运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,7 +28,7 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `penguin-flag-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel-core-reaudit` | `codex/exp-penguin-flag-duel-core-reaudit` | `ddc3bde` | 四符号电影 getter 边界修复与核心复验已集成并释放槽位；现复核冰面物理、夺旗闭环、双席公平、重放和 Box2D 借鉴边界 |
+| Worker 1 | 已分配 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | Penguin 七类真实边界、bug/learn 与复验已集成并释放槽位；现盘点 58 个入口及非视觉候选的来源固定性、许可证、复制边界和声明覆盖，只写 `363` 与唯一记录 |
 | Worker 2 | 已分配 | 全仓依赖、runtime 与 launcher 合同审计 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-launch-contract-audit` | `260c0bf` | Ricochet 三处真实核心缺口、bug/learn 与复验已集成并释放槽位；现复核 58 个入口的依赖统一、A/B/C/D 启动层和可复用修复建议，只写 `362` 与唯一记录 |
 | Worker 3 | 已分配 | `honeycomb-passage` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/honeycomb-passage-core-reaudit` | `codex/exp-honeycomb-passage-core-reaudit` | `9d52b5c` | 影剑离散联合结算、replay、隐私与固定来源复验无新缺口并释放槽位；现复核蜂巢图结构、双席规则、可解性、公开投影和借鉴声明 |
 | Worker 4 | 已分配 | `emoji-movie-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/emoji-movie-duel-core-reaudit` | `codex/exp-emoji-movie-duel-core-reaudit` | `9c81ea0` | 双迷宫连通性、Proxy/hostile passage 与来源覆盖修复已集成并释放槽位；现复核 Emoji 字素、题包原创性、盲交接、replay 和借鉴声明 |
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `362`；下列编号区间已互斥预留：
+当前已使用或预留到 `363`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -130,6 +130,7 @@
 | `honeycomb-passage` | `360` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `226` 用户确认 |
 | `emoji-movie-duel` | `361` | Worker 4 | 现有核心再验收进行中；生产 UI 仍等待后续视觉提案确认 |
 | 全仓依赖、runtime 与 launcher 合同审计 | `362` | Worker 2 | 已分配；只审计并提出共享层串行修复建议，不直接修改总控所有的依赖、runtime、launcher 或 catalog |
+| 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已分配；只盘点并提出串行修复建议，不直接批量修改项目声明、共享索引、依赖或生产文件 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -163,6 +164,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `penguin-flag-duel` 敌对边界修复与核心再验收 | `2af6c15`、`17d8e84`、`3014654`、`b017863`、`c0c83d3`、`2c106cd`、`59fe3e8`、`bec8ccd`、`005272e`、`293e25d`、`6aacd73`、`f2fed7d`、`f506679`、`f2e6f4f`、`549c559`、`c3694e4`、`2988435` | `220fe2d`、`e473334`、`a0a59a4`、`8d91138`、`f93ba72`、`f12da5f`、`3f428e0`、`6bc1042`、`83eefa3`、`a80c3d6`、`c564814`、`be062d1`、`7dd05c0`、`c504301`、`dcdea42`、`ea060f3`、`5e76c23` | 定向 `28 / 28`；组合后全仓 `2296 / 2296`；verify；range diff-check | 嵌套数组改为 descriptor 快照，合法浏览器默认配置不再被初始化顺序吞掉，revision/剩余时间/Proxy type-replay/速度向量边界均已关闭；Box2D v3.1.0 固定 MIT 来源与零复制边界复核；生产 UI 仍等待用户确认，不计 installed |
 | `ricochet-tank-duel` 镜像/状态修复与核心再验收 | `6b4c3c4`、`66e3575`、`86a113d`、`5077976`、`7b56433`、`bf47e10`、`204d5e6`、`8c89ebf`、`1956af4`、`bdc1ab0` | `0d95692`、`0f39724`、`de3b627`、`cdb9036`、`ba972eb`、`3ee2a49`、`729e430`、`54a84a3`、`5268463`、`260c0bf` | 定向 `47 / 47`；组合后全仓 `2291 / 2291`；verify；range diff-check | 同 tick 发射改为奇偶席位 ID 对，畸形 STEP 先关闭非法 state，持久状态拒绝弹体与对手重叠；三份 bug、一份 learn 与零开源游戏/引擎复制边界已锁定；生产 UI 仍等待用户确认，不计 installed |
 | `dual-maze-race` 图验证/敌对输入/来源修复与核心再验收 | `af7b1f7`、`36dc62d`、`8ee1615` | `e01ca83`、`f93723d`、`9c81ea0` | 定向 `27 / 27`；组合后全仓 `2288 / 2288`；verify；range diff-check | 全图连通性与 `E=V-1` 共同证明树；descriptor 快照后不再回读原 Proxy，passage 先做整数门禁；15/15 来源和零复制边界已锁定；生产 UI 仍等待用户确认，不计 installed |
 | `shadow-sword-duel` 无缺口核心再验收 | `541dd63` | `9d52b5c` | 定向 `29 / 29`；全仓 `2284 / 2284`；verify；range diff-check | 5,184 组独立 oracle、席位镜像、原子双攻/双 KO、严格历史 replay、隐私与 hostile 边界通过；固定 commit/许可证和零复制声明完整；仅文档，不计 installed |
