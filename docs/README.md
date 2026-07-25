@@ -209,6 +209,14 @@
 | [314-kaleidoscope-names-design-proposal.md](./314-kaleidoscope-names-design-proposal.md) | 深紫光学调校台的桌面调校、移动揭晓、code-native 视觉和响应式边界 |
 | [350-kaleidoscope-names-core-verification.md](./350-kaleidoscope-names-core-verification.md) | 万花筒名字的 frozen 内容规范化、标准来源维护与 25 项核心复验 |
 | [387-kaleidoscope-names-final-verification.md](./387-kaleidoscope-names-final-verification.md) | “把名字折成同一束光”的 35 项定向测试、隐私 DOM、六视口、输入和降级终验 |
+| [271-emoji-movie-duel-research.md](./271-emoji-movie-duel-research.md) | 表情电影擂台的本地优先可行性、影视表达、Unicode 与厂商字形权利边界调研 |
+| [272-emoji-movie-duel-brainstorm.md](./272-emoji-movie-duel-brainstorm.md) | 四符片名擂台的原创虚构题包、聚光灯经济、八题轮换和热座交接决策 |
+| [273-emoji-movie-duel-spec.md](./273-emoji-movie-duel-spec.md) | 四符片名擂台的 32 卡内容、2 / 1 / 0 计分、八阶段状态机、隐私与验收规格 |
+| [274-emoji-movie-duel-plan.md](./274-emoji-movie-duel-plan.md) | 四符片名擂台的内容、核心、生产 UI、catalog、Chrome 与独立提交实施计划 |
+| [280-four-symbol-film-duel-content-audit.md](./280-four-symbol-film-duel-content-audit.md) | 四符片名擂台的原创题卡、字形域、答案位置、配平和权利边界审计 |
+| [318-four-symbol-film-duel-design-proposal.md](./318-four-symbol-film-duel-design-proposal.md) | 复古影院票根台的桌面猜题、移动交接和 code-native 视觉方案 |
+| [352-four-symbol-film-duel-core-verification.md](./352-four-symbol-film-duel-core-verification.md) | 四符片名擂台的配置、winner getter、27 项核心测试与来源复验 |
+| [388-four-symbol-film-duel-final-verification.md](./388-four-symbol-film-duel-final-verification.md) | 四符片名擂台的 38 项定向测试、完整八题、秘密 DOM、六视口和降级终验 |
 | [267-vinyl-secret-research.md](./267-vinyl-secret-research.md) | S14“黑胶寻声”的三轨文字主路线、可选本地音频、阶段隐私与权利边界调研 |
 | [268-vinyl-secret-brainstorm.md](./268-vinyl-secret-brainstorm.md) | “黑胶寻声”的十二圈远近反馈、三轨顺序、默认无音频与失败软降级决策 |
 | [269-vinyl-secret-spec.md](./269-vinyl-secret-spec.md) | “把秘密藏进这一圈”的 reducer、公开投影、媒体生命周期、响应式与验收规格 |
