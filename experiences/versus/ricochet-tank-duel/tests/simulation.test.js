@@ -487,6 +487,18 @@ test("state 严拒绝额外键、非法 heading、重复 ID 和每席超过两�
   }));
 });
 
+test("step 即使收到畸形 input frame 也先关闭非法 state", () => {
+  const hostileState = { attackerControlled: true };
+  const malformedFrame = { leftMask: 0 };
+  assert.deepEqual(
+    simulation.step(hostileState, malformedFrame),
+    simulation.createInitialState(),
+  );
+
+  const valid = playing();
+  assert.equal(simulation.step(valid, malformedFrame), valid);
+});
+
 test("输入数组顺序变化会按稳定 ID 规范化，不改变原子计分与哈希", () => {
   const raw = clone(playing());
   raw.bullets = [
