@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta
+      name="description"
+      content="两个人在同一台设备上密封选招、一起揭晓的本地热座策略对抗。"
+    >
+    <title>影子剑术</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="paper-arc paper-arc--left" aria-hidden="true"></div>
+    <div class="paper-arc paper-arc--right" aria-hidden="true"></div>
+
+    <main id="game" class="game-shell">
+      <header class="title-block">
+        <h1>影子剑术</h1>
+        <p class="subtitle">先藏好这一招，再看看你有没有读懂我。</p>
+        <p id="round-marker" class="round-marker">第 1 / 9 回合</p>
+      </header>
+
+      <noscript>
+        <p class="no-script">
+          此体验需要浏览器启用 JavaScript。启用后重新打开本页即可开始。
+        </p>
+      </noscript>
+
+      <div class="duel-layout">
+        <aside id="left-rail" class="resource-rail resource-rail--left"></aside>
+        <section id="stage" class="stage" aria-label="当前决斗步骤"></section>
+        <aside id="right-rail" class="resource-rail resource-rail--right"></aside>
+      </div>
+
+      <p class="privacy-note">
+        两人正常交接时，未揭晓的招式不会显示在页面上；同机开发者工具不属于保密范围。
+      </p>
+      <p
+        id="live-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+    </main>
+
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

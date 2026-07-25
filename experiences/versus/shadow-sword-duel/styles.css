@@ -1,0 +1,691 @@
+:root {
+  --night: #0c1725;
+  --night-raised: #142233;
+  --night-line: #304154;
+  --ivory: #ead8b8;
+  --ivory-muted: #a99d88;
+  --left: #cf5847;
+  --right: #78c3c8;
+  --focus: #9bd5ff;
+  --danger: #f18b74;
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--night);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 0;
+  background: var(--night);
+}
+
+body {
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ivory);
+  background-color: var(--night);
+  background-image:
+    repeating-linear-gradient(8deg, rgb(255 255 255 / 0.012) 0 1px, transparent 1px 8px),
+    radial-gradient(circle at 50% -20%, rgb(120 195 200 / 0.08), transparent 43%);
+  overflow-wrap: anywhere;
+}
+
+button {
+  min-height: 48px;
+  border: 1px solid var(--ivory-muted);
+  border-radius: 4px;
+  color: var(--ivory);
+  font: 650 1rem/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0.04em;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--ivory);
+  background: rgb(234 216 184 / 0.06);
+}
+
+button:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.game-shell {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 96px, 1240px);
+  margin: 0 auto;
+  padding: 34px 0 24px;
+}
+
+.title-block {
+  text-align: center;
+}
+
+h1,
+.stage-title,
+.result-headline {
+  font-family: STKaiti, KaiTi, "Songti SC", serif;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(3.25rem, 5.1vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+}
+
+.subtitle {
+  margin: 14px 0 0;
+  color: var(--ivory-muted);
+  font-family: STKaiti, KaiTi, "Songti SC", serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  letter-spacing: 0.08em;
+}
+
+.round-marker {
+  display: inline-block;
+  margin: 19px 0 0;
+  padding: 7px 22px;
+  border-block: 1px solid var(--night-line);
+  font-family: "Songti SC", serif;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+}
+
+.duel-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 0.7fr)
+    minmax(480px, 1.6fr)
+    minmax(180px, 0.7fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+  margin-top: 28px;
+}
+
+.resource-rail {
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.resource-name {
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--night-line);
+  font-family: STKaiti, KaiTi, "Songti SC", serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+}
+
+.resource-name--left {
+  color: var(--left);
+}
+
+.resource-name--right {
+  color: var(--right);
+}
+
+.resource-list {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--night-line);
+}
+
+.resource-list dt,
+.resource-list dd {
+  margin: 0;
+  padding: 11px 0;
+  border-top: 1px solid rgb(48 65 84 / 0.55);
+  font-size: 1rem;
+}
+
+.resource-list dd {
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.seat-order {
+  margin: 11px 0 0;
+  color: var(--ivory-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+
+.stage {
+  min-width: 0;
+  text-align: center;
+}
+
+.stage-title {
+  margin: 0 0 16px;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+}
+
+.stage-copy {
+  max-width: 36rem;
+  margin: 0 auto 20px;
+  color: var(--ivory-muted);
+  line-height: 1.65;
+}
+
+.instructions {
+  max-width: 36rem;
+  margin: 0 auto 24px;
+  padding: 18px 18px 18px 38px;
+  border-block: 1px solid var(--night-line);
+  color: var(--ivory-muted);
+  text-align: left;
+  line-height: 1.65;
+}
+
+.instructions li + li {
+  margin-top: 6px;
+}
+
+.action-list {
+  display: grid;
+  gap: 9px;
+}
+
+.action-button {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  min-height: 68px;
+  padding: 11px 18px;
+  text-align: left;
+  background: rgb(20 34 51 / 0.78);
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.action-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.action-button.is-selected {
+  border: 2px solid var(--right);
+  background: rgb(120 195 200 / 0.1);
+}
+
+.action-label {
+  color: var(--ivory);
+  font-family: STKaiti, KaiTi, "Songti SC", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.action-summary {
+  min-width: 0;
+  color: var(--ivory-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.selection-copy,
+.unavailable-copy {
+  font-size: 0.78rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.selection-copy {
+  color: var(--right);
+}
+
+.unavailable-copy {
+  color: var(--danger);
+}
+
+.stage-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.button {
+  width: min(100%, 36rem);
+  padding: 13px 18px;
+}
+
+.button--primary {
+  border-color: #9f4437;
+  color: #fff0d1;
+  background: #9f3028;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.22);
+}
+
+.button--primary:hover:not(:disabled) {
+  border-color: var(--left);
+  background: #ad382f;
+}
+
+.button--quiet {
+  color: var(--ivory-muted);
+  background: transparent;
+}
+
+.fold-mark {
+  display: grid;
+  grid-template-columns: repeat(2, 56px);
+  grid-template-rows: repeat(2, 44px);
+  gap: 4px;
+  width: max-content;
+  margin: 24px auto;
+  transform: rotate(45deg);
+}
+
+.fold-plane {
+  display: block;
+  border: 1px solid var(--night-line);
+  background: var(--night-raised);
+}
+
+.fold-plane:nth-child(1) {
+  border-top-left-radius: 8px;
+}
+
+.fold-plane:nth-child(2) {
+  background: #172b3f;
+  border-top-right-radius: 8px;
+}
+
+.fold-plane:nth-child(3) {
+  background: #172b3f;
+  border-bottom-left-radius: 8px;
+}
+
+.fold-plane:nth-child(4) {
+  border-bottom-right-radius: 8px;
+}
+
+.fold-mark--sealed .fold-plane {
+  border-color: var(--right);
+}
+
+.fold-mark--quiet {
+  grid-template-columns: repeat(2, 44px);
+  grid-template-rows: repeat(2, 34px);
+  opacity: 0.72;
+}
+
+.reveal-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 4px 0 16px;
+}
+
+.action-reveal {
+  margin: 0;
+  padding: 12px 14px;
+  border-block: 1px solid var(--night-line);
+  font-size: 1.08rem;
+}
+
+.action-reveal--left strong {
+  color: var(--left);
+}
+
+.action-reveal--right strong {
+  color: var(--right);
+}
+
+.result-headline {
+  margin: 18px 0;
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ledger-title {
+  margin: 0;
+  color: var(--ivory-muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+}
+
+.effect-ledger {
+  max-width: 34rem;
+  margin: 12px auto 20px;
+  padding: 13px 16px 13px 36px;
+  border-block: 1px solid var(--night-line);
+  text-align: left;
+  line-height: 1.55;
+}
+
+.effect-ledger li + li {
+  margin-top: 5px;
+}
+
+.match-reason {
+  margin: -5px 0 15px;
+  color: var(--ivory-muted);
+}
+
+.final-note {
+  margin: 0 auto 20px;
+  padding: 13px 18px;
+  border-left: 3px solid var(--left);
+  color: var(--ivory);
+  font-family: STKaiti, KaiTi, "Songti SC", serif;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.history {
+  margin-top: 22px;
+  text-align: left;
+}
+
+.history-title {
+  margin: 0 0 8px;
+  color: var(--ivory-muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.history-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--night-line);
+}
+
+.history-list li {
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--night-line);
+  color: var(--ivory-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.privacy-note {
+  max-width: 48rem;
+  margin: 24px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--night-line);
+  color: var(--ivory-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.no-script {
+  max-width: 40rem;
+  margin: 28px auto;
+  padding: 18px;
+  border: 2px solid var(--danger);
+  color: var(--ivory);
+  text-align: center;
+}
+
+.paper-arc {
+  position: fixed;
+  z-index: 0;
+  width: 34vw;
+  height: 34vw;
+  min-width: 260px;
+  min-height: 260px;
+  border: 1px solid var(--night-line);
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.paper-arc--left {
+  bottom: -18vw;
+  left: -21vw;
+  box-shadow:
+    42px -26px 0 -40px var(--left),
+    82px -52px 0 -78px var(--left);
+}
+
+.paper-arc--right {
+  top: -18vw;
+  right: -21vw;
+  box-shadow:
+    -42px 26px 0 -40px var(--right),
+    -82px 52px 0 -78px var(--right);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .game-shell {
+    width: min(100% - 40px, 760px);
+    padding-top: 28px;
+  }
+
+  .duel-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 18px;
+    margin-top: 24px;
+  }
+
+  .resource-rail {
+    grid-row: 1;
+  }
+
+  .resource-rail--left {
+    grid-column: 1;
+  }
+
+  .resource-rail--right {
+    grid-column: 2;
+  }
+
+  .stage {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: min(100%, 620px);
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-shell {
+    width: min(100% - 32px, 520px);
+    padding-top: 22px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 13vw, 3.25rem);
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  .round-marker {
+    margin-top: 14px;
+  }
+
+  .duel-layout {
+    gap: 18px 14px;
+    margin-top: 18px;
+  }
+
+  .resource-name {
+    font-size: 1.45rem;
+  }
+
+  .resource-list dt,
+  .resource-list dd {
+    padding-block: 8px;
+    font-size: 0.92rem;
+  }
+
+  .seat-order {
+    font-size: 0.72rem;
+  }
+
+  .stage-title {
+    font-size: clamp(1.8rem, 9vw, 2.35rem);
+  }
+
+  .action-button {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 9px 12px;
+    min-height: 74px;
+    padding: 10px 13px;
+  }
+
+  .selection-copy,
+  .unavailable-copy {
+    grid-column: 2;
+    white-space: normal;
+  }
+
+  .stage-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .reveal-pair {
+    gap: 8px;
+  }
+
+  .action-reveal {
+    padding-inline: 8px;
+    font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .game-shell {
+    width: min(100% - 24px, 356px);
+  }
+
+  .duel-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap-inline: 10px;
+  }
+
+  .resource-name {
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .resource-list {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .resource-list dt,
+  .resource-list dd {
+    font-size: 0.84rem;
+  }
+
+  .action-summary {
+    font-size: 0.88rem;
+  }
+
+  .fold-mark {
+    grid-template-columns: repeat(2, 46px);
+    grid-template-rows: repeat(2, 36px);
+  }
+}
+
+@media (max-width: 250px) {
+  .duel-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .resource-rail--left,
+  .resource-rail--right,
+  .stage {
+    grid-column: 1;
+  }
+
+  .resource-rail--left {
+    grid-row: 1;
+  }
+
+  .resource-rail--right {
+    grid-row: 2;
+  }
+
+  .stage {
+    grid-row: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  body,
+  .action-button,
+  .button,
+  .fold-plane {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .resource-name,
+  .selection-copy,
+  .unavailable-copy,
+  .action-reveal strong {
+    color: CanvasText;
+  }
+
+  button,
+  .action-button,
+  .resource-name,
+  .resource-list,
+  .effect-ledger,
+  .history-list,
+  .fold-plane {
+    border-color: CanvasText;
+  }
+
+  button:focus-visible,
+  [tabindex="-1"]:focus-visible {
+    outline-color: Highlight;
+  }
+}
