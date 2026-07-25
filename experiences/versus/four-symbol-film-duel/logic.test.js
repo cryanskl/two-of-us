@@ -210,8 +210,8 @@ test("validator rejects ZWJ, skin, flag, tag and private glyphs", () => {
   }
 });
 
-test("validator accepts exactly one glyph scalar with optional emoji presentation", () => {
-  for (const glyph of ["🐈🐕", "☀️☁️"]) {
+test("validator accepts exactly one pictographic scalar with optional emoji presentation", () => {
+  for (const glyph of ["🐈🐕", "☀️☁️", "A", "中"]) {
     const candidate = editableConfig();
     candidate.tokens[0].glyph = glyph;
     assert.ok(validateGameData(candidate).some((error) => error.includes("glyph")));
