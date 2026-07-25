@@ -201,6 +201,14 @@
     return true;
   }
 
+  function isSingleGlyphScalar(value) {
+    var scalars = Array.from(value);
+    return (
+      scalars.length === 1 ||
+      (scalars.length === 2 && scalars[1] === "\ufe0f")
+    );
+  }
+
   function cleanText(value, minimum, maximum, noWhitespace) {
     if (
       typeof value !== "string" ||
@@ -255,7 +263,12 @@
       if (!id || ids.has(id)) {
         errors.push("token:" + index + ":id");
       }
-      if (!glyph || FORBIDDEN_GLYPH.test(glyph) || glyphs.has(glyph)) {
+      if (
+        !glyph ||
+        !isSingleGlyphScalar(glyph) ||
+        FORBIDDEN_GLYPH.test(glyph) ||
+        glyphs.has(glyph)
+      ) {
         errors.push("token:" + index + ":glyph");
       }
       if (!label || labels.has(label)) {
