@@ -83,6 +83,7 @@ test("controller uses public views, precommitted entropy and tokenized settling"
     "new Uint32Array(logic.ENTROPY_LENGTH)",
     "logic.FALLBACK_ENTROPY",
     'document.createElement("output")',
+    'output.setAttribute("role", "paragraph")',
     'document.createElement("ol")',
     'document.createElement("section")',
     '{ type: "PULL" }',
