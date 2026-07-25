@@ -104,7 +104,7 @@ test("visual system preserves the paper theatre and all accessibility fallbacks"
     "--paper-card:", "--ink:", "--brass:", "--text:", "--muted:", "--focus:",
   ]) assert.equal(css.includes(token), true, token);
   for (const expected of [
-    "min-width: 44px", "min-height: 44px", "min-height: 48px",
+    "min-width: 44px", "min-height: 56px", "min-height: 48px",
     "prefers-reduced-motion: reduce", "forced-colors: active",
     "overflow-x: hidden", ":focus-visible", "[aria-pressed=\"true\"]",
   ]) assert.equal(css.includes(expected), true, expected);
