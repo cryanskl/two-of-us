@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `9be3915` |
+| 当前 HEAD | `3426c57` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -29,7 +29,7 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 脚手架、23 条规则契约、错误 blocked fixture 修复与规则实现已集成；继续 solver、固定关卡和 `334` 核心验证 |
-| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架待总控审查；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
+| Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架已集成为 `3426c57`；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
 | Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 已派发离线地图派生、私人题包、地图数学、规则和房间协议；不写 UI 或共享 runtime，预留 `340` 核心验证 |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
@@ -140,6 +140,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `seven-piece-duet` 核心脚手架 | `89b6108` | `3426c57` | diff-check、归因边界与 verify | README、双 MIT/W3C 借鉴声明、零依赖 CommonJS 边界；无实现/UI，不计 installed |
 | `our-place-guess` 前置 | `96cb023`、`eedebef`、`e872d59`、`f2a6d14`、`ee76c28`、`da831fe`、`5bf1be2`、`b0e0451`、`ad07ad0` | `a6fe37f`、`0ac9fee`、`4bb3d4b`、`6dc8464`、`05f9dbd`、`ff540a7`、`ea7a9ed`、`deefdc3`、`9be3915` | Posio/Natural Earth 固定来源；全仓 `2177 / 2177`；verify | C 级 Conditional Go；私人题包仅房主内存，固定前四张，复用现有 Socket.IO 且不改共享 runtime；无入口，不计 installed |
 | `memory-merge-board` 规则核心 | `5653a49`、`4c2a577`、`a5fca5a`、`06aae0a` | `a20f4b6`、`155e5a9`、`216925f`、`41148eb` | 定向 `23 / 23`；全仓 `2177 / 2177`；verify | 整盘滑动、合并、角色交换、章节分享与 blocked 终局；真实错误 fixture 已记录于 `bugs/`；无 UI，不计 installed |
 | `seven-piece-duet` 前置 | `2fc7801`、`ab80149`、`80742de`、`d790385`、`13cee17`、`831f7db`、`5c56ac2`、`4e3a838`、`8863611` | `03b67f3`、`ecf5390`、`aef1e87`、`835d4b1`、`cd60a84`、`43e887b`、`8fb022e`、`d2e8a94`、`5917f23` | 固定两项 MIT 来源；整数原子三角形、D4 指纹与四个原创目标合同复核；verify | Conditional Go；双席独占片组、共享无计时目标，不复制坐标、谜题、解法、UI 或资产；无入口，不计 installed |
