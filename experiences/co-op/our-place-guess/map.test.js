@@ -83,7 +83,9 @@ test("视口只接受四个缩放档位并始终钳制在世界内", () => {
     right: 0.8125,
     bottom: 0.4375,
   });
-  assert.strictEqual(zoomViewport(zoomed, 3), zoomed);
+  const rejectedZoom = zoomViewport(zoomed, 3);
+  assert.deepEqual(rejectedZoom, zoomed);
+  assert.notStrictEqual(rejectedZoom, zoomed);
 
   const panned = panViewport(zoomed, { x: 10, y: -10 });
   assert.deepEqual(viewportBounds(panned), {
@@ -93,6 +95,24 @@ test("视口只接受四个缩放档位并始终钳制在世界内", () => {
     bottom: 0.25,
   });
   deepFrozen(panned);
+});
+
+test("视口 no-op 返回断开调用方引用的冻结规范化快照", () => {
+  const mutable = { zoom: 2, center: { x: 0.4, y: 0.6 } };
+  const invalidZoom = zoomViewport(mutable, 3);
+  const sameZoom = zoomViewport(mutable, 2);
+  const invalidPan = panViewport(mutable, { x: Number.NaN, y: 0 });
+  const zeroPan = panViewport(mutable, { x: 0, y: 0 });
+
+  for (const result of [invalidZoom, sameZoom, invalidPan, zeroPan]) {
+    assert.deepEqual(result, mutable);
+    assert.notStrictEqual(result, mutable);
+    assert.notStrictEqual(result.center, mutable.center);
+    deepFrozen(result);
+  }
+
+  mutable.center.x = 0.9;
+  assert.equal(invalidZoom.center.x, 0.4);
 });
 
 test("fitPoints 选择能容纳全部点的最高档位并处理重合与边缘", () => {

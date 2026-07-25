@@ -65,8 +65,8 @@ export function createViewport() {
 export function zoomViewport(value, level, anchor = null) {
   const viewport = normalizeViewport(value);
   if (!viewport) return createViewport();
-  if (!ZOOM_LEVELS.includes(level)) return value;
-  if (level === viewport.zoom) return value;
+  if (!ZOOM_LEVELS.includes(level)) return makeViewport(viewport.zoom, viewport.center);
+  if (level === viewport.zoom) return makeViewport(viewport.zoom, viewport.center);
 
   const currentBounds = rawViewportBounds(viewport);
   const normalizedAnchor = normalizePosition(anchor, { clamp: true }) ?? viewport.center;
@@ -88,8 +88,10 @@ export function panViewport(value, delta) {
     || !normalizedDelta
     || !Number.isFinite(normalizedDelta.x)
     || !Number.isFinite(normalizedDelta.y)
-  ) return value;
-  if (normalizedDelta.x === 0 && normalizedDelta.y === 0) return value;
+  ) return viewport ? makeViewport(viewport.zoom, viewport.center) : createViewport();
+  if (normalizedDelta.x === 0 && normalizedDelta.y === 0) {
+    return makeViewport(viewport.zoom, viewport.center);
+  }
   return makeViewport(viewport.zoom, {
     x: viewport.center.x + normalizedDelta.x,
     y: viewport.center.y + normalizedDelta.y,
