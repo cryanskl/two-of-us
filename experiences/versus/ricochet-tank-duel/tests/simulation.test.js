@@ -478,6 +478,17 @@ test("state 严拒绝额外键、非法 heading、重复 ID 和每席超过两�
   evenPairBase.nextBulletId = 2;
   assert.throws(() => simulation.validateState(evenPairBase), /nextBulletId.*odd|pair base/i);
 
+  const overlappingOpponent = clone(playing());
+  overlappingOpponent.bullets = [bullet({
+    xFp: overlappingOpponent.tanks[1].xFp,
+    yFp: overlappingOpponent.tanks[1].yFp,
+  })];
+  overlappingOpponent.nextBulletId = 3;
+  assert.throws(
+    () => simulation.validateState(overlappingOpponent),
+    /bullet.*opponent|overlap.*tank/i,
+  );
+
   const exhaustedIds = clone(playing());
   exhaustedIds.nextBulletId = Number.MAX_SAFE_INTEGER - 2;
   const exhaustedState = simulation.validateState(exhaustedIds);
