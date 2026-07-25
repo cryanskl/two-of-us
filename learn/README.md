@@ -6,6 +6,11 @@
 
 ## 已沉淀
 
+- [内容不变量不能止于数量检查](./2026-07-25-content-invariants-beyond-counts.md)
+- [校验派生快照：字段自洽之外还要核对行动预算](./2026-07-25-derived-snapshot-action-budget-invariants.md)
+- [同引用 no-op 的前提：先证明 state 属于不可变域](./2026-07-25-reducer-noop-requires-owned-frozen-state.md)
+- [Reducer 边界要冻结“值快照”，不能只冻结“读取资格”](./2026-07-25-reducer-boundaries-need-value-snapshots.md)
+- [镜像确定性不仅要求物理对称，也要求身份分配对称](./2026-07-25-symmetric-id-allocation-for-mirrored-replays.md)
 - [树验证必须证明全局连通](./2026-07-25-tree-validation-needs-global-connectivity.md)
 - [内部游标哨兵不能直接显示为公共序号](./2026-07-25-cursor-sentinel-public-ordinal.md)
 - [阶段公开投影、展示幂等与热座隐私生命周期](./2026-07-24-public-view-animation-and-privacy-lifecycle.md)
