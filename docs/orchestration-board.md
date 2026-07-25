@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `44b5edc` |
+| 当前 HEAD | `ba7c0ce` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2270 / 2270` 通过 |
-| 工作树提示 | `wish-fireworks` 来源漂移修复与核心复验、`flower-language-bouquet` 核心复验均已集成；四个滚动槽位继续三个既有核心审计与一个视觉提案 |
+| 工作树提示 | `candle-wishes`、`snow-globe-message` 核心复验与 `our-place-guess` 视觉提案均已集成；四个滚动槽位继续既有核心审计 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,9 +29,9 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `compliment-reels` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-core-audit` | `codex/exp-compliment-reels-core-audit` | `44b5edc` | 烟花来源漂移修复与核心复验已集成并释放槽位；现复核赞美转轮内容、reducer、隐私、确定性与固定来源，不写生产 UI |
-| Worker 2 | 已分配 | `snow-globe-message` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-core-audit` | `codex/exp-snow-globe-message-core-audit` | `5d99563` | 七片视觉提案已集成并释放槽位；现复核雪景球确定性粒子/状态机、降动效、来源和机制去重，不写生产 UI |
-| Worker 3 | 已分配 | `candle-wishes` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-core-audit` | `codex/exp-candle-wishes-core-audit` | `25aa56f` | 花语花束核心复验已集成并释放槽位；现复核蜡烛点亮顺序、火焰数据合同、来源和机制去重，不写生产 UI |
-| Worker 4 | 已分配 | `our-place-guess` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-ui` | `codex/exp-our-place-guess-ui` | `76f6958` | `memory-merge-board` 视觉已集成并释放槽位；现制作地点竞猜桌面/移动概念与 `341`，只供用户确认 |
+| Worker 2 | 已分配 | `kaleidoscope-names` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-core-audit` | `codex/exp-kaleidoscope-names-core-audit` | `9ed8cc4` | 雪景球核心复验已集成并释放槽位；现已复现 frozen content 信任边界缺口，按红测、修复和 bug 记录推进 |
+| Worker 3 | 已分配 | `capsule-docking` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking-core-audit` | `codex/exp-capsule-docking-core-audit` | `2d442c0` | 烛愿核心复验已集成并释放槽位；现已复现 hostile composer/control 缺口，按修复、bug、learn 和复验推进 |
+| Worker 4 | 已分配 | `word-detour-duel` 现有核心再验收 | `/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-core-audit` | `codex/exp-word-detour-duel-core-audit` | `ba7c0ce` | 地点竞猜视觉提案已集成并释放槽位；现复核词语内容、交接遮挡、确定性、来源和机制去重，不写生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
@@ -77,7 +77,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `348`；下列编号区间已互斥预留：
+当前已使用或预留到 `351`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -109,13 +109,16 @@
 | `our-place-guess` | `330–333` | Worker 3 | research、brainstorm、spec、plan 四阶段及隐私/顺序修订均已集成 |
 | `memory-merge-board` | `334–336` | Worker 1 / Worker 4 / 总控 | `334` 核心验证、`335` 视觉提案已集成并等待用户确认；`336` 最终验证保留 |
 | `seven-piece-duet` | `337–339` | Worker 2 / Worker 1 / 总控 | `337` 核心验证、`338` 视觉提案已集成并等待用户确认；`339` 最终验证保留 |
-| `our-place-guess` | `340–342` | Worker 3 / Worker 4 / 总控 | `340` 核心验证已集成；`341` 视觉提案进行中，`342` 最终验证保留 |
+| `our-place-guess` | `340–342` | Worker 3 / Worker 4 / 总控 | `340` 核心验证、`341` 视觉提案已集成并等待用户确认；`342` 最终验证保留 |
 | `shadow-duet` | `343` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `205` 用户确认 |
 | `wish-fireworks` | `344` | Worker 1 | 现有核心再验收与一处来源漂移修复已集成；生产 UI 仍等待 `229` 用户确认 |
-| `snow-globe-message` | `345` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `210` 用户确认 |
+| `snow-globe-message` | `345` | Worker 2 | 现有核心再验收已集成；生产 UI 仍等待 `210` 用户确认 |
 | `flower-language-bouquet` | `346` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `187` 用户确认 |
-| `candle-wishes` | `347` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待 `217` 用户确认 |
+| `candle-wishes` | `347` | Worker 3 | 现有核心再验收已集成；生产 UI 仍等待 `217` 用户确认 |
 | `compliment-reels` | `348` | Worker 1 | 现有核心再验收进行中；生产 UI 仍等待 `198` 用户确认 |
+| `capsule-docking` | `349` | Worker 3 | 现有核心再验收进行中；生产 UI 仍等待视觉方向选择 |
+| `kaleidoscope-names` | `350` | Worker 2 | 现有核心再验收进行中；生产 UI 仍等待 `314` 用户确认 |
+| `word-detour-duel` | `351` | Worker 4 | 现有核心再验收进行中；生产 UI 仍等待 `316` 用户确认 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -143,11 +146,15 @@
 | `vinyl-secret` | 生产 UI 等待视觉方向确认 | `docs/320-vinyl-secret-design-proposal.md` | 用户 | 确认私人压片工作台、默认无音频和异步单人寻轨方向或提出修改 |
 | `memory-merge-board` | 生产 UI 等待视觉方向确认 | `docs/335-memory-merge-board-design-proposal.md` | 用户 | 确认冷雾蓝共同剪贴簿、共享 3×4 拼板与 phase 互斥方向或提出修改 |
 | `seven-piece-duet` | 生产 UI 等待视觉方向确认 | `docs/338-seven-piece-duet-design-proposal.md` | 用户 | 确认深墨纸面拼形台、A4/B3 纹理片组与共享轮廓方向或提出修改 |
+| `our-place-guess` | 生产 UI 等待视觉方向确认 | `docs/341-our-place-guess-design-proposal.md` | 用户 | 确认夜行纸图、guessing 仅自己圆点与 revealed 三形 pin 方向或提出修改 |
 
 ## 最近集成
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `our-place-guess` 视觉提案 | `d01f767` | `ba7c0ce` | 四张 active 原图与 SHA-256；定向 `36 / 36`；Natural Earth 派生 check；verify | 夜行纸图；guessing 只有自己圆点，revealed 才显示对方/目标/距离；生成地理和示例数值均列幻觉，等待用户确认，不计 installed |
+| `snow-globe-message` 现有核心再验收 | `e34bb2d` | `9ed8cc4` | 定向 `17 / 17`；固定来源与 10 张概念图 hash/尺寸；verify；当前主仓全仓 `2270 / 2270` | 上游 HEAD 漂移不影响固定 commit 与许可证；无新核心缺口；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
+| `candle-wishes` 现有核心再验收 | `993eb0a` | `2d442c0` | 定向 `23 / 23`；三项固定来源、两张概念图 hash/尺寸/隐私；verify；当前主仓全仓 `2270 / 2270` | 五实体、路线/展示分离、愿望前缀与错误 no-op 核心复核通过；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
 | `wish-fireworks` 来源修复与核心再验收 | `48521d8`、`43fd632`、`a7cfd3f`、`9a7f3b4`、`12c3887` | `989914e`、`56417d2`、`b2173f1`、`110bc10`、`44b5edc` | 定向 `31 / 31`；五项固定来源与许可证 hash；全仓 `2270 / 2270`；verify；range diff-check | 真实 docs-only 同名仓库 URL 漂移已由红测、最小修复和 bug 记录闭环；格式复核误报另以独立提交修正；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
 | `flower-language-bouquet` 现有核心再验收 | `3d663ca` | `25aa56f` | 定向 `39 / 39`；11 项固定来源、10 张概念图 hash/尺寸/隐私；全仓 `2270 / 2270`；verify | 历史配置、120 排列、阶段隐私与导出数据模型复核通过，无新核心缺口；真实 SVG/Blob、移动保存与生产 UI 仍等待用户确认，不计 installed |
 | `shadow-duet` 现有核心再验收 | `562e892` | `1ce7c6a` | 定向 `28 / 28`；固定来源与 16 张概念资产 hash/尺寸；verify；当前主仓全仓 `2269 / 2269` | 历史核心 `ee7df10` 与归因 `9cca69e` 复核通过，无新缺口、无重复改写；生产 UI 与浏览器 Gate 仍等待用户确认，不计 installed |
