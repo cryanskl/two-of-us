@@ -343,6 +343,11 @@
         throw new Error("bullet owner limit exceeded");
       }
     }
+    const hitRadiusFp = (RULES.BULLET_RADIUS + RULES.TANK_RADIUS) * RULES.FP_SCALE;
+    const hitRadiusSquared = safeProduct(hitRadiusFp, hitRadiusFp, "hit radius");
+    if (bullets.some((item) => (
+      squaredDistance(item, normalizedTanks[1 - item.ownerId]) <= hitRadiusSquared
+    ))) throw new Error("bullet overlaps opponent tank");
     const scores = raw.scores;
     if (!Array.isArray(scores) || scores.length !== 2) throw new Error("state scores invalid");
     const state = {
