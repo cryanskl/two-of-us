@@ -145,11 +145,14 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  align-self: start;
+  padding-block-start: clamp(42px, 8vw, 118px);
 }
 
-.intro-stage {
+.bouquet-stage.intro-stage {
   grid-area: stage;
   inline-size: min(100%, 720px);
+  justify-self: center;
   transform: rotate(-0.45deg);
 }
 
@@ -270,20 +273,28 @@ h1 {
 .workspace {
   display: grid;
   grid-template-columns: minmax(0, 1.38fr) minmax(360px, 0.78fr);
-  gap: clamp(32px, 5vw, 74px);
+  grid-template-areas:
+    "progress role-title"
+    "stage role-list"
+    "stage controls";
+  grid-template-rows: auto auto 1fr;
+  row-gap: 14px;
+  column-gap: clamp(32px, 5vw, 74px);
   align-items: start;
 }
 
 .workspace-visual {
-  min-inline-size: 0;
+  display: contents;
 }
 
 .workspace-controls {
+  grid-area: controls;
   min-inline-size: 0;
   padding-block-start: 2px;
 }
 
 .progress-line {
+  grid-area: progress;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -312,7 +323,8 @@ h1 {
 }
 
 .section-title {
-  margin-block: clamp(24px, 3vw, 36px) 6px;
+  grid-area: role-title;
+  margin-block: 6px;
   font-size: 1rem;
   letter-spacing: 0.12em;
 }
@@ -333,6 +345,14 @@ h1 {
   list-style: none;
   counter-reset: role;
   border-top: 1px solid var(--line);
+}
+
+.workspace-visual > .bouquet-stage {
+  grid-area: stage;
+}
+
+.workspace-visual > .role-list {
+  grid-area: role-list;
 }
 
 .role-row {
@@ -508,7 +528,9 @@ h1 {
   min-inline-size: 0;
 }
 
-.complete-stage {
+.bouquet-stage.complete-stage {
+  inline-size: min(100%, 720px);
+  justify-self: center;
   transform: rotate(-0.3deg);
 }
 
@@ -689,17 +711,26 @@ h1 {
     min-block-size: 0;
   }
 
-  .intro-stage {
+  .bouquet-stage.intro-stage {
     inline-size: min(100%, 620px);
     margin-inline: auto;
   }
 
   .intro-copy {
     justify-content: center;
+    padding-block-start: 0;
   }
 
   .workspace {
-    gap: 32px;
+    row-gap: 18px;
+    column-gap: 0;
+    grid-template-areas:
+      "progress"
+      "stage"
+      "role-title"
+      "role-list"
+      "controls";
+    grid-template-rows: auto;
   }
 
   .complete-screen {
@@ -711,7 +742,7 @@ h1 {
     gap: 26px;
   }
 
-  .complete-stage {
+  .bouquet-stage.complete-stage {
     inline-size: min(100%, 620px);
     margin-inline: auto;
   }
@@ -746,7 +777,7 @@ h1 {
     padding-block: 30px 38px;
   }
 
-  .intro-stage {
+  .bouquet-stage.intro-stage {
     max-block-size: 280px;
   }
 

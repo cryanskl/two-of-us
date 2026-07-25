@@ -318,10 +318,11 @@
       progress,
       sceneHost,
       roleRows,
-      previewHeading,
-      composition,
-      tieButton,
-      undoButton,
+        previewHeading,
+        composition,
+        actions,
+        tieButton,
+        undoButton,
       fieldset,
       cards,
       cardParts,
@@ -349,6 +350,7 @@
     workspace.tieButton.disabled = !view.canTie;
     workspace.undoButton.hidden = !view.canUndo;
     workspace.undoButton.disabled = !view.canUndo;
+    workspace.actions.hidden = !isPreview && !view.canUndo;
 
     for (let index = 0; index < view.catalog.length; index += 1) {
       const flower = view.catalog[index];
