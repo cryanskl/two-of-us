@@ -649,7 +649,21 @@ noscript {
   }
 
   .player-status {
-    display: none;
+    padding: 6px 8px;
+    font-size: 0.74rem;
+  }
+
+  .player-status h2 {
+    margin-bottom: 3px;
+  }
+
+  .player-status dl {
+    gap: 0 8px;
+  }
+
+  .player-status dl div {
+    gap: 4px;
+    padding: 3px 0;
   }
 
   .control-deck {
