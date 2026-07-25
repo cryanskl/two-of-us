@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `bbe8c77` |
+| 当前 HEAD | `f2876d6` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`1972 / 1972` 通过 |
-| 工作树提示 | 第三轮 3 项已独立集成；第四轮 3 个独立工作树已从 `bbe8c77` 建立并按根 lockfile 安装依赖 |
+| 本次是否重跑全仓测试 | 是：`1997 / 1997` 通过 |
+| 工作树提示 | 第四轮已有两项集成；两个滚动补位工作树已从 `f2876d6` 建立并按根 lockfile 安装依赖 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `four-symbol-film-duel` content/core | `/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-core` | `codex/exp-four-symbol-film-duel-core` | `bbe8c77` | 先完成 32 张原创虚构片名与符号表审计，再实现纯逻辑状态机 |
+| Worker 1 | 已分配 | `penguin-flag-duel` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel` | `codex/exp-penguin-flag-duel` | `f2876d6` | research、brainstorm、spec、plan；先审计低摩擦物理、输入公平与机制重复 |
 | Worker 2 | 已分配 | `dual-maze-race` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race` | `codex/exp-dual-maze-race` | `bbe8c77` | research、brainstorm、spec、plan；先审计迷宫/竞速重复、可解性和双人输入公平 |
-| Worker 3 | 已分配 | `photo-slider-race` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race` | `codex/exp-photo-slider-race` | `bbe8c77` | research、brainstorm、spec、plan；先审计本地图片隐私、内存、方向与无照片回退 |
+| Worker 3 | 已分配 | `photo-slider-race` core | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-core` | `codex/exp-photo-slider-race-core` | `f2876d6` | 实现确定性可解打乱、双板独立状态、暂停与 100 ms 并列合同；不创建 UI |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -91,7 +91,10 @@
 | `vinyl-secret` | `278–279` | 总控 | 视觉提案与最终验证保留 |
 | `four-symbol-film-duel` | `280–282` | 第四轮 Worker 1 / 总控 | `280` 内容审计；`281` 视觉提案、`282` 最终验证保留 |
 | `dual-maze-race` | `283–286` | 第四轮 Worker 2 | 已分配 |
-| `photo-slider-race` | `287–290` | 第四轮 Worker 3 | 已分配 |
+| `photo-slider-race` | `287–290` | 第四轮 Worker 3 | 四阶段前置文档已集成 |
+| `penguin-flag-duel` | `291–294` | 滚动补位 Worker 1 | 已分配 |
+| `photo-slider-race` | `295–296` | 总控 | 视觉提案与最终验证保留 |
+| `dual-maze-race` | `297–298` | 总控 | 视觉提案与最终验证保留 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -113,6 +116,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `photo-slider-race` 前置 | `73e9501`、`0b73c6b`、`63b4b3c`、`ca55123` | `659fbbb`、`b13ca6f`、`8de88db`、`f2876d6` | verify 通过；A 级、本地图片隐私与生命周期路线成立 | 无入口，不计 installed |
+| `four-symbol-film-duel` content/core | `45c3303`、`d5a28e2`、`b968529` | `f1501e7`、`f3242d5`、`7b1f390` | 定向 `25 / 25`；全仓 `1997 / 1997` | 无 UI；跨平台字形与盲测未完成，不计 installed |
 | `four-symbol-film-duel` 前置 | `bfa5b09`、`0360bdb`、`8606b44`、`a30314e`、`c892d60` | `b140f6b`、`fcc5dd5`、`ccb2f95`、`cb69ed9`、`bbe8c77` | verify 通过；影视表达、Unicode 字符与厂商字形边界复核 | Conditional Go；无入口，不计 installed |
 | `word-detour-duel` content/core | `ebdfcb5`、`95209a2`、`54ea6ce` | `0084134`、`4fcafe3`、`10d14fe` | 定向 `16 / 16`；两新内核叠加全仓 `1972 / 1972` | 无 UI，不计 installed |
 | `vinyl-secret` core | `b3ab2e4`、`2047303`、`5f1bb51`、`4f1a5ef` | `687d2d9`、`bd1844a`、`241dcdd`、`9a03de5` | 定向 `37 / 37`；单独集成全仓 `1956 / 1956` | 无 UI，不计 installed |
