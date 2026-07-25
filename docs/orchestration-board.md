@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `22d7b09` |
+| 当前 HEAD | `9e7db88` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2074 / 2074` 通过 |
-| 工作树提示 | 企鹅完整非视觉核心、弹射坦克与双星同轨前置、照片滑块视觉提案已集成；三个滚动槽位继续从各自已验收 main 基线运行并统一使用根 lockfile |
+| 本次是否重跑全仓测试 | 是：`2087 / 2087` 通过 |
+| 工作树提示 | 弹射坦克确定性几何、双星同轨 foundation 已继续集成；simulation、solver 与双迷宫视觉提案仍在三个独立槽位推进 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,8 +28,8 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `ricochet-tank-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-core` | `codex/exp-ricochet-tank-duel-core` | `0f7a9ba` | foundation、几何合同、TOI 规格校正、连续碰撞实现与 learn 已提交；先修正 diff-check 空白，再继续 simulation |
-| Worker 2 | 已分配 | `twin-orbit` core | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-core` | `codex/exp-twin-orbit-core` | `0d99757` | 实现纯逻辑、fixture 与独立 solver；先证明五关可达、两席均不可挂机和同 tick 原子裁决 |
+| Worker 1 | 已分配 | `ricochet-tank-duel` core | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-core` | `codex/exp-ricochet-tank-duel-core` | `0f7a9ba` | foundation、几何合同、TOI 校正、连续碰撞、learn 与空白修复已集成；继续 simulation 合同与实现 |
+| Worker 2 | 已分配 | `twin-orbit` core | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-core` | `codex/exp-twin-orbit-core` | `0d99757` | foundation 与 ATTRIBUTION 已集成；继续 logic、fixture 与独立 solver |
 | Worker 3 | 已分配 | `dual-maze-race` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-ui` | `codex/exp-dual-maze-race-ui` | `22d7b09` | 只制作桌面/移动概念与设计合同；用户确认前不写生产 UI |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
@@ -121,6 +121,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `twin-orbit` core foundation | `5d4c143` | `9e7db88` | `node --check`、range diff-check、verify | 可编辑配置、CommonJS 与归因边界；无逻辑/UI，不计 installed |
+| `ricochet-tank-duel` 确定性几何 | `984432a`、`66e2042`、`0187bfe`、`561fcf4`、`00736b1`、`60e2998` | `77c211c`、`5180143`、`81693df`、`7433791`、`10a789f`、`2022a69` | 定向 `13 / 13`；全仓 `2087 / 2087`；range diff-check、verify | 有理墙 TOI、代数圆 TOI 与精确排序；无 simulation/UI，不计 installed |
 | `photo-slider-race` 视觉提案 | `b3e8b96` | `22d7b09` | 原图检查、SHA-256、`git diff --check`、verify | 仅概念与 code-native 设计合同；等待用户确认，不计 installed |
 | `twin-orbit` 前置与来源校正 | `cac38fc`、`92f7a85`、`1f08050`、`9b2d43d`、`87b82a4`、`6a4782e` | `3f2c257`、`64dd66c`、`b24a401`、`48233bc`、`2e50821`、`0d99757` | verify；全仓 `2074 / 2074`；Apple 当前官方条目与 Playgama hidden 状态复核 | Conditional Go；无入口，不计 installed |
 | `ricochet-tank-duel` 前置 | `acccb9d`、`7b75266`、`41d5bf9`、`32cc77a`、`c636edc`、`35516a7` | `732b0a2`、`4ca09b3`、`482e072`、`b4bd13b`、`60e0e78`、`0f7a9ba` | verify 与来源复核 | Conditional Go；无入口，不计 installed |
