@@ -60,10 +60,26 @@ button {
 }
 
 .app-shell {
+  position: relative;
   width: min(1360px, calc(100% - 48px));
   min-height: 100vh;
   margin: 0 auto;
   padding: 24px 0 18px;
+}
+
+.back-link {
+  position: absolute;
+  z-index: 10;
+  top: 24px;
+  left: 0;
+  padding: 7px 10px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--color-page) 88%, transparent);
+  color: var(--color-ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .game-header {
@@ -855,6 +871,12 @@ body[data-phase="paused"] .local-note {
   .app-shell {
     width: calc(100% - 24px);
     padding-top: 16px;
+  }
+
+  .back-link {
+    position: static;
+    display: inline-block;
+    margin-bottom: 8px;
   }
 
   .game-header {
