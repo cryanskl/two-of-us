@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `3aaba82` |
+| 当前 HEAD | `3d4b5d6` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -31,17 +31,15 @@
 | Worker 1 | 进行中 | `wish-fireworks` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/wish-fireworks-ui` | `codex/exp-wish-fireworks-ui` | `3aaba82` | 视觉自治已释放；按既有 core、`229` 设计方向和 `344` 再验收直接实施，最终验证使用 `376` |
 | Worker 2 | 进行中 | `snow-globe-message` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-ui` | `codex/exp-snow-globe-message-ui` | `3aaba82` | 视觉自治已释放；重点验证粒子性能、触屏、文字回退与 reduced-motion，最终验证使用 `377` |
 | Worker 3 | 进行中 | `flower-language-bouquet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-ui` | `codex/exp-flower-language-bouquet-ui` | `3aaba82` | 视觉自治已释放；重点验证组合状态、SVG/Blob 导出、本地隐私与移动保存，最终验证使用 `378` |
-| Worker 4 | 进行中 | `candle-wishes` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui` | `codex/exp-candle-wishes-ui` | `3aaba82` | 视觉自治已释放；重点验证五实体顺序、火焰降级、愿望隐私与 reduced-motion，最终验证使用 `379` |
+| Worker 4 | 进行中 | `compliment-reels` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-ui` | `codex/exp-compliment-reels-ui` | `3d4b5d6` | Candle 实现完成但释放槽位等待独立浏览器复验；本槽位滚动补位夸夸老虎机，最终验证使用 `380` |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
 ## Ready for Review
 
-当前为空。
-
 | 项目 | 分支 | commits | 测试 | 浏览器 | 许可证 | 总控结论 |
 | --- | --- | --- | --- | --- | --- | --- |
-| — | — | — | — | — | — | — |
+| `candle-wishes` | `codex/exp-candle-wishes-ui` | `7cae4fd`…`e61892e` | 定向 `28 / 28`；分支全仓 `2313 / 2313`；verify；range diff-check | `file://` 被工具策略阻止；策略校正前 localhost 仅完成 intro/lighting 初检；favicon 修复后尚待独立会话完整复验 | 三项固定 revision、许可证、版权、借鉴和未复制范围齐全 | 代码与静态合同通过，浏览器 Gate 未闭合，不集成、不计 installed |
 
 ## 建议首轮候选
 
@@ -77,7 +75,7 @@
 
 ## 文档编号预留
 
-当前已使用或预留到 `379`；下列编号区间已互斥预留：
+当前已使用或预留到 `380`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -139,6 +137,7 @@
 | 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已集成；deterministic content identity、live witness、双根进程复用矩阵、bug/learn 与最终验证全部通过 |
 | `love-tree` 视觉自治与生产实现 | `373–375` | 总控 / Worker 2 | `373` 授权决策已集成；`374` 设计系统、`375` 验证边界已在分支完成，等待可访问 `file://` 的 Chrome Gate 后再集成 |
 | 首轮四个视觉自治生产 UI | `376–379` | Worker 1–4 | `wish-fireworks`、`snow-globe-message`、`flower-language-bouquet`、`candle-wishes` 各自独占一个最终验证编号 |
+| `compliment-reels` 生产 UI | `380` | Worker 4 | Candle 释放实现槽位后滚动补位；独占最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
