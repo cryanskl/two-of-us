@@ -88,8 +88,7 @@ test("输入与生命周期统一走 click/reducer，重复输入和失焦不会
   assert.match(source, /addEventListener\("click"/);
   assert.match(source, /addEventListener\("keydown"/);
   assert.match(source, /event\.repeat/);
-  assert.match(source, /event\.detail/);
-  assert.match(source, /event\.timeStamp/);
+  assert.match(source, /event\.detail\s*>\s*1/);
   assert.doesNotMatch(source, /addEventListener\("pointer(?:down|up)"/);
   for (const eventName of ["visibilitychange", "pagehide", "blur", "focus"]) {
     assert.match(source, new RegExp(`addEventListener\\("${eventName}"`));
@@ -98,23 +97,27 @@ test("输入与生命周期统一走 click/reducer，重复输入和失焦不会
   assert.match(source, /document\.hasFocus\(\)/);
   assert.doesNotMatch(
     source,
-    /fetch\s*\(|XMLHttpRequest|WebSocket|EventSource|localStorage|sessionStorage|indexedDB|document\.cookie|navigator\.(?:clipboard|mediaDevices|geolocation)/,
+    /fetch\s*\(|XMLHttpRequest|WebSocket|EventSource|localStorage|sessionStorage|indexedDB|document\.cookie|navigator\.(?:clipboard|mediaDevices|geolocation)|event\.timeStamp|\bDate\b|performance\.|setTimeout|setInterval|requestAnimationFrame/,
   );
 });
 
 test("六阶段语义、四动作顺序、结果因果与焦点合同写入生产控制器", () => {
   const source = read("app.js");
-  for (const renderer of [
-    "renderIntro",
-    "renderChoosing",
-    "renderCovered",
-    "renderHandoff",
-    "renderReady",
-    "renderResult",
+  for (const phase of [
+    "intro",
+    "choosing",
+    "handoff",
+    "ready-to-reveal",
+    "round-result",
+    "match-result",
   ]) {
-    assert.match(source, new RegExp(`function ${renderer}\\(`));
+    assert.match(source, new RegExp(`"${phase}"`));
   }
-  assert.match(source, /\["attack", "guard", "dodge", "charge"\]/);
+  assert.match(source, /view\.availableActions/);
+  assert.doesNotMatch(
+    source,
+    /ShadowSwordLogic\.(?:ACTIONS|isActionAvailable|resolveRound|replayHistory)/,
+  );
   for (const copy of [
     "花 1 点气；普通攻会被防住，先机攻可以破防。",
     "挡住普通攻并取得先机；空防没有收益。",
