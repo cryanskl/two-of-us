@@ -10,17 +10,17 @@
 | --- | --- |
 | 快照日期 | 2026-07-26（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `498edfc`（Photo Slider Race 集成后） |
+| 当前 HEAD | `cce13ce`（Dual Maze Race 主线集成与终验文档后） |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 74 |
-| 当前 installed | 74 |
-| 距离目标 | 1 |
-| A / B / C / D | 66 / 1 / 6 / 1 |
-| surprise / co-op / versus | 24 / 27 / 23 |
-| 本次 repository verify | 通过：74 个入口、66 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2462 / 2462` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`photo-slider-race` 已正式上架并完成主线 Chrome 进出闭环。`dual-maze-race` 已在隔离 worktree 完成生产 UI，是距离 75 个目标的唯一 Ready 项。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
-| 平台真实并发 | 1 个总控；三个执行 Session 已完成，当前由总控连续集成 |
+| 当前 catalog 总数 | 75 |
+| 当前 installed | 75 |
+| 距离目标 | 0 |
+| A / B / C / D | 67 / 1 / 6 / 1 |
+| surprise / co-op / versus | 24 / 27 / 24 |
+| 本次 repository verify | 通过：75 个入口、67 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2469 / 2469` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`dual-maze-race` 已作为第 75 个入口正式上架并完成主线 Chrome 进出闭环，当前目标已闭合。`love-tree` 保留现状，不作为 75 项交付阻塞 |
+| 平台真实并发 | 1 个总控；三个执行 Session 均已完成并集成，没有待审项目 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
 
@@ -30,14 +30,14 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已集成 | `ricochet-tank-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 56 项定向、独立 Chrome、四项浏览器问题与主门户进出闭环通过；已上架为第 73 个入口 |
 | Worker 2 | 已集成 | `photo-slider-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-production-ui` | `codex/exp-photo-slider-race-production-ui` | `df4d0cc` | 41 项定向、本地照片 Blob 生命周期、真实触控、辅助模式和主门户进出闭环通过；已上架为第 74 个入口 |
-| Worker 3 | Ready | `dual-maze-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 31 项定向、四局换席、2:2、真实触控、hidden、六视口与降级通过；等待总控合并 |
-| Worker 4 | 空闲 | — | — | — | — | 等待前三个项目最先完成者进入总控集成后滚动补位 |
+| Worker 3 | 已集成 | `dual-maze-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 32 项定向、四局换席、公平暂停、六视口、主门户进出闭环通过；已上架为第 75 个入口 |
+| Worker 4 | 已完成 | — | — | — | — | 目标已达成，无需滚动补位 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
 ## Ready for Review
 
-- `dual-maze-race`：HEAD `8135068`，工作树干净。
+- 无。三个生产 UI 项目均已完成总控复验并集成。
 
 ## 建议首轮候选
 
@@ -54,11 +54,10 @@
 
 队列只表示“值得复核”，不表示已经获准复制、已完成规格或必然进入 75：
 
-1. `dual-maze-race`
-2. `penguin-flag-duel`
-3. `memory-merge-board`
-4. `seven-piece-duet`
-5. `our-place-guess`
+1. `penguin-flag-duel`
+2. `memory-merge-board`
+3. `seven-piece-duet`
+4. `our-place-guess`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
@@ -152,6 +151,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `dual-maze-race` 生产 UI 与上架 | `40b1025`…`121ff5a`，缺口修复 `81b9d5c`…`bc483f0` | `e600c76`、`cce13ce` | 定向 `32 / 32`；组合定向 `229 / 229`；全仓 `2469 / 2469`；verify；四局换席/输入检查/公平暂停/六视口/辅助模式/主门户 | 安装入口增至 75；八方向检查、实体键盘风险诚实降级、长帧公平暂停、归因阶段真值和主门户返回路径闭环；零开源游戏代码/资产复制 |
 | `photo-slider-race` 生产 UI 与上架 | `1031e50`…`d748b1d` | `0ab0eb6`…`498edfc` | 定向 `41 / 41`；组合定向 `236 / 236`；全仓 `2462 / 2462`；verify；完整对局/本地照片/真实触控/六视口/辅助模式/主门户 | 安装入口增至 74；两张本地图片的 Blob 原子切换与释放、100ms 并列窗、左右同局公平、归因标题合同和主门户进出闭环通过；零开源滑块代码/素材复制 |
 | `ricochet-tank-duel` 生产 UI 与上架 | `f974809`…`5b0a813` | `05b64bc`…`be66904` | 定向 `56 / 56`；组合定向 `249 / 249`；全仓 `2452 / 2452`；verify；双键盘/双触控/六视口/暂停/降级/主门户 | 安装入口增至 73；混合输入、移动 HUD、40px 目标、noJS 假控件和缺少返回入口均经红测闭环；九项固定来源与零开源游戏/资产复制边界齐全 |
 | `word-detour-duel` 生产 UI 与上架 | `8c359e8`…`fe1ea55` | `057141f`、`df4d0cc` | 定向 `27 / 27`；全仓 `2441 / 2441`；verify；四回合/计时与不计时/六视口/秘密 DOM/生命周期/输入与降级 | 安装入口增至 72；门户真实点击和返回、公开投影、计时增量渲染、blur/hidden/pagehide 卸密均通过；13 项一手来源、商业表达边界和零开源复制声明齐全 |
