@@ -833,6 +833,51 @@ test("shadow sword duel keeps file launch, hot-seat privacy, and attribution bou
   assert.match(attribution, /零第三方运行依赖/);
 });
 
+test("catalog exposes the installed A-level honeycomb passage", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "honeycomb-passage");
+
+  assert.equal(experience.title, "蜜径相逢");
+  assert.equal(experience.category, "versus");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "2 人对抗");
+  assert.equal(experience.devices, "单设备轮流");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /honeycomb-passage\/index\.html$/);
+  assert.match(portal, /"id": "honeycomb-passage"/);
+});
+
+test("honeycomb passage keeps file launch, handoff isolation, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/versus/honeycomb-passage/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution, favicon] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+    readFile(new URL("favicon.svg", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css, favicon].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js"><\/script>\s*<script src="\.\/logic\.js"><\/script>\s*<script src="\.\/app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|getUserMedia|AudioContext)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /handoff/);
+  assert.match(html, /<noscript>[\s\S]*请开启 JavaScript/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /确认“交给下一位”不会增加行动/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(attribution, /6353276ef8197fbdba60d0c964f7bd4f2169064c/);
+  assert.match(attribution, /c96b802232d87d58408ed653dcbe43c0a68611f6/);
+  assert.match(attribution, /零代码、零素材复制/);
+});
+
 test("catalog exposes the installed C-level sealed compatibility quiz", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
   const quiz = catalog.experiences.find((item) => item.id === "compatibility-quiz");

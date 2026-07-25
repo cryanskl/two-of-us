@@ -202,6 +202,12 @@
 | [221-shadow-sword-duel-plan.md](./221-shadow-sword-duel-plan.md) | “影子剑术”的核心/视觉 Gate/UI/集成/QA 文件所有权、独立提交、Chrome、bugs/learn 与验证闭环计划 |
 | [222-shadow-sword-duel-design-proposal.md](./222-shadow-sword-duel-design-proposal.md) | “影子剑术”的 choosing/ready/result 三态纸影视觉概念、设计系统、生成审计、采纳/拒绝台账与用户确认 Gate |
 | [382-shadow-sword-duel-final-verification.md](./382-shadow-sword-duel-final-verification.md) | “影子剑术”的 36 项定向测试、九回合与双 KO 完整对局、六视口/隐私/输入/降级矩阵及 favicon 404 闭环 |
+| [223-honeycomb-passage-research.md](./223-honeycomb-passage-research.md) | 创意池 V20“蜂巢封路”的 37 格竞速、双方路径保全、热座边界与固定来源/许可证调研 |
+| [224-honeycomb-passage-spec.md](./224-honeycomb-passage-spec.md) | “蜜径相逢”的移动/封蜡、BFS 合法性、16 回合终止、公开 DTO 与完整验收规格 |
+| [225-honeycomb-passage-plan.md](./225-honeycomb-passage-plan.md) | “蜜径相逢”的核心、视觉 Gate、生产 UI、catalog、Chrome 与 bugs/learn 分步实施计划 |
+| [226-honeycomb-passage-design-proposal.md](./226-honeycomb-passage-design-proposal.md) | “蜜径相逢”的暖象牙纸雕蜂巢、蜜黄/暮紫棋子、封蜡纹理与四态视觉概念 |
+| [360-honeycomb-passage-core-verification.md](./360-honeycomb-passage-core-verification.md) | “蜜径相逢”核心的 25 项逻辑测试、14,352 条 BFS 穷举、随机游走与来源复验 |
+| [383-honeycomb-passage-final-verification.md](./383-honeycomb-passage-final-verification.md) | “蜜径相逢”的 33 项定向测试、完整 17 手对局、六视口/键盘/触控/降级矩阵与两项浏览器修复闭环 |
 | [178-compliment-reels-research.md](./178-compliment-reels-research.md) | “夸夸老虎机”的定向调研、许可核验与零复制边界 |
 | [179-compliment-reels-copy-audit.md](./179-compliment-reels-copy-audit.md) | “夸夸老虎机”的原创文案审计与重复风险检查 |
 | [180-compliment-reels-spec.md](./180-compliment-reels-spec.md) | “夸夸老虎机”的可执行状态机、配置与验收规格 |

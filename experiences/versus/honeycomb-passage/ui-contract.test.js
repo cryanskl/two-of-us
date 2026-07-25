@@ -286,6 +286,8 @@ test("README 与 ATTRIBUTION 完整说明启动、热座、隐私、离线和固
   const readme = read("README.md");
   const attribution = read("ATTRIBUTION.md");
 
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+
   for (const required of [
     "双击",
     "file://",
