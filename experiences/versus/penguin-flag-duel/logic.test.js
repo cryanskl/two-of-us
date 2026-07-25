@@ -79,6 +79,26 @@ test("UMD 同时暴露 CommonJS 和浏览器全局", () => {
   assert.deepEqual(Object.keys(sandbox.module.exports), Object.keys(logic));
 });
 
+test("浏览器入口采用合法配置默认值，且不执行配置 Proxy get trap", () => {
+  const logicCode = readFileSync(require.resolve("./logic.js"), "utf8");
+  const customDefault = clone(configApi.DEFAULT_CONFIG);
+  customDefault.playerNames = ["雪宝", "冰宝"];
+  customDefault.copy.title = "双企鹅夺旗";
+  let getterReads = 0;
+  const proxiedConfig = new Proxy({ DEFAULT_CONFIG: customDefault }, {
+    get(target, key, receiver) {
+      getterReads += 1;
+      return Reflect.get(target, key, receiver);
+    },
+  });
+  const sandbox = { globalThis: { PenguinFlagDuelConfig: proxiedConfig } };
+  runInNewContext(logicCode, sandbox);
+  const browserLogic = sandbox.globalThis.PenguinFlagDuelLogic;
+  assert.deepEqual(browserLogic.DEFAULT_CONFIG.playerNames, ["雪宝", "冰宝"]);
+  assert.equal(browserLogic.DEFAULT_CONFIG.copy.title, "双企鹅夺旗");
+  assert.equal(getterReads, 0);
+});
+
 test("配置逐字段清洗、断引用并对 getter/thenable 安全回退", () => {
   const source = {
     playerNames: ["  🌙 月 ", "海  盐"],
