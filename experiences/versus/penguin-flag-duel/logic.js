@@ -161,6 +161,7 @@
     } catch {
       return createInitialState();
     }
+    if (safeState.revision === Number.MAX_SAFE_INTEGER) return safeState;
     const parsed = parseAction(action, safeState.revision);
     if (!parsed) return safeState;
 
