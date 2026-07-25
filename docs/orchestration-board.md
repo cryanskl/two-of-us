@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `f2876d6` |
+| 当前 HEAD | `4c3c017` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`1997 / 1997` 通过 |
-| 工作树提示 | 第四轮已有两项集成；两个滚动补位工作树已从 `f2876d6` 建立并按根 lockfile 安装依赖 |
+| 工作树提示 | 第四轮三项均已集成；三个滚动补位工作树已分别从已验收 main 基线建立并按根 lockfile 安装依赖 |
 | 平台真实并发 | 1 个总控 + 3 个执行 Session；第 4 个执行槽位当前不可用 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -29,7 +29,7 @@
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
 | Worker 1 | 已分配 | `penguin-flag-duel` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel` | `codex/exp-penguin-flag-duel` | `f2876d6` | research、brainstorm、spec、plan；先审计低摩擦物理、输入公平与机制重复 |
-| Worker 2 | 已分配 | `dual-maze-race` 前置 | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race` | `codex/exp-dual-maze-race` | `bbe8c77` | research、brainstorm、spec、plan；先审计迷宫/竞速重复、可解性和双人输入公平 |
+| Worker 2 | 已分配 | `dual-maze-race` core | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-core` | `codex/exp-dual-maze-race-core` | `4c3c017` | 实现确定性 perfect maze、30Hz 双队列原子 tick 和四局换席赛制；不创建 UI |
 | Worker 3 | 已分配 | `photo-slider-race` core | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-core` | `codex/exp-photo-slider-race-core` | `f2876d6` | 实现确定性可解打乱、双板独立状态、暂停与 100 ms 并列合同；不创建 UI |
 | Worker 4 | 不可用 | — | — | — | — | 平台并发上限为 4 个总会话，已包含总控，不虚报执行 Session |
 
@@ -90,7 +90,7 @@
 | `word-detour-duel` | `275–277` | 第三轮 Worker 2 / 总控 | `275` 内容审计；`276` 视觉提案、`277` 最终验证保留 |
 | `vinyl-secret` | `278–279` | 总控 | 视觉提案与最终验证保留 |
 | `four-symbol-film-duel` | `280–282` | 第四轮 Worker 1 / 总控 | `280` 内容审计；`281` 视觉提案、`282` 最终验证保留 |
-| `dual-maze-race` | `283–286` | 第四轮 Worker 2 | 已分配 |
+| `dual-maze-race` | `283–286` | 第四轮 Worker 2 | 四阶段前置文档已集成 |
 | `photo-slider-race` | `287–290` | 第四轮 Worker 3 | 四阶段前置文档已集成 |
 | `penguin-flag-duel` | `291–294` | 滚动补位 Worker 1 | 已分配 |
 | `photo-slider-race` | `295–296` | 总控 | 视觉提案与最终验证保留 |
@@ -116,6 +116,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `dual-maze-race` 前置 | `f3cf9d6`、`9591933`、`d9f9453`、`455fdf6` | `7247bdd`、`3789839`、`e4e4817`、`4c3c017` | verify 通过；同源迷宫、fixed tick 与换席公平路线成立 | Conditional Go；无入口，不计 installed |
 | `photo-slider-race` 前置 | `73e9501`、`0b73c6b`、`63b4b3c`、`ca55123` | `659fbbb`、`b13ca6f`、`8de88db`、`f2876d6` | verify 通过；A 级、本地图片隐私与生命周期路线成立 | 无入口，不计 installed |
 | `four-symbol-film-duel` content/core | `45c3303`、`d5a28e2`、`b968529` | `f1501e7`、`f3242d5`、`7b1f390` | 定向 `25 / 25`；全仓 `1997 / 1997` | 无 UI；跨平台字形与盲测未完成，不计 installed |
 | `four-symbol-film-duel` 前置 | `bfa5b09`、`0360bdb`、`8606b44`、`a30314e`、`c892d60` | `b140f6b`、`fcc5dd5`、`ccb2f95`、`cb69ed9`、`bbe8c77` | verify 通过；影视表达、Unicode 字符与厂商字形边界复核 | Conditional Go；无入口，不计 installed |
