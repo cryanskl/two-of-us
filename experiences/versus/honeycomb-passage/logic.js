@@ -32,6 +32,24 @@
     return Object.freeze(value);
   }
 
+  function isDeepFrozenData(value, seen) {
+    if (value === null || (typeof value !== "object" && typeof value !== "function")) return true;
+    try {
+      if (!Object.isFrozen(value)) return false;
+      const visited = seen || new WeakSet();
+      if (visited.has(value)) return true;
+      visited.add(value);
+      for (const key of Reflect.ownKeys(value)) {
+        const descriptor = Object.getOwnPropertyDescriptor(value, key);
+        if (!descriptor || !Object.hasOwn(descriptor, "value")
+          || !isDeepFrozenData(descriptor.value, visited)) return false;
+      }
+      return true;
+    } catch (_error) {
+      return false;
+    }
+  }
+
   const STARTS = deepFreeze([{ q: -3, r: 0 }, { q: 3, r: 0 }]);
   const ACTIONS = deepFreeze(["move", "seal"]);
   const PHASES = deepFreeze(["intro", "playing", "result"]);
@@ -659,6 +677,7 @@
 
   function readState(value) {
     try {
+      if (!isDeepFrozenData(value)) return null;
       const record = readExactRecord(value, STATE_KEYS);
       if (!record || record.version !== VERSION || !PHASES.includes(record.phase)
         || !Number.isSafeInteger(record.revision) || record.revision < 0) return null;

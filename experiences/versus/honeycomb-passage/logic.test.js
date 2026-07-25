@@ -655,8 +655,25 @@ test("reducer 只接受精确 action，revision 与 ply 分离，restart 保留�
   assert.equal(fromDescriptorState.revision, 2);
   assert.equal(logic.getScreenView(descriptorState).phase, "playing");
 
-  const saturated = { ...initial, revision: Number.MAX_SAFE_INTEGER };
+  const saturated = Object.freeze({ ...initial, revision: Number.MAX_SAFE_INTEGER });
   assert.equal(logic.reduce(saturated, { type: "START" }), saturated);
+});
+
+test("可变或仅浅层冻结的 state 不得沿 no-op 路径逃逸", () => {
+  const started = logic.reduce(logic.createInitialState(), { type: "START" });
+  const mutable = structuredClone(started);
+  const shallowFrozen = Object.freeze(structuredClone(started));
+
+  for (const candidate of [mutable, shallowFrozen]) {
+    const recovered = logic.reduce(candidate, { type: "UNKNOWN" });
+    assert.deepEqual(recovered, logic.createInitialState());
+    assert.notEqual(recovered, candidate);
+    assertDeepFrozen(recovered);
+    assert.deepEqual(
+      logic.getScreenView(candidate),
+      logic.getScreenView(logic.createInitialState()),
+    );
+  }
 });
 
 test("公开 view 只暴露渲染副本、精确 controls 和规范 history", () => {
