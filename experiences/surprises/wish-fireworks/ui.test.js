@@ -74,10 +74,15 @@ test("styles implement the accepted responsive, reduced-motion, and forced-color
     "touch-action: none",
     "grid-template-areas",
     ".app-ready .revealed-glyphs.js-only:not([hidden])",
+    "width: min(25vw, 112px)",
   ]) {
     assert.match(css, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
   assert.doesNotMatch(css, /animation-iteration-count:\s*infinite|animation-direction:\s*alternate/i);
+  assert.doesNotMatch(
+    css,
+    /\n\.revealed-glyphs \{\n\s+display:\s*flex\s*!important/i,
+  );
 });
 
 test("project README documents direct launch, personalization, privacy, and fixed attribution", () => {

@@ -192,7 +192,6 @@ h1 {
 }
 
 .revealed-glyphs {
-  display: flex !important;
   width: min(100%, 760px);
   min-height: 64px;
   margin: 0;
@@ -534,6 +533,11 @@ button:active:not([aria-disabled="true"]) {
 
   .revealed-glyph {
     min-width: 44px;
+  }
+
+  .canvas-failed .revealed-glyph .glyph-grid {
+    width: min(25vw, 112px);
+    gap: 2px;
   }
 
   .progress-status {
