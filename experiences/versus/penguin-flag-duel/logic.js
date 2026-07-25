@@ -696,7 +696,7 @@
       const type = safeActionType(action);
       if (!type) return null;
       const source = readExactRecord(action, ACTION_KEYS[type]);
-      if (!source || source.expectedRevision !== expectedRevision) return null;
+      if (!source || source.type !== type || source.expectedRevision !== expectedRevision) return null;
       if (!Number.isSafeInteger(source.expectedRevision) || source.expectedRevision < 0) return null;
       if (type === "STEP") {
         const intents = parseIntentPair(source.intents);
