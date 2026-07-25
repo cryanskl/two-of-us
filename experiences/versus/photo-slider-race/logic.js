@@ -50,6 +50,30 @@
     right: "left",
   });
 
+  const PHASES = deepFreeze([
+    "setup",
+    "countdown",
+    "racing",
+    "settling",
+    "paused",
+    "resume-countdown",
+    "finished",
+  ]);
+
+  const ACTIONS = deepFreeze({
+    SET_SOURCE: "SET_SOURCE",
+    START_MATCH: "START_MATCH",
+    COUNTDOWN_TICK: "COUNTDOWN_TICK",
+    MOVE: "MOVE",
+    PAUSE: "PAUSE",
+    RESUME: "RESUME",
+    SETTLE: "SETTLE",
+    REMATCH: "REMATCH",
+    RETURN_TO_SETUP: "RETURN_TO_SETUP",
+  });
+
+  const INTERNAL_STATES = new WeakSet();
+
   function snapshotArray(value, expectedLength) {
     try {
       if (
@@ -70,6 +94,36 @@
           || !Object.hasOwn(descriptor, "value")
         ) return null;
         copy.push(descriptor.value);
+      }
+      return copy;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function snapshotRecord(value, expectedKeys) {
+    try {
+      if (
+        !value
+        || typeof value !== "object"
+        || Array.isArray(value)
+        || Object.getPrototypeOf(value) !== Object.prototype
+      ) return null;
+      const keys = Reflect.ownKeys(value);
+      if (
+        keys.length !== expectedKeys.length
+        || keys.some((key) => typeof key !== "string" || !expectedKeys.includes(key))
+      ) return null;
+      const descriptors = Object.getOwnPropertyDescriptors(value);
+      const copy = {};
+      for (const key of expectedKeys) {
+        const descriptor = descriptors[key];
+        if (
+          !descriptor
+          || descriptor.enumerable !== true
+          || !Object.hasOwn(descriptor, "value")
+        ) return null;
+        copy[key] = descriptor.value;
       }
       return copy;
     } catch (_error) {
@@ -364,8 +418,591 @@
     });
   }
 
+  function parseTimestamp(value) {
+    return typeof value === "number" && Number.isFinite(value) && value >= 0
+      ? value
+      : null;
+  }
+
+  function parseBoard(value) {
+    const record = snapshotRecord(value, [
+      "tiles",
+      "blankIndex",
+      "moves",
+      "solvedAt",
+      "locked",
+    ]);
+    if (!record) return null;
+    const tiles = parseTiles(record.tiles);
+    if (
+      !tiles
+      || !Number.isSafeInteger(record.blankIndex)
+      || record.blankIndex !== tiles.indexOf(CONSTANTS.BLANK_TILE)
+      || !Number.isSafeInteger(record.moves)
+      || record.moves < 0
+      || record.moves > CONSTANTS.MAX_REVISION
+      || (record.solvedAt !== null && parseTimestamp(record.solvedAt) === null)
+      || typeof record.locked !== "boolean"
+      || (record.solvedAt !== null && (!record.locked || !isSolved(tiles)))
+    ) return null;
+    return {
+      tiles,
+      blankIndex: record.blankIndex,
+      moves: record.moves,
+      solvedAt: record.solvedAt,
+      locked: record.locked,
+    };
+  }
+
+  function boardMoveResult(changed, value, reason) {
+    return deepFreeze({ changed, value, reason });
+  }
+
+  function applyMove(value, direction, timestamp) {
+    const board = parseBoard(value);
+    const now = parseTimestamp(timestamp);
+    if (!board) return boardMoveResult(false, null, "invalid-board");
+    if (config.DIRECTIONS.indexOf(direction) < 0) {
+      return boardMoveResult(false, deepFreeze(board), "invalid-direction");
+    }
+    if (now === null) return boardMoveResult(false, deepFreeze(board), "invalid-time");
+    if (board.locked) return boardMoveResult(false, deepFreeze(board), "locked");
+    if (isSolved(board.tiles)) return boardMoveResult(false, deepFreeze(board), "solved");
+    if (board.moves >= CONSTANTS.MAX_REVISION) {
+      return boardMoveResult(false, deepFreeze(board), "move-limit");
+    }
+
+    const moved = moveBlank(board.tiles, direction);
+    if (!moved.changed) return boardMoveResult(false, deepFreeze(board), moved.reason);
+    const solved = isSolved(moved.value);
+    return boardMoveResult(true, deepFreeze({
+      tiles: moved.value.slice(),
+      blankIndex: moved.value.indexOf(CONSTANTS.BLANK_TILE),
+      moves: board.moves + 1,
+      solvedAt: solved ? now : null,
+      locked: solved,
+    }), null);
+  }
+
+  function calculateElapsed(startedAt, solvedAt, pausedMs) {
+    const start = parseTimestamp(startedAt);
+    const solved = parseTimestamp(solvedAt);
+    const paused = parseTimestamp(pausedMs);
+    if (start === null || solved === null || paused === null || solved < start) return null;
+    const elapsed = solved - start - paused;
+    return Number.isFinite(elapsed) && elapsed >= 0 ? elapsed : null;
+  }
+
+  function resolveFinish(first, second, windowMs) {
+    const firstRecord = snapshotRecord(first, ["player", "solvedAt"]);
+    const secondRecord = second === null ? null : snapshotRecord(second, ["player", "solvedAt"]);
+    const window = windowMs === undefined ? CONSTANTS.SETTLEMENT_WINDOW_MS : windowMs;
+    if (
+      !firstRecord
+      || config.PLAYER_IDS.indexOf(firstRecord.player) < 0
+      || parseTimestamp(firstRecord.solvedAt) === null
+      || typeof window !== "number"
+      || !Number.isFinite(window)
+      || window < 0
+    ) return null;
+    if (second === null) {
+      return deepFreeze({ outcome: firstRecord.player, differenceMs: null });
+    }
+    if (
+      !secondRecord
+      || config.PLAYER_IDS.indexOf(secondRecord.player) < 0
+      || secondRecord.player === firstRecord.player
+      || parseTimestamp(secondRecord.solvedAt) === null
+      || secondRecord.solvedAt < firstRecord.solvedAt
+    ) return null;
+    const differenceMs = secondRecord.solvedAt - firstRecord.solvedAt;
+    return deepFreeze({
+      outcome: differenceMs <= window ? "draw" : firstRecord.player,
+      differenceMs,
+    });
+  }
+
+  function sanitizeSourceMetadata(value) {
+    const record = snapshotRecord(value, ["kind", "status", "generation", "errorCode"]);
+    if (
+      !record
+      || config.SOURCE_KINDS.indexOf(record.kind) < 0
+      || config.SOURCE_STATUSES.indexOf(record.status) < 0
+      || !Number.isSafeInteger(record.generation)
+      || record.generation < 0
+      || record.generation > CONSTANTS.MAX_REVISION
+    ) return null;
+    if (record.status === "error") {
+      if (config.SOURCE_ERROR_CODES.indexOf(record.errorCode) < 0) return null;
+    } else if (record.errorCode !== null) {
+      return null;
+    }
+    return deepFreeze({
+      kind: record.kind,
+      status: record.status,
+      generation: record.generation,
+      errorCode: record.errorCode,
+    });
+  }
+
+  function sourceTransitionAllowed(current, next) {
+    if (next.status === "loading") {
+      return next.generation === current.generation + 1;
+    }
+    return current.status === "loading"
+      && next.generation === current.generation
+      && next.kind === current.kind;
+  }
+
+  function classifyKeyInput(value) {
+    const record = snapshotRecord(value, ["key", "repeat", "altKey", "ctrlKey", "metaKey"]);
+    if (
+      !record
+      || typeof record.key !== "string"
+      || typeof record.repeat !== "boolean"
+      || typeof record.altKey !== "boolean"
+      || typeof record.ctrlKey !== "boolean"
+      || typeof record.metaKey !== "boolean"
+      || record.repeat
+      || record.altKey
+      || record.ctrlKey
+      || record.metaKey
+    ) return null;
+
+    const key = record.key.length === 1 ? record.key.toLowerCase() : record.key;
+    const mapping = {
+      w: ["left", "up"],
+      a: ["left", "left"],
+      s: ["left", "down"],
+      d: ["left", "right"],
+      ArrowUp: ["right", "up"],
+      ArrowLeft: ["right", "left"],
+      ArrowDown: ["right", "down"],
+      ArrowRight: ["right", "right"],
+    };
+    const match = mapping[key];
+    return match ? deepFreeze({ player: match[0], direction: match[1] }) : null;
+  }
+
+  function makeState(record) {
+    const frozen = deepFreeze(record);
+    INTERNAL_STATES.add(frozen);
+    return frozen;
+  }
+
+  function freshSourceMetadata() {
+    return {
+      kind: config.DEFAULT_SOURCE_METADATA.kind,
+      status: config.DEFAULT_SOURCE_METADATA.status,
+      generation: config.DEFAULT_SOURCE_METADATA.generation,
+      errorCode: config.DEFAULT_SOURCE_METADATA.errorCode,
+    };
+  }
+
+  function createInitialState() {
+    return makeState({
+      version: CONSTANTS.VERSION,
+      phase: "setup",
+      sourceMetadata: freshSourceMetadata(),
+      seed: null,
+      initialTiles: null,
+      left: null,
+      right: null,
+      countdownRemaining: 0,
+      resumeCountdownRemaining: 0,
+      raceStartedAt: null,
+      accumulatedPausedMs: 0,
+      pauseStartedAt: null,
+      pausedFrom: null,
+      firstFinisher: null,
+      settlementDeadline: null,
+      settlementRemainingMs: null,
+      result: null,
+      revision: 0,
+    });
+  }
+
+  function copyState(state, changes) {
+    const next = {
+      version: state.version,
+      phase: state.phase,
+      sourceMetadata: state.sourceMetadata,
+      seed: state.seed,
+      initialTiles: state.initialTiles,
+      left: state.left,
+      right: state.right,
+      countdownRemaining: state.countdownRemaining,
+      resumeCountdownRemaining: state.resumeCountdownRemaining,
+      raceStartedAt: state.raceStartedAt,
+      accumulatedPausedMs: state.accumulatedPausedMs,
+      pauseStartedAt: state.pauseStartedAt,
+      pausedFrom: state.pausedFrom,
+      firstFinisher: state.firstFinisher,
+      settlementDeadline: state.settlementDeadline,
+      settlementRemainingMs: state.settlementRemainingMs,
+      result: state.result,
+      revision: state.revision + 1,
+    };
+    for (const key of Object.keys(changes)) next[key] = changes[key];
+    return makeState(next);
+  }
+
+  function parseAction(value, state) {
+    if (!value || typeof value !== "object") return null;
+    let typeDescriptor;
+    try {
+      typeDescriptor = Object.getOwnPropertyDescriptor(value, "type");
+    } catch (_error) {
+      return null;
+    }
+    if (!typeDescriptor || !Object.hasOwn(typeDescriptor, "value")) return null;
+    const type = typeDescriptor.value;
+    const keysByType = {
+      [ACTIONS.SET_SOURCE]: ["type", "revision", "metadata"],
+      [ACTIONS.START_MATCH]: ["type", "revision", "seed"],
+      [ACTIONS.COUNTDOWN_TICK]: ["type", "revision", "now"],
+      [ACTIONS.MOVE]: ["type", "revision", "player", "direction", "repeat", "now"],
+      [ACTIONS.PAUSE]: ["type", "revision", "now"],
+      [ACTIONS.RESUME]: ["type", "revision"],
+      [ACTIONS.SETTLE]: ["type", "revision", "now"],
+      [ACTIONS.REMATCH]: ["type", "revision", "seed"],
+      [ACTIONS.RETURN_TO_SETUP]: ["type", "revision"],
+    };
+    const keys = keysByType[type];
+    if (!keys) return null;
+    const record = snapshotRecord(value, keys);
+    if (
+      !record
+      || !Number.isSafeInteger(record.revision)
+      || record.revision !== state.revision
+    ) return null;
+    return record;
+  }
+
+  function startMatch(state, seed) {
+    const fair = createFairBoards(seed);
+    if (!fair || state.sourceMetadata.status !== "ready") return state;
+    return copyState(state, {
+      phase: "countdown",
+      seed: fair.seed,
+      initialTiles: fair.initialTiles.slice(),
+      left: fair.left,
+      right: fair.right,
+      countdownRemaining: 3,
+      resumeCountdownRemaining: 0,
+      raceStartedAt: null,
+      accumulatedPausedMs: 0,
+      pauseStartedAt: null,
+      pausedFrom: null,
+      firstFinisher: null,
+      settlementDeadline: null,
+      settlementRemainingMs: null,
+      result: null,
+    });
+  }
+
+  function resultPlayer(board, state) {
+    return {
+      elapsedMs: board.solvedAt === null
+        ? null
+        : calculateElapsed(state.raceStartedAt, board.solvedAt, state.accumulatedPausedMs),
+      moves: board.moves,
+    };
+  }
+
+  function finishWinner(state, settledAt) {
+    return copyState(state, {
+      phase: "finished",
+      settlementDeadline: null,
+      settlementRemainingMs: null,
+      result: {
+        outcome: state.firstFinisher,
+        left: resultPlayer(state.left, state),
+        right: resultPlayer(state.right, state),
+        settledAt,
+      },
+    });
+  }
+
+  function finishDraw(state, changes, settledAt) {
+    const left = changes.left || state.left;
+    const right = changes.right || state.right;
+    return copyState(state, {
+      ...changes,
+      phase: "finished",
+      settlementDeadline: null,
+      settlementRemainingMs: null,
+      result: {
+        outcome: "draw",
+        left: resultPlayer(left, state),
+        right: resultPlayer(right, state),
+        settledAt,
+      },
+    });
+  }
+
+  function reduceMove(state, event) {
+    if (
+      (state.phase !== "racing" && state.phase !== "settling")
+      || config.PLAYER_IDS.indexOf(event.player) < 0
+      || config.DIRECTIONS.indexOf(event.direction) < 0
+      || typeof event.repeat !== "boolean"
+      || event.repeat
+    ) return state;
+    const now = parseTimestamp(event.now);
+    if (now === null || now < state.raceStartedAt) return state;
+
+    if (
+      state.phase === "settling"
+      && now > state.settlementDeadline
+    ) return finishWinner(state, state.settlementDeadline);
+
+    const currentBoard = event.player === "left" ? state.left : state.right;
+    const moved = applyMove(currentBoard, event.direction, now);
+    if (!moved.changed) return state;
+    const changes = event.player === "left"
+      ? { left: moved.value }
+      : { right: moved.value };
+
+    if (moved.value.solvedAt === null) return copyState(state, changes);
+    if (state.phase === "racing") {
+      return copyState(state, {
+        ...changes,
+        phase: "settling",
+        firstFinisher: event.player,
+        settlementDeadline: now + CONSTANTS.SETTLEMENT_WINDOW_MS,
+      });
+    }
+
+    return finishDraw(state, changes, now);
+  }
+
+  function resumeActivePhase(state, now) {
+    const pausedDuration = now - state.pauseStartedAt;
+    if (!Number.isFinite(pausedDuration) || pausedDuration < 0) return state;
+    const common = {
+      resumeCountdownRemaining: 0,
+      pauseStartedAt: null,
+      pausedFrom: null,
+      settlementRemainingMs: null,
+    };
+    if (state.pausedFrom === "countdown") {
+      return copyState(state, { ...common, phase: "countdown" });
+    }
+    if (state.pausedFrom === "racing") {
+      return copyState(state, {
+        ...common,
+        phase: "racing",
+        accumulatedPausedMs: state.accumulatedPausedMs + pausedDuration,
+      });
+    }
+    if (state.pausedFrom === "settling") {
+      return copyState(state, {
+        ...common,
+        phase: "settling",
+        accumulatedPausedMs: state.accumulatedPausedMs + pausedDuration,
+        settlementDeadline: now + state.settlementRemainingMs,
+      });
+    }
+    return state;
+  }
+
+  function reduce(state, action) {
+    if (!INTERNAL_STATES.has(state)) return createInitialState();
+    if (state.revision >= CONSTANTS.MAX_REVISION) return state;
+    const event = parseAction(action, state);
+    if (!event) return state;
+
+    if (event.type === ACTIONS.SET_SOURCE) {
+      if (state.phase !== "setup") return state;
+      const metadata = sanitizeSourceMetadata(event.metadata);
+      if (!metadata || !sourceTransitionAllowed(state.sourceMetadata, metadata)) return state;
+      return copyState(state, { sourceMetadata: metadata });
+    }
+
+    if (event.type === ACTIONS.START_MATCH) {
+      return state.phase === "setup" ? startMatch(state, event.seed) : state;
+    }
+
+    if (event.type === ACTIONS.COUNTDOWN_TICK) {
+      const now = parseTimestamp(event.now);
+      if (now === null) return state;
+      if (state.phase === "countdown") {
+        if (state.countdownRemaining > 1) {
+          return copyState(state, { countdownRemaining: state.countdownRemaining - 1 });
+        }
+        if (state.countdownRemaining === 1) {
+          return copyState(state, {
+            phase: "racing",
+            countdownRemaining: 0,
+            raceStartedAt: now,
+          });
+        }
+        return state;
+      }
+      if (state.phase === "resume-countdown") {
+        if (now < state.pauseStartedAt) return state;
+        if (state.resumeCountdownRemaining > 1) {
+          return copyState(state, {
+            resumeCountdownRemaining: state.resumeCountdownRemaining - 1,
+          });
+        }
+        return state.resumeCountdownRemaining === 1
+          ? resumeActivePhase(state, now)
+          : state;
+      }
+      return state;
+    }
+
+    if (event.type === ACTIONS.MOVE) return reduceMove(state, event);
+
+    if (event.type === ACTIONS.PAUSE) {
+      const now = parseTimestamp(event.now);
+      if (
+        now === null
+        || (state.phase !== "countdown"
+          && state.phase !== "racing"
+          && state.phase !== "settling")
+        || (state.raceStartedAt !== null && now < state.raceStartedAt)
+      ) return state;
+      if (state.phase === "settling" && now >= state.settlementDeadline) {
+        return finishWinner(state, state.settlementDeadline);
+      }
+      return copyState(state, {
+        phase: "paused",
+        pauseStartedAt: now,
+        pausedFrom: state.phase,
+        settlementRemainingMs: state.phase === "settling"
+          ? state.settlementDeadline - now
+          : null,
+        settlementDeadline: state.phase === "settling" ? null : state.settlementDeadline,
+      });
+    }
+
+    if (event.type === ACTIONS.RESUME) {
+      return state.phase === "paused"
+        ? copyState(state, {
+            phase: "resume-countdown",
+            resumeCountdownRemaining: 3,
+          })
+        : state;
+    }
+
+    if (event.type === ACTIONS.SETTLE) {
+      const now = parseTimestamp(event.now);
+      return state.phase === "settling"
+        && now !== null
+        && now >= state.settlementDeadline
+        ? finishWinner(state, state.settlementDeadline)
+        : state;
+    }
+
+    if (event.type === ACTIONS.REMATCH) {
+      return state.phase === "finished" ? startMatch(state, event.seed) : state;
+    }
+
+    if (event.type === ACTIONS.RETURN_TO_SETUP) {
+      return state.phase === "finished"
+        ? copyState(state, {
+            phase: "setup",
+            seed: null,
+            initialTiles: null,
+            left: null,
+            right: null,
+            countdownRemaining: 0,
+            resumeCountdownRemaining: 0,
+            raceStartedAt: null,
+            accumulatedPausedMs: 0,
+            pauseStartedAt: null,
+            pausedFrom: null,
+            firstFinisher: null,
+            settlementDeadline: null,
+            settlementRemainingMs: null,
+            result: null,
+          })
+        : state;
+    }
+
+    return state;
+  }
+
+  function boardView(board) {
+    return board === null ? null : {
+      tiles: board.tiles.slice(),
+      blankIndex: board.blankIndex,
+      moves: board.moves,
+      solvedAt: board.solvedAt,
+      locked: board.locked,
+    };
+  }
+
+  function getPublicView(state) {
+    if (!INTERNAL_STATES.has(state)) return null;
+    const leftCanMove = (state.phase === "racing" || state.phase === "settling")
+      && state.left !== null
+      && !state.left.locked;
+    const rightCanMove = (state.phase === "racing" || state.phase === "settling")
+      && state.right !== null
+      && !state.right.locked;
+    return deepFreeze({
+      version: state.version,
+      phase: state.phase,
+      sourceMetadata: {
+        kind: state.sourceMetadata.kind,
+        status: state.sourceMetadata.status,
+        generation: state.sourceMetadata.generation,
+        errorCode: state.sourceMetadata.errorCode,
+      },
+      seed: state.seed,
+      initialTiles: state.initialTiles === null ? null : state.initialTiles.slice(),
+      boards: {
+        left: boardView(state.left),
+        right: boardView(state.right),
+      },
+      countdown: {
+        race: state.countdownRemaining,
+        resume: state.resumeCountdownRemaining,
+      },
+      timing: {
+        raceStartedAt: state.raceStartedAt,
+        accumulatedPausedMs: state.accumulatedPausedMs,
+        settlementDeadline: state.settlementDeadline,
+        settlementRemainingMs: state.settlementRemainingMs,
+      },
+      pausedFrom: state.pausedFrom,
+      firstFinisher: state.firstFinisher,
+      result: state.result === null ? null : {
+        outcome: state.result.outcome,
+        left: {
+          elapsedMs: state.result.left.elapsedMs,
+          moves: state.result.left.moves,
+        },
+        right: {
+          elapsedMs: state.result.right.elapsedMs,
+          moves: state.result.right.moves,
+        },
+        settledAt: state.result.settledAt,
+      },
+      controls: {
+        canChangeSource: state.phase === "setup",
+        canStart: state.phase === "setup" && state.sourceMetadata.status === "ready",
+        canMoveLeft: leftCanMove,
+        canMoveRight: rightCanMove,
+        canPause: state.phase === "countdown"
+          || state.phase === "racing"
+          || state.phase === "settling",
+        canResume: state.phase === "paused",
+        canRematch: state.phase === "finished",
+        canReturnToSetup: state.phase === "finished",
+      },
+      revision: state.revision,
+    });
+  }
+
   return deepFreeze({
     CONSTANTS,
+    PHASES,
+    ACTIONS,
     createSeededRandom,
     createSolvedTiles,
     getLegalBlankMoves,
@@ -378,5 +1015,13 @@
     shuffleFromSolved,
     createBoard,
     createFairBoards,
+    applyMove,
+    calculateElapsed,
+    resolveFinish,
+    sanitizeSourceMetadata,
+    classifyKeyInput,
+    createInitialState,
+    reduce,
+    getPublicView,
   });
 });

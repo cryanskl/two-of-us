@@ -236,3 +236,423 @@ test("非法洗牌选项 fail closed，合法小夹具可控", () => {
   assert.ok(fixture);
   assert.equal(fixture.trace.length, 1);
 });
+
+function action(state, type, fields) {
+  return { type, revision: state.revision, ...(fields || {}) };
+}
+
+function startRacing(seed) {
+  let state = logic.createInitialState();
+  state = logic.reduce(state, action(state, logic.ACTIONS.START_MATCH, { seed }));
+  state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now: 10 }));
+  state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now: 20 }));
+  state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now: 30 }));
+  return state;
+}
+
+function inverseTraceFor(state) {
+  const opposites = { up: "down", left: "right", down: "up", right: "left" };
+  return logic.shuffleFromSolved(state.seed).trace.slice().reverse().map(
+    (direction) => opposites[direction],
+  );
+}
+
+function playDirections(state, player, directions, startAt, stepMs) {
+  let current = state;
+  directions.forEach((direction, index) => {
+    current = logic.reduce(current, action(current, logic.ACTIONS.MOVE, {
+      player,
+      direction,
+      repeat: false,
+      now: startAt + (index * stepMs),
+    }));
+  });
+  return current;
+}
+
+test("来源元数据只接受精确白名单并按 generation 两阶段提交", () => {
+  const initial = logic.createInitialState();
+  assert.deepEqual(logic.sanitizeSourceMetadata({
+    kind: "local",
+    status: "loading",
+    generation: 1,
+    errorCode: null,
+  }), {
+    kind: "local",
+    status: "loading",
+    generation: 1,
+    errorCode: null,
+  });
+  assert.equal(logic.sanitizeSourceMetadata({
+    kind: "local",
+    status: "ready",
+    generation: 1,
+    errorCode: null,
+    filename: "secret.jpg",
+  }), null);
+
+  const loading = logic.reduce(initial, action(initial, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "local",
+      status: "loading",
+      generation: 1,
+      errorCode: null,
+    },
+  }));
+  assert.equal(loading.revision, 1);
+  assert.equal(logic.getPublicView(loading).controls.canStart, false);
+
+  const ready = logic.reduce(loading, action(loading, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "local",
+      status: "ready",
+      generation: 1,
+      errorCode: null,
+    },
+  }));
+  assert.equal(ready.revision, 2);
+  assert.equal(logic.getPublicView(ready).controls.canStart, true);
+
+  const stale = logic.reduce(ready, action(ready, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "local",
+      status: "loading",
+      generation: 1,
+      errorCode: null,
+    },
+  }));
+  assert.equal(stale, ready);
+});
+
+test("键盘抽象映射左右席位并忽略 repeat、组合键和多余字段", () => {
+  const key = (value) => ({
+    key: value,
+    repeat: false,
+    altKey: false,
+    ctrlKey: false,
+    metaKey: false,
+  });
+  assert.deepEqual(logic.classifyKeyInput(key("w")), { player: "left", direction: "up" });
+  assert.deepEqual(logic.classifyKeyInput(key("A")), { player: "left", direction: "left" });
+  assert.deepEqual(logic.classifyKeyInput(key("s")), { player: "left", direction: "down" });
+  assert.deepEqual(logic.classifyKeyInput(key("d")), { player: "left", direction: "right" });
+  assert.deepEqual(logic.classifyKeyInput(key("ArrowUp")), { player: "right", direction: "up" });
+  assert.deepEqual(logic.classifyKeyInput(key("ArrowLeft")), { player: "right", direction: "left" });
+  assert.deepEqual(logic.classifyKeyInput(key("ArrowDown")), { player: "right", direction: "down" });
+  assert.deepEqual(logic.classifyKeyInput(key("ArrowRight")), { player: "right", direction: "right" });
+  assert.equal(logic.classifyKeyInput({ ...key("w"), repeat: true }), null);
+  assert.equal(logic.classifyKeyInput({ ...key("w"), ctrlKey: true }), null);
+  assert.equal(logic.classifyKeyInput({ ...key("w"), extra: true }), null);
+  assert.equal(logic.classifyKeyInput(key("Enter")), null);
+});
+
+test("applyMove 严格验证棋盘、时间、锁定和完成状态", () => {
+  const board = logic.createBoard([1, 2, 3, 4, 5, 6, 7, 0, 8]);
+  const completed = logic.applyMove(board, "right", 12.5);
+  assert.equal(completed.changed, true);
+  assert.deepEqual(completed.value.tiles, logic.createSolvedTiles());
+  assert.equal(completed.value.solvedAt, 12.5);
+  assert.equal(completed.value.locked, true);
+  assert.equal(completed.value.moves, 1);
+  assert.equal(logic.applyMove(completed.value, "left", 13).reason, "locked");
+  assert.equal(logic.applyMove(board, "right", -1).reason, "invalid-time");
+  assert.equal(logic.applyMove({ ...board, extra: true }, "right", 1).reason, "invalid-board");
+});
+
+test("有效用时扣除暂停，100ms 边界含等号", () => {
+  assert.equal(logic.calculateElapsed(10, 210, 50), 150);
+  assert.equal(logic.calculateElapsed(10, 9, 0), null);
+  assert.equal(logic.calculateElapsed(10, 20, 11), null);
+  assert.deepEqual(
+    logic.resolveFinish(
+      { player: "left", solvedAt: 100 },
+      { player: "right", solvedAt: 200 },
+    ),
+    { outcome: "draw", differenceMs: 100 },
+  );
+  assert.deepEqual(
+    logic.resolveFinish(
+      { player: "right", solvedAt: 100 },
+      { player: "left", solvedAt: 200.001 },
+    ),
+    { outcome: "right", differenceMs: 100.001 },
+  );
+  assert.deepEqual(
+    logic.resolveFinish({ player: "left", solvedAt: 100 }, null),
+    { outcome: "left", differenceMs: null },
+  );
+});
+
+test("初态、三拍倒数和比赛开始严格递增 revision", () => {
+  let state = logic.createInitialState();
+  const initialView = logic.getPublicView(state);
+  assert.equal(initialView.phase, "setup");
+  assert.equal(initialView.revision, 0);
+  assert.equal(initialView.controls.canStart, true);
+
+  state = logic.reduce(state, action(state, logic.ACTIONS.START_MATCH, { seed: 123 }));
+  assert.equal(logic.getPublicView(state).phase, "countdown");
+  assert.equal(logic.getPublicView(state).countdown.race, 3);
+  assert.equal(state.revision, 1);
+
+  for (const now of [10, 20]) {
+    state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now }));
+  }
+  assert.equal(logic.getPublicView(state).countdown.race, 1);
+  state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now: 30 }));
+  const view = logic.getPublicView(state);
+  assert.equal(view.phase, "racing");
+  assert.equal(view.timing.raceStartedAt, 30);
+  assert.equal(state.revision, 4);
+});
+
+test("倒数、暂停和终局阶段拒绝移动，repeat 永远不推进", () => {
+  let countdown = logic.createInitialState();
+  countdown = logic.reduce(countdown, action(countdown, logic.ACTIONS.START_MATCH, { seed: 10 }));
+  const noCountdownMove = logic.reduce(countdown, action(countdown, logic.ACTIONS.MOVE, {
+    player: "left", direction: "up", repeat: false, now: 1,
+  }));
+  assert.equal(noCountdownMove, countdown);
+
+  const racing = startRacing(10);
+  const repeated = logic.reduce(racing, action(racing, logic.ACTIONS.MOVE, {
+    player: "left", direction: "up", repeat: true, now: 31,
+  }));
+  assert.equal(repeated, racing);
+});
+
+test("MOVE 只修改目标席位，无效移动保持 state 引用和 revision", () => {
+  const state = startRacing(44);
+  const view = logic.getPublicView(state);
+  const leftBlank = view.boards.left.blankIndex;
+  const direction = logic.getLegalBlankMoves(leftBlank)[0];
+  const moved = logic.reduce(state, action(state, logic.ACTIONS.MOVE, {
+    player: "left",
+    direction,
+    repeat: false,
+    now: 31,
+  }));
+  const movedView = logic.getPublicView(moved);
+  assert.notDeepEqual(movedView.boards.left.tiles, view.boards.left.tiles);
+  assert.deepEqual(movedView.boards.right.tiles, view.boards.right.tiles);
+  assert.equal(movedView.boards.left.moves, 1);
+  assert.equal(movedView.boards.right.moves, 0);
+  assert.equal(moved.revision, state.revision + 1);
+
+  const illegalDirection = logic.getLegalBlankMoves(movedView.boards.left.blankIndex)
+    .includes("up") ? "down" : "up";
+  const maybeInvalid = logic.reduce(moved, action(moved, logic.ACTIONS.MOVE, {
+    player: "left",
+    direction: illegalDirection,
+    repeat: false,
+    now: 32,
+  }));
+  if (maybeInvalid === moved) assert.equal(maybeInvalid.revision, moved.revision);
+});
+
+test("严格 action 拒绝 stale revision、多字段、访问器、Proxy 和最大 revision", () => {
+  const state = startRacing(55);
+  assert.equal(logic.reduce(state, {
+    type: logic.ACTIONS.PAUSE,
+    revision: state.revision - 1,
+    now: 40,
+  }), state);
+  assert.equal(logic.reduce(state, {
+    type: logic.ACTIONS.PAUSE,
+    revision: state.revision,
+    now: 40,
+    extra: true,
+  }), state);
+
+  const getter = {};
+  Object.defineProperties(getter, {
+    type: { enumerable: true, value: logic.ACTIONS.PAUSE },
+    revision: { enumerable: true, get() { throw new Error("read"); } },
+    now: { enumerable: true, value: 40 },
+  });
+  assert.equal(logic.reduce(state, getter), state);
+  assert.equal(
+    logic.reduce(state, new Proxy({}, { ownKeys() { throw new Error("trap"); } })),
+    state,
+  );
+
+  const saturated = Object.freeze({ ...state, revision: Number.MAX_SAFE_INTEGER });
+  const reset = logic.reduce(saturated, {
+    type: logic.ACTIONS.PAUSE,
+    revision: Number.MAX_SAFE_INTEGER,
+    now: 40,
+  });
+  assert.equal(logic.getPublicView(reset).phase, "setup");
+});
+
+test("比赛暂停冻结有效用时，显式恢复三拍后才继续", () => {
+  let state = startRacing(66);
+  state = logic.reduce(state, action(state, logic.ACTIONS.PAUSE, { now: 50 }));
+  let view = logic.getPublicView(state);
+  assert.equal(view.phase, "paused");
+  assert.equal(view.pausedFrom, "racing");
+  assert.equal(view.controls.canResume, true);
+
+  state = logic.reduce(state, action(state, logic.ACTIONS.RESUME));
+  assert.equal(logic.getPublicView(state).phase, "resume-countdown");
+  for (const now of [80, 90]) {
+    state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now }));
+  }
+  assert.equal(logic.getPublicView(state).phase, "resume-countdown");
+  state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now: 100 }));
+  view = logic.getPublicView(state);
+  assert.equal(view.phase, "racing");
+  assert.equal(view.timing.accumulatedPausedMs, 50);
+});
+
+test("第一方完成后只锁该方，窗口内第二方完成判并列", () => {
+  let state = startRacing(77);
+  const inverse = inverseTraceFor(state);
+  state = playDirections(state, "left", inverse, 31, 1);
+  let view = logic.getPublicView(state);
+  assert.equal(view.phase, "settling");
+  assert.equal(view.firstFinisher, "left");
+  assert.equal(view.boards.left.locked, true);
+  assert.equal(view.boards.right.locked, false);
+  assert.equal(view.controls.canMoveLeft, false);
+  assert.equal(view.controls.canMoveRight, true);
+  const leftSolvedAt = view.boards.left.solvedAt;
+
+  const revisionBeforeSecondFinish = state.revision;
+  state = playDirections(state, "right", inverse, leftSolvedAt + 0.001, 0.5);
+  view = logic.getPublicView(state);
+  assert.equal(view.phase, "finished");
+  assert.equal(view.result.outcome, "draw");
+  assert.ok(view.result.right.elapsedMs - view.result.left.elapsedMs <= 100);
+  assert.equal(state.revision, revisionBeforeSecondFinish + inverse.length);
+});
+
+test("结算窗口超时固定第一方获胜，延迟 MOVE 不能偷走结果", () => {
+  let state = startRacing(88);
+  const inverse = inverseTraceFor(state);
+  state = playDirections(state, "right", inverse, 31, 1);
+  const settling = logic.getPublicView(state);
+  assert.equal(settling.firstFinisher, "right");
+  const afterDeadline = settling.timing.settlementDeadline + 0.001;
+  state = logic.reduce(state, action(state, logic.ACTIONS.MOVE, {
+    player: "left",
+    direction: logic.getLegalBlankMoves(logic.getPublicView(state).boards.left.blankIndex)[0],
+    repeat: false,
+    now: afterDeadline,
+  }));
+  const view = logic.getPublicView(state);
+  assert.equal(view.phase, "finished");
+  assert.equal(view.result.outcome, "right");
+  assert.equal(view.result.left.elapsedMs, null);
+  assert.equal(view.result.settledAt, settling.timing.settlementDeadline);
+});
+
+test("暂停 settling 冻结剩余窗口，恢复后按剩余毫秒重建 deadline", () => {
+  let state = startRacing(99);
+  const inverse = inverseTraceFor(state);
+  state = playDirections(state, "left", inverse, 31, 1);
+  const first = logic.getPublicView(state);
+  const pauseAt = first.boards.left.solvedAt + 40;
+  state = logic.reduce(state, action(state, logic.ACTIONS.PAUSE, { now: pauseAt }));
+  let view = logic.getPublicView(state);
+  assert.equal(view.phase, "paused");
+  assert.equal(view.pausedFrom, "settling");
+  assert.equal(view.timing.settlementRemainingMs, 60);
+  assert.equal(view.timing.settlementDeadline, null);
+
+  state = logic.reduce(state, action(state, logic.ACTIONS.RESUME));
+  for (const now of [500, 510, 520]) {
+    state = logic.reduce(state, action(state, logic.ACTIONS.COUNTDOWN_TICK, { now }));
+  }
+  view = logic.getPublicView(state);
+  assert.equal(view.phase, "settling");
+  assert.equal(view.timing.settlementDeadline, 580);
+  assert.equal(view.timing.accumulatedPausedMs, 520 - pauseAt);
+  const early = logic.reduce(state, action(state, logic.ACTIONS.SETTLE, { now: 579.999 }));
+  assert.equal(early, state);
+  state = logic.reduce(state, action(state, logic.ACTIONS.SETTLE, { now: 580 }));
+  assert.equal(logic.getPublicView(state).result.outcome, "left");
+});
+
+test("rematch 保留来源但生成新共同局面，返回 setup 清空比赛", () => {
+  let state = startRacing(111);
+  const inverse = inverseTraceFor(state);
+  state = playDirections(state, "left", inverse, 31, 1);
+  const deadline = logic.getPublicView(state).timing.settlementDeadline;
+  state = logic.reduce(state, action(state, logic.ACTIONS.SETTLE, { now: deadline }));
+  assert.equal(logic.getPublicView(state).phase, "finished");
+
+  const rematch = logic.reduce(state, action(state, logic.ACTIONS.REMATCH, { seed: 112 }));
+  const rematchView = logic.getPublicView(rematch);
+  assert.equal(rematchView.phase, "countdown");
+  assert.deepEqual(rematchView.boards.left.tiles, rematchView.boards.right.tiles);
+  assert.notDeepEqual(rematchView.initialTiles, logic.getPublicView(state).initialTiles);
+  assert.deepEqual(rematchView.sourceMetadata, logic.getPublicView(state).sourceMetadata);
+
+  state = logic.reduce(state, action(state, logic.ACTIONS.RETURN_TO_SETUP));
+  const setup = logic.getPublicView(state);
+  assert.equal(setup.phase, "setup");
+  assert.equal(setup.boards.left, null);
+  assert.equal(setup.result, null);
+});
+
+test("公开 view 精确冻结、断开全部可变引用且只含安全来源元数据", () => {
+  const state = startRacing(222);
+  const view = logic.getPublicView(state);
+  assert.deepEqual(Reflect.ownKeys(view), [
+    "version",
+    "phase",
+    "sourceMetadata",
+    "seed",
+    "initialTiles",
+    "boards",
+    "countdown",
+    "timing",
+    "pausedFrom",
+    "firstFinisher",
+    "result",
+    "controls",
+    "revision",
+  ]);
+  assert.equal(Object.isFrozen(view), true);
+  assert.equal(Object.isFrozen(view.boards.left.tiles), true);
+  assert.notEqual(view.initialTiles, state.initialTiles);
+  assert.notEqual(view.boards.left.tiles, state.left.tiles);
+  assert.deepEqual(Reflect.ownKeys(view.sourceMetadata), [
+    "kind", "status", "generation", "errorCode",
+  ]);
+  assert.equal(logic.getPublicView(JSON.parse(JSON.stringify(state))), null);
+  const serialized = JSON.stringify(view).toLowerCase();
+  for (const forbidden of ["filename", "blob:", "exif", "gps", "activeurl"]) {
+    assert.equal(serialized.includes(forbidden), false, forbidden);
+  }
+});
+
+test("生产内核不读取 DOM、浏览器图片、网络、存储、随机、时钟或计时器", () => {
+  const sources = [
+    readFileSync(require.resolve("./config.js"), "utf8"),
+    readFileSync(require.resolve("./logic.js"), "utf8"),
+  ].join("\n");
+  for (const forbidden of [
+    /\bdocument\b/u,
+    /\bwindow\./u,
+    /\bCanvas/u,
+    /\bBlob\b/u,
+    /\bFile\b/u,
+    /\bImageBitmap\b/u,
+    /\bcreateImageBitmap\b/u,
+    /\bfetch\s*\(/u,
+    /\bXMLHttpRequest\b/u,
+    /\bWebSocket\b/u,
+    /\blocalStorage\b/u,
+    /\bsessionStorage\b/u,
+    /\bindexedDB\b/u,
+    /\bMath\.random\b/u,
+    /\bDate\.now\b/u,
+    /\bperformance\./u,
+    /\bsetTimeout\b/u,
+    /\bsetInterval\b/u,
+  ]) {
+    assert.equal(forbidden.test(sources), false, String(forbidden));
+  }
+});
