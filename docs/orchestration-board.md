@@ -10,16 +10,16 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `9e9e117` |
+| 当前 HEAD | `6b4cfe3` |
 | 目标 installed | 75 |
-| 当前 catalog 总数 | 64 |
-| 当前 installed | 64 |
-| 距离目标 | 11 |
-| A / B / C / D | 56 / 1 / 6 / 1 |
-| surprise / co-op / versus | 22 / 24 / 18 |
-| 本次 repository verify | 通过：64 个入口、56 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2356 / 2356` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`shadow-sword-duel` 已正式上架，`shadow-duet`、`honeycomb-passage`、`capsule-docking` 与 `vinyl-secret` 占满四个生产 UI 槽位。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
+| 当前 catalog 总数 | 65 |
+| 当前 installed | 65 |
+| 距离目标 | 10 |
+| A / B / C / D | 57 / 1 / 6 / 1 |
+| surprise / co-op / versus | 22 / 24 / 19 |
+| 本次 repository verify | 通过：65 个入口、57 个 A、8 个非 A |
+| 本次是否重跑全仓测试 | 是：`2366 / 2366` 通过 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`honeycomb-passage` 已正式上架，`shadow-duet` 等待总控集成，`twin-orbit`、`capsule-docking` 与 `vinyl-secret` 正在生产 UI。`love-tree` clean-room 仍待可访问 `file://` 的浏览器 Gate |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,16 +28,18 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 进行中 | `honeycomb-passage` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/honeycomb-passage-ui` | `codex/exp-honeycomb-passage-ui` | `f729deb` | 视觉自治已释放；复用 25 项核心合同与 `226` 方向，重点验证轮流走子/封蜡、路径可达、热座交接、六档视口和降级，最终验证使用 `383` |
+| Worker 1 | 进行中 | `twin-orbit` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-production-ui` | `codex/exp-twin-orbit-production-ui` | `6b4cfe3` | 视觉自治已释放；复用 39 项核心合同与 `310` 方向，对外只用中文标题，重点验证双环同刻输入、穿门证据、固定步、六档视口和降级，最终验证使用 `386` |
 | Worker 2 | 进行中 | `capsule-docking` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking-ui` | `codex/exp-capsule-docking-ui` | `f729deb` | 视觉自治已释放；复用 22 项核心合同与 `369` 方向，重点验证双席分权、60 Hz 固定步、三航段、六项 Gate、触屏/键盘和降级，最终验证使用 `384` |
-| Worker 3 | 进行中 | `shadow-duet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui` | `codex/exp-shadow-duet-ui` | `aec935f` | 视觉自治已释放；复用既有 28 项核心合同与 `205` 方向，重点验证双人同刻输入、节拍窗口、六档视口与降级，最终验证使用 `381` |
+| Worker 3 | 待总控审查 | `shadow-duet` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-ui` | `codex/exp-shadow-duet-ui` | `aec935f` | HEAD `deb8e906`，定向 `38 / 38`、单并发全仓 `2336 / 2336`、六档视口/双触控/降级通过；等待逐提交集成与 catalog 接入 |
 | Worker 4 | 进行中 | `vinyl-secret` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret-production-ui` | `codex/exp-vinyl-secret-production-ui` | `9e9e117` | 视觉自治已释放；复用 38 项核心合同与 `320` 方向，默认无音频，重点验证异步单人寻轨、秘密延迟出现、可选本地音频、六档视口与降级，最终验证使用 `385` |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
 
 ## Ready for Review
 
-当前没有等待总控审查的项目；四个执行槽位均在生产 UI 阶段。
+| 项目 | 分支 HEAD | 状态 | 下一步 |
+| --- | --- | --- | --- |
+| `shadow-duet` | `deb8e906` | 项目定向、单并发全仓、verify、Chrome 六视口和降级已通过 | 总控审查八个项目提交，逐一集成后补 catalog 与共享合同 |
 
 ## 建议首轮候选
 
@@ -54,23 +56,22 @@
 
 队列只表示“值得复核”，不表示已经获准复制、已完成规格或必然进入 75：
 
-1. `twin-orbit`
-2. `kaleidoscope-names`
-3. `four-symbol-film-duel`
-4. `word-detour-duel`
-5. `ricochet-tank-duel`
-6. `photo-slider-race`
-7. `dual-maze-race`
-8. `penguin-flag-duel`
-9. `memory-merge-board`
-10. `seven-piece-duet`
-11. `our-place-guess`
+1. `kaleidoscope-names`
+2. `four-symbol-film-duel`
+3. `word-detour-duel`
+4. `ricochet-tank-duel`
+5. `photo-slider-race`
+6. `dual-maze-race`
+7. `penguin-flag-duel`
+8. `memory-merge-board`
+9. `seven-piece-duet`
+10. `our-place-guess`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
 ## 文档编号预留
 
-当前已使用或预留到 `382`；下列编号区间已互斥预留：
+当前已使用或预留到 `386`；下列编号区间已互斥预留：
 
 | 项目 | 预留编号 | 所有者 | 状态 |
 | --- | --- | --- | --- |
@@ -138,6 +139,7 @@
 | `honeycomb-passage` 生产 UI | `383` | Worker 1 | Candle 正式上架后滚动补位；独占最终验证编号 |
 | `capsule-docking` 生产 UI | `384` | Worker 2 | Snow Globe 正式上架后滚动补位；独占最终验证编号 |
 | `vinyl-secret` 生产 UI | `385` | Worker 4 | Shadow Sword 正式上架后滚动补位；独占最终验证编号 |
+| `twin-orbit` 生产 UI | `386` | Worker 1 | Honeycomb Passage 正式上架后滚动补位；独占最终验证编号 |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
@@ -151,6 +153,7 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `honeycomb-passage` 生产 UI 与上架 | `77888e7`…`deacec9` | `30b241f`…`1035be1`、`6b4cfe3` | 定向 `33 / 33`；共享接入 `210 / 210`；全仓 `2366 / 2366`；verify；完整 17 手/最后路线拒绝/六视口/键盘/真实触摸/降级 | 安装入口增至 65；标题命中层与动作轨溢出经浏览器回归闭环，固定来源、许可证、版权与零复制边界齐全 |
 | `shadow-sword-duel` 生产 UI 与上架 | `d8c0714`…`e177f30` | `abf915b`…`720d46c`、`9e9e117` | 定向 `36 / 36`；共享接入 `211 / 211`；全仓 `2356 / 2356`；verify；九回合/双 KO/六视口/键盘/真实触摸/隐私/降级 | 安装入口增至 64；四种第一手 DOM 不可区分，隐式 favicon 404 经红测闭环，四项固定来源和零复制边界齐全 |
 | `candle-wishes` 生产 UI 与上架 | `7cae4fd`…`7b65f01` | `68b92dc`…`5f3be1f`、`f729deb` | 定向 `28 / 28`；共享接入 `201 / 201`；全仓 `2347 / 2347`；verify；独立六档视口/键盘/触屏/降级 | 安装入口增至 63；无 JavaScript 惰性控件经红测闭环，三项固定来源、许可证、版权、借鉴和未复制边界齐全 |
 | `snow-globe-message` 生产 UI 与上架 | `61ef09c`…`7ff79ef` | `8a45b97`…`382bcf1`、`0be1be0` | 定向 `22 / 22`；共享接入 `193 / 193`；全仓 `2340 / 2340`；verify；六档视口/键盘/真实触摸拖拽/reduced-motion | 安装入口增至 62；四阵风、确定性雪花、完整结果树与固定来源/零复制边界齐全 |
