@@ -93,10 +93,11 @@
       }
     }
 
-    function isTypingContext() {
+    function shouldIgnoreGameplayKey(event) {
       const activeElement = doc.activeElement;
       if (!activeElement) return false;
-      return activeElement.matches("button, input, textarea, select, [contenteditable='true']");
+      if (activeElement.matches("input, textarea, select, [contenteditable='true']")) return true;
+      return event.code === "Enter" && activeElement.matches("button");
     }
 
     function keydown(event) {
@@ -109,7 +110,7 @@
         return;
       }
       const binding = KEY_BINDINGS[event.code];
-      if (!binding || isTypingContext()) return;
+      if (!binding || shouldIgnoreGameplayKey(event)) return;
       event.preventDefault();
       if (event.repeat) return;
       hold(binding[0], binding[1], `key:${event.code}`);
