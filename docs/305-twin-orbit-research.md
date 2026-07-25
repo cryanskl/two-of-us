@@ -166,7 +166,7 @@ openTick
   `lostpointercapture` 和 document 级释放。
 
 [W3C UI Events KeyboardEvent code Values](https://www.w3.org/TR/uievents-code/)
-定义了物理键位 `code`；[Pointer Events](https://www.w3.org/TR/pointerevents/)
+定义了物理键位 `code`；[Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/)
 定义了 capture、cancel 与释放生命周期。标准只用于校准平台行为，不是运行依赖
 或代码来源。
 

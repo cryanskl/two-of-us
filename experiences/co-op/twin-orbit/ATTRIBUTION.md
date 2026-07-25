@@ -35,7 +35,26 @@
 - 网络、服务、storage、权限、DOM、Canvas 和真实时钟依赖：0。
 
 W3C、WHATWG 与 WAI 文档只用于前置规格中的键盘、Pointer、页面可见性、动画帧
-和无障碍边界，不是本核心的运行依赖、代码来源或素材来源。
+和无障碍边界，不是本核心的运行依赖、代码来源或素材来源。固定依据为：
+
+- [UI Events KeyboardEvent code Values](https://www.w3.org/TR/uievents-code/)
+  （W3C Recommendation，2025-04-22）；
+- [Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/)
+  （W3C Recommendation，2026-06-30）；
+- [WHATWG HTML Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility)
+  与 [Animation frames](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames)
+  （Living Standard）；
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
+  （W3C Recommendation，2024-12-12）。
+
+W3C 页面保留 World Wide Web Consortium 的原始版权及各页链接的
+[Software and Document License](https://www.w3.org/copyright/software-license/)
+或 [Document License](https://www.w3.org/copyright/document-license/)；
+WHATWG Living Standards 保留 WHATWG 及其 Steering Group 成员版权，并按
+[WHATWG IPR Policy](https://whatwg.org/ipr-policy) 的 CC BY 4.0 条款发布。
+
+本目录没有复制或改写这些标准的正文、Web IDL、示例代码、表格、图表、测试或
+站点视觉，也不再分发标准正文；这里只保留一手链接、状态和独立实现用途。
 
 完整来源、名称和证据边界见
 [`docs/307-twin-orbit-attribution-dependency-audit.md`](../../../docs/307-twin-orbit-attribution-dependency-audit.md)。

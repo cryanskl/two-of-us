@@ -131,7 +131,7 @@
 | 一手来源 | 2026-07-25 状态 | 本项目只用于 | 不复制 |
 | --- | --- | --- | --- |
 | [UI Events KeyboardEvent code Values](https://www.w3.org/TR/uievents-code/) | W3C Recommendation，2025-04-22 | `KeyF` / `KeyJ` 物理键位 | 规范正文、IDL、示例、表格 |
-| [Pointer Events](https://www.w3.org/TR/pointerevents/) | W3C Recommendation；当前页面为 Level 3 | pointerId、capture、cancel、lostcapture | 算法文字、IDL、测试、图表 |
+| [Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/) | W3C Recommendation，2026-06-30 | pointerId、capture、cancel、lostcapture | 算法文字、IDL、测试、图表 |
 | [WHATWG HTML：Page visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility) | Living Standard | visibilityState / visibilitychange | 规范算法、示例和站点表达 |
 | [WHATWG HTML：Animation frames](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames) | Living Standard | RAF timestamp 与渲染/规则分层 | 示例代码与规范文字 |
 | [WCAG 2.2](https://www.w3.org/TR/WCAG22/) 与 WAI Understanding | W3C Recommendation，2024-12-12 再发布 | 键盘、焦点、状态、目标尺寸、降动效 | 正文、示例、图表、站点视觉 |
@@ -139,12 +139,38 @@
 标准不是运行依赖、游戏代码、素材或视觉来源。项目不宣称通过 W3C 合规认证；
 48px 触控目标、暂停策略和 live-region 节流是仓库自己的验收门槛。
 
-### 6.1 已纠正的来源状态
+### 6.1 版权、许可证与零复制
+
+2026-07-25 复核确认：
+
+- UI Events KeyboardEvent code Values 为 W3C Recommendation
+  （2025-04-22），页面版权为 © 2025 W3C；
+- Pointer Events Level 3 为 W3C Recommendation（2026-06-30），页面版权为
+  © 2026 W3C；
+- WCAG 2.2 为 W3C Recommendation（2024-12-12），页面版权为
+  © 2020–2024 W3C；
+- W3C 技术报告各自链接其适用的
+  [Software and Document License](https://www.w3.org/copyright/software-license/)
+  或 [Document License](https://www.w3.org/copyright/document-license/)；
+- WHATWG HTML Living Standard 的出版物版权归 WHATWG 及其 Steering Group
+  成员，并按
+  [WHATWG IPR Policy](https://whatwg.org/ipr-policy) 的 CC BY 4.0 条款发布。
+
+本项目只保留来源链接、状态、用途和独立实现边界，没有复制或改写规范正文、
+Web IDL、示例代码、表格、图表、测试或站点视觉，也不再分发标准正文。因此项目
+目录不打包标准许可证正文；若未来复制任何标准内容，必须按对应页面实际链接的
+许可证重新履行署名、版权、状态和 notice 要求。
+
+### 6.2 已纠正的来源状态
 
 [W3C Page Visibility Level 2](https://www.w3.org/TR/page-visibility-2/) 已于
 2022-06-23 成为 discontinued draft。当前设计使用 WHATWG HTML Living
 Standard 作为现行来源。发现、根因和修复见
 [`bugs/2026-07-25-twin-orbit-page-visibility-source-status.md`](../bugs/2026-07-25-twin-orbit-page-visibility-source-status.md)。
+
+本次复核还发现 Pointer Events 通用 URL 已移动到 Level 4 Working Draft，不能
+继续把它标为 Level 3 Recommendation。现已固定 Level 3 URL；详见
+[`bugs/2026-07-25-twin-orbit-pointer-events-source-drift.md`](../bugs/2026-07-25-twin-orbit-pointer-events-source-drift.md)。
 
 ## 7. 运行与开发依赖审计
 
