@@ -127,13 +127,15 @@ test("CSS 锁定纸质训练台、触控尺寸、回流与系统可访问模式"
     "--attitude",
     "--thrust",
     ":focus-visible",
-    "min-height: 44px",
-    "min-height: 48px",
     "@media (max-width: 390px)",
     "@media (max-width: 320px)",
     "@media (prefers-reduced-motion: reduce)",
     "@media (forced-colors: active)",
   ]) assert.match(css, new RegExp(fragment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  const controlHeight = Number(css.match(/\.control-button\s*\{[\s\S]*?min-height:\s*(\d+)px/)?.[1]);
+  const primaryHeight = Number(css.match(/\.primary-action\s*\{[\s\S]*?min-height:\s*(\d+)px/)?.[1]);
+  assert.ok(controlHeight >= 44, `控制键高度不足：${controlHeight}`);
+  assert.ok(primaryHeight >= 48, `主动作高度不足：${primaryHeight}`);
   assert.doesNotMatch(css, /\border\s*:|display\s*:\s*contents/i);
 });
 
