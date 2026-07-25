@@ -36,13 +36,36 @@ JSS 文章页面区分文章许可与随文软件许可；本项目没有引入�
 
 ### Breadth-first search
 
-- E. F. Moore, “The Shortest Path Through a Maze”, in
-  *Proceedings of an International Symposium on the Theory of Switching*,
+- E. F. Moore, [“The Shortest Path Through a Maze”](https://cir.nii.ac.jp/crid/1570854175170619520),
+  in *Proceedings of an International Symposium on the Theory of Switching*,
   Harvard University Press, 1959, pp. 285–292.
 - 用于：校准无权迷宫最短路径的 BFS 语义。
 - 未复制：论文文字、图、证明或实现。
 
 BFS 只用于生产同源校验和测试。最短路径不会进入公共 view，也不会作为玩家提示。
+
+## 浏览器、无障碍与硬件资料
+
+以下资料影响前置规格和未来 UI Gate，不是当前纯逻辑核心的运行依赖：
+
+| 来源 | 用于 | 未复制与当前边界 |
+| --- | --- | --- |
+| W3C [UI Events](https://www.w3.org/TR/uievents/) | 键盘事件、`repeat` 与事件顺序边界 | 未复制规范文字或示例代码；当前核心不读取事件 |
+| W3C [KeyboardEvent code Values](https://www.w3.org/TR/uievents-code/) | 冻结 WASD 与方向键的物理 code | 未复制规范文字或表格；未来 app 才负责 code 映射 |
+| W3C [Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/) | 双 pointer、cancel 与触控边界 | 未复制示例代码；当前没有 Pointer UI |
+| W3C [High Resolution Time](https://www.w3.org/TR/hr-time-3/) | 单调时钟只驱动整数 tick | 未复制算法；核心不读取 `performance.now()` |
+| WHATWG [Page Visibility](https://html.spec.whatwg.org/multipage/interaction.html#page-visibility) | hidden 时暂停 | 未复制规范文字或代码；当前只冻结 pause reason |
+| WHATWG [Animation Frames](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames) | RAF 只作 fixed-step 驱动 | 未复制算法；核心胜负不依赖 RAF 分组 |
+| W3C [Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/#prefers-reduced-motion) | 降动效不能改变规则 | 未复制样式；当前没有生产 CSS |
+| WCAG 2.2 [Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) | 键盘等价 Gate | 不宣称当前通过完整 WCAG 验收 |
+| WCAG 2.2 [Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) | 未来触控目标 Gate | 当前没有生产控件 |
+| WCAG 2.2 [Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible) | 未来焦点可见性 Gate | 当前没有 DOM 或焦点管理 |
+| WCAG 2.2 [Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages) | 未来倒数与结果播报 Gate | 当前 public view 只提供纯数据 |
+| Microsoft Applied Sciences [Keyboard Ghosting](https://www.microsoft.com/applied-sciences/projects/anti-ghosting) | 说明同机多键可能被硬件、软件或协议漏报 | 未复制产品、图、演示或实现；因此保留联合输入检查和触控替代 Gate |
+
+上述 15 个论文、书目、标准与硬件页面于 2026-07-25 重新访问。它们是动态网页或
+出版物记录，不是被引入的版本化源码。当前没有第三方开源实现、代码或素材，因此
+没有可合理固定的外部 commit/tag，也没有需要随本作再分发的第三方软件许可证正文。
 
 ## 当前实现边界
 

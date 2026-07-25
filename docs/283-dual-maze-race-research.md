@@ -359,7 +359,7 @@ lockfile 变更。
 | --- | --- | --- |
 | Robert Tarjan, [Depth-First Search and Linear Graph Algorithms](https://doi.org/10.1137/0201010), SIAM J. Comput. 1(2), 1972 | DFS / backtracking 与生成树的算法背景 | 论文文字、图、证明和任何实现 |
 | George Marsaglia, [Xorshift RNGs](https://doi.org/10.18637/jss.v008.i14), JSS 8(14), 2003 | 非零 32 位可复现状态递推；文章页标注 article 为 CC BY、software 为 GPL v2/v3 或兼容许可 | 论文代码、软件包、测试与文字；生产只按规格独立写有限整数递推 |
-| E. F. Moore, *The Shortest Path Through a Maze*, 1959, Harvard University Press, pp. 285–292 | 无权网格最短路径的历史来源与 BFS 语义校准 | 论文文字、图和实现 |
+| E. F. Moore, [*The Shortest Path Through a Maze*](https://cir.nii.ac.jp/crid/1570854175170619520), 1959, Harvard University Press, pp. 285–292 | 无权网格最短路径的历史来源与 BFS 语义校准 | 论文文字、图和实现 |
 | W3C [UI Events](https://www.w3.org/TR/uievents/) 与 [KeyboardEvent code values](https://www.w3.org/TR/uievents-code/) | `KeyboardEvent.code`、`repeat` 与键盘事件边界 | 规范示例代码与文字 |
 | W3C [Pointer Events Level 3](https://www.w3.org/TR/pointerevents3/) | 多 pointer、`pointercancel`、`touch-action` 与设备上限 | 规范示例代码与文字 |
 | W3C [High Resolution Time](https://www.w3.org/TR/hr-time-3/) | `performance.now()` 的单调时钟边界 | 规范示例代码与文字 |

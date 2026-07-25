@@ -706,6 +706,28 @@ test("match note receives frozen public summary, is bounded and cannot alter the
   assert.equal(logic.resolveMatchNote(startRacing()), null);
 });
 
+test("attribution covers every research URL and preserves the zero-copy boundary", () => {
+  function markdownUrls(source) {
+    return [...new Set(
+      [...source.matchAll(/https?:\/\/[^\s)>]+/gu)].map((match) => match[0])
+    )].sort();
+  }
+
+  const research = readFileSync(
+    require.resolve("../../../docs/283-dual-maze-race-research.md"),
+    "utf8"
+  );
+  const attribution = readFileSync(
+    require.resolve("./ATTRIBUTION.md"),
+    "utf8"
+  );
+  assert.equal(markdownUrls(research).length, 15);
+  assert.deepEqual(markdownUrls(attribution), markdownUrls(research));
+  assert.match(attribution, /没有第三方开源实现、代码或素材/u);
+  assert.match(attribution, /没有可合理固定的外部 commit\/tag/u);
+  assert.match(attribution, /没有需要随本作再分发的第三方软件许可证正文/u);
+});
+
 test("production core has no DOM, network, storage, random or browser clock dependency", () => {
   const source = [
     readFileSync(require.resolve("./config.js"), "utf8"),
