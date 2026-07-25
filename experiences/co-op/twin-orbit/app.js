@@ -447,6 +447,7 @@
     elements.phaseMessage.textContent = view.message;
     var phaseAction = actionForPhase();
     elements.phaseAction.hidden = phaseAction === null;
+    elements.phaseAction.disabled = phaseAction === null;
     if (phaseAction) {
       elements.phaseAction.dataset.action = phaseAction.action;
       elements.phaseAction.textContent = phaseAction.label;

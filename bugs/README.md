@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [这一圈，和你同时到：无 JavaScript 时主动作成为无响应假按钮](./2026-07-25-twin-orbit-no-js-false-primary-action.md)
 - [这一圈，和你同时到：SVG `hidden` 属性写入方式泄露 intro 门位](./2026-07-25-twin-orbit-svg-hidden-target-leak.md)
 - [这一圈，和你同时到：localhost 自动请求 favicon 返回 404](./2026-07-25-twin-orbit-localhost-favicon-404.md)
 - [Candle Wishes：localhost 自动请求 favicon 返回 404](./2026-07-25-candle-wishes-localhost-favicon-404.md)

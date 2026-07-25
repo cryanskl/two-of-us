@@ -107,6 +107,16 @@ test("静态入口只公开中文标题，并提供真实语义与 no-JS 说明"
     noScript,
     /<(?:button|canvas|svg|form|input|select|progress)\b/iu
   );
+  assert.match(
+    html,
+    /<button\b(?=[^>]*\bid=["']phase-action["'])(?=[^>]*\bdisabled\b)[^>]*>/iu,
+    "the static primary action must stay inert until JavaScript initializes"
+  );
+  assert.match(
+    read("app.js"),
+    /phaseAction\.disabled\s*=\s*phaseAction\s*===\s*null/u,
+    "the renderer must enable only actions that exist in the public phase"
+  );
 });
 
 test("左右席是等权原生按住按钮，并明确给出 F/J 键盘等价", () => {
