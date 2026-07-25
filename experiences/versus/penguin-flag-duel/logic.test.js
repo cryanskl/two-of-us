@@ -81,22 +81,33 @@ test("UMD 同时暴露 CommonJS 和浏览器全局", () => {
 
 test("浏览器入口采用合法配置默认值，且不执行配置 Proxy get trap", () => {
   const logicCode = readFileSync(require.resolve("./logic.js"), "utf8");
-  const customDefault = clone(configApi.DEFAULT_CONFIG);
-  customDefault.playerNames = ["雪宝", "冰宝"];
-  customDefault.copy.title = "双企鹅夺旗";
-  let getterReads = 0;
-  const proxiedConfig = new Proxy({ DEFAULT_CONFIG: customDefault }, {
-    get(target, key, receiver) {
-      getterReads += 1;
-      return Reflect.get(target, key, receiver);
-    },
-  });
-  const sandbox = { globalThis: { PenguinFlagDuelConfig: proxiedConfig } };
+  const sandbox = { globalThis: {} };
+  runInNewContext(`
+    globalThis.configGetterReads = 0;
+    globalThis.PenguinFlagDuelConfig = new Proxy({
+      DEFAULT_CONFIG: {
+        playerNames: ["雪宝", "冰宝"],
+        copy: {
+          title: "双企鹅夺旗",
+          subtitle: "抢到旗只是开始，带回家才算得分。",
+          start: "开始比赛",
+          restart: "再抢一局",
+          resume: "继续比赛",
+          localOnly: "只在本机运行，刷新即重置。",
+        },
+      },
+    }, {
+      get(target, key, receiver) {
+        globalThis.configGetterReads += 1;
+        return Reflect.get(target, key, receiver);
+      },
+    });
+  `, sandbox);
   runInNewContext(logicCode, sandbox);
   const browserLogic = sandbox.globalThis.PenguinFlagDuelLogic;
-  assert.deepEqual(browserLogic.DEFAULT_CONFIG.playerNames, ["雪宝", "冰宝"]);
+  assert.deepEqual(Array.from(browserLogic.DEFAULT_CONFIG.playerNames), ["雪宝", "冰宝"]);
   assert.equal(browserLogic.DEFAULT_CONFIG.copy.title, "双企鹅夺旗");
-  assert.equal(getterReads, 0);
+  assert.equal(sandbox.globalThis.configGetterReads, 0);
 });
 
 test("配置逐字段清洗、断引用并对 getter/thenable 安全回退", () => {

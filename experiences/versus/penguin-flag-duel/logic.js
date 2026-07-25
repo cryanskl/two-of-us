@@ -92,12 +92,12 @@
       localOnly: "只在本机运行，刷新即重置。",
     },
   });
-  const DEFAULT_CONFIG = isUsableDefaultConfig(configApi && configApi.DEFAULT_CONFIG)
-    ? configApi.DEFAULT_CONFIG : FALLBACK_CONFIG;
   const COPY_LIMITS = deepFreeze({
     title: 24, subtitle: 64, start: 16, restart: 16, resume: 16, localOnly: 64,
   });
   const COPY_KEYS = deepFreeze(Object.keys(COPY_LIMITS));
+  const CONFIG_KEYS = deepFreeze(["playerNames", "copy"]);
+  const DEFAULT_CONFIG = resolveDefaultConfig(configApi);
   const STATE_KEYS = deepFreeze([
     "version", "phase", "playerNames", "copy", "players", "flag", "scores",
     "liveTicksRemaining", "countdownTicks", "pauseReason", "lastCaptureSeat", "result", "revision",
@@ -106,7 +106,6 @@
   const FLAG_KEYS = deepFreeze(["x", "y", "carrierSeat", "pickupLockTicks", "looseTicks"]);
   const RESULT_KEYS = deepFreeze(["winnerSeat", "reason"]);
   const REPLAY_KEYS = deepFreeze(["version", "config", "actions"]);
-  const CONFIG_KEYS = deepFreeze(["playerNames", "copy"]);
   const ACTION_KEYS = deepFreeze({
     START: ["type", "expectedRevision"],
     STEP: ["type", "expectedRevision", "intents"],
@@ -975,11 +974,13 @@
     });
   }
 
-  function isUsableDefaultConfig(value) {
+  function resolveDefaultConfig(value) {
     try {
-      return Boolean(value && sanitizeNames(value.playerNames) && parseCopyStrict(value.copy));
+      const source = safePlainRecord(value);
+      const candidate = source ? readOwnData(source, "DEFAULT_CONFIG") : null;
+      return candidate ? parseConfigStrict(candidate) : FALLBACK_CONFIG;
     } catch {
-      return false;
+      return FALLBACK_CONFIG;
     }
   }
 
