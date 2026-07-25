@@ -203,6 +203,32 @@ test("移动圆 CCD 对静止、迎面和高速目标保留代数候选", () => 
   ), -1);
 });
 
+test("完全平方圆根可与分段端点精确并列，非完全平方极近值仍严格排序", () => {
+  const exact = geometry.sweepMovingCircle(
+    point(-10, 0),
+    delta(20, 0),
+    fp(2),
+  );
+  assert.equal(geometry.compareCircleContactToRational(
+    exact,
+    fixed.makeRational(2, 5),
+  ), 0);
+
+  const irrational = geometry.sweepMovingCircle(
+    point(-10, 1),
+    delta(20, 0),
+    fp(2),
+  );
+  assert.equal(geometry.compareCircleContactToRational(
+    irrational,
+    fixed.makeRational(413, 1000),
+  ), 1);
+  assert.equal(geometry.compareCircleContactToRational(
+    irrational,
+    fixed.makeRational(414, 1000),
+  ), -1);
+});
+
 test("圆形 CCD 初始重叠失败，表面向外与纯切线无接触", () => {
   assert.throws(
     () => geometry.sweepMovingCircle(point(0, 0), delta(1, 0), fp(2)),

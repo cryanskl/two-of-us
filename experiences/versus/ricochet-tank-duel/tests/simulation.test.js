@@ -263,6 +263,38 @@ test("外边界可连续折射，第三次继续而第四次接触前销毁", ()
   ));
 });
 
+test("命中与墙精确同刻时命中优先，不再反射", () => {
+  const result = simulation.simulateBulletTick(
+    bullet({ xFp: fp(600), yFp: fp(300), vxFp: fp(30) }),
+    {
+      id: 1,
+      xFp: fp(638),
+      yFp: fp(300),
+    },
+    [{
+      t0: { num: 0, den: 1 },
+      t1: { num: 1, den: 1 },
+      start: { xFp: fp(638), yFp: fp(300) },
+      end: { xFp: fp(638), yFp: fp(300) },
+    }],
+  );
+  assert.equal(result.hitTargetId, 1);
+  assert.equal(result.destroyReason, "hit");
+  assert.equal(result.bullet, null);
+});
+
+test("合成高速夹具允许前四接触，第五候选处理前 contact-cap", () => {
+  const result = simulation.simulateBulletTick(
+    bullet({ xFp: fp(500), yFp: fp(50), vxFp: fp(5000) }),
+    null,
+    [],
+    { maxReflections: 99 },
+  );
+  assert.equal(result.bullet, null);
+  assert.equal(result.destroyReason, "contact-cap");
+  assert.equal(result.contactsProcessed, 4);
+});
+
 test("第 360 个活跃 tick 才寿命销毁，暂停与倒计时不增加年龄", () => {
   let state = withBullet(playing(), bullet({ ageTicks: 358 }));
   state = simulation.simulatePlayingTick(state, { leftMask: 0, rightMask: 0 });
@@ -339,6 +371,32 @@ test("第 5400 个 playing tick 无条件计时，先结算命中再判时间结
   assert.equal(state.phase, "round-result");
 });
 
+test("单方到三分按赢家结算，90 秒无命中覆盖领先和平局", () => {
+  let raw = clone(playing({ scores: [2, 1] }));
+  raw.bullets = [bullet({ ownerId: 0, xFp: fp(780), vxFp: fp(9) })];
+  raw.nextBulletId = 2;
+  let state = simulation.simulatePlayingTick(simulation.validateState(raw), {
+    leftMask: 0,
+    rightMask: 0,
+  });
+  assert.deepEqual(state.scores, [3, 1]);
+  assert.equal(state.pendingMatchResult, "left");
+
+  state = simulation.simulatePlayingTick(
+    playing({ activeMatchTicks: 5399, scores: [2, 1] }),
+    { leftMask: 0, rightMask: 0 },
+  );
+  assert.equal(state.phase, "match-result");
+  assert.equal(state.matchResult, "left");
+
+  state = simulation.simulatePlayingTick(
+    playing({ activeMatchTicks: 5399, scores: [1, 1] }),
+    { leftMask: 0, rightMask: 0 },
+  );
+  assert.equal(state.phase, "match-result");
+  assert.equal(state.matchResult, "draw");
+});
+
 test("暂停只接受 countdown/playing，恢复完整倒计时且冻结全部玩法计数", () => {
   const live = withBullet(playing({ activeMatchTicks: 12 }), bullet({ ageTicks: 20 }));
   const paused = simulation.applyCommand(live, { type: "PAUSE", reason: "manual" });
@@ -355,4 +413,55 @@ test("暂停只接受 countdown/playing，恢复完整倒计时且冻结全部�
     type: "PAUSE",
     reason: "manual",
   }).phase, "instructions");
+});
+
+test("state 严拒绝额外键、非法 heading、重复 ID 和每席超过两弹", () => {
+  const extra = clone(simulation.createInitialState());
+  extra.extra = true;
+  assert.throws(() => simulation.validateState(extra), /state|schema|key/i);
+  assert.deepEqual(
+    simulation.applyCommand(extra, { type: "START" }),
+    simulation.createInitialState(),
+  );
+
+  const heading = clone(playing());
+  heading.tanks[0].heading = 32;
+  assert.throws(() => simulation.validateState(heading), /heading/i);
+
+  const duplicate = clone(playing());
+  duplicate.bullets = [
+    bullet({ id: 1, xFp: fp(400) }),
+    bullet({ id: 1, xFp: fp(420) }),
+  ];
+  duplicate.nextBulletId = 2;
+  assert.throws(() => simulation.validateState(duplicate), /duplicate|bullet/i);
+
+  const excess = clone(playing());
+  excess.bullets = [
+    bullet({ id: 1, xFp: fp(400) }),
+    bullet({ id: 2, xFp: fp(420) }),
+    bullet({ id: 3, xFp: fp(440) }),
+  ];
+  excess.nextBulletId = 4;
+  assert.throws(() => simulation.validateState(excess), /bullet|owner|limit/i);
+});
+
+test("输入数组顺序变化会按稳定 ID 规范化，不改变原子计分与哈希", () => {
+  const raw = clone(playing());
+  raw.bullets = [
+    bullet({ id: 9, ownerId: 1, xFp: fp(180), vxFp: fp(-9) }),
+    bullet({ id: 3, ownerId: 0, xFp: fp(780), vxFp: fp(9) }),
+  ];
+  raw.nextBulletId = 10;
+  const canonical = simulation.validateState(raw);
+  const reversedRaw = clone(raw);
+  reversedRaw.bullets.reverse();
+  reversedRaw.tanks.reverse();
+  const reversed = simulation.validateState(reversedRaw);
+  assert.equal(simulation.hashState(canonical), simulation.hashState(reversed));
+  const input = { leftMask: 0, rightMask: 0 };
+  assert.deepEqual(
+    simulation.simulatePlayingTick(canonical, input),
+    simulation.simulatePlayingTick(reversed, input),
+  );
 });

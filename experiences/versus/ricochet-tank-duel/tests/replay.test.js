@@ -65,6 +65,31 @@ test("状态镜像交换玩家、弹体所有者和 x/vx，二次镜像严格恢
   assert.deepEqual(simulation.mirrorState(mirrored), state);
 });
 
+test("RESTART 从终局清空比分、时间、弹体、ID、结果并进入完整倒计时", () => {
+  const raw = JSON.parse(JSON.stringify(simulation.createInitialState()));
+  Object.assign(raw, {
+    phase: "match-result",
+    scores: [3, 1],
+    activeMatchTicks: 812,
+    matchResult: "left",
+    lastRoundResult: "left-hit",
+    pendingMatchResult: null,
+    roundIndex: 4,
+    nextBulletId: 19,
+  });
+  const terminal = simulation.validateState(raw);
+  const restarted = simulation.applyCommand(terminal, { type: "RESTART" });
+  assert.equal(restarted.phase, "countdown");
+  assert.equal(restarted.phaseTicksRemaining, 180);
+  assert.deepEqual(restarted.scores, [0, 0]);
+  assert.equal(restarted.activeMatchTicks, 0);
+  assert.equal(restarted.nextBulletId, 1);
+  assert.equal(restarted.roundIndex, 1);
+  assert.equal(restarted.lastRoundResult, null);
+  assert.equal(restarted.matchResult, null);
+  assert.deepEqual(restarted.bullets, []);
+});
+
 test("规范化与哈希排除语义文案，保留全部逻辑字段和稳定 ID 顺序", () => {
   const state = simulation.replay(makeLog());
   const raw = JSON.parse(JSON.stringify(state));
