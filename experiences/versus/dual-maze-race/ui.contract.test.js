@@ -17,6 +17,10 @@ test("production entry uses semantic A-level classic scripts and eight native co
   assert.match(html, /<html\b[^>]*lang="zh-CN"/u);
   assert.match(html, /<meta\b[^>]*name="viewport"/u);
   assert.match(html, /<h1\b[^>]*>同路，谁先到<\/h1>/u);
+  assert.match(
+    html,
+    /<a\b[^>]*class="back-link"[^>]*href="\.\.\/\.\.\/\.\.\/index\.html"[^>]*>返回作品集<\/a>/u
+  );
   assert.match(html, /<noscript\b/u);
   assert.match(html, /<div\b[^>]*id="app-status"[^>]*role="status"[^>]*aria-live="polite"/u);
   assert.match(html, /<section\b[^>]*id="left-board"[^>]*aria-label=/u);
@@ -84,6 +88,7 @@ test("styles freeze the approved shared-map-table system and accessible variants
     /--color-player-one:\s*#1266e8/u,
     /--color-player-two:\s*#e63d2f/u,
     /--color-goal:\s*#13845d/u,
+    /\.back-link/u,
     /\.maze-board/u,
     /\.player-marker--one/u,
     /\.player-marker--two/u,
