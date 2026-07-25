@@ -63,21 +63,24 @@ experiences/co-op/seven-piece-duet/
 ├── targets.js
 ├── logic.js
 ├── app.js
-├── config.js
 ├── geometry.test.js
 ├── logic.test.js
+├── TARGETS.md
 ├── README.md
-└── ATTRIBUTION.md
+├── ATTRIBUTION.md
+└── tools/
+    └── generate-targets.mjs
 ```
 
 约束：
 
-- HTML 使用相对路径和经典 `<script src>`，加载顺序为 `geometry.js`、`targets.js`、`logic.js`、`config.js`、`app.js`；
+- HTML 使用相对路径和经典 `<script src>`，加载顺序为 `geometry.js`、`targets.js`、`logic.js`、`app.js`；
 - `geometry.js`、`targets.js`、`logic.js` 以仓库既有 `globalThis` 工厂方式同时服务浏览器和 Node 测试；
 - 无 ESM、动态 import、`fetch()`、XHR、WebSocket 或 Blob 模块；
 - 无项目私有安装命令、构建步骤或 `package.json` 运行依赖；
 - SVG/CSS 为完整视觉，不加载外部资产；
 - 项目目录可脱离统一门户单独复制和运行；
+- `tools/generate-targets.mjs` 只在开发期由 Node 执行，不被 `index.html` 加载，不产生安装步骤；`TARGETS.md` 记录生成规则、候选筛选、固定结果和人工内容审计；
 - 首次实现不修改 `shared/`，待第二个项目证明整数三角格元接口稳定后再讨论提取。
 
 ## 4. 精确几何合同
@@ -518,34 +521,15 @@ app 层每个活跃 Pointer 保存：
 
 生产视觉只用本项目原创 SVG 几何、纹理和文案。
 
-## 13. Config
+## 13. A 级、依赖和隐私
 
-`config.js` 只允许：
-
-```js
-{
-  seatALabel: "A 席",
-  seatBLabel: "B 席",
-  intro: "各守一组片，一起铺满同一个轮廓。",
-  completion: "七片刚好合上了。"
-}
-```
-
-- 不提供姓名输入 UI；
-- 缺失、畸形或抛错 formatter 使用完整默认值；
-- 输出只经 `textContent`；
-- config 不改变 piece owner、目标、规则、顺序或测试；
-- 不读取 URL query/hash、存储或远程数据。
-
-## 14. A 级、依赖和隐私
-
-### 14.1 依赖
+### 13.1 依赖
 
 运行依赖：**0**。开发依赖：**不新增**。
 
 使用原生 HTML/CSS/SVG/JavaScript、Pointer Events 和仓库现有 Node/浏览器验收工具。禁止引入 jQuery、jQuery UI、Konva、多边形布尔库、物理引擎、拖拽库、图标库或构建器。
 
-### 14.2 本地合同
+### 13.2 本地合同
 
 - `file://` 下经典脚本正常加载；
 - 不需要 localhost 才能使用的 API；
@@ -553,7 +537,7 @@ app 层每个活跃 Pointer 保存：
 - 统一门户和 catalog 不存在时，作品仍完整；
 - 自动化 localhost 验收不能替代人工双击 `file://` 四局。
 
-### 14.3 隐私
+### 13.3 隐私
 
 - 不收集文件、姓名、按键、Pointer 轨迹、完成状态或设备信息；
 - 不联网、不上传、不提交表单；
@@ -562,7 +546,7 @@ app 层每个活跃 Pointer 保存：
 - 页面关闭后没有本项目持有的数据；
 - README 不使用“绝对安全”等超范围表述。
 
-## 15. 借鉴与原创声明
+## 14. 借鉴与原创声明
 
 生产 README 和 ATTRIBUTION 必须写明：
 
@@ -581,9 +565,9 @@ app 层每个活跃 Pointer 保存：
 
 七片模板由本文整数几何独立推导，四个目标由本仓库生成并审计。若实施发现实质借用，写入生产代码前暂停，保存许可证正文、版权、notice、复制范围和修改说明，再重新执行权利与离线审查。
 
-## 16. 自动测试 Gate
+## 15. 自动测试 Gate
 
-### 16.1 `geometry.test.js`
+### 15.1 `geometry.test.js`
 
 - 顶点、三角形、shape 畸形输入；
 - 数值排序覆盖负数和两位数，禁止字符串排序错误；
@@ -597,7 +581,7 @@ app 层每个活跃 Pointer 保存：
 - 四目标验证和 fingerprint 互异；
 - 每个标准解精确覆盖目标。
 
-### 16.2 `logic.test.js`
+### 15.2 `logic.test.js`
 
 - 初态、深冻结、状态/目标引用隔离；
 - START phase；
@@ -616,7 +600,7 @@ app 层每个活跃 Pointer 保存：
 - 同一 action log 深相等；
 - public view 不泄露可修改引用。
 
-### 16.3 静态扫描
+### 15.3 静态扫描
 
 - 无 `http://`、`https://` 运行资源；文档链接除外；
 - 无 fetch/XHR/WebSocket/EventSource/sendBeacon；
@@ -625,9 +609,9 @@ app 层每个活跃 Pointer 保存：
 - 无调研上游源码、文件名、函数名、坐标、题面、截图或素材；
 - ATTRIBUTION 固定 URL、commit、license、copyright、借鉴/未借鉴边界齐全。
 
-## 17. 浏览器验收 Gate
+## 16. 浏览器验收 Gate
 
-### 17.1 功能
+### 16.1 功能
 
 - 鼠标从 intro 完成第一形；
 - 只用键盘完成至少一形，并验证 Tab、Enter/Space、方向键、旋转、翻面、取消；
@@ -638,7 +622,7 @@ app 层每个活跃 Pointer 保存：
 - 四个 golden replay 在实际 UI 投影完成四局并换组；
 - 重开本形和全部重玩。
 
-### 17.2 生命周期
+### 16.2 生命周期
 
 - blur、hidden、pointercancel、lost capture 清全部 Pointer 会话并 CANCEL draft；
 - 返回页面不补交旧动作；
@@ -646,7 +630,7 @@ app 层每个活跃 Pointer 保存：
 - round complete 后旧 Pointer 不进入下一局；
 - 重开后 DOM、状态和焦点无陈旧引用。
 
-### 17.3 可访问性与视口
+### 16.3 可访问性与视口
 
 - 320×568、390×844、844×390、768×1024、1440×900；
 - 200% 与 400% 缩放；
@@ -657,7 +641,7 @@ app 层每个活跃 Pointer 保存：
 - 中文 200% 文本不遮挡目标或控制；
 - 页面允许正常缩放和非玩法区滚动。
 
-### 17.4 A 级实证
+### 16.4 A 级实证
 
 - 从 Finder 双击 `experiences/co-op/seven-piece-duet/index.html`；
 - 完整完成四形；
@@ -669,7 +653,7 @@ app 层每个活跃 Pointer 保存：
 
 受控浏览器若拒绝导航 `file://`，记录为工具边界，并另做真实双击；不得用 localhost 成功冒充 file 直开证据。
 
-## 18. Go / No-Go
+## 17. Go / No-Go
 
 实现可以按下一份 plan 启动，但安装状态保持 **Conditional Go**。
 
