@@ -1,6 +1,6 @@
 # Bug：共享依赖借鉴声明包含失效或未固定的来源链接
 
-- 状态：`investigating`
+- 状态：`resolved`
 - 日期：2026-07-25
 - 影响作品：`heart-sprint` 的 Socket.IO 声明；共享运行时及所有复用 Socket.IO、node-qrcode、Pannellum 的作品
 - 发现版本 / commit：`260c0bfcde8adcd1c5e119cab88f1b9e19117703`
@@ -49,8 +49,9 @@ Socket.IO 的发布 tag 命名包含包名前缀，声明按普通 `4.8.1` tag �
 - [x] 失效的 Socket.IO 两个 URL 均复现 HTTP 404
 - [x] 三组建议固定源码 URL 均返回 HTTP 200
 - [x] `node_modules` 中三个直接依赖均为精确版本、MIT 且携带许可证文件
-- [ ] 总控修复后对仓库内共享依赖声明运行固定链接检查
-- [ ] `npm run verify` 通过
+- [x] 新增结构测试，自动发现 6 个 installed Socket.IO 消费者并验证三项依赖声明
+- [x] 共享运行时、真实依赖入口与 `our-place-guess` 计划依赖已统一到固定 commit
+- [ ] `npm run verify` 与全仓测试在最终修复记录完成后执行
 
 ## 借鉴与来源声明
 
@@ -58,4 +59,5 @@ Socket.IO 的发布 tag 命名包含包名前缀，声明按普通 `4.8.1` tag �
 
 ## 相关提交
 
-- 待总控修复后补充
+- `61ada43`：先加入失败的依赖归因结构测试
+- `a21d05b`：统一固定共享运行时与真实依赖入口的来源、许可证和版权
