@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `bf2eb56` |
+| 当前 HEAD | `1169d67` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2301 / 2301` 通过 |
-| 工作树提示 | 全仓归因/许可证审计与 58 项真实 Chrome 矩阵已集成；两个槽位待滚动补位到固定共享依赖归因和运行时内容身份修复，`love-tree` clean-room 与 `capsule-docking` 视觉补证继续运行 |
+| 工作树提示 | 全仓归因/许可证审计与 58 项真实 Chrome 矩阵已集成；Worker 1/3 已滚动补位到固定共享依赖归因和运行时内容身份修复，四个执行槽位均真实运行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已完成，待补位 | 全仓借鉴声明、固定来源与许可证盘点 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/exp-attribution-license-audit` | `5e76c23` | `363`、Attribution Gate 假阳性 bug 与四清单连接 learn 已集成；58 installed 为 21 通过/29 中缺口/7 高缺口/1 阻断，21 候选当前 main 为 8/12/1 |
+| Worker 1 | 已分配 | 共享依赖固定归因修复 | `/Users/zenith/Desktop/two-of-us-worktrees/attribution-license-audit` | `codex/fix-shared-dependency-attribution` | `1169d67` | `363` 审计已集成并释放槽位；现统一 Socket.IO、node-qrcode、Pannellum 的固定源码/许可证/版权/实际使用边界，并加防漂移测试，只处理真实依赖链 |
 | Worker 2 | 已分配 | `love-tree` clean-room 重构前置与视觉概念 | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` | `codex/exp-love-tree-clean-room` | `f51c884` | 全仓启动合同审计、两份 bug 与一份 learn 已集成；用户已授权舍弃或重构，总控选择保留创意并 clean-room 重写，现只做 `366–368` 与概念稿，不修改生产 UI，等待用户视觉确认 |
-| Worker 3 | 已完成，待补位 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/exp-installed-browser-matrix-audit` | `a38c90d` | `364` 已集成：58/58 localhost full-load，A/C 深路径通过，B/D 权限边界诚实保留，A/B/C/D 移动代表无横溢，0 console/HTTP/公网异常 |
+| Worker 3 | 已分配 | 共享 runtime 内容身份修复 | `/Users/zenith/Desktop/two-of-us-worktrees/installed-browser-matrix-audit` | `codex/fix-runtime-content-identity` | `1169d67` | `364` 浏览器矩阵已集成并释放槽位；现按 `362` bug/learn 走计划、红测、最小实现和双根进程验证，拒绝复用另一 checkout 的同协议旧内容 |
 | Worker 4 | 已分配 | `capsule-docking` 视觉候选补证 | `/Users/zenith/Desktop/two-of-us-worktrees/visual-approval-digest` | `codex/exp-capsule-docking-visual` | `85a6c9d` | `365` 与证据漂移 bug 已集成并释放槽位；现按 `208` 统一方向生成 desktop/mobile 可审阅候选、`GENERATION.md` 与 `369` 提案，不修改生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -135,6 +135,8 @@
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
 | `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已分配；brainstorm、spec、plan 与完整概念稿先行，旧代码、商业录音和源包只在用户确认视觉后按计划退出分发链 |
 | `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已分配；补 desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句，不修改生产 UI、core 或 catalog |
+| 共享依赖固定归因修复 | `370` | Worker 1 | 已分配；固定三个真实根依赖的源码与许可证证据，覆盖共享 runtime 和实际入口，并以测试防止 tag/链接再次漂移 |
+| 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已分配；计划、红测、deterministic content identity、双根进程复用矩阵和最终验证，不修改生产 UI 或 catalog |
 
 执行 Session 不得自行抢占未在本表登记的编号。
 
