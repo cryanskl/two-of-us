@@ -10,7 +10,7 @@
 | --- | --- |
 | 快照日期 | 2026-07-25（Asia/Kuala_Lumpur） |
 | 当前分支 | `main` |
-| 当前 HEAD | `580b940` |
+| 当前 HEAD | `9c93192` |
 | 目标 installed | 75 |
 | 当前 catalog 总数 | 58 |
 | 当前 installed | 58 |
@@ -18,8 +18,8 @@
 | A / B / C / D | 50 / 1 / 6 / 1 |
 | surprise / co-op / versus | 17 / 24 / 17 |
 | 本次 repository verify | 通过：58 个入口、50 个 A、8 个非 A |
-| 本次是否重跑全仓测试 | 是：`2177 / 2177` 通过 |
-| 工作树提示 | 三个候选的 research / brainstorm / spec / plan 均已集成；`memory-merge-board` 规则层已集成，三个项目正在独立 worktree 推进非视觉核心 |
+| 本次是否重跑全仓测试 | 是：`2199 / 2199` 通过 |
+| 工作树提示 | `memory-merge-board` 三个固定关卡、独立求解器与确定性证明已集成；`our-place-guess` 离线地图资产链已集成；其余核心与视觉提案继续并行 |
 | 平台真实并发 | 1 个总控 + 4 个执行 Session |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 脚手架、23 条规则契约、错误 blocked fixture 修复与规则实现已集成；继续 solver、固定关卡和 `334` 核心验证 |
+| Worker 1 | 已分配 | `memory-merge-board` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core` | `codex/exp-memory-merge-board-core` | `40fd69a` | 三关、独立求解器、40 条核心 Gate 与确定性分支 learn 已集成；正在完成 `334` 核心验证 |
 | Worker 2 | 已分配 | `seven-piece-duet` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/seven-piece-duet-core` | `codex/exp-seven-piece-duet-core` | `5917f23` | `89b6108` 项目文档脚手架已集成为 `3426c57`；继续几何、原创目标生成与 reducer，预留 `337` 核心验证 |
-| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 已派发离线地图派生、私人题包、地图数学、规则和房间协议；不写 UI 或共享 runtime，预留 `340` 核心验证 |
+| Worker 3 | 已分配 | `our-place-guess` 非视觉核心 | `/Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core` | `codex/exp-our-place-guess-core` | `9be3915` | 固定 Natural Earth 地图及双 SHA 派生链已集成为 `7a9d106`；继续私人题包、地图数学、规则和房间协议 |
 | Worker 4 | 已分配 | `memory-merge-board` 视觉提案 | `/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-ui` | `codex/exp-memory-merge-board-ui` | `580b940` | 使用 Image Gen 制作桌面/移动完整概念与 `335` 视觉合同；只供用户确认，不写生产 UI |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。
@@ -140,6 +140,8 @@
 
 | 项目 | 项目 commits | 总控集成 commit | Gate | 备注 |
 | --- | --- | --- | --- | --- |
+| `memory-merge-board` 可解关卡与求解证明 | `7bbdfa7`、`6b0d3b0`、`5ddc227` | `7e41335`、`3c6c857`、`9c93192` | 定向 `40 / 40`；全仓 `2199 / 2199`；verify | 三个固定关卡由独立确定性搜索和真实 reducer 双重证明；catalog 路径真实 bug 已记录；无 UI，不计 installed |
+| `our-place-guess` 离线地图 | `0b7e35d` | `7a9d106` | 定向 `5 / 5`、派生 `--check`、输入/输出双 SHA、全仓 `2199 / 2199`、verify | Natural Earth v5.1.2 public-domain land 固定派生；运行时只读 123,906 字节本地资产；无 UI，不计 installed |
 | `seven-piece-duet` 核心脚手架 | `89b6108` | `3426c57` | diff-check、归因边界与 verify | README、双 MIT/W3C 借鉴声明、零依赖 CommonJS 边界；无实现/UI，不计 installed |
 | `our-place-guess` 前置 | `96cb023`、`eedebef`、`e872d59`、`f2a6d14`、`ee76c28`、`da831fe`、`5bf1be2`、`b0e0451`、`ad07ad0` | `a6fe37f`、`0ac9fee`、`4bb3d4b`、`6dc8464`、`05f9dbd`、`ff540a7`、`ea7a9ed`、`deefdc3`、`9be3915` | Posio/Natural Earth 固定来源；全仓 `2177 / 2177`；verify | C 级 Conditional Go；私人题包仅房主内存，固定前四张，复用现有 Socket.IO 且不改共享 runtime；无入口，不计 installed |
 | `memory-merge-board` 规则核心 | `5653a49`、`4c2a577`、`a5fca5a`、`06aae0a` | `a20f4b6`、`155e5a9`、`216925f`、`41148eb` | 定向 `23 / 23`；全仓 `2177 / 2177`；verify | 整盘滑动、合并、角色交换、章节分享与 blocked 终局；真实错误 fixture 已记录于 `bugs/`；无 UI，不计 installed |
