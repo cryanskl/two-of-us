@@ -255,6 +255,7 @@
     if (!output) {
       output = document.createElement("output");
       output.className = "current-praise";
+      output.setAttribute("role", "paragraph");
       output.setAttribute("aria-live", "off");
       app.insertBefore(output, stageCopy);
     }
