@@ -134,7 +134,7 @@ output {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-height: 238px;
   margin: 0;
-  padding: 8px;
+  padding: 44px 8px 8px;
   overflow: hidden;
   list-style: none;
   border: 4px solid var(--brass-600);
@@ -158,7 +158,7 @@ output {
 .reel-label {
   position: absolute;
   z-index: 2;
-  top: -48px;
+  top: -36px;
   left: 50%;
   width: max-content;
   max-width: 100%;
