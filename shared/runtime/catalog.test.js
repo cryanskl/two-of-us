@@ -1034,6 +1034,49 @@ test("catalog exposes the installed A-level vinyl secret", async () => {
   assert.match(portal, /"id": "vinyl-secret"/);
 });
 
+test("catalog exposes the installed A-level kaleidoscope names", async () => {
+  const catalog = await loadCatalog(new URL("../../", import.meta.url));
+  const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
+  const experience = catalog.experiences.find((item) => item.id === "kaleidoscope-names");
+
+  assert.equal(experience.title, "把名字折成同一束光");
+  assert.equal(experience.category, "surprise");
+  assert.equal(experience.level, "A");
+  assert.equal(experience.players, "1 人准备，1 人体验");
+  assert.equal(experience.devices, "单设备");
+  assert.equal(experience.installed, true);
+  assert.equal(experience.networkRequired, false);
+  assert.match(experience.entry, /kaleidoscope-names\/index\.html$/);
+  assert.match(portal, /"id": "kaleidoscope-names"/);
+});
+
+test("kaleidoscope names keeps file launch, staged secrets, and attribution boundaries", async () => {
+  const root = new URL("../../experiences/surprises/kaleidoscope-names/", import.meta.url);
+  const [html, config, logic, app, css, readme, attribution] = await Promise.all([
+    readFile(new URL("index.html", root), "utf8"),
+    readFile(new URL("config.js", root), "utf8"),
+    readFile(new URL("logic.js", root), "utf8"),
+    readFile(new URL("app.js", root), "utf8"),
+    readFile(new URL("styles.css", root), "utf8"),
+    readFile(new URL("README.md", root), "utf8"),
+    readFile(new URL("ATTRIBUTION.md", root), "utf8"),
+  ]);
+  const runtimeSource = [html, config, logic, app, css].join("\n");
+
+  assert.match(html, /<script src="\.\/config\.js"><\/script>\s*<script src="\.\/logic\.js"><\/script>\s*<script src="\.\/app\.js"><\/script>/);
+  assert.doesNotMatch(html, /type=["']module["']|(?:src|href)=["'](?:https?:)?\/\//i);
+  assert.doesNotMatch(runtimeSource, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|indexedDB|serviceWorker|Worker|getUserMedia|AudioContext)\b/);
+  assert.doesNotMatch(app, /\.innerHTML\s*=|insertAdjacentHTML|document\.write|\beval\s*\(/);
+  assert.match(app, /getPublicView/);
+  assert.match(html, /<noscript>[\s\S]*需要启用 JavaScript/);
+  assert.match(css, /forced-colors:\s*active/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(readme, /^## 借鉴与来源声明$/m);
+  assert.match(readme, /没有参考或复制第三方万花筒实现/);
+  assert.match(attribution, /没有\s*参考、复制、修改、链接或打包任何第三方万花筒项目/);
+  assert.match(attribution, /不包含第三方运行时依赖、第三方代码或第三方资产/);
+});
+
 test("vinyl secret keeps file launch, staged secrets, optional audio, and attribution boundaries", async () => {
   const root = new URL("../../experiences/surprises/vinyl-secret/", import.meta.url);
   const [html, config, logic, app, css, readme, attribution] = await Promise.all([
@@ -1608,7 +1651,7 @@ test("moon base power keeps its file protocol, deterministic, and attribution bo
   assert.match(attribution, /零复制/);
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "moon-base-power"/);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[月球基地配电（已实现为“月面，保持有光”）\]\(\.\.\/experiences\/co-op\/moon-base-power\/\)/);
 });
 
@@ -1674,7 +1717,7 @@ test("fog navigation keeps its file protocol, private view, asset and attributio
   assert.deepEqual(runtimeAsset, sourceAsset);
   assert.match(portal, /"id": "fog-navigation"/);
   assert.match(coOpIndex, /\.\/fog-navigation\//);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[迷雾领航（已实现为“雾里，跟着你走”）\]\(\.\.\/experiences\/co-op\/fog-navigation\/\)/);
 });
 
@@ -1747,7 +1790,7 @@ test("cloud recipe keeps its file protocol, rule, asset and attribution boundari
   assert.deepEqual(runtimeBottles, sourceBottles);
   assert.match(portal, /"id": "cloud-recipe"/);
   assert.match(coOpIndex, /\.\/cloud-recipe\//);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[云朵配方（已实现为“这一场雨，我们一起接”）\]\(\.\.\/experiences\/co-op\/cloud-recipe\/\)/);
 });
 
@@ -1820,7 +1863,7 @@ test("together zipper keeps its file protocol, timing, asset and attribution bou
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "together-zipper"/);
   assert.match(coOpIndex, /\.\/together-zipper\//);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[同心拉链（已实现为“把两边，拉成我们”）\]\(\.\.\/experiences\/co-op\/together-zipper\/\)/);
 });
 
@@ -1889,7 +1932,7 @@ test("seven day garden keeps its file protocol, rule, asset and attribution boun
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "seven-day-garden"/);
   assert.match(coOpIndex, /\.\/seven-day-garden\//);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[七日小花园（已实现为“把七天，养成一朵花”）\]\(\.\.\/experiences\/co-op\/seven-day-garden\/\)/);
 });
 
@@ -1958,7 +2001,7 @@ test("constellation relay keeps its file protocol, graph, asset and attribution 
   assert.deepEqual(runtimeKeepsake, sourceKeepsake);
   assert.match(portal, /"id": "constellation-relay"/);
   assert.match(coOpIndex, /\.\/constellation-relay\//);
-  assert.match(backlog, /已有 46 项[\s\S]*单人惊喜 17 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 14 项/);
+  assert.match(backlog, /已有 47 项[\s\S]*单人惊喜 18 项[\s\S]*双人合作 18 项[\s\S]*双人对抗 11 项[\s\S]*其余 13 项/);
   assert.match(backlog, /\[星座接线员（已实现为“把星光，一笔一笔交给你”）\]\(\.\.\/experiences\/co-op\/constellation-relay\/\)/);
 });
 

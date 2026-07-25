@@ -202,6 +202,13 @@
 | [310-twin-orbit-design-proposal.md](./310-twin-orbit-design-proposal.md) | “午夜双环刻度盘”的桌面/移动概念、双席语义、响应式与 code-native 偏差台账 |
 | [354-twin-orbit-core-verification.md](./354-twin-orbit-core-verification.md) | 双星同轨的完成态、重试、可达角度、隐私、标准来源与 39 项核心复验 |
 | [386-twin-orbit-final-verification.md](./386-twin-orbit-final-verification.md) | “这一圈，和你同时到”的 47 项定向测试、双环入口/失败路线、六视口、无 JS 与三项产品问题闭环 |
+| [259-kaleidoscope-names-research.md](./259-kaleidoscope-names-research.md) | S19“万花筒名字”的两轴校准、异步准备、A 级本地边界、机制去重与固定来源调研 |
+| [260-kaleidoscope-names-brainstorm.md](./260-kaleidoscope-names-brainstorm.md) | “把名字折成同一束光”的镜面阶数、24 格相位、双线索和主动揭晓产品决策 |
+| [261-kaleidoscope-names-spec.md](./261-kaleidoscope-names-spec.md) | “把名字折成同一束光”的整数圈模型、四阶段 reducer、公开投影、隐私与验收规格 |
+| [262-kaleidoscope-names-plan.md](./262-kaleidoscope-names-plan.md) | 万花筒名字的核心、生产 UI、隐私 DOM、catalog、Chrome 与独立提交实施计划 |
+| [314-kaleidoscope-names-design-proposal.md](./314-kaleidoscope-names-design-proposal.md) | 深紫光学调校台的桌面调校、移动揭晓、code-native 视觉和响应式边界 |
+| [350-kaleidoscope-names-core-verification.md](./350-kaleidoscope-names-core-verification.md) | 万花筒名字的 frozen 内容规范化、标准来源维护与 25 项核心复验 |
+| [387-kaleidoscope-names-final-verification.md](./387-kaleidoscope-names-final-verification.md) | “把名字折成同一束光”的 35 项定向测试、隐私 DOM、六视口、输入和降级终验 |
 | [267-vinyl-secret-research.md](./267-vinyl-secret-research.md) | S14“黑胶寻声”的三轨文字主路线、可选本地音频、阶段隐私与权利边界调研 |
 | [268-vinyl-secret-brainstorm.md](./268-vinyl-secret-brainstorm.md) | “黑胶寻声”的十二圈远近反馈、三轨顺序、默认无音频与失败软降级决策 |
 | [269-vinyl-secret-spec.md](./269-vinyl-secret-spec.md) | “把秘密藏进这一圈”的 reducer、公开投影、媒体生命周期、响应式与验收规格 |

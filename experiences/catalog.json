@@ -301,6 +301,19 @@
       "networkRequired": false
     },
     {
+      "id": "kaleidoscope-names",
+      "title": "把名字折成同一束光",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/kaleidoscope-names/index.html",
+      "readme": "experiences/surprises/kaleidoscope-names/README.md",
+      "description": "体验者根据两条公开线索选择镜面阶数、转动相位；两轴严格对齐并主动揭晓后，两枚名字标记和本地留言才进入页面。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "hot-seat-pictionary",
       "title": "同机你画我猜",
       "category": "co-op",
