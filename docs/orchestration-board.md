@@ -57,12 +57,15 @@
 1. `vinyl-secret`
 2. `twin-orbit`
 3. `kaleidoscope-names`
-4. `emoji-movie-duel`
-5. `taboo-description-duel`
+4. `four-symbol-film-duel`
+5. `word-detour-duel`
 6. `ricochet-tank-duel`
 7. `photo-slider-race`
 8. `dual-maze-race`
 9. `penguin-flag-duel`
+10. `memory-merge-board`
+11. `seven-piece-duet`
+12. `our-place-guess`
 
 总控也可以从 [`251-local-first-second-pass-candidate-refresh.md`](./251-local-first-second-pass-candidate-refresh.md) 选择更合适的合法候选，但必须先检查与现有 60 项的机制重复，并更新本队列。
 
@@ -140,20 +143,9 @@
 
 ## Blocked
 
-| 项目 | 阻塞原因 | 已有证据 | 需要谁决定 | 下一步 |
-| --- | --- | --- | --- | --- |
-| `photo-slider-race` | 生产 UI 等待视觉方向确认 | `docs/295-photo-slider-race-design-proposal.md` | 用户 | 确认深夜蓝、暖金/珊瑚双棋盘方向或提出修改 |
-| `dual-maze-race` | 生产 UI 等待视觉方向确认 | `docs/297-dual-maze-race-design-proposal.md` | 用户 | 确认纸白共享迷宫桌、钴蓝圆点/朱砂菱形方向或提出修改 |
-| `penguin-flag-duel` | 生产 UI 等待视觉方向确认 | `docs/303-penguin-flag-duel-design-proposal.md` | 用户 | 确认极夜冰场、点阵/条纹基地与原创几何企鹅方向或提出修改 |
-| `twin-orbit` | 生产 UI 等待视觉方向确认 | `docs/310-twin-orbit-design-proposal.md` | 用户 | 确认午夜双环刻度盘、琥珀星/雾蓝菱形方向或提出修改 |
-| `ricochet-tank-duel` | 生产 UI 等待视觉方向确认 | `docs/312-ricochet-tank-duel-design-proposal.md` | 用户 | 确认深靛棱镜折射台、珊瑚/湖蓝双席方向或提出修改 |
-| `kaleidoscope-names` | 生产 UI 等待视觉方向确认 | `docs/314-kaleidoscope-names-design-proposal.md` | 用户 | 确认深紫光学调校台、单人异步揭晓方向或提出修改 |
-| `word-detour-duel` | 生产 UI 等待视觉方向确认 | `docs/316-word-detour-duel-design-proposal.md` | 用户 | 确认纸面路线改道指挥台、中央目标与四条封路方向或提出修改 |
-| `four-symbol-film-duel` | 生产 UI 等待视觉方向确认 | `docs/318-four-symbol-film-duel-design-proposal.md` | 用户 | 确认复古影院票根台、猜题与交接遮挡方向或提出修改 |
-| `vinyl-secret` | 生产 UI 等待视觉方向确认 | `docs/320-vinyl-secret-design-proposal.md` | 用户 | 确认私人压片工作台、默认无音频和异步单人寻轨方向或提出修改 |
-| `memory-merge-board` | 生产 UI 等待视觉方向确认 | `docs/335-memory-merge-board-design-proposal.md` | 用户 | 确认冷雾蓝共同剪贴簿、共享 3×4 拼板与 phase 互斥方向或提出修改 |
-| `seven-piece-duet` | 生产 UI 等待视觉方向确认 | `docs/338-seven-piece-duet-design-proposal.md` | 用户 | 确认深墨纸面拼形台、A4/B3 纹理片组与共享轮廓方向或提出修改 |
-| `our-place-guess` | 生产 UI 等待视觉方向确认 | `docs/341-our-place-guess-design-proposal.md` | 用户 | 确认夜行纸图、guessing 仅自己圆点与 revealed 三形 pin 方向或提出修改 |
+当前没有仅因视觉确认而阻塞的项目。用户已授权本仓库视觉概念直接执行；
+候选仍须分别通过玩法、隐私、许可证、测试、浏览器和启动合同 Gate 才能上架。
+`love-tree` clean-room 另因当前工具无法验证真实 `file://` 启动而保持待定，不受视觉授权影响。
 
 ## 最近集成
 
