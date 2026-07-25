@@ -139,7 +139,12 @@ test("actions require exact revisions, schemas and data descriptors", () => {
     { ...valid, extra: true },
     { type: "MOVE_DRAFT", revision: state.revision, seat: "A", dx: 0, dy: 0 },
     { type: "ROTATE_DRAFT", revision: state.revision, seat: "A", direction: 0 },
-    Object.assign(Object.create(null), valid)
+    Object.assign(Object.create(null), valid),
+    new Proxy({}, {
+      ownKeys() {
+        throw new Error("hostile ownKeys");
+      }
+    })
   ]) {
     assert.equal(logic.transition(state, invalid), state);
   }
