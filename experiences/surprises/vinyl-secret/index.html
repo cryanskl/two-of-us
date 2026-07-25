@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta
+      name="description"
+      content="在十二圈唱片沟槽间寻找三段本地秘密文字的单人惊喜。"
+    >
+    <title>把秘密藏进这一圈</title>
+    <link rel="icon" href="./assets/favicon.svg">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="press-light" aria-hidden="true"></div>
+
+    <main id="app" class="app-shell">
+      <header class="public-header">
+        <h1 id="app-title" tabindex="-1">把秘密藏进这一圈</h1>
+      </header>
+
+      <noscript>
+        <p class="no-script">
+          此体验需要浏览器启用 JavaScript。启用后重新打开本页即可开始。
+        </p>
+      </noscript>
+
+      <section id="stage" class="stage" aria-label="当前唱片步骤"></section>
+      <p
+        id="live-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+      <audio id="track-audio" preload="none"></audio>
+    </main>
+
+    <script src="./config.js" defer></script>
+    <script src="./logic.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
