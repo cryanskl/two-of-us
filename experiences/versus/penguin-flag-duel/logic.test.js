@@ -197,6 +197,18 @@ test("严格 action keys、revision 和阶段转换 fail closed", () => {
   assert.equal(getterReads, 0, "nested intent accessors must be rejected without execution");
 });
 
+test("revision 到达 MAX_SAFE 后拒绝转换且不产生不安全整数状态", () => {
+  const candidate = clone(logic.createInitialState());
+  candidate.revision = Number.MAX_SAFE_INTEGER;
+  const maxed = logic.assertState(candidate);
+  const unchanged = logic.reducePenguinFlagDuel(maxed, {
+    type: "START",
+    expectedRevision: Number.MAX_SAFE_INTEGER,
+  });
+  assert.equal(unchanged, maxed);
+  assert.equal(Number.isSafeInteger(unchanged.revision), true);
+});
+
 test("九种输入使用定点加速度，斜向与直向模长接近", () => {
   const spawn = logic.deriveSpawn()[0];
   const right = logic.resolvePlayerMotion(spawn, 3, false);
