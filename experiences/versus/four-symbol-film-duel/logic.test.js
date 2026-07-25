@@ -254,6 +254,44 @@ test("config parsing rejects accessors, sparse arrays, subclasses and hostile pr
   assert.equal(sanitizeConfig(hostile), DEFAULT_CONFIG);
 });
 
+test("nested config arrays and data validation never perform ordinary property gets", () => {
+  const candidate = editableConfig();
+  candidate.publicTitle = "代理配置";
+  let nestedGets = 0;
+  candidate.tokens[0].concepts = new Proxy(candidate.tokens[0].concepts, {
+    get() {
+      nestedGets += 1;
+      throw new Error("ordinary nested get must not run");
+    }
+  });
+  const sanitized = sanitizeConfig(candidate);
+  assert.equal(sanitized.publicTitle, "代理配置");
+  assert.equal(nestedGets, 0);
+
+  const source = editableConfig();
+  let topLevelGets = 0;
+  const dataProxy = new Proxy(source, {
+    get() {
+      topLevelGets += 1;
+      throw new Error("ordinary top-level get must not run");
+    }
+  });
+  assert.deepEqual(validateGameData(dataProxy), []);
+  assert.equal(topLevelGets, 0);
+
+  let accessorCalls = 0;
+  const accessor = editableConfig();
+  Object.defineProperty(accessor, "tokens", {
+    enumerable: true,
+    get() {
+      accessorCalls += 1;
+      return source.tokens;
+    }
+  });
+  assert.ok(validateGameData(accessor).length > 0);
+  assert.equal(accessorCalls, 0);
+});
+
 test("player names normalize Unicode whitespace and fall back safely", () => {
   assert.equal(normalizePlayerName("  阿\u00a0光  ", "玩家 A"), "阿 光");
   assert.equal(normalizePlayerName("   ", "玩家 A"), "玩家 A");
