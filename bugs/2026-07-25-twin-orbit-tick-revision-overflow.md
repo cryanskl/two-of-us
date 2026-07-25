@@ -46,6 +46,8 @@ snapshot 当作成功结果返回，导致引用变化且对象未冻结。
 - [x] 项目测试通过
 - [x] `node --check` 通过
 - [x] `git diff --check` 通过
+- [x] `npm run verify` 通过
+- [x] `npm test` 通过
 
 ## 相关提交
 

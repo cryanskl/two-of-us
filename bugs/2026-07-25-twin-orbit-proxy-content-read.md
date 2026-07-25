@@ -49,6 +49,8 @@ descriptor snapshot。这让本应纯数据的验证边界重新获得可执行�
 - [x] 项目测试通过
 - [x] `node --check` 通过
 - [x] `git diff --check` 通过
+- [x] `npm run verify` 通过
+- [x] `npm test` 通过
 
 ## 相关提交
 

@@ -47,6 +47,8 @@ intro/gate-intro 的 SUSPEND 不改变状态；epoch 或 revision 无法安全�
 - [x] 项目测试通过
 - [x] `node --check` 通过
 - [x] `git diff --check` 通过
+- [x] `npm run verify` 通过
+- [x] `npm test` 通过
 
 ## 相关提交
 
