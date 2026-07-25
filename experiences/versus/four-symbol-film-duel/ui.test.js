@@ -88,6 +88,8 @@ test("styles include responsive, focus, reduced-motion and forced-colors gates",
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /forced-colors:\s*active/);
   assert.match(css, /min-height:\s*(?:44|48)px/);
+  assert.match(css, /\.setup-screen \.name-grid,[\s\S]*\.setup-screen \.pack-grid[\s\S]*repeat\(2,/);
+  assert.match(css, /\.setup-form\s*\{[\s\S]*gap:\s*14px/);
 });
 
 test("README freezes direct-open, rules, privacy and attribution boundaries", () => {

@@ -742,6 +742,44 @@ legend {
     width: calc(100% - 22px);
   }
 
+  .setup-screen {
+    padding-top: 18px;
+    padding-bottom: 28px;
+  }
+
+  .setup-screen .lead {
+    margin: 8px auto 16px;
+    line-height: 1.5;
+  }
+
+  .setup-form {
+    gap: 14px;
+  }
+
+  .setup-screen .name-grid,
+  .setup-screen .pack-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .setup-screen .pack-choice input {
+    inset: 14px auto auto 10px;
+  }
+
+  .setup-screen .pack-copy {
+    min-height: 84px;
+    padding: 12px 10px 12px 34px;
+  }
+
+  .setup-screen .pack-choice input:checked + .pack-copy {
+    padding: 10px 8px 10px 32px;
+  }
+
+  .setup-screen .rules {
+    gap: 6px 12px;
+    padding: 10px;
+  }
+
   .handoff-curtain {
     min-height: 390px;
     padding: 24px 16px;

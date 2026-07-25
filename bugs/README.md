@@ -8,6 +8,7 @@
 
 ## 已记录
 
+- [四符片名擂台：移动设置页主动作落在首屏之外](./2026-07-26-four-symbol-film-duel-mobile-setup-primary-below-fold.md)
 - [四符片名擂台：借鉴声明标题不符合目录协议](./2026-07-26-four-symbol-film-duel-attribution-heading-contract.md)
 - [根门户：localhost 自动请求 favicon 返回 404](./2026-07-26-root-portal-localhost-favicon-404.md)
 - [这一圈，和你同时到：无 JavaScript 时主动作成为无响应假按钮](./2026-07-25-twin-orbit-no-js-false-primary-action.md)
