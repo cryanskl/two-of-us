@@ -4,6 +4,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { readFileSync } = require("node:fs");
 const vm = require("node:vm");
+const config = require("./config.js");
 const logic = require("./logic.js");
 
 function assertDeepFrozen(value, seen = new Set()) {
@@ -45,12 +46,81 @@ function throwingProxy() {
   });
 }
 
+function action(state, type, fields = {}) {
+  return { type, revision: state.revision, ...fields };
+}
+
+function createCheckedState({ joint = true, names = ["阿左", "阿右"] } = {}) {
+  let state = logic.createInitialState({
+    playerNames: names,
+    mazes: logic.DEFAULT_MAZES
+  });
+  state = logic.reduce(state, action(state, logic.ACTIONS.ENTER_INPUT_CHECK));
+  for (const playerId of [0, 1]) {
+    for (const direction of logic.DIRECTION_NAMES) {
+      state = logic.reduce(state, action(state, logic.ACTIONS.RECORD_DIRECTION_CHECK, {
+        playerId,
+        direction
+      }));
+    }
+  }
+  state = logic.reduce(
+    state,
+    action(
+      state,
+      joint ? logic.ACTIONS.RECORD_JOINT_CHECK : logic.ACTIONS.ACCEPT_INPUT_WARNING
+    )
+  );
+  return state;
+}
+
+function startRacing(options) {
+  let state = createCheckedState(options);
+  state = logic.reduce(state, action(state, logic.ACTIONS.START_MATCH));
+  for (let tick = 0; tick < logic.CONSTANTS.COUNTDOWN_TICKS; tick += 1) {
+    state = logic.reduce(state, action(state, logic.ACTIONS.TICK));
+  }
+  assert.equal(state.phase, "racing");
+  return state;
+}
+
+function pathDirections(maze) {
+  const path = logic.findShortestPath(maze);
+  return path.slice(1).map((target, index) => {
+    const from = path[index];
+    const direction = logic.DIRECTION_NAMES.find(
+      (candidate) => logic.canMove(maze, from, candidate)
+        && logic.moveIndex(maze, from, candidate) === target
+    );
+    assert.ok(direction);
+    return direction;
+  });
+}
+
+function raceAlong(state, players) {
+  const heat = logic.HEATS[state.heatIndex];
+  const directions = pathDirections(state.mazes[heat.mapIndex]);
+  let next = state;
+  for (const direction of directions) {
+    for (const playerId of players) {
+      next = logic.reduce(next, action(next, logic.ACTIONS.QUEUE_MOVE, {
+        playerId,
+        direction
+      }));
+    }
+    next = logic.reduce(next, action(next, logic.ACTIONS.TICK));
+  }
+  return next;
+}
+
 test("classic script and CommonJS expose the same recursively frozen maze API", () => {
   const sandbox = { window: {} };
+  vm.runInNewContext(readFileSync(require.resolve("./config.js"), "utf8"), sandbox);
   vm.runInNewContext(readFileSync(require.resolve("./logic.js"), "utf8"), sandbox);
   const browserApi = sandbox.window.DualMazeRaceLogic;
 
   assert.deepEqual(Object.keys(browserApi), Object.keys(logic));
+  assert.equal(sandbox.window.DUAL_MAZE_CONFIG.composeMatchNote(), config.composeMatchNote());
   assert.equal(browserApi.CONSTANTS.ROWS, 9);
   assert.equal(browserApi.CONSTANTS.COLS, 9);
   assert.deepEqual(logic.CONSTANTS.START, { row: 4, col: 0 });
@@ -237,5 +307,319 @@ test("navigation rejects invalid positions and directions without leaking mutabl
   for (const direction of ["north", "", null, throwingProxy()]) {
     assert.equal(logic.canMove(maze, 4, direction), false);
     assert.equal(logic.moveIndex(maze, 4, direction), 4);
+  }
+});
+
+test("config is frozen, strictly sanitized and cannot change rules or winner", () => {
+  assert.deepEqual(config.defaultPlayerNames, ["玩家一", "玩家二"]);
+  assertDeepFrozen(config);
+  assertDeepFrozen(logic.DEFAULT_CONFIG);
+
+  const source = {
+    defaultPlayerNames: ["  星   河 ", "月".repeat(25)],
+    composeMatchNote(summary) {
+      assertDeepFrozen(summary);
+      return "  今晚   再来一局。  ";
+    }
+  };
+  const safe = logic.sanitizeConfig(source);
+  assert.deepEqual(safe.defaultPlayerNames, ["星 河", "月".repeat(20)]);
+  source.defaultPlayerNames[0] = "篡改";
+  assert.equal(safe.defaultPlayerNames[0], "星 河");
+  assert.equal(
+    logic.sanitizeConfig({ ...source, extra: true }),
+    logic.DEFAULT_CONFIG
+  );
+  assert.equal(
+    logic.sanitizeConfig({ defaultPlayerNames: ["甲", "乙"], composeMatchNote: "no" }),
+    logic.DEFAULT_CONFIG
+  );
+});
+
+test("initial state normalizes names, freezes ownership and rejects non-fixture mazes", () => {
+  const names = ["  星   河 ", "\ud800"];
+  const state = logic.createInitialState({
+    playerNames: names,
+    mazes: logic.DEFAULT_MAZES
+  });
+  names[0] = "外部改名";
+  assert.equal(logic.isState(state), true);
+  assert.equal(state.phase, "intro");
+  assert.deepEqual(state.playerNames, ["星 河", "玩家二"]);
+  assert.equal(state.mazes, logic.DEFAULT_MAZES);
+  assert.equal(state.positions[0], 36);
+  assertDeepFrozen(state);
+
+  const wrongMaze = editableMaze(logic.DEFAULT_MAZES[0]);
+  wrongMaze.seed = logic.MAPS[1].seed;
+  const fallback = logic.createInitialState({
+    playerNames: ["甲", "乙"],
+    mazes: [wrongMaze, logic.DEFAULT_MAZES[1]]
+  });
+  assert.deepEqual(fallback.playerNames, ["玩家一", "玩家二"]);
+  assert.equal(fallback.mazes, logic.DEFAULT_MAZES);
+});
+
+test("input check requires both direction sets and joint success or explicit warning acceptance", () => {
+  let state = logic.createInitialState();
+  assert.equal(logic.startMatch(state), state);
+  state = logic.enterInputCheck(state);
+  assert.equal(state.phase, "input-check");
+  assert.equal(logic.startMatch(state), state);
+
+  for (const playerId of [0, 1]) {
+    for (const direction of logic.DIRECTION_NAMES) {
+      const previous = state;
+      state = logic.recordDirectionCheck(state, playerId, direction);
+      assert.equal(state.revision, previous.revision + 1);
+      assert.equal(logic.recordDirectionCheck(state, playerId, direction), state);
+    }
+  }
+  assert.equal(logic.startMatch(state), state);
+  const accepted = logic.acceptInputWarning(state);
+  assert.equal(accepted.inputCheck.warningAccepted, true);
+  const countdown = logic.startMatch(accepted);
+  assert.equal(countdown.phase, "countdown");
+  assert.equal(countdown.countdownTicks, 90);
+
+  const joint = createCheckedState({ joint: true });
+  assert.equal(joint.inputCheck.jointDetected, true);
+  assert.equal(logic.startMatch(joint).phase, "countdown");
+});
+
+test("actions require exact own data fields and current revision", () => {
+  const state = logic.enterInputCheck(logic.createInitialState());
+  const legal = action(state, logic.ACTIONS.RECORD_DIRECTION_CHECK, {
+    playerId: 0,
+    direction: "up"
+  });
+  assert.equal(logic.reduce(state, { ...legal, extra: true }), state);
+  assert.equal(logic.reduce(state, { ...legal, revision: state.revision - 1 }), state);
+  assert.equal(logic.reduce(state, { ...legal, playerId: 2 }), state);
+  assert.equal(logic.reduce(state, { ...legal, direction: "north" }), state);
+  assert.equal(logic.reduce(state, throwingProxy()), state);
+
+  const accessor = { type: logic.ACTIONS.RECORD_JOINT_CHECK, revision: state.revision };
+  Object.defineProperty(accessor, "revision", {
+    enumerable: true,
+    get() {
+      throw new Error("must not execute");
+    }
+  });
+  assert.equal(logic.reduce(state, accessor), state);
+
+  const recovered = logic.reduce({ phase: "racing" }, legal);
+  assert.equal(logic.isState(recovered), true);
+  assert.equal(recovered.phase, "intro");
+  assert.equal(logic.enterInputCheck(null).phase, "intro");
+  assert.equal(logic.queueMove(throwingProxy(), 0, "right").phase, "intro");
+});
+
+test("countdown consumes exactly 90 abstract ticks and rejects movement until racing", () => {
+  let state = createCheckedState();
+  state = logic.startMatch(state);
+  assert.equal(logic.queueMove(state, 0, "right"), state);
+  for (let tick = 0; tick < 89; tick += 1) {
+    state = logic.advanceCountdown(state);
+    assert.equal(state.phase, "countdown");
+    assert.equal(state.elapsedTicks, 0);
+  }
+  state = logic.advanceCountdown(state);
+  assert.equal(state.phase, "racing");
+  assert.equal(state.countdownTicks, 0);
+  assert.deepEqual(state.queues, [[], []]);
+});
+
+test("each racing tick consumes at most one FIFO item per player", () => {
+  let state = startRacing();
+  const directions = pathDirections(state.mazes[0]);
+  state = logic.queueMove(state, 0, directions[0]);
+  state = logic.queueMove(state, 0, directions[1]);
+  assert.equal(logic.queueMove(state, 0, directions[2]), state);
+  state = logic.stepRace(state);
+  assert.equal(state.elapsedTicks, 1);
+  assert.deepEqual(state.queues[0], [directions[1]]);
+  const firstPosition = state.positions[0];
+  state = logic.stepRace(state);
+  assert.equal(state.elapsedTicks, 2);
+  assert.deepEqual(state.queues[0], []);
+  assert.notEqual(state.positions[0], firstPosition);
+});
+
+test("wall attempts stay in place, increment bump and are consumed atomically", () => {
+  let state = startRacing();
+  const maze = state.mazes[0];
+  const wall = logic.DIRECTION_NAMES.find(
+    (direction) => !logic.canMove(maze, state.positions[0], direction)
+  );
+  assert.ok(wall);
+  state = logic.queueMove(state, 0, wall);
+  const before = state.positions[0];
+  state = logic.stepRace(state);
+  assert.equal(state.positions[0], before);
+  assert.equal(state.bumps[0], 1);
+  assert.equal(state.bumps[1], 0);
+  assert.deepEqual(state.queues[0], []);
+});
+
+test("player enqueue order does not affect same-tick movement or a simultaneous finish", () => {
+  let leftFirst = startRacing();
+  let rightFirst = startRacing();
+  const directions = pathDirections(leftFirst.mazes[0]);
+
+  for (const direction of directions) {
+    leftFirst = logic.queueMove(leftFirst, 0, direction);
+    leftFirst = logic.queueMove(leftFirst, 1, direction);
+    rightFirst = logic.queueMove(rightFirst, 1, direction);
+    rightFirst = logic.queueMove(rightFirst, 0, direction);
+    leftFirst = logic.stepRace(leftFirst);
+    rightFirst = logic.stepRace(rightFirst);
+  }
+
+  assert.equal(leftFirst.phase, "heat-result");
+  assert.equal(rightFirst.phase, "heat-result");
+  assert.deepEqual(leftFirst.positions, rightFirst.positions);
+  assert.deepEqual(leftFirst.bumps, rightFirst.bumps);
+  assert.deepEqual(leftFirst.heatResults, rightFirst.heatResults);
+  assert.equal(leftFirst.heatResults[0].winner, null);
+  assert.deepEqual(leftFirst.heatResults[0].points, [0.5, 0.5]);
+  assert.equal(leftFirst.heatResults[0].elapsedTicks, 28);
+});
+
+test("single-player finish awards one point without hidden time or bump tiebreaks", () => {
+  const finished = raceAlong(startRacing(), [0]);
+  assert.equal(finished.phase, "heat-result");
+  assert.equal(finished.heatResults[0].winner, 0);
+  assert.deepEqual(finished.heatResults[0].points, [1, 0]);
+  assert.equal(finished.positions[1], 36);
+  assert.equal(logic.stepRace(finished), finished);
+});
+
+test("four heats pair both seeds, swap seats and accept a tied match", () => {
+  let state = startRacing({ names: ["晨", "暮"] });
+  for (let heatIndex = 0; heatIndex < logic.HEATS.length; heatIndex += 1) {
+    state = raceAlong(state, [0, 1]);
+    if (heatIndex < logic.HEATS.length - 1) {
+      assert.equal(state.phase, "heat-result");
+      state = logic.advanceHeat(state);
+      assert.equal(state.heatIndex, heatIndex + 1);
+      for (let tick = 0; tick < logic.CONSTANTS.COUNTDOWN_TICKS; tick += 1) {
+        state = logic.advanceCountdown(state);
+      }
+    }
+  }
+
+  assert.equal(state.phase, "match-result");
+  assert.deepEqual(
+    state.heatResults.map((result) => [
+      result.mapLabel,
+      result.leftPlayer,
+      result.rightPlayer,
+      result.elapsedTicks
+    ]),
+    [
+      ["COUP", 0, 1, 28],
+      ["COUP", 1, 0, 28],
+      ["PAIR", 0, 1, 30],
+      ["PAIR", 1, 0, 30]
+    ]
+  );
+  const view = logic.getPublicView(state);
+  assert.deepEqual(view.scores, [2, 2]);
+  assert.equal(view.matchWinner, null);
+
+  const restarted = logic.restartMatch(state);
+  assert.equal(restarted.phase, "countdown");
+  assert.deepEqual(restarted.playerNames, ["晨", "暮"]);
+  assert.equal(restarted.mazes, state.mazes);
+  assert.deepEqual(restarted.heatResults, []);
+});
+
+test("pause clears queues, freezes abstract time and resume uses a 45-tick countdown", () => {
+  let state = startRacing();
+  const firstDirection = pathDirections(state.mazes[0])[0];
+  state = logic.queueMove(state, 0, firstDirection);
+  const elapsed = state.elapsedTicks;
+  const paused = logic.pauseMatch(state, "hidden");
+  assert.equal(paused.phase, "paused");
+  assert.deepEqual(paused.queues, [[], []]);
+  assert.equal(paused.elapsedTicks, elapsed);
+  assert.equal(logic.stepRace(paused), paused);
+  assert.equal(logic.pauseMatch(paused, "manual"), paused);
+
+  state = logic.resumeMatch(paused);
+  assert.equal(state.phase, "countdown");
+  assert.equal(state.countdownTicks, 45);
+  for (let tick = 0; tick < 45; tick += 1) state = logic.advanceCountdown(state);
+  assert.equal(state.phase, "racing");
+  assert.equal(state.elapsedTicks, elapsed);
+  assert.deepEqual(state.queues, [[], []]);
+});
+
+test("public view shares one maze DTO between boards without queues, paths or PRNG state", () => {
+  let state = startRacing();
+  state = logic.queueMove(state, 0, pathDirections(state.mazes[0])[0]);
+  const view = logic.getPublicView(state);
+  assert.equal(view.boards[0].maze, view.boards[1].maze);
+  assert.notEqual(view.boards[0].maze, state.mazes[0]);
+  assert.equal("queues" in view, false);
+  assert.equal("fingerprint" in view.boards[0].maze, false);
+  assert.equal("path" in view.boards[0].maze, false);
+  assert.equal("prng" in view, false);
+  assertDeepFrozen(view);
+
+  assert.equal(logic.getPublicView({ phase: "racing" }), null);
+  assert.notEqual(logic.getPublicView(state), view);
+});
+
+test("match note receives frozen public summary, is bounded and cannot alter the result", () => {
+  let state = startRacing();
+  for (let heatIndex = 0; heatIndex < 4; heatIndex += 1) {
+    state = raceAlong(state, [0, 1]);
+    if (heatIndex < 3) {
+      state = logic.advanceHeat(state);
+      for (let tick = 0; tick < 90; tick += 1) state = logic.advanceCountdown(state);
+    }
+  }
+  const winnerBefore = logic.getPublicView(state).matchWinner;
+  const note = logic.resolveMatchNote(state, {
+    defaultPlayerNames: ["甲", "乙"],
+    composeMatchNote(summary) {
+      assertDeepFrozen(summary);
+      return "爱".repeat(200);
+    }
+  });
+  assert.equal(Array.from(note).length, 160);
+  assert.equal(logic.getPublicView(state).matchWinner, winnerBefore);
+
+  const fallback = logic.resolveMatchNote(state, {
+    defaultPlayerNames: ["甲", "乙"],
+    composeMatchNote() {
+      throw new Error("formatter");
+    }
+  });
+  assert.equal(fallback, "同一条路，换个位置，再比一次。");
+  assert.equal(logic.resolveMatchNote(startRacing()), null);
+});
+
+test("production core has no DOM, network, storage, random or browser clock dependency", () => {
+  const source = [
+    readFileSync(require.resolve("./config.js"), "utf8"),
+    readFileSync(require.resolve("./logic.js"), "utf8")
+  ].join("\n");
+  for (const forbidden of [
+    /\bdocument\b/u,
+    /\bfetch\s*\(/u,
+    /\bXMLHttpRequest\b/u,
+    /\bWebSocket\b/u,
+    /\blocalStorage\b/u,
+    /\bsessionStorage\b/u,
+    /\bindexedDB\b/u,
+    /\bDate\.now\b/u,
+    /\bperformance\.now\b/u,
+    /\brequestAnimationFrame\b/u,
+    /\bMath\.random\b/u
+  ]) {
+    assert.doesNotMatch(source, forbidden);
   }
 });
