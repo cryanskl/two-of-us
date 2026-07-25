@@ -547,11 +547,12 @@
 
   function sourceTransitionAllowed(current, next) {
     if (next.status === "loading") {
-      return next.generation === current.generation + 1;
+      return next.generation === current.generation + 1
+        && next.kind === current.kind;
     }
     return current.status === "loading"
       && next.generation === current.generation
-      && next.kind === current.kind;
+      && (next.status === "ready" || next.kind === current.kind);
   }
 
   function classifyKeyInput(value) {
@@ -657,6 +658,7 @@
     }
     if (!typeDescriptor || !Object.hasOwn(typeDescriptor, "value")) return null;
     const type = typeDescriptor.value;
+    if (typeof type !== "string") return null;
     const keysByType = {
       [ACTIONS.SET_SOURCE]: ["type", "revision", "metadata"],
       [ACTIONS.START_MATCH]: ["type", "revision", "seed"],
@@ -681,7 +683,7 @@
 
   function startMatch(state, seed) {
     const fair = createFairBoards(seed);
-    if (!fair || state.sourceMetadata.status !== "ready") return state;
+    if (!fair || state.sourceMetadata.status === "loading") return state;
     return copyState(state, {
       phase: "countdown",
       seed: fair.seed,
@@ -985,7 +987,7 @@
       },
       controls: {
         canChangeSource: state.phase === "setup",
-        canStart: state.phase === "setup" && state.sourceMetadata.status === "ready",
+        canStart: state.phase === "setup" && state.sourceMetadata.status !== "loading",
         canMoveLeft: leftCanMove,
         canMoveRight: rightCanMove,
         canPause: state.phase === "countdown"

@@ -293,7 +293,7 @@ test("来源元数据只接受精确白名单并按 generation 两阶段提交",
 
   const loading = logic.reduce(initial, action(initial, logic.ACTIONS.SET_SOURCE, {
     metadata: {
-      kind: "local",
+      kind: "builtin",
       status: "loading",
       generation: 1,
       errorCode: null,
@@ -322,6 +322,84 @@ test("来源元数据只接受精确白名单并按 generation 两阶段提交",
     },
   }));
   assert.equal(stale, ready);
+});
+
+test("候选图片两阶段提交保留 active 来源，失败后当前图片仍可开局", () => {
+  const initial = logic.createInitialState();
+  const loading = logic.reduce(initial, action(initial, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "builtin",
+      status: "loading",
+      generation: 1,
+      errorCode: null,
+    },
+  }));
+  assert.deepEqual(logic.getPublicView(loading).sourceMetadata, {
+    kind: "builtin",
+    status: "loading",
+    generation: 1,
+    errorCode: null,
+  });
+  assert.equal(logic.getPublicView(loading).controls.canStart, false);
+
+  const committed = logic.reduce(loading, action(loading, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "local",
+      status: "ready",
+      generation: 1,
+      errorCode: null,
+    },
+  }));
+  assert.notEqual(committed, loading);
+  assert.equal(logic.getPublicView(committed).sourceMetadata.kind, "local");
+
+  const failed = logic.reduce(loading, action(loading, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "builtin",
+      status: "error",
+      generation: 1,
+      errorCode: "decode-failed",
+    },
+  }));
+  const failedView = logic.getPublicView(failed);
+  assert.equal(failedView.sourceMetadata.kind, "builtin");
+  assert.equal(failedView.controls.canStart, true);
+  const started = logic.reduce(failed, action(failed, logic.ACTIONS.START_MATCH, { seed: 7 }));
+  assert.equal(logic.getPublicView(started).phase, "countdown");
+
+  const forgedFailure = logic.reduce(loading, action(loading, logic.ACTIONS.SET_SOURCE, {
+    metadata: {
+      kind: "local",
+      status: "error",
+      generation: 1,
+      errorCode: "decode-failed",
+    },
+  }));
+  assert.equal(forgedFailure, loading);
+});
+
+test("File-like、访问器和 revoked Proxy 不能进入来源元数据", () => {
+  let getterReads = 0;
+  const fileLike = Object.create({
+    arrayBuffer() {
+      throw new Error("must not read");
+    },
+  });
+  for (const key of ["kind", "status", "generation", "errorCode"]) {
+    Object.defineProperty(fileLike, key, {
+      enumerable: true,
+      get() {
+        getterReads += 1;
+        throw new Error("must not read");
+      },
+    });
+  }
+  assert.equal(logic.sanitizeSourceMetadata(fileLike), null);
+  assert.equal(getterReads, 0);
+
+  const revoked = Proxy.revocable({}, {});
+  revoked.revoke();
+  assert.equal(logic.sanitizeSourceMetadata(revoked.proxy), null);
 });
 
 test("键盘抽象映射左右席位并忽略 repeat、组合键和多余字段", () => {
@@ -475,6 +553,26 @@ test("严格 action 拒绝 stale revision、多字段、访问器、Proxy 和最
     logic.reduce(state, new Proxy({}, { ownKeys() { throw new Error("trap"); } })),
     state,
   );
+
+  let coercions = 0;
+  const hostileType = {
+    [Symbol.toPrimitive]() {
+      coercions += 1;
+      throw new Error("must not coerce");
+    },
+  };
+  assert.equal(logic.reduce(state, {
+    type: hostileType,
+    revision: state.revision,
+  }), state);
+  assert.equal(coercions, 0);
+
+  const revokedType = Proxy.revocable({}, {});
+  revokedType.revoke();
+  assert.equal(logic.reduce(state, {
+    type: revokedType.proxy,
+    revision: state.revision,
+  }), state);
 
   const saturated = Object.freeze({ ...state, revision: Number.MAX_SAFE_INTEGER });
   const reset = logic.reduce(saturated, {
