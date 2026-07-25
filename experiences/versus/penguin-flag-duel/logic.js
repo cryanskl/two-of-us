@@ -573,13 +573,12 @@
 
   function replaySession(log) {
     const source = readExactRecord(log, REPLAY_KEYS);
-    if (!source || source.version !== VERSION || !Array.isArray(source.actions)
-      || hasUnexpectedArrayKeys(source.actions, source.actions.length)) {
-      throw new TypeError("invalid replay session");
-    }
+    if (!source || source.version !== VERSION) throw new TypeError("invalid replay session");
+    const actions = snapshotDenseArray(source.actions);
+    if (!actions) throw new TypeError("invalid replay session");
     const config = parseConfigStrict(source.config);
     let state = createInitialState(config);
-    for (const action of source.actions) {
+    for (const action of actions) {
       const parsed = parseAction(action, state.revision);
       if (!parsed) throw new TypeError("invalid replay action");
       const next = reducePenguinFlagDuel(state, action);
@@ -722,11 +721,8 @@
   }
 
   function parseIntentPair(value) {
-    if (!Array.isArray(value) || value.length !== 2 || Reflect.ownKeys(value).some((key) => {
-      if (key === "length") return false;
-      return key !== "0" && key !== "1";
-    })) return null;
-    const pair = [value[0], value[1]];
+    const pair = snapshotDenseArray(value, 2);
+    if (!pair) return null;
     return pair.every((intent) => Number.isInteger(intent) && intent >= 0 && intent <= 8)
       ? deepFreeze(pair) : null;
   }
@@ -797,9 +793,10 @@
   }
 
   function parsePlayers(value) {
-    if (!Array.isArray(value) || value.length !== 2) return null;
-    const first = parsePlayer(value[0], 0);
-    const second = parsePlayer(value[1], 1);
+    const players = snapshotDenseArray(value, 2);
+    if (!players) return null;
+    const first = parsePlayer(players[0], 0);
+    const second = parsePlayer(players[1], 1);
     return first && second ? [first, second] : null;
   }
 
@@ -825,10 +822,11 @@
   }
 
   function parseScores(value) {
-    if (!Array.isArray(value) || value.length !== 2) throw new TypeError("invalid scores");
+    const scores = snapshotDenseArray(value, 2);
+    if (!scores) throw new TypeError("invalid scores");
     return [
-      requireInteger(value[0], 0, TARGET_SCORE, "score 0"),
-      requireInteger(value[1], 0, TARGET_SCORE, "score 1"),
+      requireInteger(scores[0], 0, TARGET_SCORE, "score 0"),
+      requireInteger(scores[1], 0, TARGET_SCORE, "score 1"),
     ];
   }
 
@@ -849,14 +847,16 @@
   }
 
   function parseNamesStrict(value) {
-    const names = sanitizeNames(value);
-    if (!names || names[0] !== value[0] || names[1] !== value[1]) throw new TypeError("invalid names");
+    const source = snapshotDenseArray(value, 2);
+    const names = sanitizeNames(source);
+    if (!names || names[0] !== source[0] || names[1] !== source[1]) throw new TypeError("invalid names");
     return names;
   }
 
   function sanitizeNames(value) {
-    if (!Array.isArray(value) || value.length !== 2 || hasUnexpectedArrayKeys(value, 2)) return null;
-    const names = value.map((name) => cleanText(name, 12, null));
+    const source = snapshotDenseArray(value, 2);
+    if (!source) return null;
+    const names = source.map((name) => cleanText(name, 12, null));
     return names[0] && names[1] && names[0] !== names[1] ? names : null;
   }
 
@@ -1019,12 +1019,32 @@
     return Boolean(descriptor && Object.prototype.hasOwnProperty.call(descriptor, "value"));
   }
 
-  function hasUnexpectedArrayKeys(value, expectedLength) {
-    return Reflect.ownKeys(value).some((key) => {
-      if (key === "length") return false;
-      const index = Number(key);
-      return !Number.isInteger(index) || index < 0 || index >= expectedLength || String(index) !== key;
-    });
+  function snapshotDenseArray(value, expectedLength) {
+    try {
+      if (!Array.isArray(value)) return null;
+      const descriptors = Object.getOwnPropertyDescriptors(value);
+      const lengthDescriptor = descriptors.length;
+      if (!lengthDescriptor || !Object.prototype.hasOwnProperty.call(lengthDescriptor, "value")
+        || !Number.isSafeInteger(lengthDescriptor.value) || lengthDescriptor.value < 0) {
+        return null;
+      }
+      const length = lengthDescriptor.value;
+      if (expectedLength !== undefined && length !== expectedLength) return null;
+      const keys = Reflect.ownKeys(descriptors);
+      if (keys.length !== length + 1 || keys.some((key) => (
+        key !== "length" && (typeof key !== "string" || !/^(0|[1-9]\d*)$/u.test(key)
+          || Number(key) >= length)
+      ))) return null;
+      const output = new Array(length);
+      for (let index = 0; index < length; index += 1) {
+        const descriptor = descriptors[String(index)];
+        if (!descriptor || !Object.prototype.hasOwnProperty.call(descriptor, "value")) return null;
+        output[index] = descriptor.value;
+      }
+      return output;
+    } catch {
+      return null;
+    }
   }
 
   function clamp(value, minimum, maximum) {
