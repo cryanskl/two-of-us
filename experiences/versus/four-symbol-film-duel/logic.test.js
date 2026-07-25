@@ -210,6 +210,18 @@ test("validator rejects ZWJ, skin, flag, tag and private glyphs", () => {
   }
 });
 
+test("validator accepts exactly one glyph scalar with optional emoji presentation", () => {
+  for (const glyph of ["🐈🐕", "☀️☁️"]) {
+    const candidate = editableConfig();
+    candidate.tokens[0].glyph = glyph;
+    assert.ok(validateGameData(candidate).some((error) => error.includes("glyph")));
+  }
+
+  const variationSequence = editableConfig();
+  variationSequence.tokens[0].glyph = "⚙️";
+  assert.deepEqual(validateGameData(variationSequence), []);
+});
+
 test("sanitizeConfig severs ownership and falls back atomically", () => {
   const candidate = editableConfig();
   candidate.publicTitle = "  四符\u00a0片名擂台  ";
