@@ -2,11 +2,13 @@
   function filterExperiences(experiences, filters = {}) {
     const level = filters.level ?? "all";
     const category = filters.category ?? "all";
+    const featured = filters.featured ?? "all";
 
     return experiences.filter((experience) => {
       const matchesLevel = level === "all" || experience.level === level;
       const matchesCategory = category === "all" || experience.category === category;
-      return matchesLevel && matchesCategory;
+      const matchesFeatured = featured === "all" || experience.featured === true;
+      return matchesLevel && matchesCategory && matchesFeatured;
     });
   }
 

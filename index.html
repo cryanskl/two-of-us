@@ -134,11 +134,18 @@
         font-size: .88rem;
       }
 
+      .section-hint {
+        margin: 6px 0 0;
+        color: #83797c;
+        font-size: .88rem;
+      }
+
       .discovery-tools {
         display: grid;
         grid-template:
           "random level" 1fr
           "random category" 1fr
+          "random featured" 1fr
           / minmax(136px, .42fr) minmax(440px, 1fr);
         gap: 8px 12px;
         padding: 10px;
@@ -187,6 +194,13 @@
 
       .level-filter { grid-area: level; }
       .category-filter { grid-area: category; }
+      .featured-filter { grid-area: featured; }
+
+      /* 只有两个选项，等分整行会显得空旷；让它们收到自然宽度并左对齐。 */
+      .featured-filter .filter-options {
+        grid-auto-columns: max-content;
+        justify-content: start;
+      }
 
       .filter-group-label {
         grid-column: 1;
@@ -266,6 +280,16 @@
         box-shadow: 0 16px 42px rgba(74, 55, 53, .06);
       }
 
+      .preview {
+        display: block;
+        width: calc(100% + 52px);
+        margin: -26px -26px 22px;
+        border-radius: 25px 25px 0 0;
+        aspect-ratio: 16 / 10;
+        background: #f2e6df;
+        object-fit: cover;
+      }
+
       .meta { display: flex; gap: 8px; flex-wrap: wrap; }
 
       .pill {
@@ -277,7 +301,9 @@
         font-weight: 730;
       }
 
-      .card h3 { margin: 25px 0 10px; font-size: 1.5rem; }
+      .pill.featured-pill { background: #a14c5e; color: #fffaf7; }
+
+      .card h3 { margin: 18px 0 10px; font-size: 1.5rem; }
       .card p { margin: 0; color: #6c6366; line-height: 1.65; }
 
       .details {
@@ -338,6 +364,7 @@
             "random" auto
             "level" auto
             "category" auto
+            "featured" auto
             / 1fr;
         }
 
@@ -374,6 +401,7 @@
           <div>
             <h2 id="experiences-heading">现在想做什么？</h2>
             <span id="count" aria-live="polite">1 个体验</span>
+            <p class="section-hint">第一次玩，可以先只看精选的 9 个。</p>
           </div>
           <div class="discovery-tools" aria-label="体验筛选">
             <button id="random-open" class="random-open" type="button">
@@ -408,6 +436,15 @@
                 <label for="category-versus">对抗</label>
               </div>
             </div>
+            <div class="filter-group featured-filter" role="group" aria-label="精选">
+              <span class="filter-group-label" aria-hidden="true">精选</span>
+              <div class="filter-options">
+                <input id="featured-all" type="radio" name="featured" value="all" checked>
+                <label for="featured-all">全部</label>
+                <input id="featured-only" type="radio" name="featured" value="featured">
+                <label for="featured-only">只看精选</label>
+              </div>
+            </div>
           </div>
         </div>
         <div id="experiences" class="grid"></div>
@@ -431,6 +468,7 @@
             "players": "1 人制作，1 人观看",
             "devices": "单设备",
             "entry": "experiences/surprises/love-tree/index.html",
+            "preview": "experiences/surprises/love-tree/preview.webp",
             "description": "点击爱心，让一棵树生长开花，并展示情书与相爱时间。",
             "installed": true
           },
@@ -442,6 +480,7 @@
             "players": "1 人制作，1 人观看",
             "devices": "单设备",
             "entry": "experiences/surprises/memory-letter/index.html",
+            "preview": "experiences/surprises/memory-letter/preview.webp",
             "description": "拆开信封，依次翻阅三段回忆，最后送出一份约会邀请。",
             "installed": true
           },
@@ -453,7 +492,9 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/scratch-surprise/index.html",
+            "preview": "experiences/surprises/scratch-surprise/preview.webp",
             "description": "用鼠标或手指刮掉涂层，亲手揭晓一张可定制的约会券或私人承诺。",
+            "featured": true,
             "installed": true
           },
           {
@@ -464,6 +505,7 @@
             "players": "1–2 人",
             "devices": "单设备",
             "entry": "experiences/surprises/date-wheel/index.html",
+            "preview": "experiences/surprises/date-wheel/preview.webp",
             "description": "转动一只可定制的等概率约会转盘，让今晚的安排交给命运决定。",
             "installed": true
           },
@@ -475,6 +517,7 @@
             "players": "1 人准备或回看",
             "devices": "本机单设备",
             "entry": "experiences/surprises/panorama-memory/index.html",
+            "preview": "experiences/surprises/panorama-memory/preview.webp",
             "description": "选择一张本机 360° 全景照片，在不上传、不保存的当前页面里拖动回到当时。",
             "installed": true
           },
@@ -486,6 +529,7 @@
             "players": "1 人准备，1–2 人拼",
             "devices": "单设备",
             "entry": "experiences/surprises/photo-swap-puzzle/index.html",
+            "preview": "experiences/surprises/photo-swap-puzzle/preview.webp",
             "description": "选择一张本机照片，在不上传、不保存的当前页面里交换九块拼回完整画面。",
             "installed": true
           },
@@ -497,6 +541,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/future-ticket/index.html",
+            "preview": "experiences/surprises/future-ticket/preview.webp",
             "description": "从三组隐藏孔位中逐次盲选并打孔，最后签发一张可本地定制的未来约会车票。",
             "installed": true
           },
@@ -508,6 +553,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/instant-photo/index.html",
+            "preview": "experiences/surprises/instant-photo/preview.webp",
             "description": "按下快门取出一张本地配置的相纸，交替左右摇动，让照片和写给对方的话逐层显影。",
             "installed": true
           },
@@ -519,6 +565,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/nested-gift/index.html",
+            "preview": "experiences/surprises/nested-gift/preview.webp",
             "description": "用解丝带、揭纸角、拉抽屉和轻敲四种输入逐层拆开本地礼盒，最后读到盒心留言。",
             "installed": true
           },
@@ -530,6 +577,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/paper-plane-mail/index.html",
+            "preview": "experiences/surprises/paper-plane-mail/preview.webp",
             "description": "调节仰角与力度，把纸飞机送进邮箱；成功后再亲手打开一封本地定制的信。",
             "installed": true
           },
@@ -541,6 +589,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/star-code-unlock/index.html",
+            "preview": "experiences/surprises/star-code-unlock/preview.webp",
             "description": "回答三条私人线索点亮星位，三星连成后主动读出一段本地定制的惊喜星码。",
             "installed": true
           },
@@ -552,7 +601,9 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/hand-crank-music-box/index.html",
+            "preview": "experiences/surprises/hand-crank-music-box/preview.webp",
             "description": "顺时针转动胡桃木音乐盒的摇柄，让原创短旋律逐音响起、纸雕夜景展开，最后读到一段本地留言。",
+            "featured": true,
             "installed": true
           },
           {
@@ -563,6 +614,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/moon-phase-secret/index.html",
+            "preview": "experiences/surprises/moon-phase-secret/preview.webp",
             "description": "根据三条私人线索校准月份、日期和离线近似月相，三轴同时对齐后才展开本地留言。",
             "installed": true
           },
@@ -574,6 +626,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/fog-window-letter/index.html",
+            "preview": "experiences/surprises/fog-window-letter/preview.webp",
             "description": "先在雾窗上自由写下一遍，再沿自己的原始笔迹走回来；找回足够多的露珠锚点后才揭开本地私信。",
             "installed": true
           },
@@ -585,6 +638,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/starlight-keepsake-search/index.html",
+            "preview": "experiences/surprises/starlight-keepsake-search/preview.webp",
             "description": "移动一盏小灯，在五件纪念物上连续停留；每次发现都会永久留下短句，找齐后整幅夜景与本地私信一同亮起。",
             "installed": true
           },
@@ -596,6 +650,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/future-cookie-notes/index.html",
+            "preview": "experiences/surprises/future-cookie-notes/preview.webp",
             "description": "任意敲开什么时候、去哪里和一起做什么三枚未来签，收齐后主动把三段约定拼成一封邀请。",
             "installed": true
           },
@@ -607,6 +662,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/origami-heart/index.html",
+            "preview": "experiences/surprises/origami-heart/preview.webp",
             "description": "依次拖动或按按钮完成五道折痕，最后主动翻到背面，展开一颗代码原生心和本地定制的私人短笺。",
             "installed": true
           },
@@ -618,7 +674,9 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/wish-fireworks/index.html",
+            "preview": "experiences/surprises/wish-fireworks/preview.webp",
             "description": "选择高度并按住蓄光，让三束烟火依次留下一个字；第三束落定后才展开本地定制的短笺。",
+            "featured": true,
             "installed": true
           },
           {
@@ -629,6 +687,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/flower-language-bouquet/index.html",
+            "preview": "experiences/surprises/flower-language-bouquet/preview.webp",
             "description": "从六种花里依次挑三枝，以主花、陪衬和点缀组成专属花语；系好后可在本地准备一份含留言的 SVG 花束。",
             "installed": true
           },
@@ -640,6 +699,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/compliment-reels/index.html",
+            "preview": "experiences/surprises/compliment-reels/preview.webp",
             "description": "拉动三列夸夸纸卷，每次印出一句完整赞美；本轮第 3–6 次之间必有一次特别同频，落定后才展开私人结语。",
             "installed": true
           },
@@ -651,6 +711,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/snow-globe-message/index.html",
+            "preview": "experiences/surprises/snow-globe-message/preview.webp",
             "description": "依次收集上、右、下、左四阵风，再亲手让雪落下；雪停后，确定性雪花图案与本地留言一同显现。",
             "installed": true
           },
@@ -662,6 +723,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/candle-wishes/index.html",
+            "preview": "experiences/surprises/candle-wishes/preview.webp",
             "description": "根据五条回忆线索按正确顺序点亮蜡烛；每盏只在命中后留下一个愿望，五盏齐亮并主动收下后才展开最后的话。",
             "installed": true
           },
@@ -673,6 +735,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/vinyl-secret/index.html",
+            "preview": "experiences/surprises/vinyl-secret/preview.webp",
             "description": "沿十二圈唱片沟槽寻找三段文字，依次根据远近信号落下唱针；三轨找齐后才打开本地定制的私人封套，可选音频失败也不影响完成。",
             "installed": true
           },
@@ -684,6 +747,7 @@
             "players": "1 人准备，1 人体验",
             "devices": "单设备",
             "entry": "experiences/surprises/kaleidoscope-names/index.html",
+            "preview": "experiences/surprises/kaleidoscope-names/preview.webp",
             "description": "体验者根据两条公开线索选择镜面阶数、转动相位；两轴严格对齐并主动揭晓后，两枚名字标记和本地留言才进入页面。",
             "installed": true
           },
@@ -695,6 +759,7 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/hot-seat-pictionary/index.html",
+            "preview": "experiences/co-op/hot-seat-pictionary/preview.webp",
             "description": "轮流看词、遮挡交接、画画和猜词，用六轮积累共同得分。",
             "installed": true
           },
@@ -706,6 +771,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/twin-light-maze/index.html",
+            "preview": "experiences/co-op/twin-light-maze/preview.webp",
             "description": "两个人同时移动珊瑚与青色光点，互相踩住压力板、穿过门，并一起回到各自光门。",
             "installed": true
           },
@@ -717,6 +783,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/tethered-heart/index.html",
+            "preview": "experiences/co-op/tethered-heart/preview.webp",
             "description": "两个人分别牵住一枚线轴，用两条有张力的丝带共同把布艺心绕过针脚并稳定送进刺绣绷。",
             "installed": true
           },
@@ -728,6 +795,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/lighthouse-passage/index.html",
+            "preview": "experiences/co-op/lighthouse-passage/preview.webp",
             "description": "一人转动灯塔光束显露暗礁与航标，另一人操舵，把小船低速安全送回港口。",
             "installed": true
           },
@@ -739,6 +807,7 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/rhythm-relay/index.html",
+            "preview": "experiences/co-op/rhythm-relay/preview.webp",
             "description": "轮流复现并追加珊瑚拍与青绿拍，把三拍共享序列一起接到十拍。",
             "installed": true
           },
@@ -750,6 +819,7 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/telegraph-codebook/index.html",
+            "preview": "experiences/co-op/telegraph-codebook/preview.webp",
             "description": "先共同记住六码本，再轮流用三拍短长讯号发送和译码四封电报。",
             "installed": true
           },
@@ -761,6 +831,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/kitchen-relay/index.html",
+            "preview": "experiences/co-op/kitchen-relay/preview.webp",
             "description": "传菜员选对订单下一样食材，装盘员把盘子移到同一条滑槽，洒落三次前共同完成四单。",
             "installed": true
           },
@@ -772,7 +843,9 @@
             "players": "2 人合作",
             "devices": "单设备面对面轮流",
             "entry": "experiences/co-op/closer-cards/index.html",
+            "preview": "experiences/co-op/closer-cards/preview.webp",
             "description": "面对面轮流回答六张原创谈话卡，不评分、不记录，任何公开题都可以中性换掉。",
+            "featured": true,
             "installed": true
           },
           {
@@ -783,6 +856,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/shared-color-studio/index.html",
+            "preview": "experiences/co-op/shared-color-studio/preview.webp",
             "description": "两人分别控制色相与明度，在倒计时内把共享调色纸对齐目标刻度，共同收下五张色笺。",
             "installed": true
           },
@@ -794,6 +868,7 @@
             "players": "2 人合作",
             "devices": "单设备面对面",
             "entry": "experiences/co-op/signal-repair-manual/index.html",
+            "preview": "experiences/co-op/signal-repair-manual/preview.webp",
             "description": "两人分别读取三条故障星路与三条优先规则，靠口述在倒计时内接回唯一正确分支，四轮交换角色。",
             "installed": true
           },
@@ -805,7 +880,9 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/four-hands-harmony/index.html",
+            "preview": "experiences/co-op/four-hands-harmony/preview.webp",
             "description": "低音席与高音席在 200ms 内按下公开目标并共同保持，五次合成原创和弦后留下赠予短句。",
+            "featured": true,
             "installed": true
           },
           {
@@ -816,6 +893,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/same-pace-star/index.html",
+            "preview": "experiences/co-op/same-pace-star/preview.webp",
             "description": "两人轮换领拍，依次按住、接住并松开四个节拍，六次共同点亮星光。",
             "installed": true
           },
@@ -827,6 +905,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/steady-together/index.html",
+            "preview": "experiences/co-op/steady-together/preview.webp",
             "description": "两人分别托起天平两端，把滚珠稳在中央，穿过三段相反坡势和两处检查灯后一起抵达终点。",
             "installed": true
           },
@@ -838,6 +917,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/moving-home-together/index.html",
+            "preview": "experiences/co-op/moving-home-together/preview.webp",
             "description": "两人各自控制沙发一端，在固定 S 形门厅共同平移、转弯并一起松手把它放稳。",
             "installed": true
           },
@@ -849,6 +929,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/moon-base-power/index.html",
+            "preview": "experiences/co-op/moon-base-power/preview.webp",
             "description": "一人控制供电与联络，一人安排氧气、照明和通信，在三次班次中找出唯一安全路由并共同稳定三秒。",
             "installed": true
           },
@@ -860,9 +941,9 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/fog-navigation/index.html",
+            "preview": "experiences/co-op/fog-navigation/preview.webp",
             "description": "领航员限时看完整地图，交接后驾驶员只看 5×5 局部雾窗，靠口述完成四段换角路线。",
-            "installed": true,
-            "networkRequired": false
+            "installed": true
           },
           {
             "id": "cloud-recipe",
@@ -872,9 +953,9 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/cloud-recipe/index.html",
+            "preview": "experiences/co-op/cloud-recipe/preview.webp",
             "description": "两人各守云朵一边，把接雨区间调到唯一正确宽度，接齐三份固定配方的彩滴并避开灰滴。",
-            "installed": true,
-            "networkRequired": false
+            "installed": true
           },
           {
             "id": "together-zipper",
@@ -884,9 +965,9 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/together-zipper/index.html",
+            "preview": "experiences/co-op/together-zipper/preview.webp",
             "description": "左右席在同一公共时间窗各拉一次，逐齿合上三段 15 齿拉链；卡住只重试当前齿。",
-            "installed": true,
-            "networkRequired": false
+            "installed": true
           },
           {
             "id": "seven-day-garden",
@@ -896,9 +977,9 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/seven-day-garden/index.html",
+            "preview": "experiences/co-op/seven-day-garden/preview.webp",
             "description": "两人公开轮流从各自有限工具篮选卡，让水、日照与耐心精确覆盖七张花签，共同把一盆花养到盛开。",
-            "installed": true,
-            "networkRequired": false
+            "installed": true
           },
           {
             "id": "constellation-relay",
@@ -908,9 +989,9 @@
             "players": "2 人合作",
             "devices": "单设备轮流",
             "entry": "experiences/co-op/constellation-relay/index.html",
+            "preview": "experiences/co-op/constellation-relay/preview.webp",
             "description": "两人严格轮流沿公开轮廓追加星线，避开非法相交与无解前缀，各接五根共同完成双翼星鸢。",
-            "installed": true,
-            "networkRequired": false
+            "installed": true
           },
           {
             "id": "shadow-duet",
@@ -920,6 +1001,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/shadow-duet/index.html",
+            "preview": "experiences/co-op/shadow-duet/preview.webp",
             "description": "两席同时按住四种姿势，在公开节拍窗内把目标影子稳定六小拍，共同收集六幕纸幕合照。",
             "installed": true
           },
@@ -931,6 +1013,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/capsule-docking/index.html",
+            "preview": "experiences/co-op/capsule-docking/preview.webp",
             "description": "姿态席只管转、推进席只管推，两人让同一艘纸模舱体同时满足六项安全条件并完成三段对接。",
             "installed": true
           },
@@ -942,6 +1025,7 @@
             "players": "2 人合作",
             "devices": "单设备同屏",
             "entry": "experiences/co-op/twin-orbit/index.html",
+            "preview": "experiences/co-op/twin-orbit/preview.webp",
             "description": "两人各按住一颗星切换快慢轨道，提前安排累积路程，让两颗星在同一个逻辑 tick 穿过各自的门，合作完成五圈。",
             "installed": true
           },
@@ -953,6 +1037,7 @@
             "players": "2 人轮流",
             "devices": "本机单设备",
             "entry": "experiences/co-op/i-heard-you/index.html",
+            "preview": "experiences/co-op/i-heard-you/preview.webp",
             "description": "轮流说一句想让对方认真听见的话，由本机语音模型整理成可编辑草稿，确认后让两句话相遇。",
             "installed": true,
             "capabilities": ["speech-whisper-base@1"]
@@ -965,7 +1050,9 @@
             "players": "2 人合作",
             "devices": "局域网双设备",
             "entry": "experiences/co-op/together-lock/index.html",
+            "preview": "experiences/co-op/together-lock/preview.webp",
             "description": "加入同一本地房间，同时按住两块屏幕 2.5 秒，一起打开机关。",
+            "featured": true,
             "installed": true
           },
           {
@@ -976,6 +1063,7 @@
             "players": "2 人合作",
             "devices": "局域网双设备",
             "entry": "experiences/co-op/lan-pictionary/index.html",
+            "preview": "experiences/co-op/lan-pictionary/preview.webp",
             "description": "秘密题目只发给画家，笔迹实时同步给猜词者，四回合轮换积累共同得分。",
             "installed": true
           },
@@ -987,6 +1075,7 @@
             "players": "2 人合作",
             "devices": "局域网双设备",
             "entry": "experiences/co-op/compatibility-quiz/index.html",
+            "preview": "experiences/co-op/compatibility-quiz/preview.webp",
             "description": "两个人各自密封回答八道二选一题，收齐后同时揭晓，相同答案积累一颗同心。",
             "installed": true
           },
@@ -998,6 +1087,7 @@
             "players": "2 人对抗",
             "devices": "局域网双设备",
             "entry": "experiences/versus/lan-connect-four/index.html",
+            "preview": "experiences/versus/lan-connect-four/preview.webp",
             "description": "两台设备加入同一本地房间，轮流落下双色棋子，率先连成四颗获胜。",
             "installed": true
           },
@@ -1009,7 +1099,9 @@
             "players": "2 人对抗",
             "devices": "局域网双设备",
             "entry": "experiences/versus/sealed-rps/index.html",
+            "preview": "experiences/versus/sealed-rps/preview.webp",
             "description": "双方先秘密出拳，本机裁判收齐后同时揭晓，三局两胜且不会提前泄露选择。",
+            "featured": true,
             "installed": true
           },
           {
@@ -1020,6 +1112,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/shadow-sword-duel/index.html",
+            "preview": "experiences/versus/shadow-sword-duel/preview.webp",
             "description": "两人依次暗选攻、防、闪或蓄力，交接时彻底遮住秘密；一起揭晓后原子结算体力、气与先机，最多九回合决出胜负。",
             "installed": true
           },
@@ -1031,6 +1124,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/honeycomb-passage/index.html",
+            "preview": "experiences/versus/honeycomb-passage/preview.webp",
             "description": "两人在 37 格蜂巢上轮流移动或放置封蜡，任何封锁都必须为双方保留路线；先抵达对边者获胜。",
             "installed": true
           },
@@ -1042,6 +1136,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/four-symbol-film-duel/index.html",
+            "preview": "experiences/versus/four-symbol-film-duel/preview.webp",
             "description": "两人轮流根据四枚 Unicode 符号猜原创虚构片名；八题严格交替，可消耗聚光灯排除一个错误项，按 2 / 1 / 0 计分。",
             "installed": true
           },
@@ -1053,6 +1148,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/word-detour-duel/index.html",
+            "preview": "experiences/versus/word-detour-duel/preview.webp",
             "description": "两人轮流绕开四个禁词口述目标；可选 30 / 60 / 90 秒或不计时，四回合共同复核后比较净分。",
             "installed": true
           },
@@ -1064,6 +1160,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/ricochet-tank-duel/index.html",
+            "preview": "experiences/versus/ricochet-tank-duel/preview.webp",
             "description": "两人同时驾驶折光车，利用墙面反射光弹；键盘与触屏可混合操作，90 秒内先命中三次者获胜。",
             "installed": true
           },
@@ -1075,6 +1172,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/photo-slider-race/index.html",
+            "preview": "experiences/versus/photo-slider-race/preview.webp",
             "description": "两人用同一张图和完全相同的可解乱序同时拼 3×3 滑块；支持双键盘区、触屏和只在当前页面处理的本地照片。",
             "installed": true
           },
@@ -1086,6 +1184,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/dual-maze-race/index.html",
+            "preview": "experiences/versus/dual-maze-race/preview.webp",
             "description": "两人在完全相同的迷宫中同时逐格竞速；COUP 与 PAIR 各跑两次并交换左右席，四局后按公开积分结算。",
             "installed": true
           },
@@ -1097,6 +1196,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/balloon-dare/index.html",
+            "preview": "experiences/versus/balloon-dare/preview.webp",
             "description": "轮流给隐藏爆点的气球打气或见好就收，四轮后比较双方存下的总分。",
             "installed": true
           },
@@ -1108,6 +1208,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/number-target/index.html",
+            "preview": "experiences/versus/number-target/preview.webp",
             "description": "从共享市场轮流拿两张数字和一个运算符，组成算式，三局争夺离目标更近的结果。",
             "installed": true
           },
@@ -1119,7 +1220,9 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/paper-soccer/index.html",
+            "preview": "experiences/versus/paper-soccer/preview.webp",
             "description": "轮流在八乘十点阵上画不可重复的线，借旧点连续推进，把球送进对方球门或封住出口。",
+            "featured": true,
             "installed": true
           },
           {
@@ -1130,6 +1233,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/echo-arena/index.html",
+            "preview": "experiences/versus/echo-arena/preview.webp",
             "description": "轮流完整复现四音序列并追加一音，第一位按错的人输掉本局，先得两分获胜。",
             "installed": true
           },
@@ -1141,6 +1245,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/dots-and-boxes/index.html",
+            "preview": "experiences/versus/dots-and-boxes/preview.webp",
             "description": "轮流连接相邻点，闭合一格就得分并继续，16 格全部归属后比较双方占地。",
             "installed": true
           },
@@ -1152,6 +1257,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/light-trail-hunt/index.html",
+            "preview": "experiences/versus/light-trail-hunt/preview.webp",
             "description": "两束光在固定网格中同时前进，用左右转向留下永久轨迹；撞墙或撞线者落败，同 tick 双亡则平局。",
             "installed": true
           },
@@ -1163,6 +1269,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/orbit-star-race/index.html",
+            "preview": "experiences/versus/orbit-star-race/preview.webp",
             "description": "两枚卫星沿相反方向自动绕行，只用升降轨改变角速度，抢先碰到五颗共享目标星。",
             "installed": true
           },
@@ -1174,6 +1281,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/secret-recipe-code/index.html",
+            "preview": "experiences/versus/secret-recipe-code/preview.webp",
             "description": "两人轮流藏好四格配方并交接设备，依据同位与错位数量在七次内破译；交换角色后，猜测次数更少者获胜。",
             "installed": true
           },
@@ -1185,6 +1293,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/memory-bid/index.html",
+            "preview": "experiences/versus/memory-bid/preview.webp",
             "description": "共同看过八件旧物后公开升价，最高报价者按顺序证明；固定四轮且双方各先开价两次。",
             "installed": true
           },
@@ -1196,6 +1305,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/garden-resource-duel/index.html",
+            "preview": "experiences/versus/garden-resource-duel/preview.webp",
             "description": "轮流遮屏藏下有限的阳光、雨露或虫害牌，共同揭晓后按当前季节长出花瓣，先让自己的花开放。",
             "installed": true
           },
@@ -1207,6 +1317,7 @@
             "players": "2 人对抗",
             "devices": "单设备轮流",
             "entry": "experiences/versus/heart-catapult/index.html",
+            "preview": "experiences/versus/heart-catapult/preview.webp",
             "description": "轮流秘密选择角度和力度，让两颗爱心直接或反弹送进对方纸雕城堡；完整一轮后才联合计分。",
             "installed": true
           },
@@ -1218,6 +1329,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/soft-sumo/index.html",
+            "preview": "experiences/versus/soft-sumo/preview.webp",
             "description": "两枚软垫棋子转向、蓄力并同时冲刺，在持续收紧的圆形擂台上把对方推出边界，三轮决胜。",
             "installed": true
           },
@@ -1229,7 +1341,9 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/reaction-duel/index.html",
+            "preview": "experiences/versus/reaction-duel/preview.webp",
             "description": "等待绿色信号后抢按；抢跑会送分给对方，先得两分获胜。",
+            "featured": true,
             "installed": true
           },
           {
@@ -1240,6 +1354,7 @@
             "players": "2 人对抗",
             "devices": "单设备同屏",
             "entry": "experiences/versus/ribbon-tug/index.html",
+            "preview": "experiences/versus/ribbon-tug/preview.webp",
             "description": "两个人用 A/L 或左右触控区反复拉动同一条织带，先赢两局完成比赛。",
             "installed": true
           },
@@ -1251,6 +1366,7 @@
             "players": "2 人对抗",
             "devices": "局域网双设备",
             "entry": "experiences/versus/heart-sprint/index.html",
+            "preview": "experiences/versus/heart-sprint/preview.webp",
             "description": "两台设备加入本地房间，连续点击推动各自的心形跑者，先赢两局完成比赛。",
             "installed": true
           }
@@ -1265,7 +1381,7 @@
         versus: "对抗"
       };
       const fallbackCatalog = JSON.parse(document.querySelector("#fallback-catalog").textContent);
-      const filterState = { level: "all", category: "all" };
+      const filterState = { level: "all", category: "all", featured: "all" };
       let activeCatalog = fallbackCatalog;
       let visibleExperiences = [];
       let capabilityStatuses = [];
@@ -1329,6 +1445,7 @@
         if (!(event.target instanceof HTMLInputElement)) return;
         if (event.target.name === "level") filterState.level = event.target.value;
         if (event.target.name === "category") filterState.category = event.target.value;
+        if (event.target.name === "featured") filterState.featured = event.target.value;
         renderFilteredCatalog();
       }
 
@@ -1357,8 +1474,12 @@
         article.dataset.level = item.level;
         article.dataset.category = item.category;
 
+        const preview = createPreview(item);
+        if (preview) article.append(preview);
+
         const meta = document.createElement("div");
         meta.className = "meta";
+        if (item.featured === true) meta.append(createPill("精选", "featured-pill"));
         meta.append(createPill(categoryNames[item.category] ?? item.category));
         meta.append(createPill(`${item.level} 级`));
         meta.append(createPill(availabilityLabel(item)));
@@ -1380,9 +1501,21 @@
         return article;
       }
 
-      function createPill(text) {
+      function createPreview(item) {
+        if (typeof item.preview !== "string" || item.preview === "") return null;
+        const preview = document.createElement("img");
+        preview.className = "preview";
+        preview.src = new URL(item.preview, location.href).href;
+        preview.alt = "";
+        preview.loading = "lazy";
+        preview.decoding = "async";
+        preview.addEventListener("error", () => preview.remove(), { once: true });
+        return preview;
+      }
+
+      function createPill(text, variant) {
         const pill = document.createElement("span");
-        pill.className = "pill";
+        pill.className = variant ? `pill ${variant}` : "pill";
         pill.textContent = text;
         return pill;
       }

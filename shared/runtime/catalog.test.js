@@ -62,6 +62,42 @@ test("catalog validator aligns category, entry, readme, and uniqueness", () => {
   );
 });
 
+test("catalog validator keeps preview and featured optional but exact", () => {
+  assert.doesNotThrow(() => validateCatalog({
+    schemaVersion: 1,
+    experiences: [catalogFixture({
+      preview: "experiences/surprises/local-test/preview.webp",
+      featured: true,
+    })],
+  }));
+
+  for (const preview of [
+    "experiences/surprises/other/preview.webp",
+    "experiences/co-op/local-test/preview.webp",
+    "experiences/surprises/local-test/preview.png",
+    "experiences/surprises/local-test/index.html",
+    42,
+  ]) {
+    assert.throws(
+      () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ preview })] }),
+      /预览图/,
+    );
+  }
+
+  assert.throws(
+    () => validateCatalog({ schemaVersion: 1, experiences: [catalogFixture({ featured: "true" })] }),
+    /featured/,
+  );
+});
+
+test("preview path derives from the catalog entry", async () => {
+  const { previewPathFor } = await import("./catalog.js");
+  assert.equal(
+    previewPathFor(catalogFixture()),
+    "experiences/surprises/local-test/preview.webp",
+  );
+});
+
 test("portal gives every experience link a title-specific accessible name", async () => {
   const portal = await readFile(new URL("../../index.html", import.meta.url), "utf8");
 

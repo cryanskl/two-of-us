@@ -18,6 +18,19 @@ try {
 }
 const errors = [...await validateExperienceContracts({ rootDir, catalog })];
 const realRoot = await realpath(rootDir);
+const dependenciesInstalled = await pathExists(path.join(rootDir, "node_modules"));
+
+for (const experience of catalog.experiences) {
+  if (experience.installed !== true) continue;
+  if (typeof experience.preview !== "string") {
+    errors.push(`${experience.id} 没有在 catalog 中声明 preview 预览图。`);
+    continue;
+  }
+  await requireRepositoryFile(
+    path.join(rootDir, experience.preview),
+    `${experience.id} 的预览图不存在：${experience.preview}，请运行 npm run previews 生成。`,
+  );
+}
 
 for (const experience of catalog.experiences) {
   if (experience.installed !== true || experience.level === "A") continue;
@@ -43,6 +56,8 @@ for (const experience of catalog.experiences) {
       const vendorPath = resolveVendorAsset(rootDir, localReference);
       if (!vendorPath) {
         errors.push(`${experience.id} 引用了未登记的浏览器依赖：${safeReference}`);
+      } else if (!dependenciesInstalled) {
+        errors.push("仓库还没有安装依赖：请先运行 npm run setup -- --skip-optional，再重新验收。");
       } else {
         await requireRepositoryFile(vendorPath, `${experience.id} 引用的浏览器依赖不存在：${safeReference}`);
       }
@@ -95,6 +110,15 @@ async function requireFile(filePath, message) {
     await access(filePath);
   } catch {
     errors.push(message);
+  }
+}
+
+async function pathExists(filePath) {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
   }
 }
 

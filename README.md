@@ -3,6 +3,8 @@
 > 给情侣、夫妻、朋友，或任意两个人的本地游乐场。<br>
 > Private by default. Local first. Made for two.
 
+*English: [README.en.md](./README.en.md)*
+
 Two of Us 收集并实现了一组点开即玩的轻量互动网页：可以准备一份惊喜、一起完成挑战，也可以面对面对抗。项目默认不要求账号，不依赖云端房间，不把私人照片、语音或游戏内容上传到外部服务。
 
 当前 Catalog 收录 **75 个已安装体验**：
@@ -10,6 +12,16 @@ Two of Us 收集并实现了一组点开即玩的轻量互动网页：可以准�
 | 单人惊喜 | 双人合作 | 双人对抗 | 启动等级 |
 | ---: | ---: | ---: | --- |
 | 24 | 27 | 24 | 67 个 A 级 · 1 个 B 级 · 6 个 C 级 · 1 个 D 级 |
+
+## 第一次玩，从这九个开始
+
+75 个体验一次看完太多。下面九个覆盖三种类型，也覆盖“一个人准备”“同屏合作”“两台设备”三种玩法；门户里把「精选」筛选切到“只看精选”会得到同一组。
+
+| | | |
+| --- | --- | --- |
+| [<img src="./experiences/surprises/hand-crank-music-box/preview.webp" alt="把这首转给你" width="260">](./experiences/surprises/hand-crank-music-box/)<br>**[把这首转给你](./experiences/surprises/hand-crank-music-box/)** · 单人惊喜 · A<br>转动摇柄，让原创旋律逐音响起、纸雕夜景展开。 | [<img src="./experiences/surprises/scratch-surprise/preview.webp" alt="爱的刮刮卡" width="260">](./experiences/surprises/scratch-surprise/)<br>**[爱的刮刮卡](./experiences/surprises/scratch-surprise/)** · 单人惊喜 · A<br>亲手刮开涂层，揭晓一张可定制的约会券。 | [<img src="./experiences/surprises/wish-fireworks/preview.webp" alt="今晚，点三束光" width="260">](./experiences/surprises/wish-fireworks/)<br>**[今晚，点三束光](./experiences/surprises/wish-fireworks/)** · 单人惊喜 · A<br>按住蓄光放出三束烟火，每束留下一个字。 |
+| [<img src="./experiences/co-op/four-hands-harmony/preview.webp" alt="这一拍，刚好和你" width="260">](./experiences/co-op/four-hands-harmony/)<br>**[这一拍，刚好和你](./experiences/co-op/four-hands-harmony/)** · 双人合作 · A<br>一台设备、两个人：低音席与高音席同时按下同一拍。 | [<img src="./experiences/co-op/closer-cards/preview.webp" alt="靠近一点" width="260">](./experiences/co-op/closer-cards/)<br>**[靠近一点](./experiences/co-op/closer-cards/)** · 双人合作 · A<br>六张原创谈话卡，不评分、不记录、随时可换。 | [<img src="./experiences/co-op/together-lock/preview.webp" alt="同心解锁" width="260">](./experiences/co-op/together-lock/)<br>**[同心解锁](./experiences/co-op/together-lock/)** · 双人合作 · C<br>两块屏幕同时按住 2.5 秒，一起打开机关。 |
+| [<img src="./experiences/versus/reaction-duel/preview.webp" alt="反应力对决" width="260">](./experiences/versus/reaction-duel/)<br>**[反应力对决](./experiences/versus/reaction-duel/)** · 双人对抗 · A<br>等绿灯亮起再抢按，抢跑就把分数送给对方。 | [<img src="./experiences/versus/sealed-rps/preview.webp" alt="密封猜拳" width="260">](./experiences/versus/sealed-rps/)<br>**[密封猜拳](./experiences/versus/sealed-rps/)** · 双人对抗 · C<br>先各自密封出拳，本机裁判收齐后同时揭晓。 | [<img src="./experiences/versus/paper-soccer/preview.webp" alt="纸上球局" width="260">](./experiences/versus/paper-soccer/)<br>**[纸上球局](./experiences/versus/paper-soccer/)** · 双人对抗 · A<br>在点阵上画线推进，把球送进对方球门。 |
 
 ## 一分钟开始
 
@@ -55,7 +67,7 @@ npm start
 
 ## 选择一个体验
 
-门户提供等级和类型筛选，也可以点击“随机开启”从当前结果中挑选：
+门户的每张卡片都带一张预览图，并提供精选、等级和类型三组筛选；也可以点击“随机开启”从当前结果中挑选：
 
 | 分类 | 目录 | 适合 |
 | --- | --- | --- |
@@ -63,7 +75,20 @@ npm start
 | 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成：默契、节奏、推理、操作和交流挑战 |
 | 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负：反应、策略、记忆和同屏竞速 |
 
-[`experiences/catalog.json`](./experiences/catalog.json) 是体验数量、入口、人数、设备、等级和安装状态的唯一事实来源。
+[`experiences/catalog.json`](./experiences/catalog.json) 是体验数量、入口、预览图、人数、设备、等级、精选标记和安装状态的唯一事实来源。
+
+### 预览图
+
+每个作品目录下的 `preview.webp` 是门户和本文件使用的封面，由 [`scripts/previews.mjs`](./scripts/previews.mjs) 用本机 Chromium 截取作品自己的开场画面并直接编码为 WebP：
+
+```bash
+npm run previews              # 重新生成全部预览图
+npm run previews -- --only=love-tree,sealed-rps
+```
+
+- 预览图**不是运行依赖**：作品本身从不加载它，门户在缺图或加载失败时退回纯文字卡片；
+- Chromium 只在制作预览时使用，不进入 `package.json` 的依赖，也不参与任何作品的运行；
+- 预览内容全部来自本仓库自己的页面，不引入新的第三方素材；画面中出现的作品自有资产，来源仍以各作品的 `README.md`／`ATTRIBUTION.md` 为准。
 
 ## A / B / C / D 是什么
 
@@ -109,7 +134,7 @@ two-of-us/
 └── learn/                     # 可跨体验复用的工程知识
 ```
 
-每个体验通常包含自己的 `README.md`、入口、逻辑、样式、测试和来源声明。B/C/D 级体验还提供薄启动器，但统一复用根目录的依赖和本地运行时。
+每个体验通常包含自己的 `README.md`、入口、逻辑、样式、测试、门户预览图 `preview.webp` 和来源声明。B/C/D 级体验还提供薄启动器，但统一复用根目录的依赖和本地运行时。
 
 ## 开发
 
@@ -126,6 +151,7 @@ two-of-us/
 | `npm run setup -- --skip-optional` | 安装共享依赖，不安装 D 级可选能力 |
 | `npm start` | 启动统一门户 |
 | `npm start -- --experience <id>` | 启动并直达指定体验 |
+| `npm run previews` | 用本机 Chromium 重新生成作品预览图 |
 | `npm run capabilities` | 查看本地能力 CLI 帮助 |
 | `npm test` | 运行仓库自动发现的全部测试 |
 | `npm run verify` | 校验 Catalog、入口、资源闭包和来源声明 |
@@ -139,11 +165,12 @@ npm start -- --experience panorama-memory
 新增或修改体验时，至少应保持：
 
 1. Catalog 与真实文件入口一致；
-2. 声明的 A/B/C/D 启动方式可重复验证；
-3. 私人数据、公网依赖和权限边界写清楚；
-4. 玩法核心尽量确定、可重放、可测试；
-5. 借鉴、代码、素材和依赖来源可追溯；
-6. `npm test` 与 `npm run verify` 通过。
+2. 在 Catalog 中声明 `preview`，并用 `npm run previews -- --only=<id>` 生成预览图；
+3. 声明的 A/B/C/D 启动方式可重复验证；
+4. 私人数据、公网依赖和权限边界写清楚；
+5. 玩法核心尽量确定、可重放、可测试；
+6. 借鉴、代码、素材和依赖来源可追溯；
+7. `npm test` 与 `npm run verify` 通过。
 
 ## 文档与工程记录
 

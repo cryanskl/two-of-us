@@ -9,9 +9,9 @@ vm.runInContext(source, context);
 
 const { filterExperiences, pickRandom } = context.PortalFilters;
 const experiences = [
-  { id: "letter", level: "A", category: "surprise" },
+  { id: "letter", level: "A", category: "surprise", featured: true },
   { id: "garden", level: "A", category: "co-op" },
-  { id: "race", level: "C", category: "versus" },
+  { id: "race", level: "C", category: "versus", featured: true },
 ];
 
 test("portal filters combine level and category selections", () => {
@@ -21,6 +21,19 @@ test("portal filters combine level and category selections", () => {
   );
   assert.equal(filterExperiences(experiences, { level: "all", category: "versus" }).length, 1);
   assert.equal(filterExperiences(experiences, { level: "D", category: "all" }).length, 0);
+});
+
+test("portal featured filter narrows to opted-in experiences only", () => {
+  assert.deepEqual(
+    filterExperiences(experiences, { featured: "featured" }).map(({ id }) => id),
+    ["letter", "race"],
+  );
+  assert.deepEqual(
+    filterExperiences(experiences, { featured: "featured", category: "versus" }).map(({ id }) => id),
+    ["race"],
+  );
+  assert.equal(filterExperiences(experiences, { featured: "all" }).length, 3);
+  assert.equal(filterExperiences(experiences).length, 3);
 });
 
 test("portal random selection is deterministic at collection boundaries", () => {

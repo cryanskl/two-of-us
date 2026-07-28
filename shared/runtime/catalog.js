@@ -13,6 +13,7 @@ export async function loadCatalog(rootDir) {
 const lowerKebabPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const exactEntryPattern = /^experiences\/(surprises|co-op|versus)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/index\.html$/;
 const exactReadmePattern = /^experiences\/(surprises|co-op|versus)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/README\.md$/;
+const exactPreviewPattern = /^experiences\/(surprises|co-op|versus)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/preview\.webp$/;
 const categoryDirectories = Object.freeze({
   surprise: "surprises",
   "co-op": "co-op",
@@ -79,6 +80,23 @@ function validateExperience(experience) {
   if (!readmeMatch || readmeMatch[1] !== expectedDirectory || readmeMatch[2] !== experience.id) {
     throw new Error(`作品 ${experience.id} 的 README 必须与入口位于同一目录。`);
   }
+
+  if (experience.preview !== undefined) {
+    const previewMatch = typeof experience.preview === "string"
+      ? exactPreviewPattern.exec(experience.preview)
+      : null;
+    if (!previewMatch || previewMatch[1] !== expectedDirectory || previewMatch[2] !== experience.id) {
+      throw new Error(`作品 ${experience.id} 的预览图必须是同目录下的 preview.webp。`);
+    }
+  }
+
+  if (experience.featured !== undefined && typeof experience.featured !== "boolean") {
+    throw new Error(`作品 ${experience.id} 的 featured 必须是 boolean。`);
+  }
+}
+
+export function previewPathFor(experience) {
+  return experience.entry.replace(/index\.html$/, "preview.webp");
 }
 
 function toPath(value) {
