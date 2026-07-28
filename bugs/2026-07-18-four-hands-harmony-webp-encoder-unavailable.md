@@ -47,8 +47,10 @@ Error opening output file .../harmony-table.webp.
 
 使用已安装 `baoyu-compress-image` 技能的临时 Bun/Sharp 回退，不修改项目依赖：
 
+将 `SKILL_ROOT` 指向本机已安装的 skill 根目录：
+
 ```bash
-npx -y bun /Users/zenith/.agents/skills/baoyu-compress-image/scripts/main.ts \
+npx -y bun "${SKILL_ROOT}/baoyu-compress-image/scripts/main.ts" \
   harmony-table.png \
   --output experiences/co-op/four-hands-harmony/assets/harmony-table.webp \
   --format webp --quality 82 --keep --json

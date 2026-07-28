@@ -8,7 +8,7 @@
 
 ## 环境
 
-- macOS，本地 `main` worktree：`/Users/zenith/Desktop/two-of-us`
+- macOS，本地 `main` worktree：`<repo-root>`
 - Node.js `node:test`
 - 纯逻辑层；不涉及 DOM、网络或浏览器存储
 
@@ -106,4 +106,3 @@ git diff --check
 
 - `c73c8bf feat: add honeycomb passage geometry`
 - `9b6c699 feat: add honeycomb passage duel core`
-

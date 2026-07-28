@@ -4,6 +4,8 @@
 
 建议命名为 `YYYY-MM-DD-<topic>.md`，并在文中写清适用范围、关键结论、反例和验证方法。
 
+本目录默认作为公共工程手册发布。新增内容在提交前同样遵守 [`bugs/PUBLICATION.md`](../bugs/PUBLICATION.md)：脱敏个人机器信息，延迟公开未修复的安全或隐私细节，并确保第三方引用和素材允许公开。
+
 ## 已沉淀
 
 - [借鉴声明不是一段文案，而是四张清单的连接](./2026-07-25-attribution-is-a-source-asset-dependency-join.md)

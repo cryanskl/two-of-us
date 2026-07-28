@@ -9,7 +9,7 @@
 
 ## 环境
 
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-core`
+- worktree：`<worktree-root>`
 - 分支：`codex/exp-dual-maze-race-core`
 - 基线：`4c3c017008e9f4157886fe626d6f99240fe80c28`
 - Node：仓库声明的 Node 18+ CommonJS 项目边界

@@ -46,8 +46,10 @@ Error opening output file .../quiet-sky.webp.
 
 先加载 Codex 工作区依赖并确认 Pillow 的 WebP 能力，再用制作期 Python 转换：
 
+将 `TOOL_RUNTIME` 指向工作区依赖提供的运行时根目录：
+
 ```bash
-/Users/zenith/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 \
+"${TOOL_RUNTIME}/bin/python3" \
   -c "from PIL import Image; src=Image.open('quiet-sky.png'); src.save('experiences/co-op/same-pace-star/assets/quiet-sky.webp', 'WEBP', quality=82, method=6)"
 ```
 

@@ -17,7 +17,7 @@
 
 ```text
 ENOENT: no such file or directory,
-open '/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core/catalog.json'
+open '<worktree-root>/catalog.json'
 ```
 
 ## 预期

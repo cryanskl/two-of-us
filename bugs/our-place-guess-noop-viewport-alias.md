@@ -47,7 +47,7 @@ git diff --check
 
 ```text
 branch: codex/exp-our-place-guess-core
-worktree: /Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core
+worktree: <worktree-root>
 ```
 
 修复提交：`6432af9 fix: isolate no-op map viewports`

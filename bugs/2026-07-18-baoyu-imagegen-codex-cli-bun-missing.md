@@ -11,12 +11,14 @@
 - `codex` 已安装且可找到；
 - `npx` 已安装；
 - `bun` 不在 PATH；
-- 工具：`/Users/zenith/.agents/skills/baoyu-image-gen/scripts/main.ts`。
+- 工具：`<skill-root>/baoyu-image-gen/scripts/main.ts`。
 
 ## 复现
 
+将 `SKILL_ROOT` 指向本机已安装的 skill 根目录后运行：
+
 ```bash
-npx -y tsx /Users/zenith/.agents/skills/baoyu-image-gen/scripts/main.ts \
+npx -y tsx "${SKILL_ROOT}/baoyu-image-gen/scripts/main.ts" \
   --provider codex-cli \
   --quality 2k \
   --ar 3:2 \

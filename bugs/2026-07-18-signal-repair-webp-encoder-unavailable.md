@@ -61,8 +61,10 @@ Error selecting an encoder
 
 实际命令：
 
+将 `SKILL_ROOT` 指向本机已安装的 skill 根目录：
+
 ```bash
-npx -y bun /Users/zenith/.codex/skills/baoyu-compress-image/scripts/main.ts \
+npx -y bun "${SKILL_ROOT}/baoyu-compress-image/scripts/main.ts" \
   signal-dust.png \
   --output experiences/co-op/signal-repair-manual/assets/signal-dust.webp \
   --format webp --quality 82 --keep --json
