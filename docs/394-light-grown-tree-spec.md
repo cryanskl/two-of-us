@@ -44,7 +44,7 @@ Love Tree 点一下就播放一段固定的生长动画。本作把这一步交�
 ## 验收
 
 - [x] `node --test experiences/surprises/light-grown-tree/logic.test.js` 18 项通过；
-- [x] `npm run verify` 通过，catalog 76 个作品入口；
+- [x] `npm run verify` 通过，catalog 75 个作品入口（Love Tree 下架后）；
 - [x] Chrome 实际完成：鼠标全流程、键盘全流程（方向键移光 + Tab 到生长按钮）各一次；
 - [x] 完成后信的三行正文、落款与“再种一棵”均可见可用；
 - [x] 门户预览图由 `scripts/previews.mjs` 的配方生成，展示的是长满开花后的状态。
