@@ -9,8 +9,16 @@ import { fileURLToPath } from "node:url";
 const projectRoot = path.resolve(fileURLToPath(new URL("../", import.meta.url)));
 const startScript = path.join(projectRoot, "scripts", "start.mjs");
 
+// 每次启动都要先为整个仓库计算内容身份，这一步随作品与素材增长而变慢，冷文件缓存的
+// 机器又比热缓存慢一个量级。下面的预算按“最慢的一次真实启动”给：它们只用来防止测试
+// 永久挂起，不该被当成性能断言，否则在慢机器上会变成假失败。
+const launchTimeoutMs = 60_000;
+const outputTimeoutMs = 20_000;
+const exitTimeoutMs = 20_000;
+const terminateTimeoutMs = 10_000;
+
 test("a sequential second launcher reuses the first process and leaves the next port free", {
-  timeout: 20_000,
+  timeout: launchTimeoutMs,
 }, async (context) => {
   const reservation = await reserveConsecutivePorts();
   const { port } = reservation;
@@ -23,7 +31,7 @@ test("a sequential second launcher reuses the first process and leaves the next 
 
   const second = startProcess(port, "compatibility-quiz");
   context.after(() => terminateChild(second.child));
-  const secondExit = await waitForExit(second.child, 6_000);
+  const secondExit = await waitForExit(second.child, exitTimeoutMs);
   assert.deepEqual(secondExit, { code: 0, signal: null });
   assert.match(second.output(), /Two of Us 已经在运行，正在复用/);
   assert.match(second.output(), new RegExp(`本机入口：http://127.0.0.1:${port}/`));
@@ -42,7 +50,7 @@ test("a sequential second launcher reuses the first process and leaves the next 
 });
 
 test("a foreign HTTP service on the preferred port is skipped and a new runtime uses the next port", {
-  timeout: 20_000,
+  timeout: launchTimeoutMs,
 }, async (context) => {
   const reservation = await reserveConsecutivePorts();
   const { port, servers } = reservation;
@@ -67,7 +75,7 @@ test("a foreign HTTP service on the preferred port is skipped and a new runtime 
 });
 
 test("a same-protocol runtime with different content stays alive while launcher uses the next port", {
-  timeout: 20_000,
+  timeout: launchTimeoutMs,
 }, async (context) => {
   const reservation = await reserveConsecutivePorts();
   const { port } = reservation;
@@ -191,7 +199,7 @@ function startProcess(port, experienceId) {
   return {
     child,
     output: () => `${stdout}\n${stderr}`,
-    waitFor(fragment, timeout = 8_000) {
+    waitFor(fragment, timeout = outputTimeoutMs) {
       return new Promise((resolve, reject) => {
         let timer;
         const check = () => {
@@ -230,7 +238,7 @@ function waitForExit(child, timeout) {
 async function terminateChild(child) {
   if (!child || child.exitCode !== null || child.signalCode !== null) return;
   child.kill("SIGTERM");
-  await waitForExit(child, 5_000);
+  await waitForExit(child, terminateTimeoutMs);
 }
 
 async function canListen(port) {

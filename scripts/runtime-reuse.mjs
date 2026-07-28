@@ -5,7 +5,11 @@ import { resolveExperienceUrl } from "./start-target.mjs";
 export const RUNTIME_HEADER_NAME = "x-two-of-us-runtime";
 export const RUNTIME_HEADER_VALUE = "1";
 export const RUNTIME_PROTOCOL_VERSION = 1;
-export const RUNTIME_PROBE_TIMEOUT_MS = 1_000;
+// /api/health 在回答之前会重新计算整个仓库的内容身份，用来确认这个运行时和当前签出一致。
+// 这一步随仓库体积增长：75 个作品加素材已经需要一秒以上，早先的 1 秒预算会在真正的运行时
+// 回答之前就中止探测，让复用永远失败、每次启动都多占一个端口。预算按“慢磁盘上的一次完整
+// 重算”给，仍然远小于重新启动一个运行时的代价。
+export const RUNTIME_PROBE_TIMEOUT_MS = 10_000;
 export const DEFAULT_MAX_PORT_ATTEMPTS = 20;
 
 export function buildRuntimeCandidateUrls(preferredPort, maxPortAttempts) {
