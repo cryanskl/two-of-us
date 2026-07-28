@@ -9,6 +9,7 @@ const rootPath = path.resolve(fileURLToPath(root));
 
 test("static resolver maps the portal and keeps files inside the repository", () => {
   assert.equal(resolveStaticPath(root, "/"), path.join(rootPath, "index.html"));
+  assert.equal(resolveStaticPath(root, "/favicon.svg"), path.join(rootPath, "favicon.svg"));
   assert.match(
     resolveStaticPath(root, "/experiences/surprises/love-tree/index.html"),
     /love-tree\/index\.html$/,

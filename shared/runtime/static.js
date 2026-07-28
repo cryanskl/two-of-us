@@ -38,6 +38,7 @@ export function resolveStaticPath(rootDir, pathname) {
 
   const relativePath = decoded === "/" ? "index.html" : decoded.replace(/^\/+/, "");
   const isPublicPath = relativePath === "index.html"
+    || relativePath === "favicon.svg"
     || relativePath.startsWith("experiences/")
     || relativePath.startsWith("shared/");
   if (!isPublicPath) return null;
