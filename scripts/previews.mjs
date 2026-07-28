@@ -18,10 +18,24 @@ const defaultLayout = Object.freeze({ width: 1280, height: 800, scale: 0.5, qual
 const settleTimeoutMs = 20000;
 const captureSettleMs = 1400;
 
-// 绝大多数作品的开场画面就是最诚实的预览。个别作品开场只有一个待点击的目标，
-// 需要先替体验者点一下，等它自己的动画走完才有可用画面。
+// 绝大多数作品的开场画面就是最诚实的预览，默认不做任何交互。个别作品开场是一块空地，
+// 要先替体验者走几步才有可看的东西，才在这里登记一条最小配方。
+// 每一步是一次点击：`selector` 点某个元素的中心，`offset` 再给出元素框内的相对位置，
+// `point` 直接给视口坐标。用选择器而不是硬编码坐标，配方才不会被版面变化悄悄弄坏。
 const captureRecipes = Object.freeze({
-  "love-tree": { click: { x: 620, y: 350 }, settleMs: 26000 },
+  "light-grown-tree": {
+    steps: [
+      { selector: "#primary-button" },
+      ...[
+        [0.30, 0.42], [0.30, 0.42], [0.24, 0.30], [0.70, 0.28], [0.74, 0.24], [0.74, 0.24],
+        [0.44, 0.12], [0.20, 0.20], [0.80, 0.22], [0.50, 0.10], [0.50, 0.10], [0.50, 0.10],
+      ].flatMap(([x, y]) => [
+        { selector: ".canvas-frame", offset: { x, y } },
+        { selector: "#grow-button" },
+      ]),
+    ],
+    settleMs: 2600,
+  },
 });
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -206,6 +220,7 @@ async function launchChromium(executable) {
   const { targetId } = await send("Target.createTarget", { url: "about:blank" });
   const { sessionId } = await send("Target.attachToTarget", { targetId, flatten: true });
   await send("Page.enable", {}, sessionId);
+  await send("Runtime.enable", {}, sessionId);
 
   return {
     send: (method, params) => send(method, params, sessionId),
@@ -259,17 +274,20 @@ async function capture(browser, { url, recipe, options }) {
   await browser.send("Page.navigate", { url });
   await wait(captureSettleMs);
 
-  if (recipe.click) {
+  for (const step of recipe.steps ?? []) {
+    const point = await resolveStepPoint(browser, step);
+    if (!point) throw new Error(`预览配方找不到目标：${step.selector ?? "point"}`);
     for (const type of ["mousePressed", "mouseReleased"]) {
       await browser.send("Input.dispatchMouseEvent", {
         type,
-        x: recipe.click.x,
-        y: recipe.click.y,
+        x: point.x,
+        y: point.y,
         button: "left",
         buttons: type === "mousePressed" ? 1 : 0,
         clickCount: 1,
       });
     }
+    await wait(step.waitMs ?? 90);
   }
   if (recipe.settleMs) await wait(recipe.settleMs);
 
@@ -281,6 +299,27 @@ async function capture(browser, { url, recipe, options }) {
   const image = Buffer.from(data, "base64");
   if (image.length === 0) throw new Error("Chromium 返回了空截图。");
   return image;
+}
+
+async function resolveStepPoint(browser, step) {
+  if (step.point) return step.point;
+  const { result } = await browser.send("Runtime.evaluate", {
+    expression: `(() => {
+      const element = document.querySelector(${JSON.stringify(step.selector)});
+      if (!element) return "";
+      const rect = element.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return "";
+      return JSON.stringify({ left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+    })()`,
+    returnByValue: true,
+  });
+  if (typeof result.value !== "string" || result.value === "") return null;
+  const rect = JSON.parse(result.value);
+  const offset = step.offset ?? { x: 0.5, y: 0.5 };
+  return {
+    x: rect.left + rect.width * offset.x,
+    y: rect.top + rect.height * offset.y,
+  };
 }
 
 function wait(milliseconds) {

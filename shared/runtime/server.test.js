@@ -132,7 +132,7 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   assert.match(health.contentIdentity, /^sha256:[a-f0-9]{64}$/);
   assert.doesNotMatch(JSON.stringify(health), new RegExp(projectRootPattern()));
   assert.match(health.qrDataUrl, /^data:image\/png;base64,/);
-  assert.equal(catalog.experiences[0].id, "love-tree");
+  assert.equal(catalog.experiences[0].id, "light-grown-tree");
   assert.equal(catalogResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.equal(capabilitiesResponse.status, 200);
   assert.equal(capabilitiesResponse.headers.get("x-two-of-us-runtime"), null);

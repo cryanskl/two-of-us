@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "experiences": [
     {
-      "id": "love-tree",
-      "title": "Love Tree",
+      "id": "light-grown-tree",
+      "title": "跟着光，长成一棵树",
       "category": "surprise",
       "level": "A",
-      "players": "1 人制作，1 人观看",
+      "players": "1 人准备，1 人体验",
       "devices": "单设备",
-      "entry": "experiences/surprises/love-tree/index.html",
-      "readme": "experiences/surprises/love-tree/README.md",
-      "preview": "experiences/surprises/love-tree/preview.webp",
-      "description": "点击爱心，让一棵树生长开花，并展示情书与相爱时间。",
+      "entry": "experiences/surprises/light-grown-tree/index.html",
+      "readme": "experiences/surprises/light-grown-tree/README.md",
+      "preview": "experiences/surprises/light-grown-tree/preview.webp",
+      "description": "移动一盏暖光，每让树长一节，枝条就朝光当时的方向生长；十二节长成后花开满枝，展开写给对方的信与相守时间。",
       "installed": true,
       "networkRequired": false
     },

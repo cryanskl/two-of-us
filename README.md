@@ -79,13 +79,14 @@ npm start
 
 ### 预览图
 
-每个作品目录下的 `preview.webp` 是门户和本文件使用的封面，由 [`scripts/previews.mjs`](./scripts/previews.mjs) 用本机 Chromium 截取作品自己的开场画面并直接编码为 WebP：
+每个作品目录下的 `preview.webp` 是门户和本文件使用的封面，由 [`scripts/previews.mjs`](./scripts/previews.mjs) 用本机 Chromium 截取作品自己的画面并直接编码为 WebP：
 
 ```bash
 npm run previews              # 重新生成全部预览图
-npm run previews -- --only=love-tree,sealed-rps
+npm run previews -- --only=light-grown-tree,sealed-rps
 ```
 
+- 绝大多数预览就是作品的开场画面；只有开场本身没有可看内容的作品，才在脚本里登记一条最小配方，先替体验者走几步；
 - 预览图**不是运行依赖**：作品本身从不加载它，门户在缺图或加载失败时退回纯文字卡片；
 - Chromium 只在制作预览时使用，不进入 `package.json` 的依赖，也不参与任何作品的运行；
 - 预览内容全部来自本仓库自己的页面，不引入新的第三方素材；画面中出现的作品自有资产，来源仍以各作品的 `README.md`／`ATTRIBUTION.md` 为准。

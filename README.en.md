@@ -76,13 +76,14 @@ Every card in the portal carries a preview image and three filter groups — fea
 
 ### Preview images
 
-The `preview.webp` beside each experience is the cover used by the portal and by this page. [`scripts/previews.mjs`](./scripts/previews.mjs) generates them by driving a local Chromium over the DevTools protocol, screenshotting each experience's own opening screen and encoding straight to WebP:
+The `preview.webp` beside each experience is the cover used by the portal and by this page. [`scripts/previews.mjs`](./scripts/previews.mjs) generates them by driving a local Chromium over the DevTools protocol, screenshotting each experience's own screen and encoding straight to WebP:
 
 ```bash
 npm run previews              # regenerate every preview
-npm run previews -- --only=love-tree,sealed-rps
+npm run previews -- --only=light-grown-tree,sealed-rps
 ```
 
+- Almost every preview is simply the experience's opening screen. Only pieces whose opening has nothing to look at get a minimal scripted recipe that takes a few steps first.
 - Previews are **not a runtime dependency**: no experience ever loads one, and the portal falls back to a text-only card when an image is missing or fails to load.
 - Chromium is only used while authoring previews. It is not in `package.json` and takes no part in running any experience.
 - Every preview is a screenshot of this repository's own pages and introduces no new third-party material. For assets that appear inside a shot, the per-experience `README.md` / `ATTRIBUTION.md` remains the source of record.

@@ -19,7 +19,7 @@
 | surprise / co-op / versus | 24 / 27 / 24 |
 | 本次 repository verify | 通过：75 个入口、67 个 A、8 个非 A |
 | 本次是否重跑全仓测试 | 是：`2469 / 2469` 通过 |
-| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`dual-maze-race` 已作为第 75 个入口正式上架并完成主线 Chrome 进出闭环，当前目标已闭合。`love-tree` 保留现状，不作为 75 项交付阻塞 |
+| 工作树提示 | 用户已授权整个仓库的视觉概念直接执行；`dual-maze-race` 已作为第 75 个入口正式上架并完成主线 Chrome 进出闭环，当前目标已闭合。`love-tree` 已于 2026-07-28 整体下架，由原创作品「跟着光，长成一棵树」接替，入口总数保持 75 |
 | 平台真实并发 | 1 个总控；三个执行 Session 均已完成并集成，没有待审项目 |
 
 快照数字来自 `experiences/catalog.json`；下次总控恢复时必须重新计算。聊天记录、旧 verification 文档和本表都不能替代实时 catalog 与测试结果。
@@ -119,11 +119,9 @@
 | 全仓借鉴声明、固定来源与许可证盘点 | `363` | Worker 1 | 已集成；逐项覆盖 58 installed 与 21 候选，区分中/高缺口和公开分发阻断，并给出共享依赖与结构化 Gate 修复顺序 |
 | 58 个 installed 的真实浏览器首载与统一入口矩阵 | `364` | Worker 3 | 已集成；真实 Chrome 验证 58/58 localhost 首载、8/8 launcher、A/B/C/D 深路径代表、移动视口与端口释放 |
 | 待确认视觉提案总清单与批量确认路径 | `365` | Worker 4 | 已集成；覆盖 21/21 阻塞项与 122 个可点击本地证据链接，提供批量确认、单项修改和逐项目精确确认模板 |
-| `love-tree` clean-room 重构前置 | `366–368` | Worker 2 | 已集成；brainstorm、spec、plan、完整概念稿和文档清理均独立提交，生产 UI 等待用户确认 |
 | `capsule-docking` 视觉候选补证 | `369` | Worker 4 | 已集成；desktop/mobile active 概念、生成台账、code-native 偏差和明确确认语句齐备，生产 UI 等待用户确认 |
 | 共享依赖固定归因修复 | `370` | Worker 1 | 已集成；三个真实根依赖的固定源码/许可证/版权/消费者边界与防漂移测试通过 |
 | 共享 runtime 内容身份修复 | `371–372` | Worker 3 | 已集成；deterministic content identity、live witness、双根进程复用矩阵、bug/learn 与最终验证全部通过 |
-| `love-tree` 视觉自治与生产实现 | `373–375` | 总控 / Worker 2 | `373` 授权决策已集成；`374` 设计系统、`375` 验证边界已在分支完成，等待可访问 `file://` 的 Chrome Gate 后再集成 |
 | 首轮四个视觉自治生产 UI | `376–379` | Worker 1–4 | `wish-fireworks`、`snow-globe-message`、`flower-language-bouquet`、`candle-wishes` 各自独占一个最终验证编号 |
 | `compliment-reels` 生产 UI | `380` | Worker 4 | Candle 释放实现槽位后滚动补位；独占最终验证编号 |
 | `shadow-duet` 生产 UI | `381` | Worker 3 | 花语花束正式上架后滚动补位；独占最终验证编号 |
@@ -145,7 +143,7 @@
 
 当前没有仅因视觉确认而阻塞的项目。用户已授权本仓库视觉概念直接执行；
 候选仍须分别通过玩法、隐私、许可证、测试、浏览器和启动合同 Gate 才能上架。
-`love-tree` clean-room 另因当前工具无法验证真实 `file://` 启动而保持待定，不受视觉授权影响。
+Love Tree 的 clean-room 重构已作废：用户选择整体下架该第三方作品，改由原创的「跟着光，长成一棵树」接替，`366–368`、`373` 与相关概念图已随之删除。
 
 ## 最近集成
 

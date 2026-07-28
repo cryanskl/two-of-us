@@ -9,13 +9,15 @@ import { fileURLToPath } from "node:url";
 const projectRoot = path.resolve(fileURLToPath(new URL("../", import.meta.url)));
 const startScript = path.join(projectRoot, "scripts", "start.mjs");
 
-// 每次启动都要先为整个仓库计算内容身份，这一步随作品与素材增长而变慢，冷文件缓存的
-// 机器又比热缓存慢一个量级。下面的预算按“最慢的一次真实启动”给：它们只用来防止测试
-// 永久挂起，不该被当成性能断言，否则在慢机器上会变成假失败。
-const launchTimeoutMs = 60_000;
-const outputTimeoutMs = 20_000;
-const exitTimeoutMs = 20_000;
-const terminateTimeoutMs = 10_000;
+// 每次启动都要先为整个仓库计算内容身份，这一步随作品与素材增长而变慢（当前约 2.3 秒），
+// 冷文件缓存的机器又比热缓存慢一个量级。这个文件还会和其余测试并行跑，几个 node 进程
+// 同时读盘时，同一步可能慢上好几倍。
+// 下面的预算按“最慢的一次真实启动”给：它们只用来防止测试永久挂起，不该被当成性能断言，
+// 否则在慢机器或高并发下会变成假失败。
+const launchTimeoutMs = 90_000;
+const outputTimeoutMs = 30_000;
+const exitTimeoutMs = 45_000;
+const terminateTimeoutMs = 15_000;
 
 test("a sequential second launcher reuses the first process and leaves the next port free", {
   timeout: launchTimeoutMs,

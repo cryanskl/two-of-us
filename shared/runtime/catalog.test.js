@@ -116,14 +116,14 @@ test("co-op index links every cataloged co-op experience", async () => {
   }
 });
 
-test("catalog exposes an installed A-level Love Tree", async () => {
+test("catalog exposes the installed A-level light grown tree", async () => {
   const catalog = await loadCatalog(new URL("../../", import.meta.url));
-  const loveTree = catalog.experiences.find((item) => item.id === "love-tree");
+  const lightGrownTree = catalog.experiences.find((item) => item.id === "light-grown-tree");
 
   assert.equal(catalog.schemaVersion, 1);
-  assert.equal(loveTree.level, "A");
-  assert.equal(loveTree.installed, true);
-  assert.equal(loveTree.networkRequired, false);
+  assert.equal(lightGrownTree.level, "A");
+  assert.equal(lightGrownTree.installed, true);
+  assert.equal(lightGrownTree.networkRequired, false);
 });
 
 test("catalog exposes the installed B-level panorama memory experience", async () => {
