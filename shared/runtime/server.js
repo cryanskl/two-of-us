@@ -15,6 +15,8 @@ import {
 import { serveStatic } from "./static.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
 import {
+  CONTENT_IDENTITY_QUERY_KEY,
+  CONTENT_IDENTITY_QUERY_VALUE,
   RUNTIME_HEADER_NAME,
   RUNTIME_HEADER_VALUE,
 } from "../../scripts/runtime-reuse.mjs";
@@ -71,13 +73,20 @@ export async function createRuntimeServer({
       }
 
       if (url.pathname === "/api/health") {
-        const reusableContentIdentity = await getReusableContentIdentity();
+        // 重新校验内容身份要读遍整个仓库；这一步随作品与素材增长而变慢，门户每次加载
+        // 都等它是纯粹的浪费——门户只用地址、二维码和 Node 版本。因此只有明确请求
+        // 校验的调用者（启动器的复用探测）才触发重算，其余调用拿到的 health 不含这个
+        // 字段：宁可让不问的人拿不到，也不让它误以为手上有一个已校验的身份。
+        const wantsContentIdentity =
+          url.searchParams.get(CONTENT_IDENTITY_QUERY_KEY) === CONTENT_IDENTITY_QUERY_VALUE;
         return sendJson(request, response, 200, {
           ok: true,
           service: "two-of-us",
           version: 1,
           node: process.versions.node,
-          contentIdentity: reusableContentIdentity,
+          ...(wantsContentIdentity
+            ? { contentIdentity: await getReusableContentIdentity() }
+            : {}),
           ...runtimeDetails,
         }, {
           [RUNTIME_HEADER_NAME]: RUNTIME_HEADER_VALUE,

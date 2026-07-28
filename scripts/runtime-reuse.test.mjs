@@ -4,6 +4,7 @@ import { once } from "node:events";
 import test from "node:test";
 import {
   buildRuntimeCandidateUrls,
+  CONTENT_IDENTITY_QUERY,
   DEFAULT_MAX_PORT_ATTEMPTS,
   findReusableRuntime,
   probeRuntimeCandidate,
@@ -63,7 +64,7 @@ function response(url, value, overrides = {}) {
 function successfulFetch(log = [], contentIdentity = expectedContentIdentity) {
   return async (url, options) => {
     log.push({ url, options });
-    if (url.endsWith("api/health")) {
+    if (url.includes("api/health")) {
       const match = /^http:\/\/127\.0\.0\.1:(\d+)\//.exec(url);
       const port = Number(match[1]);
       return response(url, {
@@ -114,7 +115,8 @@ test("successful probe performs exact health/catalog GETs without browser side e
     "http://127.0.0.1:4173/experiences/surprises/panorama-memory/index.html");
   assert.equal(result.catalog.experiences[0].id, "panorama-memory");
   assert.deepEqual(log.map(({ url }) => url), [
-    "http://127.0.0.1:4173/api/health", "http://127.0.0.1:4173/api/catalog",
+    `http://127.0.0.1:4173/api/health?${CONTENT_IDENTITY_QUERY}`,
+    "http://127.0.0.1:4173/api/catalog",
   ]);
   for (const { options } of log) {
     assert.equal(options.method, "GET");
@@ -136,7 +138,7 @@ test("invalid status/header/url never reads the rejected response body", async (
     { header: "2" },
     { header: null },
     { url: "http://127.0.0.1:4173/redirected" },
-    { url: "https://example.com/api/health" },
+    { url: `https://example.com/api/health?${CONTENT_IDENTITY_QUERY}` },
   ]) {
     let rejectedResponse;
     const fetchImpl = async (url) => {
@@ -160,7 +162,7 @@ test("catalog status/header/url gates also reject before reading its body", asyn
   ]) {
     let catalogResponse;
     const fetchImpl = async (url, options) => {
-      if (url.endsWith("api/health")) return successfulFetch()(url, options);
+      if (url.includes("api/health")) return successfulFetch()(url, options);
       catalogResponse = response(url, {}, overrides);
       return catalogResponse;
     };
@@ -256,7 +258,7 @@ test("connection failure on one candidate does not prevent a later success", asy
     preferredPort: 4173, maxPortAttempts: 2, experienceId: null, expectedContentIdentity,
   }, { fetchImpl });
   assert.equal(result.localUrl, "http://127.0.0.1:4174/");
-  assert.equal(visited[0], "http://127.0.0.1:4173/api/health");
+  assert.equal(visited[0], `http://127.0.0.1:4173/api/health?${CONTENT_IDENTITY_QUERY}`);
 });
 
 test("real fetch refuses health/catalog same-origin, cross-origin, and multi-hop redirects", async (context) => {

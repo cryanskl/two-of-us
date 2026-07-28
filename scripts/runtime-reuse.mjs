@@ -5,6 +5,14 @@ import { resolveExperienceUrl } from "./start-target.mjs";
 export const RUNTIME_HEADER_NAME = "x-two-of-us-runtime";
 export const RUNTIME_HEADER_VALUE = "1";
 export const RUNTIME_PROTOCOL_VERSION = 1;
+
+// 校验内容身份要重新读遍整个仓库，因此它不是 /api/health 的默认工作。只有需要判断
+// “这个运行时和我的签出是不是同一份内容”的调用者才带上这个查询，并承担那次重算；
+// 门户只要地址和二维码，不看这个字段，也就不该为它等待。
+export const CONTENT_IDENTITY_QUERY_KEY = "verify";
+export const CONTENT_IDENTITY_QUERY_VALUE = "content-identity";
+export const CONTENT_IDENTITY_QUERY =
+  `${CONTENT_IDENTITY_QUERY_KEY}=${CONTENT_IDENTITY_QUERY_VALUE}`;
 // /api/health 在回答之前会重新计算整个仓库的内容身份，用来确认这个运行时和当前签出一致。
 // 这一步随仓库体积增长：75 个作品加素材已经需要一秒以上，早先的 1 秒预算会在真正的运行时
 // 回答之前就中止探测，让复用永远失败、每次启动都多占一个端口。预算按“慢磁盘上的一次完整
@@ -44,7 +52,7 @@ export async function probeRuntimeCandidate(
 
   try {
     const request = createRequestHelper(dependencies);
-    const health = await request(`${localUrl}api/health`);
+    const health = await request(`${localUrl}api/health?${CONTENT_IDENTITY_QUERY}`);
     if (!health || health.ok !== true || health.service !== "two-of-us"
       || health.version !== RUNTIME_PROTOCOL_VERSION || health.port !== candidatePort
       || health.localUrl !== localUrl

@@ -6,6 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { CONTENT_IDENTITY_QUERY } from "../../scripts/runtime-reuse.mjs";
 import { RoomError, RoomRegistry } from "./rooms.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
 import { createRuntimeServer, registerRoomProtocol } from "./server.js";
@@ -129,7 +130,7 @@ test("runtime serves health, catalog, portal, and releases its port", async (con
   assert.equal(healthResponse.headers.get("x-two-of-us-runtime"), "1");
   assert.equal(health.ok, true);
   assert.equal(health.port, details.port);
-  assert.match(health.contentIdentity, /^sha256:[a-f0-9]{64}$/);
+  assert.equal("contentIdentity" in health, false, "普通 health 不做全仓重算，也就不该给出已校验的身份");
   assert.doesNotMatch(JSON.stringify(health), new RegExp(projectRootPattern()));
   assert.match(health.qrDataUrl, /^data:image\/png;base64,/);
   assert.equal(catalog.experiences[0].id, "light-grown-tree");
@@ -295,19 +296,59 @@ test("runtime becomes non-reusable when its checkout changes after startup", asy
   context.after(() => runtime.stop());
 
   const details = await runtime.start();
-  const initialHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  const verifyUrl = `${details.localUrl}api/health?${CONTENT_IDENTITY_QUERY}`;
+  const initialHealth = await fetch(verifyUrl).then((response) => response.json());
   assert.equal(initialHealth.contentIdentity, testContentIdentity);
 
   currentContentIdentity = `sha256:${"b".repeat(64)}`;
-  const changedHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  const changedHealth = await fetch(verifyUrl).then((response) => response.json());
   assert.equal(changedHealth.ok, true);
   assert.equal(changedHealth.contentIdentity, null);
   assert.equal(runtime.httpServer.listening, true);
 
   currentContentIdentity = null;
-  const unreadableHealth = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+  const unreadableHealth = await fetch(verifyUrl).then((response) => response.json());
   assert.equal(unreadableHealth.contentIdentity, null);
   assert.equal(runtime.httpServer.listening, true);
+});
+
+test("only a caller that asks for verification pays for a content identity recomputation", async (context) => {
+  let recomputations = 0;
+  const runtime = await createRuntimeServer({
+    rootDir: new URL("../../", import.meta.url),
+    host: "127.0.0.1",
+    preferredPort: 0,
+    contentIdentity: testContentIdentity,
+    contentIdentityProvider: async () => {
+      recomputations += 1;
+      return testContentIdentity;
+    },
+  });
+  context.after(() => runtime.stop());
+
+  const details = await runtime.start();
+
+  // 门户走的就是这条路径：连续加载都不该触发一次全仓重算。
+  for (let index = 0; index < 3; index += 1) {
+    const health = await fetch(`${details.localUrl}api/health`).then((response) => response.json());
+    assert.equal(health.ok, true);
+    assert.equal("contentIdentity" in health, false);
+    assert.equal(health.port, details.port);
+  }
+  assert.equal(recomputations, 0, "普通 health 不得读遍整个仓库");
+
+  // 未知或错误的查询值同样不触发重算，避免被随手拼出来的 URL 拖慢。
+  for (const query of ["verify=1", "verify=", "verify=content", "other=content-identity"]) {
+    const health = await fetch(`${details.localUrl}api/health?${query}`)
+      .then((response) => response.json());
+    assert.equal("contentIdentity" in health, false, query);
+  }
+  assert.equal(recomputations, 0);
+
+  const verified = await fetch(`${details.localUrl}api/health?${CONTENT_IDENTITY_QUERY}`)
+    .then((response) => response.json());
+  assert.equal(verified.contentIdentity, testContentIdentity);
+  assert.equal(recomputations, 1, "明确请求校验时才重算一次");
 });
 
 test("room protocol cleans sealed rounds by participant before clearing an empty room", async () => {
