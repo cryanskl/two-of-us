@@ -108,15 +108,135 @@
       }
 
       .section-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        align-items: end;
-        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: minmax(190px, .72fr) minmax(610px, 1.75fr);
+        gap: 28px;
+        align-items: center;
+        margin-bottom: 24px;
       }
 
       h2 { margin: 0; font: 500 1.9rem/1.2 Georgia, "Songti SC", serif; }
-      #count { color: #83797c; font-size: .88rem; }
+
+      #count {
+        display: block;
+        margin-top: 9px;
+        color: #83797c;
+        font-size: .88rem;
+      }
+
+      .discovery-tools {
+        display: grid;
+        grid-template:
+          "random level" 1fr
+          "random category" 1fr
+          / minmax(136px, .42fr) minmax(440px, 1fr);
+        gap: 8px 12px;
+        padding: 10px;
+        border: 1px solid rgba(84, 67, 70, .12);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .58);
+        box-shadow: 0 14px 34px rgba(73, 51, 48, .05);
+      }
+
+      .random-open {
+        grid-area: random;
+        min-width: 0;
+        border: 0;
+        border-radius: 12px;
+        background: #a14c5e;
+        color: #fffaf7;
+        cursor: pointer;
+        font-weight: 760;
+        line-height: 1.2;
+        transition: transform .18s ease, background .18s ease, opacity .18s ease;
+      }
+
+      .random-open small {
+        display: block;
+        margin-top: 5px;
+        color: rgba(255, 250, 247, .76);
+        font-size: .7rem;
+        font-weight: 560;
+      }
+
+      .random-open:hover { transform: translateY(-1px); background: #874858; }
+      .random-open:active { transform: scale(.98); }
+      .random-open:disabled { cursor: not-allowed; opacity: .45; transform: none; }
+
+      .filter-group {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      .level-filter { grid-area: level; }
+      .category-filter { grid-area: category; }
+
+      .filter-group legend {
+        grid-column: 1;
+        grid-row: 1;
+        width: auto;
+        padding: 0;
+        color: #756b6e;
+        font-size: .76rem;
+        font-weight: 720;
+      }
+
+      .filter-options {
+        display: grid;
+        grid-column: 2;
+        grid-row: 1;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(44px, 1fr);
+        gap: 5px;
+        min-width: 0;
+      }
+
+      .filter-options input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      .filter-options label {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        color: #6f6568;
+        cursor: pointer;
+        font-size: .78rem;
+        font-weight: 690;
+        white-space: nowrap;
+        transition: background .16s ease, color .16s ease, transform .16s ease;
+      }
+
+      .filter-options label:hover { background: #f2e6df; color: #874858; }
+      .filter-options label:active { transform: scale(.97); }
+
+      .filter-options input:checked + label {
+        background: #3e3437;
+        color: #fffaf7;
+      }
+
+      .filter-options input:focus-visible + label,
+      .random-open:focus-visible,
+      .open:focus-visible {
+        outline: 3px solid rgba(161, 76, 94, .3);
+        outline-offset: 2px;
+      }
 
       .grid {
         display: grid;
@@ -170,6 +290,22 @@
 
       .open:hover { transform: translateY(-2px); background: #a14c5e; }
 
+      .empty-state {
+        grid-column: 1 / -1;
+        padding: 58px 24px;
+        border: 1px dashed rgba(84, 67, 70, .23);
+        border-radius: 26px;
+        color: #766c6f;
+        text-align: center;
+      }
+
+      .empty-state strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #3e3437;
+        font: 500 1.35rem/1.3 Georgia, "Songti SC", serif;
+      }
+
       footer {
         margin-top: 44px;
         color: #8b8184;
@@ -177,10 +313,28 @@
         line-height: 1.65;
       }
 
+      @media (max-width: 900px) {
+        .section-head { grid-template-columns: 1fr; gap: 16px; }
+      }
+
       @media (max-width: 640px) {
         .shell { width: min(100% - 28px, 1120px); padding-top: 38px; }
         .runtime { grid-template-columns: 1fr; }
         #qr { width: 116px; height: 116px; }
+
+        .discovery-tools {
+          grid-template:
+            "random" auto
+            "level" auto
+            "category" auto
+            / 1fr;
+        }
+
+        .random-open { min-height: 54px; }
+        .random-open small { display: inline; margin: 0 0 0 6px; }
+        .filter-group { grid-template-columns: 36px minmax(0, 1fr); }
+        .filter-options { grid-auto-columns: minmax(38px, 1fr); }
+        .filter-options label { padding: 0 6px; }
       }
     </style>
   </head>
@@ -205,8 +359,44 @@
 
       <section aria-labelledby="experiences-heading">
         <div class="section-head">
-          <h2 id="experiences-heading">现在想做什么？</h2>
-          <span id="count">1 个体验</span>
+          <div>
+            <h2 id="experiences-heading">现在想做什么？</h2>
+            <span id="count" aria-live="polite">1 个体验</span>
+          </div>
+          <div class="discovery-tools" aria-label="体验筛选">
+            <button id="random-open" class="random-open" type="button">
+              随机开启
+              <small>从当前结果中挑选</small>
+            </button>
+            <fieldset class="filter-group level-filter">
+              <legend>等级</legend>
+              <div class="filter-options">
+                <input id="level-all" type="radio" name="level" value="all" checked>
+                <label for="level-all">全部</label>
+                <input id="level-a" type="radio" name="level" value="A">
+                <label for="level-a">A</label>
+                <input id="level-b" type="radio" name="level" value="B">
+                <label for="level-b">B</label>
+                <input id="level-c" type="radio" name="level" value="C">
+                <label for="level-c">C</label>
+                <input id="level-d" type="radio" name="level" value="D">
+                <label for="level-d">D</label>
+              </div>
+            </fieldset>
+            <fieldset class="filter-group category-filter">
+              <legend>类型</legend>
+              <div class="filter-options">
+                <input id="category-all" type="radio" name="category" value="all" checked>
+                <label for="category-all">全部</label>
+                <input id="category-surprise" type="radio" name="category" value="surprise">
+                <label for="category-surprise">惊喜</label>
+                <input id="category-co-op" type="radio" name="category" value="co-op">
+                <label for="category-co-op">合作</label>
+                <input id="category-versus" type="radio" name="category" value="versus">
+                <label for="category-versus">对抗</label>
+              </div>
+            </fieldset>
+          </div>
         </div>
         <div id="experiences" class="grid"></div>
       </section>
@@ -1055,6 +1245,7 @@
         ]
       }
     </script>
+    <script src="./shared/portal-filters.js"></script>
     <script>
       const categoryNames = {
         surprise: "惊喜",
@@ -1062,9 +1253,14 @@
         versus: "对抗"
       };
       const fallbackCatalog = JSON.parse(document.querySelector("#fallback-catalog").textContent);
+      const filterState = { level: "all", category: "all" };
+      let activeCatalog = fallbackCatalog;
+      let visibleExperiences = [];
       let capabilityStatuses = [];
 
       renderCatalog(fallbackCatalog);
+      document.querySelector(".discovery-tools").addEventListener("change", handleFilterChange);
+      document.querySelector("#random-open").addEventListener("click", openRandomExperience);
       if (location.protocol === "http:" || location.protocol === "https:") connectRuntime();
 
       async function connectRuntime() {
@@ -1099,14 +1295,53 @@
       }
 
       function renderCatalog(catalog) {
+        activeCatalog = catalog;
+        renderFilteredCatalog();
+      }
+
+      function renderFilteredCatalog() {
         const container = document.querySelector("#experiences");
-        container.replaceChildren(...catalog.experiences.map(createCard));
-        document.querySelector("#count").textContent = `${catalog.experiences.length} 个体验`;
+        visibleExperiences = PortalFilters.filterExperiences(activeCatalog.experiences, filterState);
+        const content = visibleExperiences.length
+          ? visibleExperiences.map(createCard)
+          : [createEmptyState()];
+        container.replaceChildren(...content);
+        document.querySelector("#count").textContent = `${visibleExperiences.length} 个体验`;
+        document.querySelector("#random-open").disabled =
+          !visibleExperiences.some((experience) => experience.installed);
+      }
+
+      function handleFilterChange(event) {
+        if (!(event.target instanceof HTMLInputElement)) return;
+        if (event.target.name === "level") filterState.level = event.target.value;
+        if (event.target.name === "category") filterState.category = event.target.value;
+        renderFilteredCatalog();
+      }
+
+      function openRandomExperience() {
+        const availableExperiences = visibleExperiences.filter((experience) => experience.installed);
+        const experience = PortalFilters.pickRandom(availableExperiences);
+        if (!experience) return;
+        location.assign(new URL(experience.entry, location.href).href);
+      }
+
+      function createEmptyState() {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        const title = document.createElement("strong");
+        title.textContent = "这个组合暂时没有体验";
+        const copy = document.createElement("span");
+        copy.textContent = "换一个等级或类型，再挑一次。";
+        empty.append(title, copy);
+        return empty;
       }
 
       function createCard(item) {
         const article = document.createElement("article");
         article.className = "card";
+        article.dataset.experienceId = item.id;
+        article.dataset.level = item.level;
+        article.dataset.category = item.category;
 
         const meta = document.createElement("div");
         meta.className = "meta";
