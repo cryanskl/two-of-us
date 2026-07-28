@@ -17,7 +17,7 @@
 
 ```text
 ENOENT: no such file or directory,
-open '<worktree-root>/catalog.json'
+open '{worktree-root}/catalog.json'
 ```
 
 ## 预期

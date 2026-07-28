@@ -561,13 +561,13 @@ README 必须诚实说明实时空间玩法无法提供完全等价的非视觉�
 
 如发现 bug：
 
-- 在 `/Users/zenith/Desktop/two-of-us/bugs` 新建独立记录；
+- 在 `{repo-root}/bugs` 新建独立记录；
 - 写复现、环境、预期、实际、根因、修复、回归测试；
 - 修复本身单独提交。
 
 如形成可泛化知识：
 
-- 在 `/Users/zenith/Desktop/two-of-us/learn` 记录；
+- 在 `{repo-root}/learn` 记录；
 - 例如“有理 TOI 并列”“Pointer capture 卡键清理”“长帧公平暂停”；
 - 学习记录与生产改动分开提交。
 

@@ -11,7 +11,7 @@
 - `codex` 已安装且可找到；
 - `npx` 已安装；
 - `bun` 不在 PATH；
-- 工具：`<skill-root>/baoyu-image-gen/scripts/main.ts`。
+- 工具：`{skill-root}/baoyu-image-gen/scripts/main.ts`。
 
 ## 复现
 

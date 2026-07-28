@@ -75,7 +75,7 @@ git branch --show-current && git rev-parse --show-toplevel
 git status --short
 ```
 
-必须确认分支与 `/Users/zenith/Desktop/two-of-us` worktree 属于当前任务，保留用户和
+必须确认分支与 `{repo-root}` worktree 属于当前任务，保留用户和
 其他会话的改动。子任务只修改获分配文件，不 stage、不 commit；主线程审阅 diff、
 跑完该批 Gate 后再提交。pre-commit hook 失败时修复、重新 add、创建新 commit，
 绝不使用 `--amend` 补救。

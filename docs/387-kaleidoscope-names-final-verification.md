@@ -7,7 +7,7 @@
 - 等级：A 级本地直开
 - 基线：`69c8e74`
 - 分支：`codex/exp-kaleidoscope-names-production-ui`
-- Worktree：`/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-production-ui`
+- Worktree：`{worktree-base}/kaleidoscope-names-production-ui`
 - 结论：**项目范围内 Go，可交给共享目录集成**
 
 ## 1. 交付结论
@@ -73,7 +73,7 @@ index.html
 `file://` URL 与标题“把名字折成同一束光”：
 
 ```text
-file:///Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-production-ui/
+file://{worktree-base}/kaleidoscope-names-production-ui/
 experiences/surprises/kaleidoscope-names/index.html
 ```
 

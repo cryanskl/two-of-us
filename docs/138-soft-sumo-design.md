@@ -61,7 +61,7 @@
 透明图集生成命令使用工作区统一 Python：
 
 ```sh
-/Users/zenith/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 \
+{tool-runtime}/codex-primary-runtime/dependencies/python/bin/python3 \
   "${CODEX_HOME:-$HOME/.codex}/skills/.system/imagegen/scripts/remove_chroma_key.py" \
   --input docs/assets/soft-sumo/token-atlas-chroma-source.png \
   --out experiences/versus/soft-sumo/assets/token-atlas.png \

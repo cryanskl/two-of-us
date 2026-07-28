@@ -7,7 +7,7 @@
 
 ## 环境
 
-- macOS，本地 `main` worktree：`<repo-root>`
+- macOS，本地 `main` worktree：`{repo-root}`
 - Node.js 运行 `logic.test.js`
 - 纯逻辑层；不涉及 DOM、Canvas 或网络
 

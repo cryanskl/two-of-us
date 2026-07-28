@@ -63,7 +63,7 @@
 
 Playwright CLI 的命令层主动阻止 `file:` 导航，因此另启 headless Google Chrome 直接加载：
 
-`file:///Users/zenith/Desktop/two-of-us/experiences/versus/paper-soccer/index.html`
+`file://{repo-root}/experiences/versus/paper-soccer/index.html`
 
 通过 Chrome DevTools Protocol 实测：
 

@@ -63,7 +63,7 @@ git diff --check
 系统 Google Chrome 以 headless 模式直接加载：
 
 ```text
-file:///Users/zenith/Desktop/two-of-us/experiences/versus/orbit-star-race/index.html
+file://{repo-root}/experiences/versus/orbit-star-race/index.html
 ```
 
 DOM dump 返回：

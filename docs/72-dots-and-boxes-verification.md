@@ -22,7 +22,7 @@
 ## 3. 浏览器方法与环境
 
 - 首选应用内 Browser 插件；当前环境返回 `No browser is available`，并且故障文档指向旧版本缓存目录，已记录在 [`bugs/2026-07-18-browser-plugin-version-drift.md`](../bugs/2026-07-18-browser-plugin-version-drift.md)；
-- 回退方法：`playwright-cli` 驱动本机 Chromium；通过页面级导航真实打开 `file:///Users/zenith/Desktop/two-of-us/experiences/versus/dots-and-boxes/index.html`，并以 `127.0.0.1:8769` 复验资源与故障降级；
+- 回退方法：`playwright-cli` 驱动本机 Chromium；通过页面级导航真实打开 `file://{repo-root}/experiences/versus/dots-and-boxes/index.html`，并以 `127.0.0.1:8769` 复验资源与故障降级；
 - 直接文件入口与 localhost 正常路径均为 0 error；localhost 自动 favicon 请求曾产生 404，现已使用体验内相对 SVG 修复并记录在 [`bugs/2026-07-18-dots-boxes-localhost-favicon-404.md`](../bugs/2026-07-18-dots-boxes-localhost-favicon-404.md)；
 - 桌面尺寸：1504×1046；手机尺寸：390×844；最窄 Gate：320×700。
 

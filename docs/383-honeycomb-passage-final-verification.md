@@ -3,7 +3,7 @@
 - 日期：2026-07-25
 - 基线：`main@f729deb`
 - 分支：`codex/exp-honeycomb-passage-ui`
-- Worktree：`/Users/zenith/Desktop/two-of-us-worktrees/honeycomb-passage-ui`
+- Worktree：`{worktree-base}/honeycomb-passage-ui`
 - 范围：`experiences/versus/honeycomb-passage/**`
 - 结论：项目生产 UI、热座闭环、响应式、A 级直开契约、借鉴声明与测试均已完成，
   可进入共享目录集成阶段。

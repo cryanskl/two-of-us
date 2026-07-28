@@ -70,7 +70,7 @@ git diff --check
 Playwright CLI 自身会拒绝 `file:` 导航，因此没有把 localhost 冒充直开证据。本机 Chrome 直接加载：
 
 ```text
-file:///Users/zenith/Desktop/two-of-us/experiences/co-op/shared-color-studio/index.html
+file://{repo-root}/experiences/co-op/shared-color-studio/index.html
 ```
 
 [`file-ready-1504x1046.png`](./assets/shared-color-studio/file-ready-1504x1046.png) 是 1504×1046 原生截图，能看到：

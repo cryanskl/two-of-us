@@ -4,7 +4,7 @@
 - 项目 ID：`capsule-docking`
 - 基线：`main@f729deb`
 - 分支：`codex/exp-capsule-docking-ui`
-- Worktree：`/Users/zenith/Desktop/two-of-us-worktrees/capsule-docking-ui`
+- Worktree：`{worktree-base}/capsule-docking-ui`
 - 范围：`experiences/co-op/capsule-docking/**`
 - 结论：项目目录内的生产 UI、输入层、规则核心、测试、文档、借鉴声明和本地直开
   边界均已完成，可交给上层任务登记共享目录入口。

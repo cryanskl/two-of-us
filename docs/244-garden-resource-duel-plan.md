@@ -97,7 +97,7 @@ git branch --show-current && git rev-parse --show-toplevel
 并确认：
 
 - 分支为当前目标分支；
-- top-level 为 `/Users/zenith/Desktop/two-of-us`；
+- top-level 为 `{repo-root}`；
 - 没有把其他会话或用户改动带入；
 - 只暂存本部分文件；
 - 对应测试已通过。

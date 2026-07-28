@@ -1,6 +1,6 @@
 # Two of Us 多 Session 总控 Runbook
 
-> 适用仓库：`/Users/zenith/Desktop/two-of-us`
+> 适用仓库：`{repo-root}`
 >
 > 目标：用 1 个总控 Session 协调最多 4 个执行 Session，把仓库稳定推进到 75 个已安装、已验收的本地优先互动体验。
 >
@@ -121,8 +121,8 @@ brainstorm → research/attribution → spec → plan → implementation
 
 ## 8. Bug 与 Learn
 
-- 实际出现的 bug、复现条件、影响、根因、修复和回归验证写入 `/Users/zenith/Desktop/two-of-us/bugs`。
-- 可复用的架构、交互、调试、浏览器兼容和许可证知识写入 `/Users/zenith/Desktop/two-of-us/learn`。
+- 实际出现的 bug、复现条件、影响、根因、修复和回归验证写入 `{repo-root}/bugs`。
+- 可复用的架构、交互、调试、浏览器兼容和许可证知识写入 `{repo-root}/learn`。
 - 一个独立问题优先使用一个唯一命名文件，避免四个 Session 同写同一个文件。
 - 同一根因再次出现时，追加到已有记录并注明新项目和回归证据。
 - 纯预防性假设不冒充真实 bug。

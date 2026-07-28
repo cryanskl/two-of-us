@@ -44,7 +44,7 @@ git rev-parse --show-toplevel
 
 ```text
 codex/exp-vinyl-secret
-/Users/zenith/Desktop/two-of-us-worktrees/vinyl-secret
+{worktree-base}/vinyl-secret
 ```
 
 禁止未经当次授权执行 `reset --hard`、`push --force`、`branch -D`、`clean -f`、`checkout --`、覆盖未提交改动或其他破坏性操作。
@@ -257,7 +257,7 @@ feat: add optional local audio playback
 实际出现的 bug 才写：
 
 ```text
-/Users/zenith/Desktop/two-of-us/bugs/<unique-vinyl-secret-slug>.md
+{repo-root}/bugs/<unique-vinyl-secret-slug>.md
 ```
 
 每份包含：
@@ -278,7 +278,7 @@ feat: add optional local audio playback
 真正可复用且经验证的知识才写：
 
 ```text
-/Users/zenith/Desktop/two-of-us/learn/<unique-vinyl-secret-slug>.md
+{repo-root}/learn/<unique-vinyl-secret-slug>.md
 ```
 
 优先候选只有在实践证实后才记录：

@@ -54,7 +54,7 @@
 
 Playwright CLI 自身阻止 `file:` 导航，这不是作品限制。为验证真实 A 级承诺，另启 headless Google Chrome 直接加载：
 
-`file:///Users/zenith/Desktop/two-of-us/experiences/co-op/kitchen-relay/index.html`
+`file://{repo-root}/experiences/co-op/kitchen-relay/index.html`
 
 通过 Chrome DevTools Protocol 实测：
 

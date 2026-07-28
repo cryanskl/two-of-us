@@ -87,7 +87,7 @@ git rev-parse --show-toplevel
 
 ```text
 branch: codex/exp-memory-merge-board
-worktree: /Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board
+worktree: {worktree-base}/memory-merge-board
 ```
 
 每次提交前还要：

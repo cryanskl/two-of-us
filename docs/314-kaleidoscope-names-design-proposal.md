@@ -218,7 +218,7 @@ node --test experiences/surprises/kaleidoscope-names/logic.test.js
 - 工作区路径：
   `docs/assets/kaleidoscope-names-desktop-tuning-concept.png`
 - ImageGen 原始路径：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_LDylgdYE93RplyaCgvI1Bj70.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_LDylgdYE93RplyaCgvI1Bj70.png`
 - 生成方式：内置 `image_gen`
 - 用例：`ui-mockup`
 - 状态职责：`tuning`
@@ -237,7 +237,7 @@ node --test experiences/surprises/kaleidoscope-names/logic.test.js
 - 工作区路径：
   `docs/assets/kaleidoscope-names-mobile-complete-concept.png`
 - ImageGen 原始路径：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_YYFYE6s3zsPGH9PYNJfdbpjF.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_YYFYE6s3zsPGH9PYNJfdbpjF.png`
 - 生成方式：内置 `image_gen`
 - 输入引用：desktop tuning 仅作风格/组件参考
 - 用例：`ui-mockup`

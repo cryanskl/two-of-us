@@ -117,7 +117,7 @@ UI 会清 timer；reducer 仍用当前 `playbackToken` 核对完成回调，形�
 
 ## 5. `file://`、门户与请求
 
-- 真实打开 `file:///Users/zenith/Desktop/two-of-us/experiences/versus/echo-arena/index.html`：标题与 H1 正常，`TWO_OF_US_TONE_PLAYER.createTonePlayer` 为函数，背景解析到本地 PNG；
+- 真实打开 `file://{repo-root}/experiences/versus/echo-arena/index.html`：标题与 H1 正常，`TWO_OF_US_TONE_PLAYER.createTonePlayer` 为函数，背景解析到本地 PNG；
 - 根门户通过 `file://` 显示 30 个体验，可用唯一链接名“打开《回声擂台》”进入同一入口；
 - HTTP 验收只有 7 个同源静态请求：HTML、CSS、`config.js`、共享 tone player、`logic.js`、`app.js` 和背景 PNG；
 - 不请求 CDN、远程字体、统计、API、音频或商业音乐；

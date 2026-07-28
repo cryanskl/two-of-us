@@ -28,9 +28,9 @@
 
 | 槽位 | 状态 | 项目 | worktree | 分支 | 基线 SHA | 最近进展 |
 | --- | --- | --- | --- | --- | --- | --- |
-| Worker 1 | 已集成 | `ricochet-tank-duel` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 56 项定向、独立 Chrome、四项浏览器问题与主门户进出闭环通过；已上架为第 73 个入口 |
-| Worker 2 | 已集成 | `photo-slider-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-production-ui` | `codex/exp-photo-slider-race-production-ui` | `df4d0cc` | 41 项定向、本地照片 Blob 生命周期、真实触控、辅助模式和主门户进出闭环通过；已上架为第 74 个入口 |
-| Worker 3 | 已集成 | `dual-maze-race` 生产 UI | `/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 32 项定向、四局换席、公平暂停、六视口、主门户进出闭环通过；已上架为第 75 个入口 |
+| Worker 1 | 已集成 | `ricochet-tank-duel` 生产 UI | `{worktree-base}/ricochet-tank-duel-production-ui` | `codex/exp-ricochet-tank-duel-production-ui` | `d6b783d` | 56 项定向、独立 Chrome、四项浏览器问题与主门户进出闭环通过；已上架为第 73 个入口 |
+| Worker 2 | 已集成 | `photo-slider-race` 生产 UI | `{worktree-base}/photo-slider-race-production-ui` | `codex/exp-photo-slider-race-production-ui` | `df4d0cc` | 41 项定向、本地照片 Blob 生命周期、真实触控、辅助模式和主门户进出闭环通过；已上架为第 74 个入口 |
+| Worker 3 | 已集成 | `dual-maze-race` 生产 UI | `{worktree-base}/dual-maze-race-production-ui` | `codex/exp-dual-maze-race-production-ui` | `df4d0cc` | 32 项定向、四局换席、公平暂停、六视口、主门户进出闭环通过；已上架为第 75 个入口 |
 | Worker 4 | 已完成 | — | — | — | — | 目标已达成，无需滚动补位 |
 
 若平台实际并发上限不足 4，保留槽位定义，但只使用真实可用的 Session，不虚报运行状态。

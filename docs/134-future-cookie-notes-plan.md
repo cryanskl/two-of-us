@@ -220,7 +220,7 @@ git branch --show-current
 git rev-parse --show-toplevel
 ```
 
-确认当前分支为 `main` 且仓库根为 `/Users/zenith/Desktop/two-of-us`，再 add/commit。hook 失败时修问题、重新 add、新建 commit；不得 amend。破坏性 Git、数据库或文件操作仍需用户在当前消息显式授权。
+确认当前分支为 `main` 且仓库根为 `{repo-root}`，再 add/commit。hook 失败时修问题、重新 add、新建 commit；不得 amend。破坏性 Git、数据库或文件操作仍需用户在当前消息显式授权。
 
 ## 6. 完成判据
 

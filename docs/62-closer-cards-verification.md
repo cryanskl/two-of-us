@@ -32,7 +32,7 @@
 
 - 首选应用内浏览器与 Chrome 扩展通道均按技能要求尝试；当前运行时报告无可用浏览器，且故障文档查找到了不同插件版本目录，详见 [`bugs/2026-07-18-browser-plugin-version-drift.md`](../bugs/2026-07-18-browser-plugin-version-drift.md)；
 - 回退方法：`playwright-cli` 驱动本机 headed Chrome 验证 localhost 全流程；另用系统 Chrome headless 直接打开 `file://`，生成 1504×1046 启动页证明；
-- 入口：`file:///Users/zenith/Desktop/two-of-us/experiences/co-op/closer-cards/index.html`；
+- 入口：`file://{repo-root}/experiences/co-op/closer-cards/index.html`；
 - 桌面原生概念尺寸：1504×1046；
 - 手机验证尺寸：390×844；
 - 窄屏 Gate：320×760。

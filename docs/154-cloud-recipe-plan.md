@@ -29,7 +29,7 @@
 git branch --show-current && git rev-parse --show-toplevel
 ```
 
-并确认分支为当前任务分支、根目录为 `/Users/zenith/Desktop/two-of-us`。不得使用破坏性 Git 操作，不覆盖无关用户改动。
+并确认分支为当前任务分支、根目录为 `{repo-root}`。不得使用破坏性 Git 操作，不覆盖无关用户改动。
 
 ## 2. 子任务与文件所有权
 

@@ -5,7 +5,7 @@
 - 对外标题：`绕词对决`
 - 分类：`versus`
 - 等级目标：A（真实 `file://` 直开）
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/word-detour-duel-core-audit`
+- worktree：`{worktree-base}/word-detour-duel-core-audit`
 - 分支：`codex/exp-word-detour-duel-core-audit`
 - 基线：`ba7c0ce8feec43860b53e1cafbb6902156bfb520`
 - 核心结论：**Core Go**

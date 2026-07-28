@@ -198,7 +198,7 @@ public score example = 玩家 1: 1, 玩家 2: 0
 | 字段 | 记录 |
 | --- | --- |
 | 仓库路径 | `docs/assets/word-detour-duel-desktop-describing-concept.png` |
-| ImageGen 原始路径 | `/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/call_nnDnpl24YOFS88mqBxXezMlc.png` |
+| ImageGen 原始路径 | `{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/call_nnDnpl24YOFS88mqBxXezMlc.png` |
 | 生成方式 | Codex 内置 `image_gen` |
 | 用例 | `ui-mockup` |
 | 输入图片 | 无 |
@@ -214,7 +214,7 @@ public score example = 玩家 1: 1, 玩家 2: 0
 | 字段 | 记录 |
 | --- | --- |
 | 仓库路径 | `docs/assets/word-detour-duel-mobile-describing-concept.png` |
-| ImageGen 原始路径 | `/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/call_5mgnqv2hrwThTLJoQ8Xs8ARW.png` |
+| ImageGen 原始路径 | `{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/call_5mgnqv2hrwThTLJoQ8Xs8ARW.png` |
 | 生成方式 | Codex 内置 `image_gen` |
 | 用例 | `ui-mockup` |
 | 输入图片 | 仅本次内部生成的最终桌面概念，作为风格/组件参考 |
@@ -232,14 +232,14 @@ public score example = 玩家 1: 1, 玩家 2: 0
 
 | 方向 | 原始路径 | 尺寸 | SHA-256 | 淘汰理由 |
 | --- | --- | ---: | --- | --- |
-| 电台绕词 | `/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/call_csNF4tZMEQV700nj8rGrfisf.png` | 1536 × 1024 | `3e0a773019b772ca7dfa849b87dace639bed1033c5413780349e902617818310` | 旋钮与广播设备仍暗示录音/自动监听 |
-| 纸条接力 | `/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/call_3oxgIgWrvCMUmuFenqe0b0RI.png` | 1536 × 1024 | `0d867629e2976bb90e76a8633ee4c70a4e9a7977a7511331c32dcd2ab739d9d1` | 目标纸与四小纸过度接近卡牌/包装表达 |
+| 电台绕词 | `{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/call_csNF4tZMEQV700nj8rGrfisf.png` | 1536 × 1024 | `3e0a773019b772ca7dfa849b87dace639bed1033c5413780349e902617818310` | 旋钮与广播设备仍暗示录音/自动监听 |
+| 纸条接力 | `{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/call_3oxgIgWrvCMUmuFenqe0b0RI.png` | 1536 × 1024 | `0d867629e2976bb90e76a8633ee4c70a4e9a7977a7511331c32dcd2ab739d9d1` | 目标纸与四小纸过度接近卡牌/包装表达 |
 
 两张淘汰稿也做了 `view_image(detail="original")` 检查。
 
 ### 3.4 生成会话
 
-- 生成目录：`/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/`
+- 生成目录：`{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/`
 - 工具没有暴露可记录的模型名、seed 或内部采样参数；
 - 本文不虚构未暴露字段；
 - 没有使用外部图片、开源截图、商业产品图、私人图片或品牌素材。
@@ -288,7 +288,7 @@ Privacy and rule constraints: exactly two equal seats, one current target, four 
 
 ```text
 referenced_image_paths:
-  - /Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/call_nnDnpl24YOFS88mqBxXezMlc.png
+  - {generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/call_nnDnpl24YOFS88mqBxXezMlc.png
 num_last_images_to_include: omitted
 ```
 

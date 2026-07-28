@@ -158,7 +158,7 @@ git branch --show-current
 git rev-parse --show-toplevel
 ```
 
-确认当前分支与 `/Users/zenith/Desktop/two-of-us` 一致，再 add/commit。hook 失败时修复、重新 add、新建 commit；不得 amend。任何 destructive Git/文件操作仍需当前消息显式授权。
+确认当前分支与 `{repo-root}` 一致，再 add/commit。hook 失败时修复、重新 add、新建 commit；不得 amend。任何 destructive Git/文件操作仍需当前消息显式授权。
 
 ## 5. 完成判据
 

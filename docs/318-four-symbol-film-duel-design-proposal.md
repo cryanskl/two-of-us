@@ -87,7 +87,7 @@
 ### 2.3 生成会话与源文件
 
 - 生成目录：
-  `/Users/zenith/.codex/generated_images/019f97bb-eca4-7e70-980f-59a91cfc27b4/`
+  `{generated-image-root}/019f97bb-eca4-7e70-980f-59a91cfc27b4/`
 - 桌面原始文件：`call_Ztj5tb1MQNCfNsk5rhzk0zYq.png`
 - 移动原始文件：`call_abWLKiFzMW0It0JIkBLcR2UC.png`
 - 两张图都由内置工具从纯文本提示词新生成；

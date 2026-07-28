@@ -44,7 +44,7 @@
 git branch --show-current && git rev-parse --show-toplevel
 ```
 
-本计划编写时实测分支为 `main`、根目录为 `/Users/zenith/Desktop/two-of-us`。每次提交都必须重新确认当时分支与 worktree；不能把本次实测当作永久条件。子任务不 stage、不 commit，由主线程审阅、验证、暂存并提交。
+本计划编写时实测分支为 `main`、根目录为 `{repo-root}`。每次提交都必须重新确认当时分支与 worktree；不能把本次实测当作永久条件。子任务不 stage、不 commit，由主线程审阅、验证、暂存并提交。
 
 ## 3. 子任务、文件所有权与前置关系
 

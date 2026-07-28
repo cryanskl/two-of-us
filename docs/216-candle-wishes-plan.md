@@ -36,7 +36,7 @@ git branch --show-current && git rev-parse --show-toplevel
 ```
 
 并确认当前分支与 worktree 确实属于本任务。预期根目录是
-`/Users/zenith/Desktop/two-of-us`；不能把某次检查结果当作后续提交的永久授权。
+`{repo-root}`；不能把某次检查结果当作后续提交的永久授权。
 子任务不 stage、不 commit，由主线程审阅、验证、暂存并提交。
 
 ## 2. 固定交付合同

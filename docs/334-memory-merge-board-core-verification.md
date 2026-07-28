@@ -5,7 +5,7 @@
 - 对外名称：把小事，合成我们的故事
 - 分类：`co-op`
 - 等级目标：A
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core`
+- worktree：`{worktree-base}/memory-merge-board-core`
 - 分支：`codex/exp-memory-merge-board-core`
 - 基线：`40fd69a6bdaf8e311a2b4468433aeb9d0a8712ca`
 - 核心结论：**Core Go**
@@ -97,7 +97,7 @@ docs/334-memory-merge-board-core-verification.md
 
 ```text
 codex/exp-memory-merge-board-core
-/Users/zenith/Desktop/two-of-us-worktrees/memory-merge-board-core
+{worktree-base}/memory-merge-board-core
 ```
 
 没有使用 amend、reset、clean、force push 或共享文件捎带提交。

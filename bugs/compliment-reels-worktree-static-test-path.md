@@ -8,7 +8,7 @@
 ## 复现
 
 在 worktree
-`<worktree-root>` 执行：
+`{worktree-root}` 执行：
 
 ```bash
 npm test
@@ -20,7 +20,7 @@ npm test
 
 ```text
 The input did not match the regular expression /two-of-us\/index\.html$/.
-Input: <worktree-root>/index.html
+Input: {worktree-root}/index.html
 ```
 
 ## 根因

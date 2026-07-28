@@ -3,7 +3,7 @@
 - 复验日期：2026-07-25
 - 基线：`a4eea1eb2f7f01fb18c21797cd970c16d67bfb3c`
 - 分支：`codex/exp-shadow-duet-core`
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/shadow-duet-core`
+- worktree：`{worktree-base}/shadow-duet-core`
 - 范围：既有非视觉核心再验收、重复机制与来源审计；不创建生产 UI
 
 ## 1. 结论

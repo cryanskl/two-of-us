@@ -27,7 +27,7 @@
 
 ### `file://` 直开
 
-Chromium 从绝对 `file:///Users/zenith/Desktop/two-of-us/experiences/surprises/moon-phase-secret/index.html` 打开：
+Chromium 从绝对 `file://{repo-root}/experiences/surprises/moon-phase-secret/index.html` 打开：
 
 - intro 的最终留言节点为 0，`body.textContent`、`aria-*`、`data-*` 和 style 属性均不含最终标题/正文；
 - 点击开始后焦点进入月份圆环，三条线索才创建；

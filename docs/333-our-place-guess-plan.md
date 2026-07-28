@@ -36,7 +36,7 @@ git status --short
 
 ```text
 branch: codex/exp-our-place-guess
-root: /Users/zenith/Desktop/two-of-us-worktrees/our-place-guess
+root: {worktree-base}/our-place-guess
 ```
 
 并确认：

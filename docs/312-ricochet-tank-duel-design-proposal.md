@@ -47,7 +47,7 @@ catalog、Board、README 或共享索引，也不把项目标记为 installed。
 
 - 项目路径：`docs/assets/ricochet-tank-duel-desktop-concept.png`
 - ImageGen 生成源：
-  `/Users/zenith/.codex/generated_images/019f97bb-eca4-7e70-980f-59a91cfc27b4/call_RJJ2nBkabjvIeG6kyy2qQXHD.png`
+  `{generated-image-root}/019f97bb-eca4-7e70-980f-59a91cfc27b4/call_RJJ2nBkabjvIeG6kyy2qQXHD.png`
 - 尺寸：1536×1024 px
 - 格式：PNG，无透明通道要求
 - SHA-256：`4f86b702a5ffcdbed74dc62b6e1c209c5d155e9810a91d2ec7d5d1caf8015e48`
@@ -59,7 +59,7 @@ catalog、Board、README 或共享索引，也不把项目标记为 installed。
 
 - 项目路径：`docs/assets/ricochet-tank-duel-mobile-concept.png`
 - ImageGen 生成源：
-  `/Users/zenith/.codex/generated_images/019f97bb-eca4-7e70-980f-59a91cfc27b4/call_pS3524zm1N9As1tY7pNZhfAC.png`
+  `{generated-image-root}/019f97bb-eca4-7e70-980f-59a91cfc27b4/call_pS3524zm1N9As1tY7pNZhfAC.png`
 - 尺寸：916×1717 px
 - 格式：PNG，无透明通道要求
 - SHA-256：`5a9aac9a1f4281e7a9a08f227f838a076f9e352db93f02c2b273c5b2ed4f58bf`

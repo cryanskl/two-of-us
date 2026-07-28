@@ -23,7 +23,7 @@
 
 - 首选应用内 Browser 插件；当前运行时报告 `No browser is available`，且故障文档解析到不同插件版本目录，详见 [`bugs/2026-07-18-browser-plugin-version-drift.md`](../bugs/2026-07-18-browser-plugin-version-drift.md)；
 - 回退方法：`playwright-cli` 驱动本机 headed Chromium 验证 localhost 全流程；已有 headed Chrome 会话真实打开 `file://` 且控制台为零错误，另用系统 Chrome headless 直接打开同一 `file://` 入口生成桌面证明图；
-- 入口：`file:///Users/zenith/Desktop/two-of-us/experiences/surprises/hand-crank-music-box/index.html`；
+- 入口：`file://{repo-root}/experiences/surprises/hand-crank-music-box/index.html`；
 - 桌面原生概念尺寸：1504×1046；
 - 手机验证尺寸：390×844；窄屏 Gate：320×760。
 

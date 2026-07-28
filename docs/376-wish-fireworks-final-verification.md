@@ -3,7 +3,7 @@
 - 验收日期：2026-07-25
 - 项目：`experiences/surprises/wish-fireworks/`
 - 分支：`codex/exp-wish-fireworks-ui`
-- 独立 worktree：`/Users/zenith/Desktop/two-of-us-worktrees/wish-fireworks-ui`
+- 独立 worktree：`{worktree-base}/wish-fireworks-ui`
 - 起点：`3aaba821ecbb3a5db06c4cb9139d4e15a96116e3`
 - 结论：**通过；达到 A 级直接本地打开边界**
 

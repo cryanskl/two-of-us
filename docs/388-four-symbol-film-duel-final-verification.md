@@ -6,7 +6,7 @@
 > 分类：双人对抗  
 > 本地等级：A  
 > 分支：`codex/exp-four-symbol-film-duel-production-ui`  
-> worktree：`/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-production-ui`  
+> worktree：`{worktree-base}/four-symbol-film-duel-production-ui`\
 > 基线：`69a3b286e3ff5df18c9c9c778fe2e562eca6844e`
 
 ## 1. 结论

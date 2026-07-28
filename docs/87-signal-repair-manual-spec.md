@@ -402,5 +402,5 @@ main
 - file/localhost、四轮、选错、超时、重试、暂停、重开和三档响应式均有证据；
 - 作品测试、全仓测试和仓库校验全绿；
 - 目录入口、README、ATTRIBUTION、bugs、learn 与 verification 文档完整；
-- 每个实现部分和修复单独提交，提交前确认 `main` 与 `/Users/zenith/Desktop/two-of-us`；
+- 每个实现部分和修复单独提交，提交前确认 `main` 与 `{repo-root}`；
 - 没有第三方运行代码、框架、字体、音频、图像、远程请求或未声明参考。

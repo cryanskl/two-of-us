@@ -83,7 +83,7 @@ git diff --check
 真实导航：
 
 ```text
-file:///Users/zenith/Desktop/two-of-us/experiences/versus/light-trail-hunt/index.html
+file://{repo-root}/experiences/versus/light-trail-hunt/index.html
 ```
 
 三个页面上下文都直接加载本地文件，没有用 localhost 冒充 A 级直开。每档均记录：

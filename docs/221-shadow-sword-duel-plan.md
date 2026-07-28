@@ -34,7 +34,7 @@ fb12a2e  docs: align shadow sword stylesheet contract
 git branch --show-current && git rev-parse --show-toplevel
 ```
 
-预期根目录必须是 `/Users/zenith/Desktop/two-of-us`，当前分支与 worktree 必须属于
+预期根目录必须是 `{repo-root}`，当前分支与 worktree 必须属于
 本任务。子代理只负责边界明确的文件或只读审查，不 stage、不 commit；主线程负责
 核对用户现有改动、测试、暂存和提交。
 

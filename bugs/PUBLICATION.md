@@ -24,13 +24,16 @@
 
 | 占位符 | 含义 |
 | --- | --- |
-| `<repo-root>` | 当前仓库根目录 |
-| `<worktree-root>` | 当前隔离 worktree 根目录 |
-| `<tool-runtime>` | 工具提供的解释器或运行时 |
-| `<skill-root>` | 可选开发工具或 skill 的安装目录 |
-| `<temporary-host>` | 仅在一次验证中有效的主机或 IP |
+| `{repo-root}` | 当前仓库根目录 |
+| `{worktree-root}` | 当前隔离 worktree 根目录 |
+| `{worktree-base}` | 存放多个隔离 worktree 的父目录 |
+| `{tool-runtime}` | 工具提供的解释器或运行时 |
+| `{skill-root}` | 可选开发工具或 skill 的安装目录 |
+| `{generated-image-root}` | 本地生成图片的临时保存目录 |
+| `{visualization-root}` | 本地浏览器截图或验收图的临时保存目录 |
+| `{temporary-host}` | 仅在一次验证中有效的主机或 IP |
 
-占位符应保留命令和错误的解释力。例如将个人 worktree 下的 `catalog.json` 写成 `<worktree-root>/catalog.json`，不要直接删掉与根因有关的文件名。
+占位符应保留命令和错误的解释力。例如将个人 worktree 下的 `catalog.json` 写成 `{worktree-root}/catalog.json`，不要直接删掉与根因有关的文件名。
 
 ## 提交前检查
 

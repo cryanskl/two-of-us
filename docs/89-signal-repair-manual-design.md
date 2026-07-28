@@ -262,25 +262,25 @@ branch button
 ### 14.1 桌面进行态
 
 - 最终文件：`design/signal-repair-manual/concept-desktop-playing.png`；
-- 原始生成：`/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-90591e06-81c2-493f-b234-eb72cc331eaa.png`；
+- 原始生成：`{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-90591e06-81c2-493f-b234-eb72cc331eaa.png`；
 - 提示词摘要：1504×1046 面对面双朝向网页，北席三规则手册、南席 A/B/C 三分支、中部 45 秒/1 of 4 仪表；午夜天文台、纸卡、黄铜、珊瑚、青紫信号；明确排除炸弹、电线、危险、军工、七段数码管和既有手册版式。
 
 ### 14.2 移动交接态
 
 - 最终文件：`design/signal-repair-manual/concept-mobile-handoff.png`；
-- 原始生成：`/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-307543a7-36cc-4448-b439-efa59926ac05.png`；
+- 原始生成：`{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-307543a7-36cc-4448-b439-efa59926ac05.png`；
 - 提示词摘要：390×844 单列 handoff、轮次、交换提示、北/南两席同权角色和 READY、未显示题面答案；48px、安全区、无横向溢出；同一原创天文材质并明确排除危险表达。
 
 ### 14.3 桌面完成态
 
 - 最终文件：`design/signal-repair-manual/concept-desktop-complete.png`；
-- 原始生成：`/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-4b7cbdb0-8f59-4466-a9d5-514b2740083e.png`；
+- 原始生成：`{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-4b7cbdb0-8f59-4466-a9d5-514b2740083e.png`；
 - 提示词摘要：1504×1046 完成态，以四段拼合私人传输为中心，四轮中性记录和四节点星图为辅，无分数、评级、胜负或彩纸。
 
 ### 14.4 生产背景
 
 - 最终文件：`experiences/co-op/signal-repair-manual/assets/signal-dust.webp`；
-- 原始生成：`/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-726adfbe-9c8b-45f8-a8f7-32e5a00a338c.png`；
+- 原始生成：`{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-726adfbe-9c8b-45f8-a8f7-32e5a00a338c.png`；
 - 完整边界：1536×1024 深蓝手工纸纹，边缘稀疏星尘/轨道/黄铜细线，中央 70% 低对比；无字、无数字、无 UI、无卡片、无对象、无人、无 Logo、无炸弹/电线/危险符号；
 - 转换：`baoyu-compress-image` 通过临时 Sharp 以 quality 82 输出 WebP，2,682,073 bytes → 144,098 bytes；不增加项目依赖。
 

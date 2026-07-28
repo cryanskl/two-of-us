@@ -69,7 +69,7 @@
 
 ### 2.3 生成会话记录
 
-- 生成目录：`/Users/zenith/.codex/generated_images/019f97bc-3964-7f50-a328-01764b681a97/`
+- 生成目录：`{generated-image-root}/019f97bc-3964-7f50-a328-01764b681a97/`
 - 桌面原始文件：`call_EtSerCl6YXDKoiXbw7UnUWlt.png`
 - 移动端原始文件：`call_Smb3qKk4TupkIfEV3kErfFBy.png`
 - 工具未暴露可记录的模型名、种子或内部采样参数，因此本提案不虚构这些字段。

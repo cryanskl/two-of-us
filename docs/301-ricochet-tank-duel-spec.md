@@ -961,9 +961,9 @@ MAX_STEPS_PER_FRAME = 5
 
 若实现中发现 bug：
 
-- 记录到 `/Users/zenith/Desktop/two-of-us/bugs`；
+- 记录到 `{repo-root}/bugs`；
 - 包含复现输入、预期、实际、根因和解决方案；
-- 可泛化知识记录到 `/Users/zenith/Desktop/two-of-us/learn`；
+- 可泛化知识记录到 `{repo-root}/learn`；
 - 当前文档任务不创建这些目录内容，因为尚未进入实现且未发现生产 bug。
 
 ## 23. 借鉴声明

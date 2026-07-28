@@ -57,7 +57,7 @@
 | Node.js | `v22.22.3` |
 | npm | `10.9.8` |
 | Git | `2.50.1 (Apple Git-155)` |
-| worktree | `/Users/zenith/Desktop/two-of-us-worktrees/launch-contract-audit` |
+| worktree | `{worktree-base}/launch-contract-audit` |
 
 ### 证据限制
 

@@ -6,7 +6,7 @@
 > 分类：双人对抗  
 > 本地等级：A  
 > 分支：`codex/exp-dual-maze-race-production-ui`  
-> worktree：`/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-production-ui`  
+> worktree：`{worktree-base}/dual-maze-race-production-ui`\
 > 基线：`df4d0cc2b6232fb034ccee0b2970928debc6f5c6`
 
 ## 1. 结论

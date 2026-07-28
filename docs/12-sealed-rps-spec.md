@@ -161,7 +161,7 @@ experiences/versus/sealed-rps/
 
 ### 视觉一致性账本
 
-桌面概念：`/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-d4222f2e-e219-4d66-a1c0-32c63eabcfab.png`；移动概念：同目录的 `exec-fb59dca4-c820-4779-88f5-2e49668e00b6.png`。两张概念与最终 Chrome 截图均通过原始尺寸图像检查。
+桌面概念：`{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-d4222f2e-e219-4d66-a1c0-32c63eabcfab.png`；移动概念：同目录的 `exec-fb59dca4-c820-4779-88f5-2e49668e00b6.png`。两张概念与最终 Chrome 截图均通过原始尺寸图像检查。
 
 | 对比点 | 概念证据 | 最终实现 | 结论 |
 | --- | --- | --- | --- |

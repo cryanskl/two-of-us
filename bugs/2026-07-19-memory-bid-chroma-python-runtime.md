@@ -33,7 +33,7 @@
 
 从 Codex workspace dependencies 读取已捆绑的 Python：
 
-`<tool-runtime>/bin/python3`
+`{tool-runtime}/bin/python3`
 
 用该解释器运行同一脚本和参数，成功生成 RGBA 图集。源图保留在 `design/memory-bid/`，运行时只加载处理后的 PNG；没有修改 `package.json`、lockfile 或用户安装流程。
 

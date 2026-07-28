@@ -52,7 +52,7 @@
 
 Playwright CLI 自身阻止 `file:` 导航，因此另启 headless Google Chrome 直接加载：
 
-`file:///Users/zenith/Desktop/two-of-us/experiences/surprises/nested-gift/index.html`
+`file://{repo-root}/experiences/surprises/nested-gift/index.html`
 
 通过 Chrome DevTools Protocol 实测：
 

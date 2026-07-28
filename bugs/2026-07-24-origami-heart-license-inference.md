@@ -7,7 +7,7 @@
 
 ## 环境
 
-- 仓库：`<repo-root>`
+- 仓库：`{repo-root}`
 - 分支：`main`
 - 复核对象：`hannahapuan/shetech-origami-heart`
 

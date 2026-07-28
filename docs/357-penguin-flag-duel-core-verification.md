@@ -14,7 +14,7 @@
 
 ## 2. 范围与环境
 
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/penguin-flag-duel-core-reaudit`
+- worktree：`{worktree-base}/penguin-flag-duel-core-reaudit`
 - 分支：`codex/exp-penguin-flag-duel-core-reaudit`
 - 基线：`ddc3bde71881528652d7d3c618920ba908412226`
 - 审计范围：

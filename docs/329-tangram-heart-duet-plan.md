@@ -53,7 +53,7 @@ git branch --show-current && git rev-parse --show-toplevel
 
 ```text
 codex/exp-tangram-heart-duet
-/Users/zenith/Desktop/two-of-us-worktrees/tangram-heart-duet
+{worktree-base}/tangram-heart-duet
 ```
 
 历史分支名可以保留，但生产目录、文案和测试统一使用正式 ID `seven-piece-duet`。
@@ -688,8 +688,8 @@ fix: fit duet controls at 320px
 
 目录使用用户指定位置：
 
-- `/Users/zenith/Desktop/two-of-us/bugs`
-- `/Users/zenith/Desktop/two-of-us/learn`
+- `{repo-root}/bugs`
+- `{repo-root}/learn`
 
 在本 worktree 中对应仓库相对目录 `bugs/`、`learn/`。只有真实内容才创建文件，不预建占位。
 

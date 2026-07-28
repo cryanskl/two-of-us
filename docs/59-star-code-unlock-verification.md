@@ -25,7 +25,7 @@ git diff --check                                 PASS
 应用内浏览器在本次环境不可用，Playwright CLI 又出于安全策略拒绝 `file:` 导航，因此采用两条互补路径：
 
 1. 同一份源码通过临时 `http://127.0.0.1:4173/` 由 Playwright CLI 实玩全部交互；
-2. 系统 Chrome 直接加载 `file:///Users/zenith/Desktop/two-of-us/experiences/surprises/star-code-unlock/index.html`，生成 1503×1046 截图并确认经典脚本、CSS 和本地图片正常加载。
+2. 系统 Chrome 直接加载 `file://{repo-root}/experiences/surprises/star-code-unlock/index.html`，生成 1503×1046 截图并确认经典脚本、CSS 和本地图片正常加载。
 
 实玩顺序与结果：
 

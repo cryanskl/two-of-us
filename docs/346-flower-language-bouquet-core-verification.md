@@ -3,7 +3,7 @@
 - 复验日期：2026-07-25
 - 基线：`1ce7c6ad10e6cfc56e5c5ed4ae64d5f9f1fb3e72`
 - 分支：`codex/exp-flower-language-bouquet-core-audit`
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-core-audit`
+- worktree：`{worktree-base}/flower-language-bouquet-core-audit`
 - 范围：既有配置、纯逻辑、导出数据合同、来源/资产与重复机制审计；不创建生产 UI
 
 ## 1. 结论

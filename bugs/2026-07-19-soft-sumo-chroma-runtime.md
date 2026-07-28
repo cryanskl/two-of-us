@@ -34,7 +34,7 @@
 使用 `edge-contract=0`、`edge-feather=0.6`，并固定调用工作区 Python：
 
 ```text
-<tool-runtime>/bin/python3
+{tool-runtime}/bin/python3
 ```
 
 输出 PNG 后以 Pillow 无损 WebP 保存为 `token-atlas.webp`。网页只加载 WebP，不把 Python 或 Pillow加入作品运行依赖。

@@ -11,7 +11,7 @@
 
 - 文件：`concept-choosing-desktop.png`
 - 原始输出：
-  `/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-26974a4e-e7b3-4766-a47e-329155f4952d.png`
+  `{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-26974a4e-e7b3-4766-a47e-329155f4952d.png`
 - 像素：1586×992
 - SHA-256：`1ab4beba8f23c03a4f6daf724989ead2ea911640f13e04ec8662960c723777f7`
 - 状态：choosing，左席已选“防”但尚未封招
@@ -36,7 +36,7 @@ two public resource rails, central four real-button choices in fixed order,
 
 - 文件：`concept-ready-mobile.png`
 - 原始输出：
-  `/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-b9f9946c-37cb-4d41-a52c-aa6a614dcf8e.png`
+  `{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-b9f9946c-37cb-4d41-a52c-aa6a614dcf8e.png`
 - 像素：853×1844
 - SHA-256：`524ac55e9d57514cd6d7894afa04a075e53fa05e61656d91c1f46f71b5aec758`
 - 状态：两份动作已封、尚未揭晓
@@ -60,7 +60,7 @@ one “一起揭晓” button; absolutely no action values, icons or color codin
 
 - 文件：`concept-result-desktop.png`
 - 原始输出：
-  `/Users/zenith/.codex/generated_images/019f6391-1492-74c1-ad81-58b3f8721526/exec-441bf4f4-9858-40ee-901d-36b17ce1e5d0.png`
+  `{generated-image-root}/019f6391-1492-74c1-ad81-58b3f8721526/exec-441bf4f4-9858-40ee-901d-36b17ce1e5d0.png`
 - 像素：1586×992
 - SHA-256：`3497cf889280d79c48855027eb03aef4b9f7ac9130c01daabc46dac8df618a1b`
 - 状态：普通攻 / 防，右席防守成功并取得先机

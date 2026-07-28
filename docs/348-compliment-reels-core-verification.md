@@ -3,7 +3,7 @@
 - 复验日期：2026-07-25
 - 基线：`44b5edc0457ac3b18fc069e52d06e54b9bc630c8`
 - 分支：`codex/exp-compliment-reels-core-audit`
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-core-audit`
+- worktree：`{worktree-base}/compliment-reels-core-audit`
 - 范围：既有 research/copy audit/spec/plan/design、配置、纯逻辑、测试、来源、
   docs-only 资源与机制去重；不创建生产 UI
 

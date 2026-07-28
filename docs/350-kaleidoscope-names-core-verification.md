@@ -5,7 +5,7 @@
 - 对外公开标题：`把名字折成光`
 - 分类：`surprise`
 - 等级目标：A
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/kaleidoscope-names-core-audit`
+- worktree：`{worktree-base}/kaleidoscope-names-core-audit`
 - 分支：`codex/exp-kaleidoscope-names-core-audit`
 - 基线：`9ed8cc4561dfb5e412acf9c349c9f05c7bd1d5d1`
 - 核心结论：**Core Go**

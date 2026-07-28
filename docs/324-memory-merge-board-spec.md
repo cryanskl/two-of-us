@@ -908,7 +908,7 @@ CSS 不在 `body` 上设置 `touch-action: none`。棋盘区只声明实现所�
 生产提交前必须在 Chromium 中直接打开：
 
 ```text
-file:///Users/zenith/Desktop/two-of-us/experiences/co-op/memory-merge-board/index.html
+file://{repo-root}/experiences/co-op/memory-merge-board/index.html
 ```
 
 独立 worktree 验证时使用该 worktree 的绝对 `file://` 路径。

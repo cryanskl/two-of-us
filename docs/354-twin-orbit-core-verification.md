@@ -5,7 +5,7 @@
 - 对外公开标题：`这一圈，和你同时到`
 - 分类：`co-op`
 - 等级目标：A
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit-core-audit`
+- worktree：`{worktree-base}/twin-orbit-core-audit`
 - 分支：`codex/exp-twin-orbit-core-audit`
 - 基线：`e539ca3991b20afa2139c495e5969ad6bbe41218`
 - 核心结论：**Core Go**

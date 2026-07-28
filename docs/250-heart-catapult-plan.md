@@ -54,7 +54,7 @@ git branch --show-current && git rev-parse --show-toplevel
 并确认：
 
 - 当前分支属于本任务；
-- top-level 是 `/Users/zenith/Desktop/two-of-us`；
+- top-level 是 `{repo-root}`；
 - 没有混入用户或其他会话的修改；
 - 只暂存当前完成部分；
 - 本部分定向 Gate、`npm test`、`npm run verify` 与 `git diff --check` 全绿。

@@ -26,7 +26,7 @@ git rev-parse --show-toplevel
 
 ```text
 branch: codex/exp-our-place-guess-core
-worktree: /Users/zenith/Desktop/two-of-us-worktrees/our-place-guess-core
+worktree: {worktree-base}/our-place-guess-core
 baseline: 9be39154d6e3e42ce2b6df5314b75a47a9a73738
 ```
 

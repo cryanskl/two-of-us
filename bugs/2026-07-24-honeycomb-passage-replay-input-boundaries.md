@@ -8,7 +8,7 @@
 
 ## 环境
 
-- macOS，本地 `main` worktree：`<repo-root>`
+- macOS，本地 `main` worktree：`{repo-root}`
 - Node.js `node:test`
 - 纯逻辑层；不涉及 DOM、网络或浏览器存储
 

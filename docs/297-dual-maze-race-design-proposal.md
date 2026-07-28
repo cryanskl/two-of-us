@@ -78,7 +78,7 @@ concept-to-code 验收方法。本文不授权生产 UI 实现。
 - 生成方式：Codex 内置 `image_gen` 工具；
 - 分类：`ui-mockup`；
 - 生成会话目录：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/`；
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/`；
 - 桌面原始输出：
   `call_Zl7rOQQ6yhJS1LwC0BOihf8Q.png`；
 - 移动原始输出：

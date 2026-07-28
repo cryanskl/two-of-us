@@ -97,7 +97,7 @@
 ### 1.3 生成记录
 
 - 生成目录：
-  `/Users/zenith/.codex/generated_images/019f97bb-eca4-7e70-980f-59a91cfc27b4/`
+  `{generated-image-root}/019f97bb-eca4-7e70-980f-59a91cfc27b4/`
 - 桌面最终源文件：
   `call_WzCJLdCeqOclpgdOm0htLs4m.png`
 - 移动最终源文件：

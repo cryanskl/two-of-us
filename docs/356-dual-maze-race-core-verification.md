@@ -3,7 +3,7 @@
 - 日期：2026-07-25
 - 项目 ID：`dual-maze-race`
 - 分类 / 目标等级：`versus` / A
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/dual-maze-race-core-reaudit`
+- worktree：`{worktree-base}/dual-maze-race-core-reaudit`
 - 分支：`codex/exp-dual-maze-race-core-reaudit`
 - 基线：`6560edeffddfde8ca9516c4549d66119b00b11af`
 - 核心结论：**Core Go**

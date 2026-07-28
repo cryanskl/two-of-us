@@ -4,7 +4,7 @@
 > 验收日期：2026-07-25
 > 基线：`b039503a852cbbe86f6fe24f606a516fdbd3323d`
 > 分支：`codex/exp-four-symbol-film-duel-core-audit`
-> worktree：`/Users/zenith/Desktop/two-of-us-worktrees/four-symbol-film-duel-core-audit`
+> worktree：`{worktree-base}/four-symbol-film-duel-core-audit`
 > 范围：research / brainstorm / spec / plan / design、原创内容、纯逻辑、测试、
 > Unicode 数据边界、热座盲交接、固定来源与许可证、零复制、机制去重
 > 明确排除：生产 UI、共享依赖、根入口、launcher、catalog、Board

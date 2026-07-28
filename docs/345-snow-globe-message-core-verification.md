@@ -5,7 +5,7 @@
 - 对外公开标题：`等雪停下`
 - 分类：`surprise`
 - 等级目标：A
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/snow-globe-message-core-audit`
+- worktree：`{worktree-base}/snow-globe-message-core-audit`
 - 分支：`codex/exp-snow-globe-message-core-audit`
 - 基线：`5d995630672668df6e1a4f356b5eef67606d89b0`
 - 核心结论：**Core Go**

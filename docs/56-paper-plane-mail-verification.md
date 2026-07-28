@@ -91,7 +91,7 @@
 
 ## 5. 直开、请求与隐私
 
-- 真实 `file:///Users/zenith/Desktop/two-of-us/experiences/surprises/paper-plane-mail/index.html` 直开，开始并放飞默认组合后成功进入“已送达 · 信还封着”；
+- 真实 `file://{repo-root}/experiences/surprises/paper-plane-mail/index.html` 直开，开始并放飞默认组合后成功进入“已送达 · 信还封着”；
 - HTTP 验收只有 6 个同源请求：HTML、CSS、`logic.js`、`config.js`、`app.js` 和本地背景 PNG；
 - 不请求 CDN、字体、统计、API 或音频；
 - 不写 localStorage、sessionStorage、IndexedDB、cookie 或服务端；

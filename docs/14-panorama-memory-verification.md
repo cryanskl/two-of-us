@@ -42,7 +42,7 @@ Chrome 扩展没有开启 file URL 访问，因此 `fileChooser.setFiles` 被扩
 
 当前机器的临时证据：
 
-- 概念图：`/Users/zenith/.codex/generated_images/019f64a6-a21a-7422-a71a-682735543ad1/exec-d1b8f849-b15f-436c-9bec-dc650c2406ed.png`
+- 概念图：`{generated-image-root}/019f64a6-a21a-7422-a71a-682735543ad1/exec-d1b8f849-b15f-436c-9bec-dc650c2406ed.png`
 - 桌面实现：`/tmp/panorama-memory-final-desktop-v3.png`
 - 移动实现：`/tmp/panorama-memory-final-mobile.png`
 - 移动成功态与缩放后：`/tmp/panorama-memory-mobile-ready.png`、`/tmp/panorama-memory-mobile-after-zoom.png`

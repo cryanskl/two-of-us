@@ -158,7 +158,7 @@ node experiences/versus/penguin-flag-duel/logic.test.js
 - 工作区路径：
   `docs/assets/penguin-flag-duel/desktop-active-match-concept.png`
 - ImageGen 原始路径：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_adCrDupdjQwz9IfZ3cX9w2C9.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_adCrDupdjQwz9IfZ3cX9w2C9.png`
 - 生成方式：内置 `image_gen`
 - 用例：`ui-mockup`
 - 原生尺寸：`1503 × 1046`
@@ -175,7 +175,7 @@ node experiences/versus/penguin-flag-duel/logic.test.js
 - 工作区路径：
   `docs/assets/penguin-flag-duel/mobile-active-match-concept.png`
 - ImageGen 原始路径：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_gQOMKV7w42JeoS69dlOdZEFC.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_gQOMKV7w42JeoS69dlOdZEFC.png`
 - 生成方式：内置 `image_gen`
 - 输入引用：桌面最终稿只作风格与组件参考
 - 用例：`ui-mockup`
@@ -195,8 +195,8 @@ node experiences/versus/penguin-flag-duel/logic.test.js
 
 | 原始路径 | 未采用原因 |
 | --- | --- |
-| `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_1tHtSE0EbsLTEgXEO4pSoYmV.png` | 把固定横向冰场误画成明显纵向冰场 |
-| `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_mQy50S2A3rb1FFHEp8r2A6kG.png` | 信息层级正确，但冰场仍过高，且概念中的触控盘占比不够稳定 |
+| `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_1tHtSE0EbsLTEgXEO4pSoYmV.png` | 把固定横向冰场误画成明显纵向冰场 |
+| `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_mQy50S2A3rb1FFHEp8r2A6kG.png` | 信息层级正确，但冰场仍过高，且概念中的触控盘占比不够稳定 |
 
 淘汰稿只用于证明迭代过程，不是实现参考，也不进入 Git。
 
@@ -247,7 +247,7 @@ Constraints: arena aspect is the highest priority; horizontal arena 1.6:1; no sc
 
 ```text
 referenced_image_paths:
-  - /Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_adCrDupdjQwz9IfZ3cX9w2C9.png
+  - {generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_adCrDupdjQwz9IfZ3cX9w2C9.png
 num_last_images_to_include: omitted
 ```
 

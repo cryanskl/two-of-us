@@ -25,7 +25,7 @@ git branch --show-current && git rev-parse --show-toplevel
 
 ```text
 branch   = codex/exp-twin-orbit
-worktree = /Users/zenith/Desktop/two-of-us-worktrees/twin-orbit
+worktree = {worktree-base}/twin-orbit
 ```
 
 若分支、worktree、目标目录或父分支状态不符，停止写入，不猜测。
@@ -440,7 +440,7 @@ localhost 冒充第二层。
 目录：
 
 ```text
-/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit/bugs/
+{worktree-base}/twin-orbit/bugs/
 ```
 
 每个真实问题：
@@ -464,7 +464,7 @@ localhost 冒充第二层。
 目录：
 
 ```text
-/Users/zenith/Desktop/two-of-us-worktrees/twin-orbit/learn/
+{worktree-base}/twin-orbit/learn/
 ```
 
 只有跨项目可复用的方法才写入，例如：

@@ -1,7 +1,7 @@
 # 「这一弹，拐弯见你」生产 UI 最终验收
 
 日期：2026-07-26
-工作树：`/Users/zenith/Desktop/two-of-us-worktrees/ricochet-tank-duel-production-ui`
+工作树：`{worktree-base}/ricochet-tank-duel-production-ui`
 分支：`codex/exp-ricochet-tank-duel-production-ui`
 基线：`d6b783d`
 

@@ -28,7 +28,7 @@
 git branch --show-current && git rev-parse --show-toplevel
 ```
 
-并确认分支为 `main`、根目录为 `/Users/zenith/Desktop/two-of-us`。子任务不 stage、不 commit；主线程审阅、验证并按上述边界提交。
+并确认分支为 `main`、根目录为 `{repo-root}`。子任务不 stage、不 commit；主线程审阅、验证并按上述边界提交。
 
 ## 2. 子任务与文件所有权
 

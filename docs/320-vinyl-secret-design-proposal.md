@@ -355,7 +355,7 @@ font-family:
 - 项目路径：
   `docs/assets/vinyl-secret-desktop-seeking-concept.png`
 - ImageGen 源：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_SKHkeYG5xgJeP6fDsHcePSuz.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_SKHkeYG5xgJeP6fDsHcePSuz.png`
 - 原生尺寸：`1537 × 1023`
 - alpha：无
 - SHA-256：
@@ -378,7 +378,7 @@ font-family:
 - 项目路径：
   `docs/assets/vinyl-secret-mobile-complete-concept.png`
 - ImageGen 源：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_eD6COkvL1mMPw1fFg5nmhi2W.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_eD6COkvL1mMPw1fFg5nmhi2W.png`
 - 原生尺寸：`853 × 1844`
 - alpha：无
 - SHA-256：
@@ -413,7 +413,7 @@ font-family:
 ### Desktop 第 1 稿
 
 - 仅保留在 ImageGen 默认目录，不复制进项目：
-  `/Users/zenith/.codex/generated_images/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_ZeLmqh9OBFuRF1zABcISY2Q8.png`
+  `{generated-image-root}/019f97bc-7f53-75f0-b78a-713c7ee25a39/call_ZeLmqh9OBFuRF1zABcISY2Q8.png`
 - 原生尺寸：`1536 × 1024`
 - alpha：无
 - SHA-256：

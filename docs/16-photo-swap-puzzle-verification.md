@@ -54,7 +54,7 @@ Chrome 扩展的原生 `fileChooser.setFiles` 还因未开启“Allow access to 
 
 ## 视觉忠实度账本
 
-视觉概念图：`/Users/zenith/.codex/generated_images/019f64a6-a21a-7422-a71a-682735543ad1/exec-ed618b0e-4af9-45c0-9a86-5c628ba00da0.png`
+视觉概念图：`{generated-image-root}/019f64a6-a21a-7422-a71a-682735543ad1/exec-ed618b0e-4af9-45c0-9a86-5c628ba00da0.png`
 
 | 概念要点 | 最终实现 |
 | --- | --- |
@@ -70,10 +70,10 @@ Chrome 扩展的原生 `fileChooser.setFiles` 还因未开启“Allow access to 
 
 ## 截图证据
 
-- 桌面游戏态：`/Users/zenith/.codex/visualizations/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-desktop-game.png`
-- 桌面完成态：`/Users/zenith/.codex/visualizations/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-desktop-complete.png`
-- 移动游戏态：`/Users/zenith/.codex/visualizations/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-mobile-game.png`
-- 移动空状态：`/Users/zenith/.codex/visualizations/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-mobile-empty.png`
+- 桌面游戏态：`{visualization-root}/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-desktop-game.png`
+- 桌面完成态：`{visualization-root}/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-desktop-complete.png`
+- 移动游戏态：`{visualization-root}/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-mobile-game.png`
+- 移动空状态：`{visualization-root}/2026/07/15/019f6391-1492-74c1-ad81-58b3f8721526/photo-swap-mobile-empty.png`
 
 ## 借鉴与隐私结论
 

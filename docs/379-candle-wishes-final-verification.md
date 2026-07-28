@@ -2,7 +2,7 @@
 
 日期：2026-07-25
 项目：`candle-wishes`
-工作树：`/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-ui`
+工作树：`{worktree-base}/candle-wishes-ui`
 分支：`codex/exp-candle-wishes-ui`
 本轮起始提交：`e61892eea4adde55ad32ac41a7b4d554e4ae6442`
 

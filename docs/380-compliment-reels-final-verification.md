@@ -3,7 +3,7 @@
 - 日期：2026-07-25
 - 基线：`main@3d4b5d604ef3`
 - 分支：`codex/exp-compliment-reels-ui`
-- Worktree：`/Users/zenith/Desktop/two-of-us-worktrees/compliment-reels-ui`
+- Worktree：`{worktree-base}/compliment-reels-ui`
 - 范围：`experiences/surprises/compliment-reels/**`
 - 结论：本项目目录内的生产 UI、规则核心、文档、借鉴声明和测试均已完成，可进入
   仓库目录集成阶段。

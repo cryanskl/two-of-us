@@ -3,7 +3,7 @@
 - 验收日期：2026-07-25
 - 实现基线：`main@3aaba821ecbb3a5db06c4cb9139d4e15a96116e3`
 - 分支：`codex/exp-flower-language-bouquet-ui`
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/flower-language-bouquet-ui`
+- worktree：`{worktree-base}/flower-language-bouquet-ui`
 - 范围：`experiences/surprises/flower-language-bouquet/` 的 A 级生产 UI、项目测试、
   浏览器验证、bug/learn；不登记 catalog、不修改共享运行时或根依赖
 

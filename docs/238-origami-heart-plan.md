@@ -30,7 +30,7 @@
 git branch --show-current && git rev-parse --show-toplevel
 ```
 
-确认分支与 `/Users/zenith/Desktop/two-of-us` worktree 匹配。子任务不 stage、不 commit；主线程审阅、测试后按边界提交。
+确认分支与 `{repo-root}` worktree 匹配。子任务不 stage、不 commit；主线程审阅、测试后按边界提交。
 
 ## 2. 子任务 A：纯逻辑
 

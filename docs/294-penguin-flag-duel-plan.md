@@ -321,7 +321,7 @@ git diff --check
 只有实际复现的问题才写入：
 
 ```text
-/Users/zenith/Desktop/two-of-us/bugs/YYYY-MM-DD-penguin-flag-duel-<slug>.md
+{repo-root}/bugs/YYYY-MM-DD-penguin-flag-duel-<slug>.md
 ```
 
 每个文件包含：
@@ -341,7 +341,7 @@ git diff --check
 仅当结论可复用于其他本地实时双人作品时写入：
 
 ```text
-/Users/zenith/Desktop/two-of-us/learn/YYYY-MM-DD-<reusable-topic>.md
+{repo-root}/learn/YYYY-MM-DD-<reusable-topic>.md
 ```
 
 优先候选：

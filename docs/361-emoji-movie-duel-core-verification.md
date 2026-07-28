@@ -5,7 +5,7 @@
 > 日期：2026-07-25
 > 基线：`9c81ea0d699662967471000facb9320cca379ae1`
 > 分支：`codex/exp-emoji-movie-duel-core-reaudit`
-> worktree：`/Users/zenith/Desktop/two-of-us-worktrees/emoji-movie-duel-core-reaudit`
+> worktree：`{worktree-base}/emoji-movie-duel-core-reaudit`
 > 范围：项目配置、纯逻辑、测试、bug / learn、来源与借鉴声明
 > 排除：生产 UI、共享依赖声明、根入口、launcher、catalog、Board
 

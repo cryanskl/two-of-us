@@ -3,7 +3,7 @@
 - 复验日期：2026-07-25
 - 基线：`25aa56fc3a093983dc3a291460b9377c6f4a5c3b`
 - 分支：`codex/exp-candle-wishes-core-audit`
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/candle-wishes-core-audit`
+- worktree：`{worktree-base}/candle-wishes-core-audit`
 - 范围：既有配置、纯逻辑、来源/资产与重复机制再验收；不创建生产 UI
 
 ## 1. 结论

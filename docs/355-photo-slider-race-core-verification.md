@@ -6,7 +6,7 @@
 - 产品 Gate：**Conditional / 尚未可玩**。
 - 基线：`f186744591d3c1e917a2b8b4cc3a1a5c316b7fbb`。
 - 分支：`codex/exp-photo-slider-race-core-audit`。
-- worktree：`/Users/zenith/Desktop/two-of-us-worktrees/photo-slider-race-core-audit`。
+- worktree：`{worktree-base}/photo-slider-race-core-audit`。
 - 验收日期：2026-07-25。
 
 本轮发现并修复两个真实缺口：
