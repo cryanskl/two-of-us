@@ -1,0 +1,287 @@
+:root {
+  color-scheme: dark;
+  --ink: #f2ece2;
+  --ink-soft: #b6ab9c;
+  --ink-faint: #7d7466;
+  --night: #14181b;
+  --night-lift: #1c2226;
+  --bark: #6d5240;
+  --glow: #f6c66a;
+  --bloom: #f0a0ad;
+  --line: rgba(242, 236, 226, .14);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(120% 90% at 50% 108%, #232b2c 0%, transparent 62%),
+    linear-gradient(178deg, #10141a 0%, var(--night) 58%, #171a17 100%);
+  color: var(--ink);
+  font: 400 16px/1.7 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.back-link {
+  position: fixed;
+  z-index: 5;
+  top: 20px;
+  left: 20px;
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(20, 24, 27, .72);
+  color: var(--ink-soft);
+  transition: color .18s ease, border-color .18s ease;
+}
+
+.back-link:hover { color: var(--ink); border-color: rgba(242, 236, 226, .34); }
+.back-link svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+
+.experience-shell {
+  display: grid;
+  width: min(100% - 40px, 1180px);
+  margin: 0 auto;
+  padding: 74px 0 68px;
+  grid-template-columns: minmax(280px, 27rem) minmax(0, 1fr);
+  gap: 42px;
+  align-items: start;
+}
+
+.title-block { margin-bottom: 26px; }
+
+h1 {
+  margin: 0;
+  font: 500 2.35rem/1.25 Georgia, "Songti SC", serif;
+  letter-spacing: .01em;
+}
+
+.title-rule {
+  display: block;
+  width: 54px;
+  height: 1px;
+  margin: 18px 0;
+  background: linear-gradient(90deg, var(--glow), transparent);
+}
+
+.lead { margin: 0; color: var(--ink-soft); }
+
+.controls { display: grid; gap: 16px; }
+
+.primary-button,
+.grow-button,
+.restart-button {
+  min-height: 50px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--glow);
+  color: #2a1e0c;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  transition: transform .18s ease, background .18s ease, opacity .18s ease;
+}
+
+.grow-button { background: #f2ece2; color: #23282b; }
+.restart-button { background: transparent; border: 1px solid var(--line); color: var(--ink-soft); }
+
+.primary-button:hover,
+.grow-button:hover { transform: translateY(-1px); }
+.restart-button:hover { color: var(--ink); border-color: rgba(242, 236, 226, .34); }
+
+.primary-button:disabled,
+.grow-button:disabled {
+  cursor: not-allowed;
+  opacity: .38;
+  transform: none;
+}
+
+.growth-note {
+  min-height: 1.7em;
+  margin: 0;
+  color: var(--glow);
+  font-size: .95rem;
+}
+
+.progress-block { display: grid; gap: 9px; }
+
+.progress-copy {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-faint);
+  font-size: .84rem;
+  letter-spacing: .04em;
+}
+
+.progress-rail {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(242, 236, 226, .12);
+}
+
+.progress-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--bark), var(--glow));
+  transition: width .5s ease;
+}
+
+.hint { margin: 0; color: var(--ink-faint); font-size: .84rem; }
+
+.stage { display: grid; gap: 14px; }
+
+.canvas-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    radial-gradient(80% 60% at 50% 100%, rgba(109, 82, 64, .22) 0%, transparent 70%),
+    linear-gradient(180deg, #171d21 0%, #10151a 100%);
+  aspect-ratio: 4 / 3;
+  touch-action: none;
+}
+
+#tree-canvas { display: block; width: 100%; height: 100%; }
+
+.canvas-fallback {
+  position: absolute;
+  inset: auto 24px 24px;
+  margin: 0;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.light-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  margin: -29px 0 0 -29px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+
+.light-handle:disabled { cursor: default; opacity: .5; }
+.light-handle:active:not(:disabled) { cursor: grabbing; }
+
+.light-core {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6e0 0%, var(--glow) 46%, rgba(246, 198, 106, 0) 72%);
+  box-shadow: 0 0 26px 12px rgba(246, 198, 106, .3);
+}
+
+.text-mirror {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+  color: var(--ink-faint);
+  font-size: .82rem;
+  list-style: none;
+}
+
+.text-mirror li::before { content: "· "; color: var(--glow); }
+
+.letter-panel {
+  grid-column: 1 / -1;
+  padding: 34px 32px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(28, 34, 38, .62);
+}
+
+.letter-recipient { margin: 0 0 10px; color: var(--glow); font-size: .88rem; letter-spacing: .08em; }
+#letter-title { margin: 0 0 20px; font: 500 1.85rem/1.35 Georgia, "Songti SC", serif; }
+
+/* 正文的基础状态就是可读的。入场只是把它从透明过渡回来的一次性加成：
+   动画被停用、过渡没跑或截图抢在前面，读到的都是最终状态，而不是空白。 */
+.letter-body p {
+  margin: 0 0 10px;
+  color: var(--ink);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.letter-panel[data-entering="true"] .letter-body p {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.letter-signature { margin: 18px 0 0; color: var(--ink-soft); }
+
+.together {
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.together-label { margin-right: 10px; font-size: .88rem; }
+
+.together-value {
+  color: var(--glow);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.restart-button { margin-top: 24px; }
+
+@media (max-width: 900px) {
+  .experience-shell {
+    padding-top: 68px;
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  h1 { font-size: 1.95rem; }
+  .canvas-frame { aspect-ratio: 1 / 1; }
+}
+
+@media (max-width: 560px) {
+  .experience-shell { width: min(100% - 26px, 1180px); }
+  .letter-panel { padding: 26px 20px; }
+  #letter-title { font-size: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primary-button,
+  .grow-button,
+  .restart-button,
+  .progress-fill { transition: none; }
+
+  .letter-body p,
+  .letter-panel[data-entering="true"] .letter-body p {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

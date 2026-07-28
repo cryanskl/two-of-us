@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#14181b">
+    <link rel="icon" href="data:,">
+    <title>跟着光，长成一棵树 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-phase="intro">
+    <a class="back-link" href="../../../index.html" aria-label="返回体验库">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7M8 12h10"></path>
+      </svg>
+    </a>
+
+    <main class="experience-shell">
+      <section class="intro-panel" aria-labelledby="page-title">
+        <div class="title-block">
+          <h1 id="page-title">跟着光，长成一棵树</h1>
+          <span class="title-rule" aria-hidden="true"></span>
+          <p class="lead">把光放到你想让它长过去的地方，再让它长一节。</p>
+        </div>
+
+        <div class="controls">
+          <button id="primary-button" class="primary-button" type="button">开始种下</button>
+
+          <p id="growth-note" class="growth-note">十二节之后，它会开花。</p>
+
+          <div class="progress-block">
+            <div class="progress-copy" aria-hidden="true">
+              <span id="step-count">0 / 12 节</span>
+              <span id="branch-count">1 根枝</span>
+            </div>
+            <div class="progress-rail" aria-hidden="true">
+              <span id="progress-fill" class="progress-fill"></span>
+            </div>
+          </div>
+
+          <button id="grow-button" class="grow-button" type="button" disabled>让它长一节</button>
+          <p class="hint" id="light-hint">拖动画面里的光，或聚焦光点后按方向键移动。</p>
+        </div>
+      </section>
+
+      <section class="stage" aria-label="生长中的树">
+        <div class="canvas-frame">
+          <canvas id="tree-canvas" aria-hidden="true"></canvas>
+          <p id="canvas-fallback" class="canvas-fallback" hidden>
+            这台设备无法绘制画面，但生长和最后的信仍然可以完整完成。
+          </p>
+          <button
+            id="light-handle"
+            class="light-handle"
+            type="button"
+            aria-label="暖光位置；拖动移动，或按方向键微调"
+            aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight"
+            disabled
+          >
+            <span class="light-core" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <ol id="text-mirror" class="text-mirror" aria-label="生长记录"></ol>
+      </section>
+
+      <section id="letter-panel" class="letter-panel" aria-labelledby="letter-title" hidden>
+        <p class="letter-recipient" id="letter-recipient"></p>
+        <h2 id="letter-title"></h2>
+        <div id="letter-body" class="letter-body"></div>
+        <p class="letter-signature" id="letter-signature"></p>
+        <p class="together" id="together" hidden>
+          <span class="together-label">我们在一起已经是</span>
+          <span class="together-value" id="together-value"></span>
+        </p>
+        <button id="restart-button" class="restart-button" type="button">再种一棵</button>
+      </section>
+    </main>
+
+    <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

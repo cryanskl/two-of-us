@@ -16,6 +16,20 @@
       "networkRequired": false
     },
     {
+      "id": "light-grown-tree",
+      "title": "跟着光，长成一棵树",
+      "category": "surprise",
+      "level": "A",
+      "players": "1 人准备，1 人体验",
+      "devices": "单设备",
+      "entry": "experiences/surprises/light-grown-tree/index.html",
+      "readme": "experiences/surprises/light-grown-tree/README.md",
+      "preview": "experiences/surprises/light-grown-tree/preview.webp",
+      "description": "移动一盏暖光，每让树长一节，枝条就朝光当时的方向生长；十二节长成后花开满枝，展开写给对方的信与相守时间。",
+      "installed": true,
+      "networkRequired": false
+    },
+    {
       "id": "memory-letter",
       "title": "一封慢慢打开的信",
       "category": "surprise",
