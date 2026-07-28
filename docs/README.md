@@ -333,15 +333,11 @@
 | [362-launch-contract-and-dependency-audit.md](./362-launch-contract-and-dependency-audit.md) | 58 个 installed 的依赖、runtime、launcher 与本地启动合同审计 |
 | [363-attribution-and-license-audit.md](./363-attribution-and-license-audit.md) | installed 与候选项目的借鉴声明、固定来源、许可证和公开分发风险盘点 |
 | [364-installed-browser-launch-matrix.md](./364-installed-browser-launch-matrix.md) | 58 个 installed 的真实 Chrome 首载、非 A launcher、代表性深路径与移动视口矩阵 |
-| [365-visual-approval-digest.md](./365-visual-approval-digest.md) | 视觉阻塞项的可点击证据、批量确认模板，以及新增 Love Tree clean-room 审批项 |
-| [366-love-tree-clean-room-brainstorm.md](./366-love-tree-clean-room-brainstorm.md) | Love Tree 在不继承旧授权风险前提下保留体验命题的 clean-room 方案取舍 |
-| [367-love-tree-clean-room-spec.md](./367-love-tree-clean-room-spec.md) | Love Tree 原创重写的状态、交互、隐私、响应式、可访问性与归属规格 |
-| [368-love-tree-clean-room-plan.md](./368-love-tree-clean-room-plan.md) | Love Tree 视觉确认后独立实现、验收与旧依赖退出的分阶段计划 |
+| [365-visual-approval-digest.md](./365-visual-approval-digest.md) | 视觉阻塞项的可点击证据与批量确认模板 |
 | [369-capsule-docking-design-proposal.md](./369-capsule-docking-design-proposal.md) | “纸质近地轨道训练台”的桌面/移动视觉锚点、core 投影和生成幻觉边界 |
 | [370-shared-dependency-attribution-remediation.md](./370-shared-dependency-attribution-remediation.md) | Socket.IO、node-qrcode、Pannellum 固定来源、许可证、版权与真实消费者修复记录 |
 | [371-runtime-content-identity-plan.md](./371-runtime-content-identity-plan.md) | 跨 checkout 运行时复用的确定性内容身份、dirty 策略、fail-closed 与验证计划 |
 | [372-runtime-content-identity-verification.md](./372-runtime-content-identity-verification.md) | 内容身份、live witness、双真实复制根复用/拒绝、旧进程存活和端口释放验收 |
-| [373-love-tree-visual-autonomy-decision.md](./373-love-tree-visual-autonomy-decision.md) | Love Tree 取消逐稿确认、直接执行 clean-room 生产 UI 的用户授权与剩余质量 Gate |
 | [393-portal-preview-and-featured-spec.md](./393-portal-preview-and-featured-spec.md) | 作品预览图的路径契约、非运行依赖边界、Chromium 制作期生成与精选 opt-in 集合规格 |
 | [394-light-grown-tree-spec.md](./394-light-grown-tree-spec.md) | “跟着光，长成一棵树”的可重放生长模型、向上约束、树冠张开策略与替代 Love Tree 的理由 |
 
@@ -375,7 +371,7 @@
 
 ## 当前仓库状态
 
-- 已收录：Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上，写给你、把夜晚照成我们、三枚以后，都是我们、沿着折痕，折到你心里、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、月面，保持有光、雾里，跟着你走、这一场雨，我们一起接、把两边，拉成我们、把七天，养成一朵花、把星光，一笔一笔交给你、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串，我还记得、这一朵，我先养开、软软相扑、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
+- 已收录：跟着光，长成一棵树、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上，写给你、把夜晚照成我们、三枚以后，都是我们、沿着折痕，折到你心里、同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、月面，保持有光、雾里，跟着你走、这一场雨，我们一起接、把两边，拉成我们、把七天，养成一朵花、把星光，一笔一笔交给你、我听见了、反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串，我还记得、这一朵，我先养开、软软相扑、心跳冲刺、同心解锁、隔屏画猜、和你一样、连心四子棋、密封猜拳；
 - 本轮新增收录：这一朵，我先养开；
 - 已建立：`surprises / co-op / versus` 三类目录；
 - 已建立：Node 18+ 统一安装、跨平台启动器、Socket.IO 房间协议和本地二维码；
@@ -389,7 +385,8 @@
 - 已实现首个 C 级手机控制器实时对抗：心跳冲刺，增加主机权威高频输入、重复序号过滤与移动端控制面；
 - 已实现首个 B 级样板：回到那一天，增加精确浏览器依赖映射、本机照片 Gate 与对象 URL 生命周期；
 - 已实现首个 D 级本地语音样板：我听见了，统一安装本机 Whisper 模型与专用 Worker，完成真实录音、转写、人工确认和双句相遇；
-- 尚未决定：整个仓库的统一许可证，以及 LoveTree 商业音乐的替换方案。
+- 已关闭：Love Tree 于 2026-07-28 下架，其迁移代码、商业录音与原始压缩包一并从仓库移除，由原创作品「跟着光，长成一棵树」接替；
+- 尚未决定：整个仓库的统一许可证。
 
 ## 下一轮选题时的最小输入
 

@@ -11,8 +11,8 @@ test("static resolver maps the portal and keeps files inside the repository", ()
   assert.equal(resolveStaticPath(root, "/"), path.join(rootPath, "index.html"));
   assert.equal(resolveStaticPath(root, "/favicon.svg"), path.join(rootPath, "favicon.svg"));
   assert.match(
-    resolveStaticPath(root, "/experiences/surprises/love-tree/index.html"),
-    /love-tree\/index\.html$/,
+    resolveStaticPath(root, "/experiences/surprises/light-grown-tree/index.html"),
+    /light-grown-tree\/index\.html$/,
   );
   assert.match(
     resolveStaticPath(root, "/vendor/pannellum/2.5.7/pannellum.css"),

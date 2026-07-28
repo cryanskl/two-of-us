@@ -2,20 +2,6 @@
   "schemaVersion": 1,
   "experiences": [
     {
-      "id": "love-tree",
-      "title": "Love Tree",
-      "category": "surprise",
-      "level": "A",
-      "players": "1 人制作，1 人观看",
-      "devices": "单设备",
-      "entry": "experiences/surprises/love-tree/index.html",
-      "readme": "experiences/surprises/love-tree/README.md",
-      "preview": "experiences/surprises/love-tree/preview.webp",
-      "description": "点击爱心，让一棵树生长开花，并展示情书与相爱时间。",
-      "installed": true,
-      "networkRequired": false
-    },
-    {
       "id": "light-grown-tree",
       "title": "跟着光，长成一棵树",
       "category": "surprise",

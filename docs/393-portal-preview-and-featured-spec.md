@@ -42,7 +42,7 @@ Catalog 已经收录 75 个作品，但门户和 README 只能用标题加一句
 - 参见 [`bugs/2026-07-18-four-hands-harmony-webp-encoder-unavailable.md`](../bugs/2026-07-18-four-hands-harmony-webp-encoder-unavailable.md)：本机 WebP 编码链不可靠，浏览器自带的编码器是这台机器上最稳定的一条路径；
 - Chromium 只在制作期使用；缺少浏览器时脚本明确报错并退出，不影响 `npm start`、`npm test` 或 `npm run verify`。
 
-**开场画面就是最诚实的预览**，因此默认不做任何交互。只有当作品的开场确实没有可看内容时，才在 `captureRecipes` 中登记一条最小配方。当前只有一条：Love Tree 打开时只有一颗待点击的种子，需要先点一下并等待生长动画结束。
+**开场画面就是最诚实的预览**，因此默认不做任何交互。只有当作品的开场确实没有可看内容时，才在 `captureRecipes` 中登记一条最小配方，配方按 CSS 选择器寻址而不是硬编码坐标，以免被版面变化悄悄弄坏。
 
 ## 验收
 
