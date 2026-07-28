@@ -98,6 +98,16 @@
       #runtime-title { font-weight: 760; }
       #runtime-copy { margin: 0; color: #776e71; font-size: .91rem; line-height: 1.55; }
 
+      #runtime-network-hint {
+        margin: 9px 0 0;
+        color: #874858;
+        font-size: .82rem;
+        font-weight: 680;
+        line-height: 1.5;
+      }
+
+      #runtime-network-hint[hidden] { display: none; }
+
       #qr {
         display: none;
         width: 96px;
@@ -354,6 +364,7 @@
             <span id="runtime-title">A 级离线门户</span>
           </div>
           <p id="runtime-copy">当前通过文件直接打开。A 级作品可以使用；运行 start.command / start.bat 后可启用本地房间和局域网入口。</p>
+          <p id="runtime-network-hint" hidden>扫码提醒：手机与这台电脑需要连接同一个 Wi‑Fi 或局域网。</p>
         </div>
         <img id="qr" alt="同一局域网的加入二维码">
       </section>
@@ -1286,12 +1297,14 @@
             ? `局域网入口：${health.joinUrl}`
             : "当前只有本机入口，A/B 级体验可以正常使用。";
           document.querySelector("#runtime-copy").textContent = `${networkCopy} · Node.js ${health.node}`;
+          document.querySelector("#runtime-network-hint").hidden = health.networkUrls.length === 0;
           const qr = document.querySelector("#qr");
           qr.src = health.qrDataUrl;
           qr.style.display = "block";
         } catch {
           document.querySelector("#runtime-title").textContent = "本地运行时未响应";
           document.querySelector("#runtime-copy").textContent = "请关闭此页面后重新双击 start.command / start.bat。A 级作品仍可从下方直接打开。";
+          document.querySelector("#runtime-network-hint").hidden = true;
         }
       }
 
