@@ -168,6 +168,7 @@
         grid-template-columns: 42px minmax(0, 1fr);
         gap: 8px;
         align-items: center;
+        min-height: 34px;
         min-width: 0;
         margin: 0;
         padding: 0;
@@ -177,7 +178,7 @@
       .level-filter { grid-area: level; }
       .category-filter { grid-area: category; }
 
-      .filter-group legend {
+      .filter-group-label {
         grid-column: 1;
         grid-row: 1;
         width: auto;
@@ -368,8 +369,8 @@
               随机开启
               <small>从当前结果中挑选</small>
             </button>
-            <fieldset class="filter-group level-filter">
-              <legend>等级</legend>
+            <div class="filter-group level-filter" role="group" aria-label="等级">
+              <span class="filter-group-label" aria-hidden="true">等级</span>
               <div class="filter-options">
                 <input id="level-all" type="radio" name="level" value="all" checked>
                 <label for="level-all">全部</label>
@@ -382,9 +383,9 @@
                 <input id="level-d" type="radio" name="level" value="D">
                 <label for="level-d">D</label>
               </div>
-            </fieldset>
-            <fieldset class="filter-group category-filter">
-              <legend>类型</legend>
+            </div>
+            <div class="filter-group category-filter" role="group" aria-label="类型">
+              <span class="filter-group-label" aria-hidden="true">类型</span>
               <div class="filter-options">
                 <input id="category-all" type="radio" name="category" value="all" checked>
                 <label for="category-all">全部</label>
@@ -395,7 +396,7 @@
                 <input id="category-versus" type="radio" name="category" value="versus">
                 <label for="category-versus">对抗</label>
               </div>
-            </fieldset>
+            </div>
           </div>
         </div>
         <div id="experiences" class="grid"></div>
