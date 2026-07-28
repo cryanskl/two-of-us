@@ -1,394 +1,180 @@
 # Two of Us
 
-一个给情侣、夫妻和伴侣准备的本地优先互动体验集合：可以是送给对方的惊喜，也可以是两个人合作或对抗的小游戏。
+> 给情侣、夫妻、朋友，或任意两个人的本地游乐场。<br>
+> Private by default. Local first. Made for two.
 
-## 立即体验
+Two of Us 收集并实现了一组点开即玩的轻量互动网页：可以准备一份惊喜、一起完成挑战，也可以面对面对抗。项目默认不要求账号，不依赖云端房间，不把私人照片、语音或游戏内容上传到外部服务。
 
-双击仓库根目录的 [`index.html`](./index.html)，即可从门户打开当前 48 个 A 级作品；它们都是纯静态页面，不需要安装依赖或启动服务器。门户还会展示首个 B 级作品“回到那一天”、六个 C 级局域网作品，以及首个 D 级本地语音作品“我听见了”；相应等级在统一安装完成后仍从同一门户打开。
+当前 Catalog 收录 **75 个已安装体验**：
 
-如果要启用局域网二维码和后续 C 级双设备房间：
+| 单人惊喜 | 双人合作 | 双人对抗 | 启动等级 |
+| ---: | ---: | ---: | --- |
+| 24 | 27 | 24 | 67 个 A 级 · 1 个 B 级 · 6 个 C 级 · 1 个 D 级 |
 
-1. 首次双击 macOS 的 `setup.command` 或 Windows 的 `setup.bat`；基础依赖完成后，交互终端会逐项询问是否安装 D 级可选能力；
-2. 以后双击 `start.command` 或 `start.bat`，门户会自动在浏览器打开；
-3. 同一 Wi-Fi 的另一台设备扫描门户二维码加入。
+## 一分钟开始
 
-拒绝可选能力不会影响 A/B/C 作品。非交互环境会自动跳过并给出精确安装命令；如只想安装基础依赖，可运行 `npm run setup -- --skip-optional`。模型不会在作品启动时隐式下载。
+### 方式一：直接打开
 
-每个已安装的 B/C/D 作品目录也有自己的 `start.command` 与 `start.bat`。完成一次根目录统一安装后，可以直接双击作品目录里的启动器直达该作品；若共享运行时已经启动，后续启动器会安全复用同一个端口和进程，不会重复常驻服务。
+双击根目录的 [`index.html`](./index.html) 即可浏览门户，并直接打开其中 **67 个 A 级体验**。
 
-> 浏览器通常会限制自动播放音乐。如果页面没有声音，请先点击页面中央的爱心，再检查浏览器的音频权限。
+这种方式：
 
-## 作品分类
+- 不需要安装依赖；
+- 不需要启动本地服务；
+- 适合单设备惊喜、同屏合作和面对面对抗；
+- 浏览器地址会以 `file://` 开头，B/C/D 级能力暂不可用。
 
-| 分类 | 目录 | 用途 | 当前状态 |
-| --- | --- | --- | --- |
-| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一人打开体验 | Love Tree、慢慢打开的信、爱的刮刮卡、今晚做什么、回到那一天、拼回这一刻、未来车票、拍立得显影、一层一层、纸飞机投递、星码解锁、把这首转给你、把月亮拨回那一天、在雾上写给你、把夜晚照成我们、三枚以后都是我们、沿着折痕折到你心里、今晚点三束光、把花语系成一束、每一格都是喜欢你的理由、等雪停下、今晚点亮五支蜡烛 |
-| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成目标 | 同机你画我猜、双光点归巢、同心牵引、为你引航、节拍接力、默契电报码、双人小馆、靠近一点、把颜色调到一起、把信号接回来、这一拍，刚好和你、慢一点，也和你一起、稳稳地，和你一起向前、一起，把家搬进来、月面，保持有光、雾里，跟着你走、这一场雨，我们一起接、把两边，拉成我们、把七天，养成一朵花、把星光，一笔一笔交给你、我听见了、同心解锁、隔屏画猜、和你一样 |
-| 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负 | 反应力对决、心动拔河、气球胆量局、数字凑靶、纸上球局、回声擂台、这一格归谁、光轨围猎、这一颗我先到、藏好这一味、这一串我还记得、这一朵我先养开、软软相扑、心跳冲刺、连心四子棋、密封猜拳、影子剑术 |
+### 方式二：启动完整本地门户
 
-## 文档
+完整门户会启用 B/C/D 级体验、本地房间、局域网地址和加入二维码。
 
-- [文档总览](./docs/README.md)
-- [仓库分类与内容收录规范](./docs/01-classification-spec.md)
-- [全网调研方法与判定口径](./docs/02-research-method.md)
-- [第二轮本地优先调研规格](./docs/03-local-first-research-spec.md)
-- [持续建设与统一运行规格](./docs/04-implementation-program-spec.md)
-- [借鉴与来源声明规范](./docs/05-reference-and-attribution-spec.md)
-- [雪球留言定向调研](./docs/181-snow-globe-message-research.md)
-- [雪球留言实现规格](./docs/182-snow-globe-message-spec.md)
-- [雪球留言实现前脑暴](./docs/199-snow-globe-message-brainstorm.md)
-- [雪球留言 ImageGen 视觉简报](./docs/200-snow-globe-message-imagegen-brief.md)
-- [雪球留言最终验收](./docs/377-snow-globe-message-final-verification.md)
-- [心愿烟火实现前脑暴](./docs/201-wish-fireworks-brainstorm.md)
-- [心愿烟火 ImageGen 视觉简报](./docs/202-wish-fireworks-imagegen-brief.md)
-- [影子双人舞分步实施计划](./docs/203-shadow-duet-plan.md)
-- [影子双人舞 ImageGen 视觉简报](./docs/204-shadow-duet-imagegen-brief.md)
-- [太空舱对接实现前 Brainstorm](./docs/207-capsule-docking-brainstorm.md)
-- [太空舱对接 ImageGen 视觉简报](./docs/208-capsule-docking-imagegen-brief.md)
-- [Catalog 本地直达合同 Brainstorm](./docs/210-catalog-local-launch-brainstorm.md)
-- [Catalog 本地直达合同规格](./docs/211-catalog-local-launch-spec.md)
-- [Catalog 本地直达合同实施计划](./docs/212-catalog-local-launch-plan.md)
-- [Catalog 本地直达合同验收记录](./docs/213-catalog-local-launch-verification.md)
-- [C 级首款作品规格：同心解锁](./docs/06-together-lock-spec.md)
-- [C 级局域网你画我猜规格](./docs/07-lan-pictionary-spec.md)
-- [A 级爱的刮刮卡规格](./docs/08-scratch-surprise-spec.md)
-- [C 级连心四子棋规格](./docs/09-lan-connect-four-spec.md)
-- [A 级约会转盘规格](./docs/11-date-wheel-spec.md)
-- [C 级密封猜拳规格](./docs/12-sealed-rps-spec.md)
-- [B 级全景回忆规格](./docs/13-panorama-memory-spec.md)
-- [B 级全景回忆验收记录](./docs/14-panorama-memory-verification.md)
-- [A 级私人照片交换拼图规格](./docs/15-photo-swap-puzzle-spec.md)
-- [A 级私人照片交换拼图验收记录](./docs/16-photo-swap-puzzle-verification.md)
-- [C 级双设备默契问答规格](./docs/17-compatibility-quiz-spec.md)
-- [C 级双设备默契问答视觉规格](./docs/18-compatibility-quiz-design.md)
-- [C 级双设备默契问答验收记录](./docs/19-compatibility-quiz-verification.md)
-- [A 级心动拔河规格](./docs/21-ribbon-tug-spec.md)
-- [A 级心动拔河验收记录](./docs/22-ribbon-tug-verification.md)
-- [C 级心跳冲刺规格](./docs/23-heart-sprint-spec.md)
-- [C 级心跳冲刺验收记录](./docs/24-heart-sprint-verification.md)
-- [A 级双光点归巢规格](./docs/25-twin-light-maze-spec.md)
-- [A 级双光点归巢验收记录](./docs/26-twin-light-maze-verification.md)
-- [A 级同心牵引规格](./docs/27-tethered-heart-spec.md)
-- [A 级同心牵引验收记录](./docs/28-tethered-heart-verification.md)
-- [A 级为你引航规格](./docs/29-lighthouse-passage-spec.md)
-- [A 级为你引航验收记录](./docs/31-lighthouse-passage-verification.md)
-- [D 级本地语音能力包与“我听见了”规格](./docs/32-local-speech-and-i-heard-you-spec.md)
-- [“我听见了”设计与验收记录](./docs/33-i-heard-you-design-and-verification.md)
-- [A 级节拍接力规格](./docs/34-rhythm-relay-spec.md)
-- [A 级节拍接力验收记录](./docs/35-rhythm-relay-verification.md)
-- [A 级默契电报码规格](./docs/41-telegraph-codebook-spec.md)
-- [A 级默契电报码验收记录](./docs/42-telegraph-codebook-verification.md)
-- [A 级气球胆量局规格](./docs/36-balloon-dare-spec.md)
-- [A 级未来车票规格](./docs/38-future-ticket-spec.md)
-- [A 级未来车票验收记录](./docs/39-future-ticket-verification.md)
-- [A 级拍立得显影规格](./docs/43-instant-photo-spec.md)
-- [A 级拍立得显影验收记录](./docs/44-instant-photo-verification.md)
-- [A 级数字凑靶规格](./docs/45-number-target-spec.md)
-- [A 级双人小馆规格](./docs/47-kitchen-relay-spec.md)
-- [A 级双人小馆验收记录](./docs/48-kitchen-relay-verification.md)
-- [A 级一层一层规格](./docs/49-nested-gift-spec.md)
-- [A 级一层一层验收记录](./docs/51-nested-gift-verification.md)
-- [A 级纸上球局规格](./docs/52-paper-soccer-spec.md)
-- [A 级纸上球局验收记录](./docs/53-paper-soccer-verification.md)
-- [A 级纸飞机投递规格](./docs/54-paper-plane-mail-spec.md)
-- [A 级纸飞机投递验收记录](./docs/56-paper-plane-mail-verification.md)
-- [A 级回声擂台规格](./docs/55-echo-arena-spec.md)
-- [A 级回声擂台验收记录](./docs/57-echo-arena-verification.md)
-- [A 级星码解锁规格](./docs/58-star-code-unlock-spec.md)
-- [A 级星码解锁验收记录](./docs/59-star-code-unlock-verification.md)
-- [A 级靠近一点规格](./docs/61-closer-cards-spec.md)
-- [A 级靠近一点验收记录](./docs/62-closer-cards-verification.md)
-- [A 级手摇音乐盒定向调研](./docs/63-hand-crank-music-box-research.md)
-- [A 级把这首转给你规格](./docs/64-hand-crank-music-box-spec.md)
-- [A 级把这首转给你验收记录](./docs/65-hand-crank-music-box-verification.md)
-- [A 级月相密语定向调研](./docs/66-moon-phase-secret-research.md)
-- [A 级月相密语实现规格](./docs/67-moon-phase-secret-spec.md)
-- [A 级月相密语视觉设计](./docs/68-moon-phase-secret-design.md)
-- [A 级线框占地定向调研](./docs/69-dots-and-boxes-research.md)
-- [A 级“这一格归谁”实现规格](./docs/70-dots-and-boxes-spec.md)
-- [A 级“这一格归谁”视觉设计](./docs/71-dots-and-boxes-design.md)
-- [A 级“这一格归谁”验收记录](./docs/72-dots-and-boxes-verification.md)
-- [A 级“这一颗我先到”定向调研](./docs/73-orbit-star-race-research.md)
-- [A 级“这一颗我先到”实现规格](./docs/74-orbit-star-race-spec.md)
-- [A 级“光轨围猎”定向调研](./docs/75-light-trail-hunt-research.md)
-- [A 级“光轨围猎”实现规格](./docs/76-light-trail-hunt-spec.md)
-- [“光轨围猎”分步实施计划](./docs/77-light-trail-hunt-plan.md)
-- [A 级“这一颗我先到”视觉设计](./docs/78-orbit-star-race-design.md)
-- [“光轨围猎”视觉设计](./docs/78-light-trail-hunt-design.md)
-- [“光轨围猎”验收记录](./docs/79-light-trail-hunt-verification.md)
-- [A 级“这一颗我先到”验收记录](./docs/80-orbit-star-race-verification.md)
-- [A 级“把颜色调到一起”定向调研](./docs/81-shared-color-studio-research.md)
-- [A 级“把颜色调到一起”实现规格](./docs/82-shared-color-studio-spec.md)
-- [“把颜色调到一起”分步实施计划](./docs/83-shared-color-studio-plan.md)
-- [“把颜色调到一起”视觉设计](./docs/84-shared-color-studio-design.md)
-- [“把颜色调到一起”验收记录](./docs/85-shared-color-studio-verification.md)
-- [A 级“把信号接回来”定向调研](./docs/86-signal-repair-manual-research.md)
-- [A 级“把信号接回来”实现规格](./docs/87-signal-repair-manual-spec.md)
-- [“把信号接回来”分步实施计划](./docs/88-signal-repair-manual-plan.md)
-- [“把信号接回来”视觉设计](./docs/89-signal-repair-manual-design.md)
-- [“把信号接回来”验收记录](./docs/90-signal-repair-manual-verification.md)
-- [A 级“这一拍，刚好和你”定向调研](./docs/91-four-hands-harmony-research.md)
-- [A 级“这一拍，刚好和你”实现规格](./docs/92-four-hands-harmony-spec.md)
-- [“这一拍，刚好和你”分步实施计划](./docs/93-four-hands-harmony-plan.md)
-- [“这一拍，刚好和你”视觉设计](./docs/94-four-hands-harmony-design.md)
-- [“这一拍，刚好和你”验收记录](./docs/95-four-hands-harmony-verification.md)
-- [A 级“慢一点，也和你一起”定向调研](./docs/96-same-pace-star-research.md)
-- [A 级“慢一点，也和你一起”实现规格](./docs/97-same-pace-star-spec.md)
-- [“慢一点，也和你一起”分步实施计划](./docs/98-same-pace-star-plan.md)
-- [“慢一点，也和你一起”视觉设计](./docs/99-same-pace-star-design.md)
-- [“慢一点，也和你一起”验收记录](./docs/100-same-pace-star-verification.md)
-- [A 级“稳稳地，和你一起向前”定向调研](./docs/101-steady-together-research.md)
-- [A 级“稳稳地，和你一起向前”实现规格](./docs/102-steady-together-spec.md)
-- [“稳稳地，和你一起向前”分步实施计划](./docs/103-steady-together-plan.md)
-- [“稳稳地，和你一起向前”视觉设计](./docs/104-steady-together-design.md)
-- [“稳稳地，和你一起向前”验收记录](./docs/105-steady-together-verification.md)
-- [A 级“一起，把家搬进来”定向调研](./docs/106-moving-home-together-research.md)
-- [A 级“一起，把家搬进来”可执行规格](./docs/107-moving-home-together-spec.md)
-- [“一起，把家搬进来”分步实施计划](./docs/108-moving-home-together-plan.md)
-- [“一起，把家搬进来”视觉设计与资产说明](./docs/109-moving-home-together-design.md)
-- [“一起，把家搬进来”验收记录](./docs/110-moving-home-together-verification.md)
-- [A 级“在雾上，写给你”定向调研](./docs/111-fog-window-letter-research.md)
-- [A 级“在雾上，写给你”可执行规格](./docs/112-fog-window-letter-spec.md)
-- [“在雾上，写给你”分步实施计划](./docs/113-fog-window-letter-plan.md)
-- [“在雾上，写给你”视觉设计与资产说明](./docs/114-fog-window-letter-design.md)
-- [“在雾上，写给你”验收记录](./docs/115-fog-window-letter-verification.md)
-- [A 级“把夜晚照成我们”定向调研](./docs/116-starlight-keepsake-search-research.md)
-- [A 级“把夜晚照成我们”可执行规格](./docs/117-starlight-keepsake-search-spec.md)
-- [“把夜晚照成我们”分步实施计划](./docs/118-starlight-keepsake-search-plan.md)
-- [“把夜晚照成我们”视觉设计与资产说明](./docs/119-starlight-keepsake-search-design.md)
-- [“把夜晚照成我们”验收记录](./docs/120-starlight-keepsake-search-verification.md)
-- [A 级“藏好这一味”定向调研](./docs/121-secret-recipe-code-research.md)
-- [A 级“藏好这一味”可执行规格](./docs/122-secret-recipe-code-spec.md)
-- [“藏好这一味”视觉设计与资产说明](./docs/123-secret-recipe-code-design.md)
-- [“藏好这一味”分步实施计划](./docs/124-secret-recipe-code-plan.md)
-- [“藏好这一味”验收记录](./docs/125-secret-recipe-code-verification.md)
-- [A 级“这一串，我还记得”定向调研](./docs/126-memory-bid-research.md)
-- [A 级“这一串，我还记得”可执行规格](./docs/127-memory-bid-spec.md)
-- [“这一串，我还记得”视觉设计与资产说明](./docs/128-memory-bid-design.md)
-- [“这一串，我还记得”分步实施计划](./docs/129-memory-bid-plan.md)
-- [“这一串，我还记得”验收记录](./docs/130-memory-bid-verification.md)
-- [A 级“三枚以后，都是我们”定向调研](./docs/131-future-cookie-notes-research.md)
-- [A 级“三枚以后，都是我们”可执行规格](./docs/132-future-cookie-notes-spec.md)
-- [“三枚以后，都是我们”视觉设计与资产说明](./docs/133-future-cookie-notes-design.md)
-- [“三枚以后，都是我们”分步实施计划](./docs/134-future-cookie-notes-plan.md)
-- [“三枚以后，都是我们”验收记录](./docs/135-future-cookie-notes-verification.md)
-- [A 级“软软相扑”定向调研](./docs/136-soft-sumo-research.md)
-- [A 级“软软相扑”可执行规格](./docs/137-soft-sumo-spec.md)
-- [“软软相扑”视觉设计与资产说明](./docs/138-soft-sumo-design.md)
-- [“软软相扑”分步实施计划](./docs/139-soft-sumo-plan.md)
-- [“软软相扑”验收记录](./docs/140-soft-sumo-verification.md)
-- [A 级“月面，保持有光”定向调研](./docs/141-moon-base-power-research.md)
-- [A 级“月面，保持有光”可执行规格](./docs/142-moon-base-power-spec.md)
-- [“月面，保持有光”视觉设计与资产说明](./docs/143-moon-base-power-design.md)
-- [“月面，保持有光”分步实施计划](./docs/144-moon-base-power-plan.md)
-- [“月面，保持有光”验收记录](./docs/145-moon-base-power-verification.md)
-- [A 级“雾里，跟着你走”定向调研](./docs/146-fog-navigation-research.md)
-- [A 级“雾里，跟着你走”实现规格](./docs/147-fog-navigation-spec.md)
-- [“雾里，跟着你走”视觉设计](./docs/148-fog-navigation-design.md)
-- [“雾里，跟着你走”分步实施计划](./docs/149-fog-navigation-plan.md)
-- [“雾里，跟着你走”验收记录](./docs/150-fog-navigation-verification.md)
-- [A 级“这一场雨，我们一起接”定向调研](./docs/151-cloud-recipe-research.md)
-- [A 级“这一场雨，我们一起接”实现规格](./docs/152-cloud-recipe-spec.md)
-- [“这一场雨，我们一起接”视觉设计与资产说明](./docs/153-cloud-recipe-design.md)
-- [“这一场雨，我们一起接”分步实施计划](./docs/154-cloud-recipe-plan.md)
-- [“这一场雨，我们一起接”验收记录](./docs/155-cloud-recipe-verification.md)
-- [A 级“把两边，拉成我们”定向调研](./docs/156-together-zipper-research.md)
-- [A 级“把两边，拉成我们”实现规格](./docs/157-together-zipper-spec.md)
-- [“把两边，拉成我们”视觉设计与资产说明](./docs/158-together-zipper-design.md)
-- [“把两边，拉成我们”分步实施计划](./docs/159-together-zipper-plan.md)
-- [“把两边，拉成我们”验收记录](./docs/160-together-zipper-verification.md)
-- [A 级“把七天，养成一朵花”定向调研](./docs/161-seven-day-garden-research.md)
-- [A 级“把七天，养成一朵花”实现规格](./docs/162-seven-day-garden-spec.md)
-- [“把七天，养成一朵花”视觉设计与资产说明](./docs/163-seven-day-garden-design.md)
-- [“把七天，养成一朵花”分步实施计划](./docs/164-seven-day-garden-plan.md)
-- [“把七天，养成一朵花”验收记录](./docs/165-seven-day-garden-verification.md)
-- [A 级“把星光，一笔一笔交给你”定向调研](./docs/166-constellation-relay-research.md)
-- [A 级“把星光，一笔一笔交给你”可执行规格](./docs/167-constellation-relay-spec.md)
-- [“把星光，一笔一笔交给你”视觉设计与资产冻结](./docs/168-constellation-relay-design.md)
-- [“把星光，一笔一笔交给你”分步实施计划](./docs/169-constellation-relay-plan.md)
-- [“把星光，一笔一笔交给你”验收记录](./docs/170-constellation-relay-verification.md)
-- [影子双人舞定向调研](./docs/171-shadow-duet-research.md)
-- [影子双人舞可执行规格](./docs/172-shadow-duet-spec.md)
-- [影子双人舞分步实施计划](./docs/203-shadow-duet-plan.md)
-- [影子双人舞 ImageGen 视觉简报](./docs/204-shadow-duet-imagegen-brief.md)
-- [影子双人舞视觉概念提案](./docs/205-shadow-duet-design-proposal.md)
-- [影子双人舞固定来源复核](./docs/231-shadow-duet-source-refresh.md)
-- [影子双人舞核心复验](./docs/343-shadow-duet-core-verification.md)
-- [把影子，跳成我们最终验收](./docs/381-shadow-duet-final-verification.md)
-- [太空舱对接定向调研](./docs/176-capsule-docking-research.md)
-- [太空舱对接可执行规格](./docs/177-capsule-docking-spec.md)
-- [太空舱对接 Brainstorm](./docs/207-capsule-docking-brainstorm.md)
-- [太空舱对接 ImageGen 视觉简报](./docs/208-capsule-docking-imagegen-brief.md)
-- [太空舱对接固定来源复核](./docs/228-capsule-docking-source-refresh.md)
-- [太空舱对接分步实施计划](./docs/256-capsule-docking-plan.md)
-- [太空舱对接核心验收](./docs/257-capsule-docking-core-verification.md)
-- [太空舱对接核心复验](./docs/349-capsule-docking-core-verification.md)
-- [太空舱对接视觉概念提案](./docs/369-capsule-docking-design-proposal.md)
-- [太空舱对接最终验收](./docs/384-capsule-docking-final-verification.md)
-- [弹射坦克定向调研](./docs/299-ricochet-tank-duel-research.md)
-- [弹射坦克 Brainstorm](./docs/300-ricochet-tank-duel-brainstorm.md)
-- [弹射坦克可执行规格](./docs/301-ricochet-tank-duel-spec.md)
-- [弹射坦克分步实施计划](./docs/302-ricochet-tank-duel-plan.md)
-- [弹射坦克视觉概念提案](./docs/312-ricochet-tank-duel-design-proposal.md)
-- [弹射坦克核心复验](./docs/358-ricochet-tank-duel-core-verification.md)
-- [这一弹，拐弯见你最终验收](./docs/390-ricochet-tank-duel-final-verification.md)
-- [同图滑块竞速定向调研](./docs/287-photo-slider-race-research.md)
-- [同图滑块竞速 Brainstorm](./docs/288-photo-slider-race-brainstorm.md)
-- [同图滑块竞速可执行规格](./docs/289-photo-slider-race-spec.md)
-- [同图滑块竞速分步实施计划](./docs/290-photo-slider-race-plan.md)
-- [同图滑块竞速视觉概念提案](./docs/295-photo-slider-race-design-proposal.md)
-- [同图滑块竞速核心复验](./docs/355-photo-slider-race-core-verification.md)
-- [同一张，谁先拼回最终验收](./docs/391-photo-slider-race-final-verification.md)
-- [双屏迷宫竞速定向调研](./docs/283-dual-maze-race-research.md)
-- [双屏迷宫竞速 Brainstorm](./docs/284-dual-maze-race-brainstorm.md)
-- [双屏迷宫竞速可执行规格](./docs/285-dual-maze-race-spec.md)
-- [双屏迷宫竞速分步实施计划](./docs/286-dual-maze-race-plan.md)
-- [双屏迷宫竞速视觉概念提案](./docs/297-dual-maze-race-design-proposal.md)
-- [双屏迷宫竞速核心复验](./docs/356-dual-maze-race-core-verification.md)
-- [同路，谁先到最终验收](./docs/392-dual-maze-race-final-verification.md)
-- [双星同轨定向调研](./docs/305-twin-orbit-research.md)
-- [双星同轨可执行规格](./docs/306-twin-orbit-spec.md)
-- [双星同轨借鉴、依赖与名称审计](./docs/307-twin-orbit-attribution-dependency-audit.md)
-- [双星同轨实施与验收计划](./docs/308-twin-orbit-acceptance-plan.md)
-- [双星同轨核心验收](./docs/309-twin-orbit-core-verification.md)
-- [双星同轨视觉概念提案](./docs/310-twin-orbit-design-proposal.md)
-- [双星同轨核心复验](./docs/354-twin-orbit-core-verification.md)
-- [这一圈，和你同时到最终验收](./docs/386-twin-orbit-final-verification.md)
-- [万花筒名字定向调研](./docs/259-kaleidoscope-names-research.md)
-- [万花筒名字 Brainstorm](./docs/260-kaleidoscope-names-brainstorm.md)
-- [万花筒名字可执行规格](./docs/261-kaleidoscope-names-spec.md)
-- [万花筒名字分步实施计划](./docs/262-kaleidoscope-names-plan.md)
-- [万花筒名字视觉概念提案](./docs/314-kaleidoscope-names-design-proposal.md)
-- [万花筒名字核心复验](./docs/350-kaleidoscope-names-core-verification.md)
-- [把名字折成同一束光最终验收](./docs/387-kaleidoscope-names-final-verification.md)
-- [禁词描述赛定向调研](./docs/263-taboo-description-duel-research.md)
-- [绕词对决 Brainstorm](./docs/264-taboo-description-duel-brainstorm.md)
-- [绕词对决可执行规格](./docs/265-taboo-description-duel-spec.md)
-- [绕词对决分步实施计划](./docs/266-taboo-description-duel-plan.md)
-- [绕词对决内容审计](./docs/275-word-detour-duel-content-audit.md)
-- [绕词对决视觉概念提案](./docs/316-word-detour-duel-design-proposal.md)
-- [绕词对决核心复验](./docs/351-word-detour-duel-core-verification.md)
-- [绕词对决最终验收](./docs/389-word-detour-duel-final-verification.md)
-- [表情电影擂台定向调研](./docs/271-emoji-movie-duel-research.md)
-- [四符片名擂台 Brainstorm](./docs/272-emoji-movie-duel-brainstorm.md)
-- [四符片名擂台可执行规格](./docs/273-emoji-movie-duel-spec.md)
-- [四符片名擂台分步实施计划](./docs/274-emoji-movie-duel-plan.md)
-- [四符片名擂台内容与字形审计](./docs/280-four-symbol-film-duel-content-audit.md)
-- [四符片名擂台视觉概念提案](./docs/318-four-symbol-film-duel-design-proposal.md)
-- [四符片名擂台核心复验](./docs/352-four-symbol-film-duel-core-verification.md)
-- [四符片名擂台最终验收](./docs/388-four-symbol-film-duel-final-verification.md)
-- [黑胶寻声定向调研](./docs/267-vinyl-secret-research.md)
-- [黑胶寻声 Brainstorm](./docs/268-vinyl-secret-brainstorm.md)
-- [黑胶寻声可执行规格](./docs/269-vinyl-secret-spec.md)
-- [黑胶寻声分步实施计划](./docs/270-vinyl-secret-plan.md)
-- [黑胶寻声视觉概念提案](./docs/320-vinyl-secret-design-proposal.md)
-- [黑胶寻声核心复验](./docs/353-vinyl-secret-core-verification.md)
-- [把秘密藏进这一圈最终验收](./docs/385-vinyl-secret-final-verification.md)
-- [夸夸老虎机定向调研](./docs/178-compliment-reels-research.md)
-- [夸夸老虎机文案审计](./docs/179-compliment-reels-copy-audit.md)
-- [夸夸老虎机可执行规格](./docs/180-compliment-reels-spec.md)
-- [夸夸印刷机 ImageGen 视觉简报](./docs/197-compliment-reels-imagegen-brief.md)
-- [夸夸印刷机视觉概念提案](./docs/198-compliment-reels-design-proposal.md)
-- [夸夸印刷机最终验收](./docs/380-compliment-reels-final-verification.md)
-- [雪球留言定向调研](./docs/181-snow-globe-message-research.md)
-- [雪球留言可执行规格](./docs/182-snow-globe-message-spec.md)
-- [雪球留言实施计划](./docs/209-snow-globe-message-plan.md)
-- [雪球留言视觉概念提案](./docs/210-snow-globe-message-design-proposal.md)
-- [蛋糕点烛定向调研](./docs/214-candle-wishes-research.md)
-- [蛋糕点烛可执行规格](./docs/215-candle-wishes-spec.md)
-- [蛋糕点烛分步实施计划](./docs/216-candle-wishes-plan.md)
-- [蛋糕点烛视觉概念提案](./docs/217-candle-wishes-design-proposal.md)
-- [蛋糕点烛最终验收](./docs/379-candle-wishes-final-verification.md)
-- [影子剑术定向调研](./docs/219-shadow-sword-duel-research.md)
-- [影子剑术可执行规格](./docs/220-shadow-sword-duel-spec.md)
-- [影子剑术分步实施计划](./docs/221-shadow-sword-duel-plan.md)
-- [影子剑术视觉概念提案](./docs/222-shadow-sword-duel-design-proposal.md)
-- [影子剑术最终验收](./docs/382-shadow-sword-duel-final-verification.md)
-- [蜂巢封路定向调研](./docs/223-honeycomb-passage-research.md)
-- [蜂巢封路可执行规格](./docs/224-honeycomb-passage-spec.md)
-- [蜂巢封路分步实施计划](./docs/225-honeycomb-passage-plan.md)
-- [蜂巢封路视觉概念提案](./docs/226-honeycomb-passage-design-proposal.md)
-- [蜂巢封路核心复验](./docs/360-honeycomb-passage-core-verification.md)
-- [蜜径相逢最终验收](./docs/383-honeycomb-passage-final-verification.md)
-- [花园抢资源定向调研](./docs/240-garden-resource-duel-research.md)
-- [花园抢资源 Brainstorm](./docs/241-garden-resource-duel-brainstorm.md)
-- [花园抢资源可执行规格](./docs/242-garden-resource-duel-spec.md)
-- [花园抢资源代码原生视觉设计](./docs/243-garden-resource-duel-design.md)
-- [花园抢资源分步实施计划](./docs/244-garden-resource-duel-plan.md)
-- [花园抢资源验收记录](./docs/245-garden-resource-duel-verification.md)
-- [爱心投石器定向调研](./docs/247-heart-catapult-research.md)
-- [爱心投石器 Brainstorm](./docs/248-heart-catapult-brainstorm.md)
-- [爱心投石器可执行规格](./docs/249-heart-catapult-spec.md)
-- [爱心投石器分步实施计划](./docs/250-heart-catapult-plan.md)
-- [爱心投石器代码原生视觉设计](./docs/252-heart-catapult-design.md)
-- [爱心投石器验收记录](./docs/253-heart-catapult-verification.md)
-- [心愿烟火定向调研](./docs/183-wish-fireworks-research.md)
-- [心愿烟火可执行规格](./docs/184-wish-fireworks-spec.md)
-- [心愿烟火分批实施计划](./docs/246-wish-fireworks-plan.md)
-- [心愿烟火最终验收](./docs/376-wish-fireworks-final-verification.md)
-- [花语配方定向调研](./docs/185-flower-language-bouquet-research.md)
-- [花语配方可执行规格](./docs/186-flower-language-bouquet-spec.md)
-- [花语配方视觉提案](./docs/187-flower-language-bouquet-design-proposal.md)
-- [花语配方实施计划](./docs/188-flower-language-bouquet-plan.md)
-- [花语配方最终验收](./docs/378-flower-language-bouquet-final-verification.md)
-- [非 A 级作品直达启动 Brainstorm](./docs/189-non-a-direct-launch-brainstorm.md)
-- [可复用直达启动器规格](./docs/190-non-a-direct-launch-spec.md)
-- [可复用直达启动器实施计划](./docs/191-non-a-direct-launch-plan.md)
-- [可复用直达启动器验收记录](./docs/192-non-a-direct-launch-verification.md)
-- [D 级可选能力统一安装 Brainstorm](./docs/193-unified-optional-capability-setup-brainstorm.md)
-- [D 级可选能力统一安装规格](./docs/194-unified-optional-capability-setup-spec.md)
-- [D 级可选能力统一安装计划](./docs/195-unified-optional-capability-setup-plan.md)
-- [D 级可选能力统一安装验收记录](./docs/196-unified-optional-capability-setup-verification.md)
-- [A 级月相密语验收记录](./docs/70-moon-phase-secret-verification.md)
-- [单人惊喜类调研](./docs/10-surprise-research.md)
-- [双人合作类调研](./docs/20-co-op-research.md)
-- [双人对抗类调研](./docs/30-versus-research.md)
-- [创意池与实现路线](./docs/40-idea-backlog.md)
-- [第三方引入与许可证指南](./docs/50-license-and-import-guide.md)
-- [第二轮本地优先全量调研](./docs/60-local-first-second-pass-research.md)
-- [Bug 与解决方案](./bugs/README.md)
-- [可复用学习笔记](./learn/README.md)
+首次使用：
 
-## 仓库原则
+- macOS：双击 `setup.command`
+- Windows：双击 `setup.bat`
 
-- 默认在本地运行，不要求账号，也不上传私人内容；
-- 按 A–D 四级说明启动方式，不再把“必须双击 HTML”作为唯一门槛；
-- 每个作品保留独立资源，方便整个目录复制和赠送；
-- 双设备玩法优先使用同一局域网；只有异地游玩才考虑公网服务；
-- 不默认加入远程统计、云数据库或不可替代的外部 API；
-- 第三方项目先确认许可证，再决定是否复制源码；
-- 私人照片、聊天、纪念日和商业音乐不应无意提交到公开仓库。
+以后启动：
 
-## 本地启动等级
+- macOS：双击 `start.command`
+- Windows：双击 `start.bat`
 
-| 等级 | 使用方式 | 适合内容 |
+也可以使用终端：
+
+```bash
+# 安装基础依赖，并跳过可选的大型本地能力
+npm run setup -- --skip-optional
+
+# 启动门户
+npm start
+```
+
+默认本机入口是 [http://127.0.0.1:4173/](http://127.0.0.1:4173/)。如果端口已被占用，运行时会自动寻找后续可用端口。
+
+> **扫描二维码前，请确认手机与运行门户的电脑连接在同一个 Wi‑Fi／局域网。**<br>
+> 蜂窝网络、访客 Wi‑Fi、VPN 或路由器的“设备隔离”可能阻止手机访问。局域网地址由当前网络动态生成，不应保存为固定书签。
+
+## 选择一个体验
+
+门户提供等级和类型筛选，也可以点击“随机开启”从当前结果中挑选：
+
+| 分类 | 目录 | 适合 |
 | --- | --- | --- |
-| A | 双击 `index.html` | 轻量惊喜页、同屏或轮流小游戏 |
-| B | 双击启动器，由它启动本地服务并打开浏览器 | ES Modules、`fetch()`、WebAssembly 等浏览器项目 |
-| C | 一台设备启动本地房间，另一台设备通过同一局域网加入 | 手机双设备协作或对抗 |
-| D | 安装或携带本地运行时、模型、大型资源后启动 | 本地 AI、语音、3D 和重资源体验 |
+| 单人惊喜 | [`experiences/surprises/`](./experiences/surprises/) | 一个人准备，另一个人打开：情书、纪念日、照片、音乐和小仪式 |
+| 双人合作 | [`experiences/co-op/`](./experiences/co-op/) | 两个人共同完成：默契、节奏、推理、操作和交流挑战 |
+| 双人对抗 | [`experiences/versus/`](./experiences/versus/) | 两个人比较分数或争夺胜负：反应、策略、记忆和同屏竞速 |
 
-四级都属于仓库目标。作品还需单独标注公网依赖；默认应为“无”，异地联机可以是可选增强。
+[`experiences/catalog.json`](./experiences/catalog.json) 是体验数量、入口、人数、设备、等级和安装状态的唯一事实来源。
 
-## 目录结构
+## A / B / C / D 是什么
+
+等级表示用户如何启动和连接，不表示作品质量或开发难度。
+
+| 等级 | 启动方式 | 典型能力 |
+| --- | --- | --- |
+| **A · 直接打开** | 双击作品的 `index.html` | 原生 HTML/CSS/JS、Canvas、Web Audio、本机文件 |
+| **B · 一键本地服务** | 双击启动器，由本机服务打开 | ES Modules、`fetch()`、WebAssembly、本地浏览器依赖 |
+| **C · 局域网双设备** | 一台电脑启动，另一台设备扫码加入 | 本地 HTTP、Socket.IO、双人房间和二维码 |
+| **D · 本地重型能力** | 安装可选模型或大型资源后启动 | 本地语音识别、Worker、WASM 和可校验能力包 |
+
+A–D 都以离线完成核心体验为目标。D 级可选能力不会在作品启动时偷偷下载；拒绝安装不会影响 A/B/C 级体验。
+
+## 本地优先与隐私边界
+
+- **无账号**：核心体验不要求注册或登录。
+- **默认无公网依赖**：安装完成后，核心玩法在本机或同一局域网内完成。
+- **私人素材留在设备上**：照片、录音和自定义内容默认只在当前页面或本地运行时处理。
+- **C 级只在局域网传输**：两台设备通过用户自己的本地 Node 服务通信。
+- **D 级模型本地运行**：能力包有独立 manifest、哈希、体积和许可证记录。
+- **可信主机模型**：本地房间信任启动服务的电脑；这不是端到端加密，也不适合不受信任的公共网络。
+
+## 项目结构
 
 ```text
 two-of-us/
-├── index.html                  # A 级直开 / B-C 级服务共用门户
-├── setup.command / setup.bat   # 首次统一安装
-├── start.command / start.bat   # 此后双击启动本地服务
+├── index.html                 # Catalog 驱动的统一门户
+├── setup.command / setup.bat  # 首次安装入口
+├── start.command / start.bat  # 统一启动入口
 ├── experiences/
+│   ├── catalog.json           # 75 个体验的唯一目录事实
 │   ├── surprises/             # 单人惊喜
 │   ├── co-op/                 # 双人合作
 │   └── versus/                # 双人对抗
-├── capabilities/              # D 级按需安装的本地模型与运行能力声明
-├── shared/runtime/             # 本地门户、房间协议、二维码
-├── bugs/                       # 已复现问题与解决方案
-├── learn/                      # 可复用的实现经验
-├── docs/                       # 分类规范、调研和实现路线
-└── archive/                    # 原始压缩包与历史配置
+├── shared/
+│   ├── runtime/               # HTTP、二维码、房间和静态资源服务
+│   └── ...                    # 跨体验共享组件
+├── capabilities/              # D 级可选能力定义与浏览器资产
+├── scripts/                   # 安装、启动、测试和仓库验收
+├── docs/                      # 调研、规格、设计、计划与验收记录
+├── bugs/                      # 已复现问题、根因和回归证据
+└── learn/                     # 可跨体验复用的工程知识
 ```
 
-## 隐私与版权提醒
+每个体验通常包含自己的 `README.md`、入口、逻辑、样式、测试和来源声明。B/C/D 级体验还提供薄启动器，但统一复用根目录的依赖和本地运行时。
 
-当前仓库是公开仓库。Love Tree 含有私人文案、纪念日期和一首商业录音；在继续公开分发前，请确认这些内容适合公开，并自行处理音乐授权。仓库暂未声明统一许可证，不能据此推定其中所有素材都允许再分发。
+## 开发
+
+要求：
+
+- Node.js 18 或更高版本；
+- macOS 或 Windows 可使用双击启动器；
+- 现代 Chromium、Safari 或 Firefox 浏览器。
+
+常用命令：
+
+| 命令 | 作用 |
+| --- | --- |
+| `npm run setup -- --skip-optional` | 安装共享依赖，不安装 D 级可选能力 |
+| `npm start` | 启动统一门户 |
+| `npm start -- --experience <id>` | 启动并直达指定体验 |
+| `npm run capabilities` | 查看本地能力 CLI 帮助 |
+| `npm test` | 运行仓库自动发现的全部测试 |
+| `npm run verify` | 校验 Catalog、入口、资源闭包和来源声明 |
+
+例如直达全景回忆：
+
+```bash
+npm start -- --experience panorama-memory
+```
+
+新增或修改体验时，至少应保持：
+
+1. Catalog 与真实文件入口一致；
+2. 声明的 A/B/C/D 启动方式可重复验证；
+3. 私人数据、公网依赖和权限边界写清楚；
+4. 玩法核心尽量确定、可重放、可测试；
+5. 借鉴、代码、素材和依赖来源可追溯；
+6. `npm test` 与 `npm run verify` 通过。
+
+## 文档与工程记录
+
+- [文档索引](./docs/README.md)：调研、规格、设计、实施计划和验收记录
+- [分类与收录规范](./docs/01-classification-spec.md)：分类、标签和 A/B/C/D 等级定义
+- [持续建设规格](./docs/04-implementation-program-spec.md)：统一运行架构与交付边界
+- [借鉴与来源声明规范](./docs/05-reference-and-attribution-spec.md)
+- [共享本地运行时](./shared/runtime/README.md)
+- [Bug 记录](./bugs/README.md)
+- [工程知识库](./learn/README.md)
+
+## 常见问题
+
+### 手机扫码后打不开
+
+确认手机和电脑在同一个 Wi‑Fi／局域网，并暂时关闭蜂窝网络或 VPN 后重试。访客网络和 AP 隔离可能让同一 Wi‑Fi 下的设备仍然无法互访。
+
+### 页面没有声音
+
+浏览器通常会阻止未经过用户操作的自动播放。先点击页面内的主要按钮或互动区域，再检查标签页和系统音量。
+
+### 端口 4173 已被占用
+
+启动器会在有限范围内寻找下一个可用端口，并在终端和门户中显示实际地址。请以当次启动显示的地址和二维码为准。
+
+### 不想安装本地语音模型
+
+使用 `npm run setup -- --skip-optional`。D 级能力是可选项，不影响其他体验。
+
+## 来源与许可
+
+仓库包含独立实现、本地生成或自制素材，以及固定版本的第三方依赖。每个体验的 `README.md`／`ATTRIBUTION.md` 和 [`shared/runtime/README.md`](./shared/runtime/README.md) 分别记录实际参考范围、代码、素材、模型与许可证。
+
+本仓库目前没有用一个根许可证覆盖所有内容。复用或再分发某个体验前，请以该目录的来源与许可记录为准；不要把“公开可见”理解为“可以任意复制”。
