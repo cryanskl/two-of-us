@@ -23,6 +23,10 @@ const captureSettleMs = 1400;
 // 每一步是一次点击：`selector` 点某个元素的中心，`offset` 再给出元素框内的相对位置，
 // `point` 直接给视口坐标。用选择器而不是硬编码坐标，配方才不会被版面变化悄悄弄坏。
 const captureRecipes = Object.freeze({
+  "spot-the-one": {
+    steps: [{ selector: "#start-button" }],
+    settleMs: 900,
+  },
   "light-grown-tree": {
     steps: [
       { selector: "#primary-button" },

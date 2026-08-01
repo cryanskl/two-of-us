@@ -340,6 +340,7 @@
 | [372-runtime-content-identity-verification.md](./372-runtime-content-identity-verification.md) | 内容身份、live witness、双真实复制根复用/拒绝、旧进程存活和端口释放验收 |
 | [393-portal-preview-and-featured-spec.md](./393-portal-preview-and-featured-spec.md) | 作品预览图的路径契约、非运行依赖边界、Chromium 制作期生成与精选 opt-in 集合规格 |
 | [394-light-grown-tree-spec.md](./394-light-grown-tree-spec.md) | “跟着光，长成一棵树”的可重放生长模型、向上约束、树冠张开策略与替代 Love Tree 的理由 |
+| [395-spot-the-one-spec.md](./395-spot-the-one-spec.md) | “一眼看穿”的确定性题面、几何差异维度、对称锁定罚则与加时收敛规格 |
 
 持续建设期间，已复现缺陷记录在 [`bugs/`](../bugs/)，可跨作品复用的知识记录在 [`learn/`](../learn/)。
 
