@@ -130,13 +130,13 @@
       #count {
         display: block;
         margin-top: 9px;
-        color: #83797c;
+        color: #6f6568;
         font-size: .88rem;
       }
 
       .section-hint {
         margin: 6px 0 0;
-        color: #83797c;
+        color: #6f6568;
         font-size: .88rem;
       }
 
@@ -171,7 +171,7 @@
       .random-open small {
         display: block;
         margin-top: 5px;
-        color: rgba(255, 250, 247, .76);
+        color: rgba(255, 250, 247, .92);
         font-size: .7rem;
         font-weight: 560;
       }
@@ -308,7 +308,7 @@
 
       .details {
         margin: 17px 0 24px;
-        color: #887f81;
+        color: #6f6568;
         font-size: .82rem;
       }
 
@@ -345,7 +345,7 @@
 
       footer {
         margin-top: 44px;
-        color: #8b8184;
+        color: #726869;
         font-size: .82rem;
         line-height: 1.65;
       }
@@ -384,8 +384,8 @@
         给两个人的本地游乐场。惊喜、合作与对抗体验都留在自己的设备上；安装一次，此后从这里直接打开。
       </p>
 
-      <section class="runtime" aria-live="polite">
-        <div>
+      <section class="runtime">
+        <div aria-live="polite">
           <div class="status-line">
             <span id="status-dot" class="status-dot"></span>
             <span id="runtime-title">A 级离线门户</span>
@@ -393,17 +393,17 @@
           <p id="runtime-copy">当前通过文件直接打开。A 级作品可以使用；运行 start.command / start.bat 后可启用本地房间和局域网入口。</p>
           <p id="runtime-network-hint" hidden>扫码提醒：手机与这台电脑需要连接同一个 Wi‑Fi 或局域网。</p>
         </div>
-        <img id="qr" alt="同一局域网的加入二维码">
+        <img id="qr" alt="" aria-hidden="true">
       </section>
 
       <section aria-labelledby="experiences-heading">
         <div class="section-head">
           <div>
             <h2 id="experiences-heading">现在想做什么？</h2>
-            <span id="count" aria-live="polite">1 个体验</span>
-            <p class="section-hint">第一次玩，可以先只看精选的 9 个。</p>
+            <span id="count" aria-live="polite">75 个体验</span>
+            <p class="section-hint">第一次玩，可以先只看精选的 <span id="featured-count">9</span> 个。</p>
           </div>
-          <div class="discovery-tools" aria-label="体验筛选">
+          <div class="discovery-tools" role="group" aria-label="体验筛选">
             <button id="random-open" class="random-open" type="button">
               随机开启
               <small>从当前结果中挑选</small>
@@ -1385,6 +1385,14 @@
       let activeCatalog = fallbackCatalog;
       let visibleExperiences = [];
       let capabilityStatuses = [];
+      const cardCache = new Map();
+
+      // 浏览器后退时会恢复 radio 的选中状态，首屏渲染前先把它读回来，
+      // 否则按钮高亮与实际筛选结果会互相矛盾。
+      for (const name of ["level", "category", "featured"]) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        if (checked) filterState[name] = checked.value;
+      }
 
       renderCatalog(fallbackCatalog);
       document.querySelector(".discovery-tools").addEventListener("change", handleFilterChange);
@@ -1396,16 +1404,17 @@
           const [healthResponse, catalogResponse, capabilitiesResponse] = await Promise.all([
             fetch("/api/health", { cache: "no-store" }),
             fetch("/api/catalog", { cache: "no-store" }),
-            fetch("/api/capabilities", { cache: "no-store" })
+            fetch("/api/capabilities", { cache: "no-store" }).catch(() => null)
           ]);
           if (!healthResponse.ok || !catalogResponse.ok) throw new Error("runtime unavailable");
 
           const [health, catalog, capabilities] = await Promise.all([
             healthResponse.json(),
             catalogResponse.json(),
-            capabilitiesResponse.ok ? capabilitiesResponse.json() : { capabilities: [] }
+            capabilitiesResponse?.ok ? capabilitiesResponse.json() : { capabilities: [] }
           ]);
           capabilityStatuses = capabilities.capabilities ?? [];
+          cardCache.clear();
           renderCatalog(catalog);
           document.querySelector("#status-dot").classList.add("online");
           document.querySelector("#runtime-title").textContent = "本地运行时已就绪";
@@ -1425,15 +1434,27 @@
       }
 
       function renderCatalog(catalog) {
+        if (!Array.isArray(catalog?.experiences)) return;
         activeCatalog = catalog;
+        const featuredCount = catalog.experiences.filter((experience) => experience.featured === true).length;
+        document.querySelector("#featured-count").textContent = String(featuredCount);
         renderFilteredCatalog();
+      }
+
+      function cardFor(item) {
+        let card = cardCache.get(item.id);
+        if (!card) {
+          card = createCard(item);
+          cardCache.set(item.id, card);
+        }
+        return card;
       }
 
       function renderFilteredCatalog() {
         const container = document.querySelector("#experiences");
         visibleExperiences = PortalFilters.filterExperiences(activeCatalog.experiences, filterState);
         const content = visibleExperiences.length
-          ? visibleExperiences.map(createCard)
+          ? visibleExperiences.map(cardFor)
           : [createEmptyState()];
         container.replaceChildren(...content);
         document.querySelector("#count").textContent = `${visibleExperiences.length} 个体验`;
