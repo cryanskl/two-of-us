@@ -21,15 +21,26 @@ export function createCapabilitiesRuntime({
   rootDir = new URL("../../", import.meta.url),
   dataDir = resolveDataDir(),
   statusProvider = getCapabilityStatus,
+  statusCacheMs = 3000,
 } = {}) {
   const inFlightStatuses = new Map();
+  const cachedStatuses = new Map();
   let inFlightPublicStatuses = null;
 
   async function provideStatus(id) {
+    // 状态计算要对声明的每个安装物做全文件哈希（语音模型约 148 MB）。
+    // 门户每次加载都会请求一次状态，分段下载的每个 Range 请求也要先过状态
+    // 检查，这里给成功结果一个短 TTL，失败结果不缓存。
+    const cached = cachedStatuses.get(id);
+    if (cached && Date.now() - cached.at < statusCacheMs) return cached.value;
     if (inFlightStatuses.has(id)) return inFlightStatuses.get(id);
     const pending = Promise.resolve()
       .then(() => statusProvider({ rootDir, dataDir, id }))
       .catch((error) => normalizeStatusError(id, error))
+      .then((value) => {
+        cachedStatuses.set(id, { value, at: Date.now() });
+        return value;
+      })
       .finally(() => inFlightStatuses.delete(id));
     inFlightStatuses.set(id, pending);
     return pending;
@@ -228,8 +239,15 @@ async function serveArtifact(request, response, route, provideStatus, { rootDir,
     const noFollow = typeof fsConstants.O_NOFOLLOW === "number" ? fsConstants.O_NOFOLLOW : 0;
     fileHandle = await open(realCandidate, fsConstants.O_RDONLY | noFollow);
     const metadata = await fileHandle.stat();
-    if (!metadata.isFile() || metadata.size !== artifact.bytes
-      || await sha256FileHandle(fileHandle) !== artifact.sha256) {
+    if (!metadata.isFile() || metadata.size !== artifact.bytes) {
+      sendJson(request, response, 409, { error: "ARTIFACT_CHANGED" });
+      return;
+    }
+    // 完整下载前仍做一次全文件哈希兜底；Range 请求逐段拉取同一文件，
+    // 每段都重读整份模型做哈希会让分段下载变成平方级磁盘读——这些请求的
+    // 内容一致性由刚通过的状态检查（含安装物哈希校验）与尺寸比对保证。
+    if (request.headers.range === undefined
+      && await sha256FileHandle(fileHandle) !== artifact.sha256) {
       sendJson(request, response, 409, { error: "ARTIFACT_CHANGED" });
       return;
     }

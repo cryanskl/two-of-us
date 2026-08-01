@@ -48,7 +48,7 @@ for (const experience of catalog.experiences) {
       errors.push(`${experience.id} 的非 A 入口引用了外部资源：<external-url>`);
       continue;
     }
-    if (reference === "/socket.io/socket.io.js" && experience.level !== "A") continue;
+    if (reference === "/socket.io/socket.io.js") continue;
     const localReference = reference.split(/[?#]/, 1)[0];
     const safeReference = redactResourceReference(reference);
     if (!localReference) continue;

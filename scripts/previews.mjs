@@ -9,7 +9,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { loadCatalog, previewPathFor } from "../shared/runtime/catalog.js";
 
 const rootDir = new URL("../", import.meta.url);
@@ -38,7 +38,10 @@ const captureRecipes = Object.freeze({
   },
 });
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// 与 setup.mjs 一致地用 pathToFileURL 比较：import.meta.url 是百分号编码的
+// URL，仓库路径含空格或在 Windows 上时，手拼 `file://${argv[1]}` 永远不相等，
+// 会让 `npm run previews` 静默什么都不做。
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   await main(process.argv.slice(2));
 }
 
@@ -197,23 +200,33 @@ async function launchChromium(executable) {
   let nextId = 0;
 
   socket.addEventListener("message", (event) => {
-    const message = JSON.parse(typeof event.data === "string" ? event.data : "");
+    if (typeof event.data !== "string") return;
+    const message = JSON.parse(event.data);
     const entry = pending.get(message.id);
     if (!entry) return;
     pending.delete(message.id);
+    clearTimeout(entry.timer);
     if (message.error) entry.reject(new Error(message.error.message ?? "CDP 调用失败"));
     else entry.resolve(message.result);
+  });
+
+  socket.addEventListener("close", () => {
+    for (const [id, entry] of pending) {
+      pending.delete(id);
+      clearTimeout(entry.timer);
+      entry.reject(new Error("Chromium 调试连接已断开。"));
+    }
   });
 
   function send(method, params = {}, sessionId = undefined) {
     const id = (nextId += 1);
     return new Promise((resolve, reject) => {
-      pending.set(id, { resolve, reject });
-      socket.send(JSON.stringify({ id, method, params, ...(sessionId ? { sessionId } : {}) }));
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (!pending.delete(id)) return;
         reject(new Error(`CDP 调用超时：${method}`));
       }, settleTimeoutMs);
+      pending.set(id, { resolve, reject, timer });
+      socket.send(JSON.stringify({ id, method, params, ...(sessionId ? { sessionId } : {}) }));
     });
   }
 
@@ -250,6 +263,10 @@ function readDevToolsEndpoint(child) {
     child.once("error", (error) => {
       clearTimeout(timer);
       reject(error);
+    });
+    child.once("exit", (code, signal) => {
+      clearTimeout(timer);
+      reject(new Error(`Chromium 在输出调试地址前退出（${signal ?? code}）。`));
     });
   });
 }
