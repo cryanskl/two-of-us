@@ -1,14 +1,19 @@
 import assert from "node:assert/strict";
 import { once } from "node:events";
 import { mkdtemp, rm } from "node:fs/promises";
-import { createServer } from "node:http";
+import { createServer, request as httpRequest } from "node:http";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { RoomError, RoomRegistry } from "./rooms.js";
 import { SealedRoundRegistry } from "./sealed-rounds.js";
-import { createRuntimeServer, registerRoomProtocol } from "./server.js";
+import {
+  createRuntimeServer,
+  isSameOriginOrAbsent,
+  isTrustedHostHeader,
+  registerRoomProtocol,
+} from "./server.js";
 
 const testContentIdentity = `sha256:${"a".repeat(64)}`;
 const testContentIdentityProvider = async () => testContentIdentity;
@@ -291,6 +296,7 @@ test("runtime becomes non-reusable when its checkout changes after startup", asy
     preferredPort: 0,
     contentIdentity: testContentIdentity,
     contentIdentityProvider: async () => currentContentIdentity,
+    identityCacheMs: 0,
   });
   context.after(() => runtime.stop());
 
@@ -355,4 +361,82 @@ test("room protocol cleans sealed rounds by participant before clearing an empty
   third.disconnect();
   assert.deepEqual(sealedRounds.clearRoomCalls, [roomId]);
   assert.equal(rooms.snapshot(roomId), null);
+});
+
+test("runtime rejects DNS-name hosts and cross-site socket handshakes", async (context) => {
+  const runtime = await createRuntimeServer({
+    rootDir: new URL("../../", import.meta.url),
+    host: "127.0.0.1",
+    preferredPort: 0,
+    contentIdentity: testContentIdentity,
+    contentIdentityProvider: testContentIdentityProvider,
+  });
+  context.after(() => runtime.stop());
+  const details = await runtime.start();
+
+  // fetch（undici）会忽略自定义 host/origin 头，必须用原生 http.request 模拟攻击请求。
+  const rawRequest = (path, headers = {}) => new Promise((resolve, reject) => {
+    const request = httpRequest({
+      host: "127.0.0.1",
+      port: details.port,
+      path,
+      headers,
+      setHost: !("host" in headers),
+    }, (response) => {
+      const chunks = [];
+      response.on("data", (chunk) => chunks.push(chunk));
+      response.on("end", () => resolve({
+        status: response.statusCode,
+        body: Buffer.concat(chunks).toString("utf8"),
+      }));
+    });
+    request.on("error", reject);
+    request.end();
+  });
+
+  // DNS 重绑定：攻击者的域名解析到 127.0.0.1，Host 头随之携带该域名。
+  const rebound = await rawRequest("/api/health", { host: "attacker.test" });
+  assert.equal(rebound.status, 403);
+  assert.deepEqual(JSON.parse(rebound.body), { error: "FORBIDDEN_HOST" });
+
+  // 合法入口不受影响：IP 直连、localhost、mDNS 名。
+  for (const hostHeader of [`127.0.0.1:${details.port}`, "localhost", "my-mac.local", "[::1]:4173"]) {
+    const allowed = await rawRequest("/api/health", { host: hostHeader });
+    assert.equal(allowed.status, 200, `Host ${hostHeader} 应被放行`);
+  }
+
+  // 跨站 WebSocket 劫持走的是 engine.io 握手：外站 Origin 必须被拒绝。
+  const hijack = await rawRequest(
+    "/socket.io/?EIO=4&transport=polling",
+    { origin: "https://evil.example" },
+  );
+  assert.equal(hijack.status, 403);
+
+  // 本服务自己发出的页面（Origin 与 Host 同源）和非浏览器客户端（无 Origin）照常放行。
+  const sameOrigin = await rawRequest(
+    "/socket.io/?EIO=4&transport=polling",
+    { origin: `http://127.0.0.1:${details.port}` },
+  );
+  assert.equal(sameOrigin.status, 200);
+  const noOrigin = await rawRequest("/socket.io/?EIO=4&transport=polling");
+  assert.equal(noOrigin.status, 200);
+});
+
+test("host and origin guards classify headers correctly", () => {
+  assert.equal(isTrustedHostHeader("127.0.0.1:4173"), true);
+  assert.equal(isTrustedHostHeader("192.168.1.20:4173"), true);
+  assert.equal(isTrustedHostHeader("[::1]:4173"), true);
+  assert.equal(isTrustedHostHeader("localhost:4173"), true);
+  assert.equal(isTrustedHostHeader("portal.localhost"), true);
+  assert.equal(isTrustedHostHeader("my-mac.local:4173"), true);
+  assert.equal(isTrustedHostHeader("attacker.test"), false);
+  assert.equal(isTrustedHostHeader("example.com:4173"), false);
+  assert.equal(isTrustedHostHeader(""), false);
+  assert.equal(isTrustedHostHeader(undefined), false);
+
+  assert.equal(isSameOriginOrAbsent(undefined, "127.0.0.1:4173"), true);
+  assert.equal(isSameOriginOrAbsent("http://127.0.0.1:4173", "127.0.0.1:4173"), true);
+  assert.equal(isSameOriginOrAbsent("https://evil.example", "127.0.0.1:4173"), false);
+  assert.equal(isSameOriginOrAbsent("null", "127.0.0.1:4173"), false);
+  assert.equal(isSameOriginOrAbsent("not a url", "127.0.0.1:4173"), false);
 });

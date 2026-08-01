@@ -7,15 +7,15 @@
 
 Two of Us is a collection of small interactive web pieces that you open and play right away: prepare a surprise for someone, finish a challenge together, or compete face to face. Nothing here asks for an account, none of it depends on a cloud room, and private photos, recordings and messages are never uploaded to an outside service.
 
-The catalog currently ships **75 installed experiences**:
+The catalog currently ships **76 installed experiences**:
 
 | Solo surprises | Two-player co-op | Two-player versus | Launch levels |
 | ---: | ---: | ---: | --- |
-| 24 | 27 | 24 | 67 level A · 1 level B · 6 level C · 1 level D |
+| 24 | 27 | 25 | 68 level A · 1 level B · 6 level C · 1 level D |
 
 ## Start with these nine
 
-Seventy-five is too many to look at in one sitting. These nine cover all three categories and all three ways of playing — one person preparing for another, two people on one screen, and two people on two devices. Switching the portal's **精选 (featured)** filter to “only featured” gives you the same set.
+Seventy-six is too many to look at in one sitting. These nine cover all three categories and all three ways of playing — one person preparing for another, two people on one screen, and two people on two devices. Switching the portal's **精选 (featured)** filter to “only featured” gives you the same set.
 
 | | | |
 | --- | --- | --- |
@@ -29,7 +29,7 @@ Seventy-five is too many to look at in one sitting. These nine cover all three c
 
 ### Option one: just open it
 
-Double-click [`index.html`](./index.html) in the repository root to browse the portal and open **67 of the level-A experiences** directly.
+Double-click [`index.html`](./index.html) in the repository root to browse the portal and open **68 of the level-A experiences** directly.
 
 This route needs no dependency install, no local service, and works for solo surprises, same-screen co-op and face-to-face versus play. The address bar will show `file://`, and level B/C/D capabilities stay unavailable.
 
@@ -118,7 +118,7 @@ two-of-us/
 ├── setup.command / setup.bat  # first-time install
 ├── start.command / start.bat  # unified launcher
 ├── experiences/
-│   ├── catalog.json           # the single source of truth for all 75 experiences
+│   ├── catalog.json           # the single source of truth for all 76 experiences
 │   ├── surprises/             # solo surprises
 │   ├── co-op/                 # two-player co-op
 │   └── versus/                # two-player versus

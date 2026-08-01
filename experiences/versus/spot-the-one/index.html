@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#101318">
+    <meta name="description" content="两块并排的图案面板只有一处不同，抢先点中它。本地双人对抗，无账号、无网络。">
+    <link rel="icon" href="data:,">
+    <title>一眼看穿 · Two of Us</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-phase="intro">
+    <a class="back-link" href="../../../index.html" aria-label="返回体验库">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.5 5 7.5 12l7 7M8 12h10"></path>
+      </svg>
+    </a>
+
+    <main class="shell">
+      <header class="masthead">
+        <p class="eyebrow">VERSUS · 同屏两席</p>
+        <h1 id="page-title">一眼看穿</h1>
+        <p class="lead" id="lead">两边的图案只有一处不同。谁先看出来，这一分就是谁的。</p>
+      </header>
+
+      <section class="scoreboard" aria-label="比分">
+        <div class="seat seat--left">
+          <span class="seat-name" id="left-name">左边这位</span>
+          <strong class="seat-score" id="left-score">0</strong>
+          <small class="seat-keys">W A S D 移动 · F 作答</small>
+        </div>
+        <div class="round-state">
+          <span id="round-label">准备开始</span>
+          <small id="round-hint">共 5 题 · 点错锁 1.5 秒</small>
+        </div>
+        <div class="seat seat--right">
+          <span class="seat-name" id="right-name">右边这位</span>
+          <strong class="seat-score" id="right-score">0</strong>
+          <small class="seat-keys">方向键移动 · 回车作答</small>
+        </div>
+      </section>
+
+      <section class="arena" aria-label="题面">
+        <div class="panel-wrap">
+          <div class="panel" id="panel-left" data-side="left"></div>
+          <p class="panel-caption">左席面板 · 点自己这边作答</p>
+        </div>
+        <div class="panel-wrap">
+          <div class="panel" id="panel-right" data-side="right"></div>
+          <p class="panel-caption">右席面板 · 点自己这边作答</p>
+        </div>
+
+        <div class="overlay" id="overlay">
+          <div class="overlay-card">
+            <p id="overlay-copy">同一块题面会同时出现在两边，只有一格不一样：可能转了个角度、变了大小，或者线条粗细不同。</p>
+            <button id="start-button" class="primary-button" type="button">开始第一题</button>
+          </div>
+        </div>
+      </section>
+
+      <p class="tip">触屏：各自点自己那块面板。点错会被锁一小会儿，对方照常作答。</p>
+
+      <noscript>
+        <p class="noscript">这个对决需要浏览器启用 JavaScript 才能生成题面和判定答案。页面不联网、不上传任何内容。</p>
+      </noscript>
+    </main>
+
+    <p id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+    <script src="config.js"></script>
+    <script src="logic.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

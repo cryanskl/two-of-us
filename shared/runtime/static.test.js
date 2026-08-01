@@ -24,6 +24,12 @@ test("static resolver maps the portal and keeps files inside the repository", ()
   assert.equal(resolveStaticPath(root, "/%2e%2e/package.json"), null);
   assert.equal(resolveStaticPath(root, "/.git/config"), null);
   assert.equal(resolveStaticPath(root, "/package.json"), null);
+  // 编码斜杠不会被 URL 规范化，白名单必须挡住解析后跳出公开目录的路径。
+  assert.equal(resolveStaticPath(root, "/experiences/..%2f.git/config"), null);
+  assert.equal(resolveStaticPath(root, "/experiences/..%2fpackage.json"), null);
+  assert.equal(resolveStaticPath(root, "/shared/..%2f.git/HEAD"), null);
+  assert.equal(resolveStaticPath(root, "/experiences/..%2f..%2fpackage.json"), null);
+  assert.equal(resolveStaticPath(root, "/experiences/%2e%2e%2fdocs/README.md"), null);
 });
 
 test("cross-origin isolation is scoped to I Heard You only", () => {

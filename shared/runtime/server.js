@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import { isIP } from "node:net";
 import process from "node:process";
 import QRCode from "qrcode";
 import { Server as SocketServer } from "socket.io";
@@ -29,6 +30,7 @@ export async function createRuntimeServer({
   dataDir,
   contentIdentity,
   contentIdentityProvider = computeContentIdentity,
+  identityCacheMs = 2000,
 } = {}) {
   const resolvedContentIdentity = contentIdentity
     ?? await contentIdentityProvider(rootDir);
@@ -44,8 +46,15 @@ export async function createRuntimeServer({
   const sealedRounds = new SealedRoundRegistry();
   let runtimeDetails = null;
   let inFlightContentIdentityCheck = null;
+  let cachedContentIdentityCheck = null;
 
   function getReusableContentIdentity() {
+    // 全量内容身份要读入并哈希整个 experiences/（本仓库约 1 秒、100 MB 磁盘读）。
+    // 每个 /api/health 请求都重算既慢又是零成本的磁盘放大，这里给结果一个短 TTL。
+    if (cachedContentIdentityCheck
+      && Date.now() - cachedContentIdentityCheck.at < identityCacheMs) {
+      return Promise.resolve(cachedContentIdentityCheck.value);
+    }
     if (inFlightContentIdentityCheck) return inFlightContentIdentityCheck;
     inFlightContentIdentityCheck = Promise.resolve()
       .then(() => contentIdentityProvider(rootDir))
@@ -53,12 +62,23 @@ export async function createRuntimeServer({
         currentIdentity === resolvedContentIdentity ? resolvedContentIdentity : null
       ))
       .catch(() => null)
+      .then((value) => {
+        cachedContentIdentityCheck = { value, at: Date.now() };
+        return value;
+      })
       .finally(() => { inFlightContentIdentityCheck = null; });
     return inFlightContentIdentityCheck;
   }
 
   const httpServer = createServer(async (request, response) => {
     try {
+      // 运行时默认监听 0.0.0.0，浏览器却可能带着攻击者控制的 DNS 名来访问
+      // （DNS 重绑定）。合法入口只有 localhost 与二维码里的局域网 IP 直连，
+      // 因此 Host 只放行 IP 字面量、localhost 和链路本地的 mDNS 名。
+      if (!isTrustedHostHeader(request.headers.host)) {
+        return sendJson(request, response, 403, { error: "FORBIDDEN_HOST" });
+      }
+
       const url = new URL(request.url ?? "/", "http://localhost");
       const readMethod = request.method === "GET" || request.method === "HEAD";
 
@@ -109,6 +129,14 @@ export async function createRuntimeServer({
     serveClient: true,
     maxHttpBufferSize: 100_000,
     cors: false,
+    // cors: false 只是不下发 CORS 头，挡不住 WebSocket：任意外部网页都能
+    // 直接向本机 4173 发起 WebSocket 握手并加入房间。这里要求握手要么不带
+    // Origin（非浏览器客户端），要么与 Host 同源（本服务自己发出的页面）。
+    allowRequest: (handshakeRequest, callback) => {
+      const allowed = isTrustedHostHeader(handshakeRequest.headers.host)
+        && isSameOriginOrAbsent(handshakeRequest.headers.origin, handshakeRequest.headers.host);
+      callback(null, allowed);
+    },
   });
   registerRoomProtocol(io, rooms, sealedRounds);
 
@@ -294,6 +322,32 @@ function sendJson(request, response, statusCode, value, extraHeaders = {}) {
   });
   if (request.method === "HEAD") response.end();
   else response.end(body);
+}
+
+export function isTrustedHostHeader(hostHeader) {
+  if (typeof hostHeader !== "string" || hostHeader === "") return false;
+  let hostname;
+  try {
+    hostname = new URL(`http://${hostHeader}`).hostname;
+  } catch {
+    return false;
+  }
+  const bare = hostname.startsWith("[") && hostname.endsWith("]")
+    ? hostname.slice(1, -1)
+    : hostname;
+  if (isIP(bare) !== 0) return true;
+  return hostname === "localhost"
+    || hostname.endsWith(".localhost")
+    || hostname.endsWith(".local");
+}
+
+export function isSameOriginOrAbsent(origin, hostHeader) {
+  if (origin === undefined) return true;
+  try {
+    return new URL(origin).host === hostHeader;
+  } catch {
+    return false;
+  }
 }
 
 function roomChannel(roomId) {
